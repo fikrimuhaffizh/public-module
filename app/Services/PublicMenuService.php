@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class PublicMenuService
 {
-    public function createMenu(array $data): PublicMenu
+    public function createMenu(array $data): Menu
     {
         return DB::transaction(function () use ($data) {
             // Handle page_id encrypted ID if coming from request
@@ -31,7 +31,7 @@ class PublicMenuService
         });
     }
 
-    public function updateMenu(PublicMenu $menu, array $data): bool
+    public function updateMenu(Menu $menu, array $data): bool
     {
         return DB::transaction(function () use ($menu, $data) {
             if (isset($data['page_id']) && ! is_numeric($data['page_id'])) {
@@ -48,7 +48,7 @@ class PublicMenuService
         });
     }
 
-    public function deleteMenu(PublicMenu $menu): bool
+    public function deleteMenu(Menu $menu): bool
     {
         return DB::transaction(function () use ($menu) {
             $title = $menu->title;

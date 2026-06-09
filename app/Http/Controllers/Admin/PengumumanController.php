@@ -53,7 +53,7 @@ class PengumumanController extends Controller
         }
 
         $pengumuman = $this->pengumumanService->createPengumuman($data);
-        $redirectRoute = $pengumuman->jenis === 'pengumuman' ? 'cms.pengumuman.index' : 'cms.berita.index';
+        $redirectRoute = $pengumuman->jenis === 'pengumuman' ? 'public.cms.pengumuman.index' : 'public.cms.berita.index';
 
         return redirect()->route($redirectRoute)->with('success', ucfirst($pengumuman->jenis).' berhasil ditambahkan.');
     }
@@ -85,7 +85,7 @@ class PengumumanController extends Controller
         }
 
         $this->pengumumanService->updatePengumuman($pengumuman, $data);
-        $redirectRoute = $pengumuman->jenis === 'pengumuman' ? 'cms.pengumuman.index' : 'cms.berita.index';
+        $redirectRoute = $pengumuman->jenis === 'pengumuman' ? 'public.cms.pengumuman.index' : 'public.cms.berita.index';
 
         return redirect()->route($redirectRoute)->with('success', ucfirst($pengumuman->jenis).' berhasil diperbarui.');
     }
@@ -97,7 +97,7 @@ class PengumumanController extends Controller
     {
         $jenis = $pengumuman->jenis;
         $this->pengumumanService->deletePengumuman($pengumuman);
-        $redirectRoute = $jenis === 'pengumuman' ? 'cms.pengumuman.index' : 'cms.berita.index';
+        $redirectRoute = $jenis === 'pengumuman' ? 'public.cms.pengumuman.index' : 'public.cms.berita.index';
 
         return jsonSuccess(ucfirst($jenis).' deleted successfully.', route($redirectRoute));
     }
@@ -122,7 +122,7 @@ class PengumumanController extends Controller
             ->addIndexColumn()
             ->editColumn('judul', function ($item) {
                 $encryptedId = encryptId($item->pengumuman_id);
-                $routePrefix = $item->jenis === 'berita' ? 'cms.berita' : 'cms.pengumuman';
+                $routePrefix = $item->jenis === 'berita' ? 'public.cms.berita' : 'public.cms.pengumuman';
 
                 return $item->judul;
             })
@@ -149,9 +149,9 @@ class PengumumanController extends Controller
             })
             ->addColumn('action', function ($item) {
                 $encryptedId = encryptId($item->pengumuman_id);
-                $routePrefix = $item->jenis === 'berita' ? 'cms.berita' : 'cms.pengumuman';
+                $routePrefix = $item->jenis === 'berita' ? 'public.cms.berita' : 'public.cms.pengumuman';
 
-                return view('components.tabler.datatables-actions', [
+                return view('components.ui.datatables-actions', [
                     'editUrl' => route($routePrefix.'.edit', $encryptedId),
                     'editModal' => false,
                     'viewUrl' => route($routePrefix.'.show', $encryptedId),

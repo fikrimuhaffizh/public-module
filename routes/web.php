@@ -6,6 +6,7 @@ use Modules\Public\app\Http\Controllers\Admin\PengumumanController;
 use Modules\Public\app\Http\Controllers\Admin\PublicMenuController;
 use Modules\Public\app\Http\Controllers\Admin\PublicPageController;
 use Modules\Public\app\Http\Controllers\Admin\SlideshowController;
+use Modules\Public\app\Http\Controllers\Web\PublicController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,8 +16,9 @@ use Modules\Public\app\Http\Controllers\Admin\SlideshowController;
 
 // Admin Area (CMS)
 Route::middleware(['auth', 'check.expired'])->prefix('admin/cms')->name('public.cms.')->group(function () {
-    
+
     // FAQ
+    Route::post('faq/reorder', [FAQController::class, 'reorder'])->name('faq.reorder');
     Route::get('faq/data', [FAQController::class, 'data'])->name('faq.data');
     Route::resource('faq', FAQController::class);
 
@@ -24,22 +26,36 @@ Route::middleware(['auth', 'check.expired'])->prefix('admin/cms')->name('public.
     Route::get('pengumuman/data', [PengumumanController::class, 'data'])->name('pengumuman.data');
     Route::resource('pengumuman', PengumumanController::class);
 
+    // Berita (menggunakan PengumumanController dengan type berita)
+    Route::prefix('berita')->name('berita.')->controller(PengumumanController::class)->group(function () {
+        Route::get('/data', 'data')->name('data');
+        Route::get('/', 'beritaIndex')->name('index');
+        Route::get('/create', 'create')->defaults('type', 'berita')->name('create');
+        Route::post('/', 'store')->name('store');
+        Route::get('/{pengumuman}', 'show')->name('show');
+        Route::get('/{pengumuman}/edit', 'edit')->name('edit');
+        Route::put('/{pengumuman}', 'update')->name('update');
+        Route::delete('/{pengumuman}', 'destroy')->name('destroy');
+    });
+
     // Slideshow
+    Route::post('slideshow/reorder', [SlideshowController::class, 'reorder'])->name('slideshow.reorder');
     Route::get('slideshow/data', [SlideshowController::class, 'data'])->name('slideshow.data');
     Route::resource('slideshow', SlideshowController::class);
 
     // Pages
-    Route::get('page/data', [PublicPageController::class, 'data'])->name('page.data');
-    Route::resource('page', PublicPageController::class);
+    Route::get('public-page/data', [PublicPageController::class, 'data'])->name('page.data');
+    Route::resource('public-page', PublicPageController::class);
 
     // Public Menu
-    Route::get('menu/data', [PublicMenuController::class, 'data'])->name('menu.data');
-    Route::resource('menu', PublicMenuController::class);
+    Route::post('public-menu/reorder', [PublicMenuController::class, 'reorder'])->name('menu.reorder');
+    Route::get('public-menu/data', [PublicMenuController::class, 'data'])->name('menu.data');
+    Route::resource('public-menu', PublicMenuController::class);
 });
 
 // Web Area (Landing Page)
-Route::name('public.')->group(function () {
-    Route::get('/', function() {
-        return view('public::pages.web.index');
-    })->name('index');
+Route::controller(PublicController::class)->name('public.')->group(function () {
+    Route::get('/', 'home')->name('index');
+    Route::get('/announcements', 'showAllNews')->name('announcements.index');
+    Route::get('/news/{pengumuman}', 'showNews')->name('news.show');
 });

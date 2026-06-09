@@ -32,7 +32,7 @@ class PublicMenuController extends Controller
         $parents = Menu::orderBy('title')->get();
 
         return view('public::pages.admin.cms.public-menu.create-edit-ajax', [
-            'menu' => new PublicMenu,
+            'menu' => new Menu,
             'pages' => $pages,
             'parents' => $parents,
         ]);
@@ -45,7 +45,7 @@ class PublicMenuController extends Controller
         return jsonSuccess('Menu berhasil ditambahkan.', route('public.cms.public-menu.index'));
     }
 
-    public function edit(PublicMenu $publicMenu)
+    public function edit(Menu $publicMenu)
     {
         $pages = Page::where('is_published', true)->orderBy('title')->get();
         $parents = Menu::where('menu_id', '!=', $publicMenu->menu_id)->orderBy('title')->get();
@@ -57,14 +57,14 @@ class PublicMenuController extends Controller
         ]);
     }
 
-    public function update(PublicMenuRequest $request, PublicMenu $publicMenu)
+    public function update(PublicMenuRequest $request, Menu $publicMenu)
     {
         $this->menuService->updateMenu($publicMenu, $request->validated());
 
         return jsonSuccess('Menu berhasil diperbarui.', route('public.cms.public-menu.index'));
     }
 
-    public function destroy(PublicMenu $publicMenu)
+    public function destroy(Menu $publicMenu)
     {
         $this->menuService->deleteMenu($publicMenu);
 

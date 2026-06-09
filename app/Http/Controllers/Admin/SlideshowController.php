@@ -57,7 +57,7 @@ class SlideshowController extends Controller
                     : '<span class="badge bg-secondary text-white">Draft</span>';
             })
             ->addColumn('action', function ($row) {
-                return view('components.tabler.datatables-actions', [
+                return view('components.ui.datatables-actions', [
                     'editUrl' => route('public.cms.slideshow.edit', $row->encrypted_slideshow_id),
                     'editModal' => true,
                     'deleteUrl' => route('public.cms.slideshow.destroy', $row->encrypted_slideshow_id),

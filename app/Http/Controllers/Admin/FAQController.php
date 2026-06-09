@@ -5,6 +5,7 @@ namespace Modules\Public\app\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Modules\Public\app\Http\Requests\FAQRequest;
 use Modules\Public\app\Models\FAQ;
+use Modules\Public\app\Http\Requests\ReorderRequest;
 use Modules\Public\app\Services\FAQService;
 
 class FAQController extends Controller
@@ -49,7 +50,7 @@ class FAQController extends Controller
         return jsonSuccess('FAQ berhasil dihapus.', route('public.cms.faq.index'));
     }
 
-    public function reorder(\App\Http\Requests\Cms\ReorderRequest $request)
+    public function reorder(ReorderRequest $request)
     {
         $order = $request->validated()['order'] ?? [];
         if ($order) {
