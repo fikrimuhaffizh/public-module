@@ -1,0 +1,11 @@
+{
+    "name": "pemutu/public-module",
+    "description": "Public-facing pages, assets, and layouts",
+    "autoload": {
+        "psr-4": {
+            "Modules\\Public\\app\\": "app/",
+            "Modules\\Public\\": "app/",
+            "App\\Http\\Controllers\\Public\\": "app/Http/Controllers/"
+        }
+    }
+}

@@ -1,0 +1,10 @@
+/* Main CSS File */
+@import './main.css';
+
+/* Vendor CSS Files */
+/* Bootstrap is loaded from vendor folder in original template, assuming it is customized or specific version */
+@import '../vendor/bootstrap/css/bootstrap.min.css';
+@import '../vendor/bootstrap-icons/bootstrap-icons.css';
+@import '../vendor/glightbox/css/glightbox.min.css';
+@import '../vendor/swiper/swiper-bundle.min.css';
+@import '../vendor/drift-zoom/drift-basic.css';
