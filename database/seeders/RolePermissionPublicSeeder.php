@@ -66,7 +66,7 @@ class RolePermissionPublicSeeder extends Seeder
 
         // Assign permissions to Administrator role
         $permissionNames = collect($permissionData)->pluck('name');
-        foreach (['Super Administrator', 'Administrator'] as $roleName) {
+        foreach (['Root', 'Super Administrator', 'Administrator'] as $roleName) {
             Role::where('name', $roleName)
                 ->where('tenant_id', $tenantId)
                 ->first()
