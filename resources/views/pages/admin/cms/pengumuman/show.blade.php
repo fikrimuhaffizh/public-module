@@ -32,8 +32,8 @@
         </div>
 
         @php
-            $coverMedia = $pengumuman->getFirstMedia('info_cover');
-            $attachments = $pengumuman->getMedia('info_attachment');
+            $coverMedia = $pengumuman->getFirstMedia('cover');
+            $attachments = $pengumuman->getMedia('attachments');
         @endphp
 
         @if($coverMedia)

@@ -28,7 +28,6 @@ class PublicMenuController extends Controller
     public function create()
     {
         $pages = Page::where('is_published', true)->orderBy('title')->get();
-        // Get parent for select options if needed, but tree view usually handles adding child
         $parents = Menu::orderBy('title')->get();
 
         return view('public::pages.admin.cms.public-menu.create-edit-ajax', [
@@ -42,7 +41,7 @@ class PublicMenuController extends Controller
     {
         $this->menuService->createMenu($request->validated());
 
-        return jsonSuccess('Menu berhasil ditambahkan.', route('public.cms.public-menu.index'));
+        return jsonSuccess('Menu berhasil ditambahkan.', route('public.cms.menu.index'));
     }
 
     public function edit(Menu $publicMenu)
@@ -59,16 +58,16 @@ class PublicMenuController extends Controller
 
     public function update(PublicMenuRequest $request, Menu $publicMenu)
     {
-        $this->menuService->updateMenu($publicMenu, $request->validated());
+        $this->menuService->updateMenu($publicMenu->getKey(), $request->validated());
 
-        return jsonSuccess('Menu berhasil diperbarui.', route('public.cms.public-menu.index'));
+        return jsonSuccess('Menu berhasil diperbarui.', route('public.cms.menu.index'));
     }
 
     public function destroy(Menu $publicMenu)
     {
-        $this->menuService->deleteMenu($publicMenu);
+        $this->menuService->deleteMenu($publicMenu->getKey());
 
-        return jsonSuccess('Menu berhasil dihapus.', route('public.cms.public-menu.index'));
+        return jsonSuccess('Menu berhasil dihapus.', route('public.cms.menu.index'));
     }
 
     public function reorder(ReorderRequest $request)

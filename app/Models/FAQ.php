@@ -13,13 +13,15 @@ class FAQ extends Model
 {
     use BelongsToTenant, Blameable, HasFactory, HashidBinding, SoftDeletes;
 
-    protected $table = 'cms_faqs';
+    protected $table = 'cms_faq';
+
+    protected $primaryKey = 'faq_id';
 
     protected $appends = ['encrypted_faq_id'];
 
     public function getEncryptedFaqIdAttribute()
     {
-        return encryptId($this->id);
+        return encryptId($this->faq_id);
     }
 
     protected $fillable = [

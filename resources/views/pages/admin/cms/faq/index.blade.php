@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         // Send to server
-        axios.post('{{ route("cms.faq.reorder") }}', { order: orderData })
+        axios.post('{{ route("public.cms.faq.reorder") }}', { order: orderData })
             .then(response => {
                 showSuccessMessage('Urutan & Kategori berhasil diperbarui');
             })

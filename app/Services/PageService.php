@@ -3,32 +3,40 @@
 namespace Modules\Public\app\Services;
 
 use Modules\Public\app\Models\Page;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class PageService
 {
-    public function getFilteredQuery(array $filters = [])
+    public function getBaseQuery(): Builder
     {
         return Page::query();
+    }
+
+    public function getFilteredQuery(array $filters = []): Builder
+    {
+        return $this->getBaseQuery();
+    }
+
+    public function findById(string|int $id): Page
+    {
+        return Page::findOrFail(decryptIdIfEncrypted($id));
     }
 
     public function createPage(array $data): Page
     {
         return DB::transaction(function () use ($data) {
-            // Auto generate slug if empty
             if (empty($data['slug'])) {
                 $data['slug'] = Str::slug($data['title']);
             }
 
             $page = Page::create($data);
 
-            // Handle Main Image
             if (isset($data['main_image'])) {
                 $page->addMediaFromRequest('main_image')->toMediaCollection('main_image');
             }
 
-            // Handle Attachments
             if (isset($data['attachments'])) {
                 foreach ($data['attachments'] as $file) {
                     $page->addMedia($file)->toMediaCollection('attachments');
@@ -41,21 +49,21 @@ class PageService
         });
     }
 
-    public function updatePage(Page $page, array $data): bool
+    public function updatePage(string|int $id, array $data): bool
     {
-        return DB::transaction(function () use ($page, $data) {
+        return DB::transaction(function () use ($id, $data) {
+            $page = $this->findById($id);
+
             if (empty($data['slug'])) {
                 $data['slug'] = Str::slug($data['title']);
             }
 
             $page->update($data);
 
-            // Handle Main Image
             if (isset($data['main_image'])) {
                 $page->addMediaFromRequest('main_image')->toMediaCollection('main_image');
             }
 
-            // Handle Attachments
             if (isset($data['attachments'])) {
                 foreach ($data['attachments'] as $file) {
                     $page->addMedia($file)->toMediaCollection('attachments');
@@ -68,13 +76,11 @@ class PageService
         });
     }
 
-    public function deletePage(Page $page): bool
+    public function deletePage(string|int $id): bool
     {
-        return DB::transaction(function () use ($page) {
+        return DB::transaction(function () use ($id) {
+            $page = $this->findById($id);
             $title = $page->title;
-            // Detach media first if hard delete, but soft delete handles it usually.
-            // Spatie handles media deletion on model deletion logic if configured,
-            // but for SoftDeletes it keeps them.
 
             $page->delete();
             logActivity('public_page', "Hapus halaman: {$title}");

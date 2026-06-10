@@ -13,7 +13,7 @@ class Menu extends Model
 {
     use BelongsToTenant, Blameable, HasFactory, HashidBinding, SoftDeletes;
 
-    protected $table = 'cms_menus';
+    protected $table = 'cms_menu';
 
     protected $primaryKey = 'menu_id';
 

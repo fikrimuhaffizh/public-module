@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Public\database\seeders;
+namespace Modules\Public\Database\Seeders;
 
 use Modules\Public\app\Models\Slideshow;
 use Illuminate\Database\Seeder;
@@ -12,7 +12,8 @@ class SlideshowSeeder extends Seeder
      */
     public function run(): void
     {
-        Slideshow::create([
+        Slideshow::updateOrCreate(['tenant_id' => 1, 'seq' => 1], [
+            'tenant_id' => 1,
             'image_url' => 'static/img/slides/slide-1.jpg',
             'title' => 'Excellence in Education',
             'caption' => 'Empowering the next generation of industry leaders through innovative technology and hands-on education.',
@@ -22,7 +23,8 @@ class SlideshowSeeder extends Seeder
             'created_by' => 1,
         ]);
 
-        Slideshow::create([
+        Slideshow::updateOrCreate(['tenant_id' => 1, 'seq' => 2], [
+            'tenant_id' => 1,
             'image_url' => 'static/img/slides/slide-2.jpg',
             'title' => 'Modern Laboratory Facilities',
             'caption' => 'State-of-the-art labs equipped with the latest industry-standard software and hardware.',
@@ -32,7 +34,8 @@ class SlideshowSeeder extends Seeder
             'created_by' => 1,
         ]);
 
-        Slideshow::create([
+        Slideshow::updateOrCreate(['tenant_id' => 1, 'seq' => 3], [
+            'tenant_id' => 1,
             'image_url' => 'static/img/slides/slide-3.jpg',
             'title' => 'Vibrant Campus Life',
             'caption' => 'A supportive and diverse community where students can grow both academically and personally.',

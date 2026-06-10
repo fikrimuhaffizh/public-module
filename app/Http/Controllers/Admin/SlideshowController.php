@@ -86,14 +86,14 @@ class SlideshowController extends Controller
 
     public function update(SlideshowRequest $request, Slideshow $slideshow)
     {
-        $this->slideshowService->updateSlideshow($slideshow, $request->validated());
+        $this->slideshowService->updateSlideshow($slideshow->getKey(), $request->validated());
 
         return jsonSuccess('Slideshow berhasil diperbarui.', route('public.cms.slideshow.index'));
     }
 
     public function destroy(Slideshow $slideshow)
     {
-        $this->slideshowService->deleteSlideshow($slideshow);
+        $this->slideshowService->deleteSlideshow($slideshow->getKey());
 
         return jsonSuccess('Slideshow berhasil dihapus.', route('public.cms.slideshow.index'));
     }

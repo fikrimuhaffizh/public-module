@@ -27,14 +27,14 @@
             <x-ui.button 
                 type="button" 
                 class="btn-icon btn-ghost-primary ajax-modal-btn" 
-                data-url="{{ route('public.cms.public-menu.edit', $menu->encrypted_menu_id) }}"
+                data-url="{{ route('public.cms.menu.edit', $menu->encrypted_menu_id) }}"
                 data-modal-title="Edit Menu"
                 icon="ti ti-pencil" 
             />
             <x-ui.button 
                 type="button" 
                 class="btn-icon btn-ghost-danger ajax-delete" 
-                data-url="{{ route('public.cms.public-menu.destroy', $menu->encrypted_menu_id) }}"
+                data-url="{{ route('public.cms.menu.destroy', $menu->encrypted_menu_id) }}"
                 data-title="Hapus Menu?"
                 icon="ti ti-trash" 
             />

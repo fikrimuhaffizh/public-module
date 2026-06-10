@@ -81,12 +81,12 @@
               @foreach($categoryFaqs as $index => $faq)
               <div class="accordion-item" data-aos="fade-up" data-aos-delay="{{ 100 * (++$faqCount) }}">
                 <h3 class="accordion-header">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-{{ $faq->id }}">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-{{ $faq->faq_id }}">
                     <i class="bi bi-question-circle me-2 text-primary"></i>
                     {{ $faq->question }}
                   </button>
                 </h3>
-                <div id="faq-content-{{ $faq->id }}" class="accordion-collapse collapse" data-bs-parent="#faqAccordion-{{ Str::slug($category ?: 'umum') }}">
+                <div id="faq-content-{{ $faq->faq_id }}" class="accordion-collapse collapse" data-bs-parent="#faqAccordion-{{ Str::slug($category ?: 'umum') }}">
                   <div class="accordion-body">
                     {!! $faq->answer !!}
                   </div>

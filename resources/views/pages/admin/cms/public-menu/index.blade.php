@@ -4,12 +4,12 @@
 <x-ui.page-header title="Manajemen Halaman & Menu" pretitle="CMS">
     <x-slot:actions>
         <div class="d-flex gap-2">
-            <x-ui.button href="{{ route('public.cms.public-page.create') }}" type="create" id="btn-add-page" text="Buat Halaman Baru" />
+            <x-ui.button href="{{ route('public.cms.page.create') }}" type="create" id="btn-add-page" text="Buat Halaman Baru" />
             <x-ui.button
                 type="create"
                 href="#"
                 class="ajax-modal-btn d-none"
-                data-url="{{ route('public.cms.public-menu.create') }}"
+                data-url="{{ route('public.cms.menu.create') }}"
                 id="btn-add-menu"
                 text="Tambah Menu"
             />
@@ -41,7 +41,7 @@
                         <x-ui.card-body class="p-0">
                             <x-ui.datatable
                                 id="pages-table"
-                                route="{{ route('public.cms.public-page.data') }}"
+                                route="{{ route('public.cms.page.data') }}"
                                 :columns="[
                                     ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex', 'title' => 'No', 'orderable' => false, 'searchable' => false, 'class' => 'text-center'],
                                     ['data' => 'title', 'name' => 'title', 'title' => 'Judul'],
@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const hierarchy = getHierarchyFromUl(rootUl);
 
-        axios.post('{{ route("cms.public-menu.reorder") }}', { hierarchy: hierarchy })
+        axios.post('{{ route("public.cms.menu.reorder") }}', { hierarchy: hierarchy })
             .then(response => {
                 showSuccessMessage('Urutan menu berhasil diperbarui');
             })

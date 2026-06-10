@@ -11,12 +11,12 @@ class PageRequest extends BaseRequest
     {
         // Get the page ID from the route if it exists (for update uniqueness)
         // Assuming route parameter is 'public_page' and it's bound via HashidBinding
-        $page = $this->route('public_page');
+        $page = $this->route('page');
         $pageId = $page ? $page->page_id : null;
 
         return [
             'title' => 'required|string|max:255',
-            'slug' => ['nullable', 'string', 'max:255', Rule::unique('cms_pages', 'slug')->ignore($pageId, 'page_id')],
+            'slug' => ['nullable', 'string', 'max:255', Rule::unique('cms_page', 'slug')->ignore($pageId, 'page_id')],
             'content' => 'nullable|string',
             'meta_desc' => 'nullable|string|max:255',
             'meta_keywords' => 'nullable|string|max:255',

@@ -36,17 +36,15 @@
     </div>
 </x-ui.form-modal>
 
-@push('js')
 <script>
-    if (window.loadHugeRTE) {
-        window.loadHugeRTE('#answer', { 
+    if (typeof window.loadHugeRTE === 'function') {
+        window.loadHugeRTE('#answer', {
             height: 300,
             setup: function (editor) {
-                editor.on('change', function () {
+                editor.on('change input blur', function () {
                     editor.save();
                 });
             }
         });
     }
 </script>
-@endpush

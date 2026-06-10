@@ -14,17 +14,11 @@ class PengumumanController extends Controller
 {
     public function __construct(protected PengumumanService $pengumumanService) {}
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
         return view('public::pages.admin.cms.pengumuman.index', ['type' => 'pengumuman']);
     }
 
-    /**
-     * Display a listing of berita.
-     */
     public function beritaIndex(Request $request)
     {
         return view('public::pages.admin.cms.pengumuman.index', ['type' => 'berita']);
@@ -33,15 +27,11 @@ class PengumumanController extends Controller
     public function create($type = 'pengumuman')
     {
         $penulisOptions = User::all();
-        // Pass a new instance for the view to handle checks like $pengumuman->exists
         $pengumuman = new Pengumuman;
 
         return view('public::pages.admin.cms.pengumuman.create-edit', compact('type', 'penulisOptions', 'pengumuman'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(PengumumanRequest $request)
     {
         $data = $request->validated();
@@ -71,9 +61,6 @@ class PengumumanController extends Controller
         return view('public::pages.admin.cms.pengumuman.create-edit', compact('pengumuman', 'type', 'penulisOptions'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(PengumumanRequest $request, Pengumuman $pengumuman)
     {
         $data = $request->validated();
@@ -84,38 +71,26 @@ class PengumumanController extends Controller
             $data['attachments'] = $request->file('attachments');
         }
 
-        $this->pengumumanService->updatePengumuman($pengumuman, $data);
+        $this->pengumumanService->updatePengumuman($pengumuman->getKey(), $data);
         $redirectRoute = $pengumuman->jenis === 'pengumuman' ? 'public.cms.pengumuman.index' : 'public.cms.berita.index';
 
         return redirect()->route($redirectRoute)->with('success', ucfirst($pengumuman->jenis).' berhasil diperbarui.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Pengumuman $pengumuman)
     {
         $jenis = $pengumuman->jenis;
-        $this->pengumumanService->deletePengumuman($pengumuman);
+        $this->pengumumanService->deletePengumuman($pengumuman->getKey());
         $redirectRoute = $jenis === 'pengumuman' ? 'public.cms.pengumuman.index' : 'public.cms.berita.index';
 
         return jsonSuccess(ucfirst($jenis).' deleted successfully.', route($redirectRoute));
     }
 
-    /**
-     * Process datatables ajax request.
-     */
     public function data(Request $request)
     {
-        // Determine the type based on the route name
         $routeName = $request->route()->getName();
-        // Route naming convention check: assumes 'cms.berita.data' for berita
-        // If route('public.cms.pengumuman.data', it's pengumuman.
-        // Or pass type as parameter?
-        // Existing code checked route name.
         $type = (str_contains($routeName, 'berita') || $request->type === 'berita') ? 'berita' : 'pengumuman';
 
-        // Use Service Query
         $query = $this->pengumumanService->getFilteredQuery($type);
 
         return DataTables::of($query)
@@ -127,7 +102,6 @@ class PengumumanController extends Controller
                 return $item->judul;
             })
             ->addColumn('cover', function ($item) {
-                // Use accessor if available, or empty check
                 $url = $item->cover_small_url ?? '';
                 if (! $url) {
                     return '';

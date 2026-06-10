@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-        <form action="{{ $page->exists ? route('public.cms.public-page.update', $page->encrypted_page_id) : route('public.cms.public-page.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ $page->exists ? route('public.cms.page.update', $page->encrypted_page_id) : route('public.cms.page.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @if($page->exists)
                 @method('PUT')
@@ -113,8 +113,9 @@
 
 @push('scripts')
 <script>
-    if (window.loadHugeRTE) {
-        window.loadHugeRTE('#content', { 
+document.addEventListener('DOMContentLoaded', function () {
+    if (typeof window.loadHugeRTE === 'function') {
+        window.loadHugeRTE('#content', {
             height: 600,
             setup: function (editor) {
                 editor.on('change', function () {
@@ -123,5 +124,6 @@
             }
         });
     }
+});
 </script>
 @endpush

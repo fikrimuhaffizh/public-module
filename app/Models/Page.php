@@ -15,7 +15,7 @@ class Page extends Model implements HasMedia
 {
     use BelongsToTenant, Blameable, HasFactory, HashidBinding, InteractsWithMedia, SoftDeletes;
 
-    protected $table = 'cms_pages';
+    protected $table = 'cms_page';
 
     protected $primaryKey = 'page_id';
 

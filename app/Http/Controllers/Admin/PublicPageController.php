@@ -33,9 +33,9 @@ class PublicPageController extends Controller
                 return $row->updated_at->format('d M Y H:i');
             })
             ->addColumn('action', function ($row) {
-                $viewBtn = '<a href="'.route('public.cms.public-page.show', $row->encrypted_id).'" class="btn btn-icon btn-ghost-info" title="Lihat"><i class="ti ti-eye"></i></a>';
-                $editBtn = '<a href="'.route('public.cms.public-page.edit', $row->encrypted_id).'" class="btn btn-icon btn-ghost-primary" title="Edit"><i class="ti ti-pencil"></i></a>';
-                $deleteBtn = '<button type="button" class="btn btn-icon btn-ghost-danger ajax-delete" data-url="'.route('public.cms.public-page.destroy', $row->encrypted_id).'" data-title="Hapus Halaman?" title="Hapus"><i class="ti ti-trash"></i></button>';
+                $viewBtn = '<a href="'.route('public.cms.page.show', $row->encrypted_page_id).'" class="btn btn-icon btn-ghost-info" title="Lihat"><i class="ti ti-eye"></i></a>';
+                $editBtn = '<a href="'.route('public.cms.page.edit', $row->encrypted_page_id).'" class="btn btn-icon btn-ghost-primary" title="Edit"><i class="ti ti-pencil"></i></a>';
+                $deleteBtn = '<button type="button" class="btn btn-icon btn-ghost-danger ajax-delete" data-url="'.route('public.cms.page.destroy', $row->encrypted_page_id).'" data-title="Hapus Halaman?" title="Hapus"><i class="ti ti-trash"></i></button>';
 
                 return '<div class="btn-group btn-group-sm" role="group">'.$viewBtn.$editBtn.$deleteBtn.'</div>';
             })
@@ -43,9 +43,9 @@ class PublicPageController extends Controller
             ->make(true);
     }
 
-    public function show(Page $publicPage)
+    public function show(Page $page)
     {
-        return view('public::pages.admin.cms.public-page.show', ['page' => $publicPage]);
+        return view('public::pages.admin.cms.public-page.show', compact('page'));
     }
 
     public function create()
@@ -57,24 +57,24 @@ class PublicPageController extends Controller
     {
         $this->pageService->createPage($request->validated());
 
-        return redirect()->route('public.cms.public-page.index')->with('success', 'Halaman berhasil dibuat.');
+        return redirect()->route('public.cms.page.index')->with('success', 'Halaman berhasil dibuat.');
     }
 
-    public function edit(Page $publicPage)
+    public function edit(Page $page)
     {
-        return view('public::pages.admin.cms.public-page.create-edit', ['page' => $publicPage]);
+        return view('public::pages.admin.cms.public-page.create-edit', compact('page'));
     }
 
-    public function update(PageRequest $request, Page $publicPage)
+    public function update(PageRequest $request, Page $page)
     {
-        $this->pageService->updatePage($publicPage, $request->validated());
+        $this->pageService->updatePage($page->getKey(), $request->validated());
 
-        return redirect()->route('public.cms.public-page.index')->with('success', 'Halaman berhasil diperbarui.');
+        return redirect()->route('public.cms.page.index')->with('success', 'Halaman berhasil diperbarui.');
     }
 
-    public function destroy(Page $publicPage)
+    public function destroy(Page $page)
     {
-        $this->pageService->deletePage($publicPage);
+        $this->pageService->deletePage($page->getKey());
 
         return jsonSuccess('Halaman berhasil dihapus.');
     }

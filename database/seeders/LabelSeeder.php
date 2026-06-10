@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Public\database\seeders;
+namespace Modules\Public\Database\Seeders;
 
 // Label model was part of Pemutu module which has been deleted
 // use App\Models\Pemutu\Label;

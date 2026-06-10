@@ -3,13 +3,24 @@
 namespace Modules\Public\app\Services;
 
 use Modules\Public\app\Models\Slideshow;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
 class SlideshowService
 {
-    public function getFilteredQuery(array $filters = [])
+    public function getBaseQuery(): Builder
     {
         return Slideshow::query();
+    }
+
+    public function getFilteredQuery(array $filters = []): Builder
+    {
+        return $this->getBaseQuery();
+    }
+
+    public function findById(string|int $id): Slideshow
+    {
+        return Slideshow::findOrFail(decryptIdIfEncrypted($id));
     }
 
     public function createSlideshow(array $data): Slideshow
@@ -28,9 +39,10 @@ class SlideshowService
         });
     }
 
-    public function updateSlideshow(Slideshow $slideshow, array $data): bool
+    public function updateSlideshow(string|int $id, array $data): bool
     {
-        return DB::transaction(function () use ($slideshow, $data) {
+        return DB::transaction(function () use ($id, $data) {
+            $slideshow = $this->findById($id);
             $slideshow->update($data);
 
             if (isset($data['slideshow_image'])) {
@@ -44,9 +56,10 @@ class SlideshowService
         });
     }
 
-    public function deleteSlideshow(Slideshow $slideshow): bool
+    public function deleteSlideshow(string|int $id): bool
     {
-        return DB::transaction(function () use ($slideshow) {
+        return DB::transaction(function () use ($id) {
+            $slideshow = $this->findById($id);
             $title = $slideshow->title;
 
             $slideshow->delete();
@@ -61,12 +74,6 @@ class SlideshowService
     {
         return DB::transaction(function () use ($order) {
             foreach ($order as $index => $encryptedId) {
-                // We use decryptIdIfEncrypted helper, but here we might need manual decrypt if encrypted ID is passed
-                // The Helper expects decryptIdIfEncrypted to handle both.
-                // However, standard is to use encrypted_{entity}_id.
-                // Controller was doing: $id = decryptIdIfEncrypted($encryptedId, false);
-                // Let's replicate that logic safely.
-
                 $id = decryptIdIfEncrypted($encryptedId, false);
                 if ($id) {
                     Slideshow::where('id', $id)->update(['seq' => $index + 1]);

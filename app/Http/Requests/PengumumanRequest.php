@@ -2,10 +2,17 @@
 
 namespace Modules\Public\app\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseRequest;
 
-class PengumumanRequest extends FormRequest
+class PengumumanRequest extends BaseRequest
 {
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'is_published' => $this->boolean('is_published'),
+        ]);
+    }
+
     public function rules(): array
     {
         return [
@@ -18,6 +25,21 @@ class PengumumanRequest extends FormRequest
             'cover' => 'nullable|image|max:2048',
             'attachments' => 'nullable|array',
             'attachments.*' => 'nullable|file|max:10240',
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'judul' => 'Judul',
+            'isi' => 'Isi Konten',
+            'jenis' => 'Jenis',
+            'penulis_id' => 'Penulis',
+            'is_published' => 'Status Publikasi',
+            'image_url' => 'URL Gambar',
+            'cover' => 'Gambar Sampul',
+            'attachments' => 'Lampiran',
+            'attachments.*' => 'Lampiran',
         ];
     }
 }

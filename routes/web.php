@@ -45,17 +45,23 @@ Route::middleware(['auth', 'check.expired'])->prefix('admin/cms')->name('public.
 
     // Pages
     Route::get('public-page/data', [PublicPageController::class, 'data'])->name('page.data');
-    Route::resource('public-page', PublicPageController::class);
+    Route::resource('public-page', PublicPageController::class)
+        ->names('page')
+        ->parameters(['public-page' => 'page']);
 
     // Public Menu
     Route::post('public-menu/reorder', [PublicMenuController::class, 'reorder'])->name('menu.reorder');
     Route::get('public-menu/data', [PublicMenuController::class, 'data'])->name('menu.data');
-    Route::resource('public-menu', PublicMenuController::class);
+    Route::resource('public-menu', PublicMenuController::class)
+        ->names('menu')
+        ->parameters(['public-menu' => 'menu']);
 });
 
 // Web Area (Landing Page)
 Route::controller(PublicController::class)->name('public.')->group(function () {
     Route::get('/', 'home')->name('index');
+    Route::get('/preview', 'preview')->name('preview');
+    Route::get('/page/{page:slug}', 'showPage')->name('page.show');
     Route::get('/announcements', 'showAllNews')->name('announcements.index');
     Route::get('/news/{pengumuman}', 'showNews')->name('news.show');
 });

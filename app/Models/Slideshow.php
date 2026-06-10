@@ -17,7 +17,7 @@ class Slideshow extends Model implements HasMedia
 {
     use BelongsToTenant, Blameable, HasFactory, HashidBinding, InteractsWithMedia, SoftDeletes;
 
-    protected $table = 'cms_slideshows';
+    protected $table = 'cms_slideshow';
 
     protected $appends = ['encrypted_slideshow_id', 'has_image', 'is_external_image'];
 

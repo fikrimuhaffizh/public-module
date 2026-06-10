@@ -3,13 +3,24 @@
 namespace Modules\Public\app\Services;
 
 use Modules\Public\app\Models\FAQ;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
 class FAQService
 {
-    public function getFilteredQuery(array $filters = [])
+    public function getBaseQuery(): Builder
     {
         return FAQ::query();
+    }
+
+    public function getFilteredQuery(array $filters = []): Builder
+    {
+        return $this->getBaseQuery();
+    }
+
+    public function findById(string|int $id): FAQ
+    {
+        return FAQ::findOrFail(decryptIdIfEncrypted($id));
     }
 
     public function createFAQ(array $data): FAQ
@@ -23,9 +34,10 @@ class FAQService
         });
     }
 
-    public function updateFAQ(FAQ $faq, array $data): bool
+    public function updateFAQ(string|int $id, array $data): bool
     {
-        return DB::transaction(function () use ($faq, $data) {
+        return DB::transaction(function () use ($id, $data) {
+            $faq = $this->findById($id);
             $faq->update($data);
 
             logActivity('faq_management', "Memperbarui FAQ: {$faq->question}", $faq);
@@ -34,9 +46,10 @@ class FAQService
         });
     }
 
-    public function deleteFAQ(FAQ $faq): bool
+    public function deleteFAQ(string|int $id): bool
     {
-        return DB::transaction(function () use ($faq) {
+        return DB::transaction(function () use ($id) {
+            $faq = $this->findById($id);
             $question = $faq->question;
 
             $faq->delete();
@@ -56,14 +69,13 @@ class FAQService
     {
         return DB::transaction(function () use ($order) {
             foreach ($order as $category => $items) {
-                // If category is "null" string or empty, treat as null (General)
                 $catValue = ($category === 'null' || $category === '') ? null : $category;
 
                 if (is_array($items)) {
                     foreach ($items as $index => $encryptedId) {
                         $id = decryptIdIfEncrypted($encryptedId, false);
                         if ($id) {
-                            FAQ::where('id', $id)->update([
+                            FAQ::where('faq_id', $id)->update([
                                 'seq' => $index + 1,
                                 'category' => $catValue,
                             ]);

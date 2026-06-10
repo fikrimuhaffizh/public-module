@@ -38,14 +38,14 @@ class FAQController extends Controller
 
     public function update(FAQRequest $request, FAQ $faq)
     {
-        $this->faqService->updateFAQ($faq, $request->validated());
+        $this->faqService->updateFAQ($faq->getKey(), $request->validated());
 
         return jsonSuccess('FAQ berhasil diperbarui.', route('public.cms.faq.index'));
     }
 
     public function destroy(FAQ $faq)
     {
-        $this->faqService->deleteFAQ($faq);
+        $this->faqService->deleteFAQ($faq->getKey());
 
         return jsonSuccess('FAQ berhasil dihapus.', route('public.cms.faq.index'));
     }

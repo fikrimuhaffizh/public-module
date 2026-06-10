@@ -7,5 +7,9 @@
     "providers": [
         "Modules\\Public\\Providers\\PublicServiceProvider"
     ],
-    "files": []
+    "aliases": {},
+    "files": [],
+    "seeders": [
+        "Modules\\Public\\Database\\Seeders\\PublicDatabaseSeeder"
+    ]
 }

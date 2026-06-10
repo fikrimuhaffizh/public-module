@@ -121,7 +121,8 @@ return new class extends Migration
                 $table->unsignedBigInteger('tenant_id')->default(1)->index();
                 $table->string('question');
                 $table->text('answer');
-                $table->integer('sequence')->default(0);
+                $table->string('category')->nullable();
+                $table->integer('seq')->default(0);
                 $table->boolean('is_active')->default(true);
 
                 $table->timestamps();
