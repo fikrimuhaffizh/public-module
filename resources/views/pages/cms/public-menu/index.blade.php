@@ -19,60 +19,61 @@
 @endsection
 
 @section('content')
-        <x-ui.card>
-            <x-ui.card-header>
-                <ul class="nav nav-tabs card-header-tabs" id="top-tabs" data-bs-toggle="tabs" role="tablist">
-                    <li class="nav-item">
-                        <a href="#tabs-page" class="nav-link active" data-bs-toggle="tab" role="tab">
-                            <i class="ti ti-file-text me-2"></i> Daftar Halaman
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#tabs-menu" class="nav-link" data-bs-toggle="tab" role="tab">
-                            <i class="ti ti-menu-2 me-2"></i> Struktur Menu
-                        </a>
-                    </li>
-                </ul>
-            </x-ui.card-header>
-            <x-ui.card-body>
-                <div class="tab-content">
-                    {{-- TAB 1: MANAJEMEN HALAMAN (DEFAULT) --}}
-                    <div class="tab-pane active show" id="tabs-page" role="tabpanel">
-                        <x-ui.card-body class="p-0">
-                            <x-ui.datatable
-                                id="pages-table"
-                                route="{{ route('public.cms.page.data') }}"
-                                :columns="[
-                                    ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex', 'title' => 'No', 'orderable' => false, 'searchable' => false, 'class' => 'text-center'],
-                                    ['data' => 'title', 'name' => 'title', 'title' => 'Judul'],
-                                    ['data' => 'slug', 'name' => 'slug', 'title' => 'Slug'],
-                                    ['data' => 'is_published', 'name' => 'is_published', 'title' => 'Status'],
-                                    ['data' => 'updated_at', 'name' => 'updated_at', 'title' => 'Terakhir Update'],
-                                    ['data' => 'action', 'name' => 'action', 'title' => 'Aksi', 'orderable' => false, 'searchable' => false, 'class' => 'text-center'],
-                                ]"
-                            />
-                        </x-ui.card-body>
-                    </div>
-
-                    {{-- TAB 2: MANAJEMEN MENU --}}
-                    <div class="tab-pane" id="tabs-menu" role="tabpanel">
-                        @if($orgUnits->isEmpty())
-                            <x-ui.empty-state
-                                title="Belum ada Menu"
-                                text="Silakan tambahkan menu baru."
-                                icon="ti ti-menu-2"
-                            />
-                        @else
-                            <ul class="list-group list-group-flush sortable-list" id="menu-tree">
-                                @foreach($orgUnits as $menu)
-                                    @include('pages.admin.cms.public-menu.item', ['menu' => $menu])
-                                @endforeach
-                            </ul>
-                        @endif
+    <x-ui.card>
+        <x-ui.card-header>
+            <ul class="nav nav-tabs card-header-tabs" id="top-tabs" data-bs-toggle="tabs" role="tablist">
+                <li class="nav-item">
+                    <a href="#tabs-page" class="nav-link active" data-bs-toggle="tab" role="tab">
+                        <i class="ti ti-file-text me-2"></i> Daftar Halaman
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#tabs-menu" class="nav-link" data-bs-toggle="tab" role="tab">
+                        <i class="ti ti-menu-2 me-2"></i> Struktur Menu
+                    </a>
+                </li>
+            </ul>
+        </x-ui.card-header>
+        <x-ui.card-body>
+            <div class="tab-content">
+                {{-- TAB 1: MANAJEMEN HALAMAN (DEFAULT) --}}
+                <div class="tab-pane active show" id="tabs-page" role="tabpanel">
+                    <div>
+                        <x-ui.datatable-toolbar dataTableId="pages-table" :filter="false" />
+                        <x-ui.datatable
+                            id="pages-table"
+                            route="{{ route('public.cms.page.data') }}"
+                            :columns="[
+                                ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex', 'title' => 'No', 'orderable' => false, 'searchable' => false, 'class' => 'text-center'],
+                                ['data' => 'title', 'name' => 'title', 'title' => 'Judul'],
+                                ['data' => 'slug', 'name' => 'slug', 'title' => 'Slug'],
+                                ['data' => 'is_published', 'name' => 'is_published', 'title' => 'Status'],
+                                ['data' => 'updated_at', 'name' => 'updated_at', 'title' => 'Terakhir Update'],
+                                ['data' => 'action', 'name' => 'action', 'title' => 'Aksi', 'orderable' => false, 'searchable' => false, 'class' => 'text-center'],
+                            ]"
+                        />
                     </div>
                 </div>
-            </x-ui.card-body>
-        </x-ui.card>
+
+                {{-- TAB 2: MANAJEMEN MENU --}}
+                <div class="tab-pane" id="tabs-menu" role="tabpanel">
+                    @if($orgUnits->isEmpty())
+                        <x-ui.empty-state
+                            title="Belum ada Menu"
+                            text="Silakan tambahkan menu baru."
+                            icon="ti ti-menu-2"
+                        />
+                    @else
+                        <ul class="list-group list-group-flush sortable-list" id="menu-tree">
+                            @foreach($orgUnits as $menu)
+                                @include('public::pages.cms.public-menu.item', ['menu' => $menu])
+                            @endforeach
+                        </ul>
+                    @endif
+                </div>
+            </div>
+        </x-ui.card-body>
+    </x-ui.card>
 @endsection
 
 @push('styles')

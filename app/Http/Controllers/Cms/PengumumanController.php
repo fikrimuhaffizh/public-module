@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Public\app\Http\Controllers\Admin;
+namespace Modules\Public\app\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
 use Modules\Public\app\Http\Requests\PengumumanRequest;
@@ -16,12 +16,12 @@ class PengumumanController extends Controller
 
     public function index(Request $request)
     {
-        return view('public::pages.admin.cms.pengumuman.index', ['type' => 'pengumuman']);
+        return view('public::pages.cms.pengumuman.index', ['type' => 'pengumuman']);
     }
 
     public function beritaIndex(Request $request)
     {
-        return view('public::pages.admin.cms.pengumuman.index', ['type' => 'berita']);
+        return view('public::pages.cms.pengumuman.index', ['type' => 'berita']);
     }
 
     public function create($type = 'pengumuman')
@@ -29,7 +29,7 @@ class PengumumanController extends Controller
         $penulisOptions = User::all();
         $pengumuman = new Pengumuman;
 
-        return view('public::pages.admin.cms.pengumuman.create-edit', compact('type', 'penulisOptions', 'pengumuman'));
+        return view('public::pages.cms.pengumuman.create-edit', compact('type', 'penulisOptions', 'pengumuman'));
     }
 
     public function store(PengumumanRequest $request)
@@ -50,7 +50,7 @@ class PengumumanController extends Controller
 
     public function show(Pengumuman $pengumuman)
     {
-        return view('public::pages.admin.cms.pengumuman.show', compact('pengumuman'));
+        return view('public::pages.cms.pengumuman.show', compact('pengumuman'));
     }
 
     public function edit(Pengumuman $pengumuman)
@@ -58,7 +58,7 @@ class PengumumanController extends Controller
         $penulisOptions = User::all();
         $type = $pengumuman->jenis;
 
-        return view('public::pages.admin.cms.pengumuman.create-edit', compact('pengumuman', 'type', 'penulisOptions'));
+        return view('public::pages.cms.pengumuman.create-edit', compact('pengumuman', 'type', 'penulisOptions'));
     }
 
     public function update(PengumumanRequest $request, Pengumuman $pengumuman)

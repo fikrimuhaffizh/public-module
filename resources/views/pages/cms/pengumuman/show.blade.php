@@ -27,7 +27,7 @@
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Created At</div>
-                <div class="datagrid-content">{{ $pengumuman->created_at->format('d M Y H:i') }}</div>
+                <div class="datagrid-content">{{ formatTanggalIndo($pengumuman->created_at) }}</div>
             </div>
         </div>
 
@@ -118,11 +118,11 @@
                             </div>
                             <div class="datagrid-item">
                                 <div class="datagrid-title">Created At</div>
-                                <div class="datagrid-content">{{ $pengumuman->created_at->format('d M Y H:i') }}</div>
+                                <div class="datagrid-content">{{ formatTanggalIndo($pengumuman->created_at) }}</div>
                             </div>
                             <div class="datagrid-item">
                                 <div class="datagrid-title">Last Updated</div>
-                                <div class="datagrid-content">{{ $pengumuman->updated_at->format('d M Y H:i') }}</div>
+                                <div class="datagrid-content">{{ formatTanggalIndo($pengumuman->updated_at) }}</div>
                             </div>
                         </div>
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Public\app\Http\Controllers\Admin;
+namespace Modules\Public\app\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
 use Modules\Public\app\Http\Requests\ReorderRequest;
@@ -18,7 +18,7 @@ class SlideshowController extends Controller
     {
         $slideshows = Slideshow::orderBy('seq')->get();
 
-        return view('public::pages.admin.cms.slideshow.index', compact('slideshows'));
+        return view('public::pages.cms.slideshow.index', compact('slideshows'));
     }
 
     public function reorder(ReorderRequest $request)
@@ -69,7 +69,7 @@ class SlideshowController extends Controller
 
     public function create()
     {
-        return view('public::pages.admin.cms.slideshow.create-edit-ajax', ['slideshow' => new Slideshow]);
+        return view('public::pages.cms.slideshow.create-edit-ajax', ['slideshow' => new Slideshow]);
     }
 
     public function store(SlideshowRequest $request)
@@ -81,7 +81,7 @@ class SlideshowController extends Controller
 
     public function edit(Slideshow $slideshow)
     {
-        return view('public::pages.admin.cms.slideshow.create-edit-ajax', compact('slideshow'));
+        return view('public::pages.cms.slideshow.create-edit-ajax', compact('slideshow'));
     }
 
     public function update(SlideshowRequest $request, Slideshow $slideshow)

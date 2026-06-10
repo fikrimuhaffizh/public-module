@@ -15,7 +15,6 @@
 @endsection
 
 @section('content')
-
     @if($slideshows->isEmpty())
         <x-ui.empty-state
             title="Belum ada Slideshow"
@@ -52,9 +51,8 @@
                             @endif
                         </div>
                         <x-ui.card-body>
-                            <div class="d-flex align-items-center mb-2">
-                                <div class="subheader">Urutan: {{ $slide->seq }}</div>
-                                <div class="ms-auto">
+                            <div class="d-flex justify-content-end mb-2">
+                                <div>
                                     @if($slide->is_active)
                                         <span class="badge bg-success-lt">Aktif</span>
                                     @else
@@ -120,21 +118,15 @@
             order.push(el.getAttribute('data-id'));
         });
 
-        showLoadingMessage('Menyimpan urutan...', 'Harap tunggu');
-
         axios.post('{{ route('public.cms.slideshow.reorder') }}', {
             order: order,
             _token: '{{ csrf_token() }}'
         })
         .then(function (response) {
-            if(response.data.status === 'success'){
-                showSuccessMessage(response.data.message);
-            } else {
-                showErrorMessage('Gagal!', response.data.message);
-            }
+            window.showSuccessMessage(response.data.message || 'Urutan berhasil disimpan.');
         })
         .catch(function (error) {
-            showErrorMessage('Error!', 'Terjadi kesalahan saat menyimpan urutan.');
+            window.showErrorMessage('Gagal', 'Urutan belum tersimpan. Silakan coba geser kembali.');
             console.error(error);
         });
     }

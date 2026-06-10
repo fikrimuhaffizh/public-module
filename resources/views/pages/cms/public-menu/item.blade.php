@@ -43,7 +43,7 @@
 
     <ul class="list-group list-group-flush sortable-list mt-2">
         @foreach($menu->children as $child)
-            @include('pages.admin.cms.public-menu.item', ['menu' => $child])
+            @include('public::pages.cms.public-menu.item', ['menu' => $child])
         @endforeach
     </ul>
 </li>

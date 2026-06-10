@@ -51,7 +51,7 @@
 
                         <div class="mb-3">
                             <label class="form-label">Terakhir Diupdate</label>
-                            <div class="form-control-plaintext">{{ $page->updated_at->format('d M Y H:i') }}</div>
+                            <div class="form-control-plaintext">{{ formatTanggalIndo($page->updated_at) }}</div>
                             <small class="text-muted">Oleh: {{ $page->updated_by ?? '-' }}</small>
                         </div>
                     </x-ui.card-body>

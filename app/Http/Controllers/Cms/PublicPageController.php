@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Public\app\Http\Controllers\Admin;
+namespace Modules\Public\app\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
 use Modules\Public\app\Http\Requests\PageRequest;
@@ -15,7 +15,7 @@ class PublicPageController extends Controller
 
     public function index(Request $request)
     {
-        return view('public::pages.admin.cms.public-page.index');
+        return view('public::pages.cms.public-page.index');
     }
 
     public function data(Request $request)
@@ -30,7 +30,7 @@ class PublicPageController extends Controller
                     : '<span class="badge bg-orange-lt">Draft</span>';
             })
             ->editColumn('updated_at', function ($row) {
-                return $row->updated_at->format('d M Y H:i');
+                return formatTanggalIndo($row->updated_at);
             })
             ->addColumn('action', function ($row) {
                 $viewBtn = '<a href="'.route('public.cms.page.show', $row->encrypted_page_id).'" class="btn btn-icon btn-ghost-info" title="Lihat"><i class="ti ti-eye"></i></a>';
@@ -45,12 +45,12 @@ class PublicPageController extends Controller
 
     public function show(Page $page)
     {
-        return view('public::pages.admin.cms.public-page.show', compact('page'));
+        return view('public::pages.cms.public-page.show', compact('page'));
     }
 
     public function create()
     {
-        return view('public::pages.admin.cms.public-page.create-edit', ['page' => new Page]);
+        return view('public::pages.cms.public-page.create-edit', ['page' => new Page]);
     }
 
     public function store(PageRequest $request)
@@ -62,7 +62,7 @@ class PublicPageController extends Controller
 
     public function edit(Page $page)
     {
-        return view('public::pages.admin.cms.public-page.create-edit', compact('page'));
+        return view('public::pages.cms.public-page.create-edit', compact('page'));
     }
 
     public function update(PageRequest $request, Page $page)

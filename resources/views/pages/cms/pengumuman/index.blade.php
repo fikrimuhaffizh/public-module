@@ -1,7 +1,7 @@
 @extends('layouts.tabler.app')
 
 @section('header')
-<x-ui.page-header :title="ucfirst($type)" pretitle="Management">
+<x-ui.page-header :title="ucfirst($type)" pretitle="CMS">
     <x-slot:actions>
         <x-ui.button type="create" :href="route('public.cms.'.$type . '.create', ['type' => $type])" :text="'Tambah ' . ucfirst($type)" />
     </x-slot:actions>
@@ -11,14 +11,7 @@
 @section('content')
     <x-ui.card class="overflow-hidden">
         <x-ui.card-header>
-            <div class="d-flex flex-wrap gap-2">
-                <div>
-                    <x-ui.datatable-page-length :dataTableId="$type . '-table'" />
-                </div>
-                <div>
-                    <x-ui.datatable-search :dataTableId="$type . '-table'" />
-                </div>
-            </div>
+            <x-ui.datatable-toolbar :dataTableId="$type . '-table'" :filter="false" />
         </x-ui.card-header>
         <x-ui.card-body class="p-0">
             @php
@@ -39,7 +32,7 @@
                         'searchable' => false
                     ],
                     [
-                        'title' => 'Title',
+                        'title' => 'Judul',
                         'data' => 'judul',
                         'name' => 'judul',
                         'orderable' => true,
@@ -53,7 +46,7 @@
                         'searchable' => false
                     ],
                     [
-                        'title' => 'Author',
+                        'title' => 'Penulis',
                         'data' => 'author',
                         'name' => 'penulis.name',
                     ],

@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Public\app\Http\Controllers\Admin;
+namespace Modules\Public\app\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
 use Modules\Public\app\Models\Pengumuman;
@@ -34,6 +34,6 @@ class DashboardController extends Controller
             ->limit(5)
             ->get();
 
-        return view('public::pages.admin.cms.dashboard', compact('slideshows', 'recentNews', 'recentAnnouncements'));
+        return view('public::pages.cms.dashboard', compact('slideshows', 'recentNews', 'recentAnnouncements'));
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Public\app\Http\Controllers\Admin;
+namespace Modules\Public\app\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
 use Modules\Public\app\Http\Requests\PublicMenuRequest;
@@ -22,7 +22,7 @@ class PublicMenuController extends Controller
 
         $pages = Page::where('is_published', true)->orderBy('title')->get();
 
-        return view('public::pages.admin.cms.public-menu.index', compact('orgUnits', 'pages'));
+        return view('public::pages.cms.public-menu.index', compact('orgUnits', 'pages'));
     }
 
     public function create()
@@ -30,7 +30,7 @@ class PublicMenuController extends Controller
         $pages = Page::where('is_published', true)->orderBy('title')->get();
         $parents = Menu::orderBy('title')->get();
 
-        return view('public::pages.admin.cms.public-menu.create-edit-ajax', [
+        return view('public::pages.cms.public-menu.create-edit-ajax', [
             'menu' => new Menu,
             'pages' => $pages,
             'parents' => $parents,
@@ -49,7 +49,7 @@ class PublicMenuController extends Controller
         $pages = Page::where('is_published', true)->orderBy('title')->get();
         $parents = Menu::where('menu_id', '!=', $publicMenu->menu_id)->orderBy('title')->get();
 
-        return view('public::pages.admin.cms.public-menu.create-edit-ajax', [
+        return view('public::pages.cms.public-menu.create-edit-ajax', [
             'menu' => $publicMenu,
             'pages' => $pages,
             'parents' => $parents,

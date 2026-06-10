@@ -1,11 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Public\app\Http\Controllers\Admin\FAQController;
-use Modules\Public\app\Http\Controllers\Admin\PengumumanController;
-use Modules\Public\app\Http\Controllers\Admin\PublicMenuController;
-use Modules\Public\app\Http\Controllers\Admin\PublicPageController;
-use Modules\Public\app\Http\Controllers\Admin\SlideshowController;
+use Modules\Public\app\Http\Controllers\Cms\FAQController;
+use Modules\Public\app\Http\Controllers\Cms\PengumumanController;
+use Modules\Public\app\Http\Controllers\Cms\PublicMenuController;
+use Modules\Public\app\Http\Controllers\Cms\PublicPageController;
+use Modules\Public\app\Http\Controllers\Cms\SlideshowController;
 use Modules\Public\app\Http\Controllers\Web\PublicController;
 
 /*
@@ -60,7 +60,7 @@ Route::middleware(['auth', 'check.expired'])->prefix('admin/cms')->name('public.
 // Web Area (Landing Page)
 Route::controller(PublicController::class)->name('public.')->group(function () {
     Route::get('/', 'home')->name('index');
-    Route::get('/preview', 'preview')->name('preview');
+    Route::get('/public/preview', 'preview')->name('preview');
     Route::get('/page/{page:slug}', 'showPage')->name('page.show');
     Route::get('/announcements', 'showAllNews')->name('announcements.index');
     Route::get('/news/{pengumuman}', 'showNews')->name('news.show');

@@ -73,7 +73,7 @@
                                         <a href="{{ route('public.cms.pengumuman.show', $announcement->pengumuman_id) }}" class="text-reset text-decoration-none">{{ $announcement->judul }}</a>
                                     </div>
                                     <div class="text-muted small mb-1">
-                                        <i class="ti ti-clock me-1"></i> {{ $announcement->created_at->format('d M Y') }}
+                                        <i class="ti ti-clock me-1"></i> {{ formatTanggalIndo($announcement->created_at) }}
                                     </div>
                                     <div class="text-secondary small lh-base" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
                                         {{ strip_tags($announcement->isi) }}
