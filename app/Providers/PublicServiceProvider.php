@@ -25,7 +25,7 @@ class PublicServiceProvider extends BaseModuleServiceProvider
                 'id'            => 'navbar-cms',
                 'icon'          => 'world-www',
                 'active_routes' => ['public.cms.*'],
-                'permission'    => 'public.cms.view',
+                'permission'    => null,
                 'children'      => [
                     [
                         'priority'      => 10,
