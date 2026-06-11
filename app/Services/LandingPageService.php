@@ -5,6 +5,7 @@ namespace Modules\Public\app\Services;
 use App\Models\Sys\Tenant;
 use App\Services\Sys\TenantConfigService;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Modules\Public\app\Models\FAQ;
 use Modules\Public\app\Models\Menu;
@@ -123,9 +124,15 @@ class LandingPageService
             ->map(fn (Menu $menu) => [
                 'id' => $menu->getKey(),
                 'title' => $menu->title,
-                'url' => $menu->type === 'page' && $menu->page
-                    ? route('public.page.show', $menu->page->slug)
-                    : ($menu->url ?: '#'),
+                'url' => match ($menu->type) {
+                    'page' => $menu->page
+                        ? route('public.page.show', ['page' => $menu->page->slug])
+                        : '#',
+                    'route' => $menu->url && Route::has($menu->url)
+                        ? route($menu->url)
+                        : '#',
+                    default => $menu->url ?: '#',
+                },
                 'target' => $menu->target,
             ])->push([
                 'id' => 'contact',

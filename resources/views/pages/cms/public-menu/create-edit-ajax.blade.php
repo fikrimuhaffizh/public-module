@@ -39,7 +39,7 @@
         <x-ui.form-select name="page_id" label="Pilih Halaman" required="true">
             <option value="">-- Pilih Halaman --</option>
             @foreach($pages as $page)
-                <option value="{{ $page->encrypted_page_id }}" {{ $menu->page_id == $page->page_id ? 'selected' : '' }}>
+                <option value="{{ $page->encrypted_page_id }}" {{ $menu->page_id === $page->page_id ? 'selected' : '' }}>
                     {{ $page->title }}
                 </option>
             @endforeach

@@ -38,6 +38,22 @@ class Page extends Model implements HasMedia
         'deleted_by',
     ];
 
+    public function resolveRouteBinding($value, $field = null)
+    {
+        if ($field === 'slug') {
+            return $this->where('slug', $value)->firstOrFail();
+        }
+
+        return $this->resolveHashidRouteBinding($value);
+    }
+
+    private function resolveHashidRouteBinding($value)
+    {
+        $decryptedId = decryptId($value, false);
+
+        return $this->where($this->getRouteKeyName(), $decryptedId ?: decryptId($value))->firstOrFail();
+    }
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('main_image')
