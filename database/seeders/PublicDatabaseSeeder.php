@@ -11,5 +11,6 @@ class PublicDatabaseSeeder extends Seeder
         $this->call(RolePermissionPublicSeeder::class);
 
         $this->call(DemoPublicSeeder::class);
+        $this->call(LandingContentSeeder::class);
     }
 }

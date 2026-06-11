@@ -64,6 +64,46 @@ class RolePermissionPublicSeeder extends Seeder
             ['name' => 'public.cms.menu.create', 'category' => 'CMS / Landing Page', 'sub_category' => 'Menu Navigasi', 'description' => 'Menambah menu navigasi baru'],
             ['name' => 'public.cms.menu.update', 'category' => 'CMS / Landing Page', 'sub_category' => 'Menu Navigasi', 'description' => 'Mengubah data menu navigasi'],
             ['name' => 'public.cms.menu.delete', 'category' => 'CMS / Landing Page', 'sub_category' => 'Menu Navigasi', 'description' => 'Menghapus menu navigasi'],
+
+            // Pengaturan Landing
+            ['name' => 'public.cms.settings.view', 'category' => 'CMS / Landing Page', 'sub_category' => 'Pengaturan Landing', 'description' => 'Melihat pengaturan landing page'],
+            ['name' => 'public.cms.settings.update', 'category' => 'CMS / Landing Page', 'sub_category' => 'Pengaturan Landing', 'description' => 'Mengubah pengaturan landing page'],
+
+            // Hero Section
+            ['name' => 'public.cms.hero.view', 'category' => 'CMS / Landing Page', 'sub_category' => 'Hero Section', 'description' => 'Melihat daftar hero section'],
+            ['name' => 'public.cms.hero.create', 'category' => 'CMS / Landing Page', 'sub_category' => 'Hero Section', 'description' => 'Menambah hero section'],
+            ['name' => 'public.cms.hero.update', 'category' => 'CMS / Landing Page', 'sub_category' => 'Hero Section', 'description' => 'Mengubah hero section'],
+            ['name' => 'public.cms.hero.delete', 'category' => 'CMS / Landing Page', 'sub_category' => 'Hero Section', 'description' => 'Menghapus hero section'],
+
+            // Fitur
+            ['name' => 'public.cms.feature.view', 'category' => 'CMS / Landing Page', 'sub_category' => 'Fitur', 'description' => 'Melihat daftar fitur'],
+            ['name' => 'public.cms.feature.create', 'category' => 'CMS / Landing Page', 'sub_category' => 'Fitur', 'description' => 'Menambah fitur'],
+            ['name' => 'public.cms.feature.update', 'category' => 'CMS / Landing Page', 'sub_category' => 'Fitur', 'description' => 'Mengubah dan mengurutkan fitur'],
+            ['name' => 'public.cms.feature.delete', 'category' => 'CMS / Landing Page', 'sub_category' => 'Fitur', 'description' => 'Menghapus fitur'],
+
+            // Produk
+            ['name' => 'public.cms.product.view', 'category' => 'CMS / Landing Page', 'sub_category' => 'Produk / Modul', 'description' => 'Melihat daftar produk/modul'],
+            ['name' => 'public.cms.product.create', 'category' => 'CMS / Landing Page', 'sub_category' => 'Produk / Modul', 'description' => 'Menambah produk/modul'],
+            ['name' => 'public.cms.product.update', 'category' => 'CMS / Landing Page', 'sub_category' => 'Produk / Modul', 'description' => 'Mengubah dan mengurutkan produk/modul'],
+            ['name' => 'public.cms.product.delete', 'category' => 'CMS / Landing Page', 'sub_category' => 'Produk / Modul', 'description' => 'Menghapus produk/modul'],
+
+            // Statistik
+            ['name' => 'public.cms.statistic.view', 'category' => 'CMS / Landing Page', 'sub_category' => 'Statistik', 'description' => 'Melihat daftar statistik'],
+            ['name' => 'public.cms.statistic.create', 'category' => 'CMS / Landing Page', 'sub_category' => 'Statistik', 'description' => 'Menambah statistik'],
+            ['name' => 'public.cms.statistic.update', 'category' => 'CMS / Landing Page', 'sub_category' => 'Statistik', 'description' => 'Mengubah dan mengurutkan statistik'],
+            ['name' => 'public.cms.statistic.delete', 'category' => 'CMS / Landing Page', 'sub_category' => 'Statistik', 'description' => 'Menghapus statistik'],
+
+            // Klien
+            ['name' => 'public.cms.client.view', 'category' => 'CMS / Landing Page', 'sub_category' => 'Klien', 'description' => 'Melihat daftar klien'],
+            ['name' => 'public.cms.client.create', 'category' => 'CMS / Landing Page', 'sub_category' => 'Klien', 'description' => 'Menambah klien'],
+            ['name' => 'public.cms.client.update', 'category' => 'CMS / Landing Page', 'sub_category' => 'Klien', 'description' => 'Mengubah dan mengurutkan klien'],
+            ['name' => 'public.cms.client.delete', 'category' => 'CMS / Landing Page', 'sub_category' => 'Klien', 'description' => 'Menghapus klien'],
+
+            // CTA
+            ['name' => 'public.cms.cta.view', 'category' => 'CMS / Landing Page', 'sub_category' => 'Call To Action', 'description' => 'Melihat daftar CTA'],
+            ['name' => 'public.cms.cta.create', 'category' => 'CMS / Landing Page', 'sub_category' => 'Call To Action', 'description' => 'Menambah CTA'],
+            ['name' => 'public.cms.cta.update', 'category' => 'CMS / Landing Page', 'sub_category' => 'Call To Action', 'description' => 'Mengubah CTA'],
+            ['name' => 'public.cms.cta.delete', 'category' => 'CMS / Landing Page', 'sub_category' => 'Call To Action', 'description' => 'Menghapus CTA'],
         ];
 
         foreach ($permissionData as $permission) {

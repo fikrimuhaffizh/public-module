@@ -9,15 +9,22 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Modules\Public\app\Models\FAQ;
 use Modules\Public\app\Models\Menu;
+use Modules\Public\app\Models\Client;
+use Modules\Public\app\Models\Cta;
+use Modules\Public\app\Models\Feature;
+use Modules\Public\app\Models\HeroSection;
+use Modules\Public\app\Models\LandingPageSetting;
 use Modules\Public\app\Models\Page;
 use Modules\Public\app\Models\Partner;
 use Modules\Public\app\Models\Pengumuman;
+use Modules\Public\app\Models\Product;
 use Modules\Public\app\Models\Slideshow;
+use Modules\Public\app\Models\Statistic;
 use Modules\Public\app\Models\Testimonial;
 
 class LandingPageService
 {
-    public const TEMPLATES = ['institutional', 'modern', 'editorial', 'corporate'];
+    public const TEMPLATES = ['institutional', 'modern', 'editorial', 'corporate', 'launch'];
 
     public function __construct(private TenantConfigService $tenantConfig) {}
 
@@ -45,19 +52,34 @@ class LandingPageService
     public function shared(string $template, bool $preview = false): array
     {
         $tenant = Tenant::find(sys_tenant_id());
+        $settings = LandingPageSetting::first();
 
         return [
             'template' => $template,
             'preview' => $preview,
             'site' => [
-                'name' => $tenant?->name ?: config('app.name'),
-                'tagline' => $tenant?->tagline ?: 'Informasi, layanan, dan inovasi kampus dalam satu ekosistem digital.',
-                'address' => $tenant?->address,
-                'email' => $tenant?->email,
-                'phone' => $tenant?->phone,
+                'name' => $settings?->site_title ?: $tenant?->name ?: config('app.name'),
+                'tagline' => $settings?->site_description ?: $tenant?->tagline ?: 'Informasi, layanan, dan inovasi kampus dalam satu ekosistem digital.',
+                'address' => $settings?->address ?: $tenant?->address,
+                'email' => $settings?->contact_email ?: $tenant?->email,
+                'phone' => $settings?->contact_phone ?: $tenant?->phone,
+                'whatsapp' => $settings?->whatsapp,
+                'logo' => $settings?->logo_url,
+                'favicon' => $settings?->favicon_url,
                 'homeUrl' => route('public.index'),
                 'contactUrl' => route('public.contact'),
                 'loginUrl' => route('login'),
+                'social' => [
+                    'facebook' => $settings?->facebook_url,
+                    'instagram' => $settings?->instagram_url,
+                    'linkedin' => $settings?->linkedin_url,
+                    'youtube' => $settings?->youtube_url,
+                ],
+            ],
+            'seo' => [
+                'title' => $settings?->meta_title,
+                'description' => $settings?->meta_description,
+                'keywords' => $settings?->meta_keywords,
             ],
             'menus' => $this->menus(),
         ];
@@ -103,6 +125,63 @@ class LandingPageService
                 ])->values(),
             'pages' => Page::where('is_published', true)->orderBy('title')->get()
                 ->map(fn (Page $page) => $this->pageSummary($page))->values(),
+            'landing' => $this->landingContent(),
+        ];
+    }
+
+    public function landingContent(): array
+    {
+        $hero = HeroSection::where('is_active', true)->latest('updated_at')->first();
+        $cta = Cta::where('is_active', true)->latest('updated_at')->first();
+
+        return [
+            'hero' => $hero ? [
+                'title' => $hero->title,
+                'subtitle' => $hero->subtitle,
+                'description' => $hero->description,
+                'image' => $hero->image_url,
+                'buttonPrimary' => ['text' => $hero->button_primary_text, 'link' => $hero->button_primary_link],
+                'buttonSecondary' => ['text' => $hero->button_secondary_text, 'link' => $hero->button_secondary_link],
+            ] : null,
+            'features' => Feature::where('is_active', true)->orderBy('sort_order')->get()
+                ->map(fn (Feature $item) => [
+                    'id' => $item->getKey(),
+                    'title' => $item->title,
+                    'description' => $item->description,
+                    'icon' => $item->icon,
+                    'image' => $item->image_url,
+                ])->values(),
+            'products' => Product::where('is_active', true)->orderBy('sort_order')->get()
+                ->map(fn (Product $item) => [
+                    'id' => $item->getKey(),
+                    'name' => $item->name,
+                    'slug' => $item->slug,
+                    'shortDescription' => $item->short_description,
+                    'description' => $item->description,
+                    'image' => $item->image_url,
+                    'demoUrl' => $item->demo_url,
+                ])->values(),
+            'statistics' => Statistic::where('is_active', true)->orderBy('sort_order')->get()
+                ->map(fn (Statistic $item) => [
+                    'id' => $item->getKey(),
+                    'label' => $item->label,
+                    'value' => $item->value,
+                    'icon' => $item->icon,
+                ])->values(),
+            'clients' => Client::where('is_active', true)->orderBy('sort_order')->get()
+                ->map(fn (Client $item) => [
+                    'id' => $item->getKey(),
+                    'name' => $item->name,
+                    'logo' => $item->logo_url,
+                    'website' => $item->website,
+                ])->values(),
+            'cta' => $cta ? [
+                'title' => $cta->title,
+                'description' => $cta->description,
+                'buttonText' => $cta->button_text,
+                'buttonLink' => $cta->button_link,
+                'backgroundImage' => $cta->background_image_url,
+            ] : null,
         ];
     }
 

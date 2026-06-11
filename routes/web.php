@@ -6,8 +6,15 @@ use Modules\Public\app\Http\Controllers\Cms\PengumumanController;
 use Modules\Public\app\Http\Controllers\Cms\PublicMenuController;
 use Modules\Public\app\Http\Controllers\Cms\PublicPageController;
 use Modules\Public\app\Http\Controllers\Cms\SlideshowController;
+use Modules\Public\app\Http\Controllers\Cms\ClientController;
+use Modules\Public\app\Http\Controllers\Cms\CtaController;
+use Modules\Public\app\Http\Controllers\Cms\FeatureController;
+use Modules\Public\app\Http\Controllers\Cms\HeroSectionController;
+use Modules\Public\app\Http\Controllers\Cms\LandingPageSettingController;
 use Modules\Public\app\Http\Controllers\Cms\LandingSettingsController;
 use Modules\Public\app\Http\Controllers\Cms\PartnerController;
+use Modules\Public\app\Http\Controllers\Cms\ProductController;
+use Modules\Public\app\Http\Controllers\Cms\StatisticController;
 use Modules\Public\app\Http\Controllers\Cms\TestimonialController;
 use Modules\Public\app\Http\Controllers\Web\PublicController;
 use App\Http\Middleware\HandleInertiaRequests;
@@ -22,6 +29,20 @@ use App\Http\Middleware\HandleInertiaRequests;
 Route::middleware(['auth', 'check.expired'])->prefix('admin/cms')->name('public.cms.')->group(function () {
     Route::get('landing-template', [LandingSettingsController::class, 'edit'])->name('landing.edit');
     Route::put('landing-template', [LandingSettingsController::class, 'update'])->name('landing.update');
+
+    Route::get('landing-settings', [LandingPageSettingController::class, 'edit'])->name('settings.edit');
+    Route::put('landing-settings', [LandingPageSettingController::class, 'update'])->name('settings.update');
+
+    Route::resource('hero', HeroSectionController::class)->except('show');
+    Route::post('feature/reorder', [FeatureController::class, 'reorder'])->name('feature.reorder');
+    Route::resource('feature', FeatureController::class)->except('show');
+    Route::post('product/reorder', [ProductController::class, 'reorder'])->name('product.reorder');
+    Route::resource('product', ProductController::class)->except('show');
+    Route::post('statistic/reorder', [StatisticController::class, 'reorder'])->name('statistic.reorder');
+    Route::resource('statistic', StatisticController::class)->except('show');
+    Route::post('client/reorder', [ClientController::class, 'reorder'])->name('client.reorder');
+    Route::resource('client', ClientController::class)->except('show');
+    Route::resource('cta', CtaController::class)->except('show');
 
     // FAQ
     Route::post('faq/reorder', [FAQController::class, 'reorder'])->name('faq.reorder');

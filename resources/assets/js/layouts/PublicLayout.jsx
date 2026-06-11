@@ -4,15 +4,23 @@ import { GraduationCap, Menu, X } from 'lucide-react';
 import { Badge } from '@public/components/ui/badge';
 import { Button } from '@public/components/ui/button';
 
-export function SiteLayout({ children, title, site, menus, template, preview = false }) {
+export function SiteLayout({ children, title, site, menus, template, preview = false, seo = {} }) {
     const [open, setOpen] = React.useState(false);
+    const pageTitle = seo?.title || (title ? `${title} - ${site.name}` : site.name);
 
     return <div className={`theme-${template}`}>
-        <Head title={title ? `${title} - ${site.name}` : site.name} />
+        <Head title={pageTitle}>
+            {seo?.description && <meta head-key="description" name="description" content={seo.description} />}
+            {seo?.keywords && <meta head-key="keywords" name="keywords" content={seo.keywords} />}
+            {site.favicon && <link rel="icon" href={site.favicon} />}
+        </Head>
         <header className="site-header">
             <div className="shell nav-wrap">
                 <Link href={site.homeUrl} className="brand">
-                    <span className="brand-mark"><GraduationCap size={24} /></span><span>{site.name}</span>
+                    {site.logo
+                        ? <img src={site.logo} alt={site.name} className="brand-logo" />
+                        : <span className="brand-mark"><GraduationCap size={24} /></span>}
+                    <span>{site.name}</span>
                 </Link>
                 <nav className="desktop-nav">
                     {menus.map(menu => menu.target === '_blank'
@@ -42,6 +50,7 @@ export function TemplatePicker({ template }) {
         modern: 'Modern',
         editorial: 'Editorial',
         corporate: 'Corporate',
+        launch: 'Launch UI',
     };
     return <div className="template-picker"><span>Pratinjau:</span>{Object.entries(labels).map(([key, label]) =>
         <a key={key} className={template === key ? 'active' : ''} href={`?template=${key}`}>{label}</a>)}</div>;

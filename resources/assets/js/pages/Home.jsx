@@ -5,12 +5,14 @@ import InstitutionalTemplate from '@public/templates/InstitutionalTemplate';
 import ModernTemplate from '@public/templates/ModernTemplate';
 import EditorialTemplate from '@public/templates/EditorialTemplate';
 import CorporateTemplate from '@public/templates/CorporateTemplate';
+import LaunchTemplate from '@public/templates/LaunchTemplate';
 
 const templates = {
     institutional: InstitutionalTemplate,
     modern: ModernTemplate,
     editorial: EditorialTemplate,
     corporate: CorporateTemplate,
+    launch: LaunchTemplate,
 };
 
 export default function Home() {
