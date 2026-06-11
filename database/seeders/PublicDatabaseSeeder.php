@@ -10,11 +10,6 @@ class PublicDatabaseSeeder extends Seeder
     {
         $this->call(RolePermissionPublicSeeder::class);
 
-        if (config('app.env') !== 'production') {
-            $this->call([
-                SlideshowSeeder::class,
-                FAQSeeder::class,
-            ]);
-        }
+        $this->call(DemoPublicSeeder::class);
     }
 }
