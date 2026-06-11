@@ -21,6 +21,7 @@ class RolePermissionPublicSeeder extends Seeder
         $permissionData = [
             // CMS
             ['name' => 'public.cms.view', 'category' => 'CMS / Landing Page', 'sub_category' => 'Dashboard', 'description' => 'Melihat menu CMS / Landing Page'],
+            ['name' => 'public.cms.update', 'category' => 'CMS / Landing Page', 'sub_category' => 'Pengaturan Landing', 'description' => 'Mengubah template landing page'],
 
             // Slideshow
             ['name' => 'public.cms.slideshow.view', 'category' => 'CMS / Landing Page', 'sub_category' => 'Slideshow', 'description' => 'Melihat daftar slideshow'],

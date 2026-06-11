@@ -10,6 +10,13 @@ class PublicServiceProvider extends BaseModuleServiceProvider
 
     protected string $nameLower = 'public';
 
+    public function register(): void
+    {
+        parent::register();
+
+        $this->mergeConfigFrom(module_path($this->name, 'config/config.php'), 'public');
+    }
+
     public function boot(): void
     {
         parent::boot();
@@ -27,6 +34,14 @@ class PublicServiceProvider extends BaseModuleServiceProvider
                 'active_routes' => ['public.cms.*'],
                 'permission'    => null,
                 'children'      => [
+                    [
+                        'priority'      => 5,
+                        'title'         => 'Template Landing',
+                        'route'         => 'public.cms.landing.edit',
+                        'active_routes' => ['public.cms.landing.*'],
+                        'icon'          => 'layout',
+                        'permission'    => 'public.cms.update',
+                    ],
                     [
                         'priority'      => 10,
                         'title'         => 'Slideshow',

@@ -3,82 +3,73 @@
 namespace Modules\Public\app\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use Modules\Public\app\Models\FAQ;
-use Modules\Public\app\Models\Pengumuman;
-use Modules\Public\app\Models\Slideshow;
-use Modules\Public\app\Models\Menu;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 use Modules\Public\app\Models\Page;
+use Modules\Public\app\Models\Pengumuman;
+use Modules\Public\app\Services\LandingPageService;
 
 class PublicController extends Controller
 {
-    public function home()
+    public function __construct(private LandingPageService $landing) {}
+
+    public function home(): Response
     {
-        $recentNews = Pengumuman::where('is_published', true)
-            ->where('jenis', 'berita')
-            ->orderBy('created_at', 'desc')
-            ->limit(4)
-            ->get();
+        $template = $this->landing->template();
 
-        $slideshows = Slideshow::where('is_active', true)
-            ->orderBy('seq', 'asc')
-            ->get();
-
-        $faqs = FAQ::where('is_active', true)
-            ->orderBy('seq', 'asc')
-            ->get()
-            ->groupBy('category');
-
-        return view('public::pages.web.index', compact('recentNews', 'slideshows', 'faqs'));
+        return Inertia::render('Home', $this->landing->home($template));
     }
 
-    public function preview()
+    public function preview(Request $request): Response
     {
-        $slideshows = Slideshow::where('is_active', true)->orderBy('seq')->get();
-        $announcements = Pengumuman::where('is_published', true)
-            ->orderByDesc('published_at')
-            ->orderByDesc('created_at')
-            ->limit(6)
-            ->get();
-        $faqs = FAQ::where('is_active', true)->orderBy('seq')->get()->groupBy('category');
-        $menus = Menu::with(['page', 'children.page'])
-            ->whereNull('parent_id')
-            ->where('position', 'header')
-            ->where('is_active', true)
-            ->orderBy('sequence')
-            ->get();
-        $pages = Page::where('is_published', true)->orderBy('title')->get();
+        $template = $this->landing->template($request->string('template')->lower()->value());
 
-        return view('public::pages.web.preview', compact(
-            'slideshows',
-            'announcements',
-            'faqs',
-            'menus',
-            'pages'
-        ));
+        return Inertia::render('Home', $this->landing->home($template, true));
     }
 
-    public function showPage(Page $page)
+    public function contact(): Response
+    {
+        $template = $this->landing->template();
+
+        return Inertia::render('Contact', $this->landing->shared($template));
+    }
+
+    public function sendContact(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:100'],
+            'email' => ['required', 'email', 'max:150'],
+            'subject' => ['required', 'string', 'max:150'],
+            'message' => ['required', 'string', 'max:3000'],
+        ]);
+
+        logActivity('public_contact', 'Pesan kontak diterima dari '.$request->string('email'));
+
+        return back()->with('success', 'Pesan Anda berhasil diterima. Tim kami akan segera menghubungi Anda.');
+    }
+
+    public function showPage(Page $page): Response
     {
         abort_unless($page->is_published, 404);
+        $template = $this->landing->template();
 
-        return view('public::pages.web.page', compact('page'));
+        return Inertia::render('ContentPage', $this->landing->page($page, $template));
     }
 
-    public function showNews(Pengumuman $pengumuman)
+    public function showNews(Pengumuman $pengumuman): Response
     {
-        if (!$pengumuman->is_published) {
-            abort(404);
-        }
+        abort_unless($pengumuman->is_published, 404);
+        $template = $this->landing->template();
 
-        return view('public::pages.web.news.show', compact('pengumuman'));
+        return Inertia::render('NewsDetail', $this->landing->news($pengumuman, $template));
     }
 
-    public function showAllNews()
+    public function showAllNews(): Response
     {
-        $allNews = Pengumuman::where('is_published', true)
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
+        $template = $this->landing->template();
 
-        return view('public::pages.web.news.index', compact('allNews'));
+        return Inertia::render('NewsIndex', $this->landing->newsIndex($template));
     }
 }

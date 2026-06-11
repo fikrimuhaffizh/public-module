@@ -3,9 +3,7 @@
 @section('header')
 <x-ui.page-header :title="$page->title" pretitle="Detail Halaman">
     <x-slot:actions>
-        <a href="{{ route('public.cms.page.edit', $page->encrypted_page_id) }}" class="btn btn-primary d-none d-sm-inline-block">
-            <i class="ti ti-edit"></i> Edit Halaman
-        </a>
+        <x-ui.button type="edit" :href="route('public.cms.page.edit', $page->encrypted_page_id)" />
         <x-ui.button type="back" />
     </x-slot:actions>
 </x-ui.page-header>

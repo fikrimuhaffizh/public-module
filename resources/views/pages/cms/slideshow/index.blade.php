@@ -71,24 +71,20 @@
                             <span class="cursor-move text-secondary me-auto" title="Drag to reorder">
                                 <i class="ti ti-grid-dots fs-2"></i>
                             </span>
-                            <div class="btn-list">
-                                <x-ui.button 
-                                    type="button" 
-                                    class="btn-icon btn-ghost-primary ajax-modal-btn" 
-                                    icon="ti ti-pencil" 
-                                    data-url="{{ route('public.cms.slideshow.edit', $slide->encrypted_slideshow_id) }}"
+                            <x-ui.dropdown class="btn btn-action text-secondary">
+                                <x-ui.dropdown-item
+                                    type="edit"
+                                    href="javascript:void(0)"
+                                    :url="route('public.cms.slideshow.edit', $slide->encrypted_slideshow_id)"
                                     data-modal-title="Edit Slideshow"
-                                    title="Edit"
                                 />
-                                <x-ui.button 
-                                    type="button" 
-                                    class="btn-icon btn-ghost-danger ajax-delete" 
-                                    icon="ti ti-trash" 
-                                    data-url="{{ route('public.cms.slideshow.destroy', $slide->encrypted_slideshow_id) }}"
-                                    data-title="Hapus Slideshow?"
-                                    title="Delete"
+                                <x-ui.dropdown-item
+                                    type="delete"
+                                    href="javascript:void(0)"
+                                    :url="route('public.cms.slideshow.destroy', $slide->encrypted_slideshow_id)"
+                                    title="Hapus Slideshow?"
                                 />
-                            </div>
+                            </x-ui.dropdown>
                         </x-ui.card-footer>
                     </x-ui.card>
                 </div>

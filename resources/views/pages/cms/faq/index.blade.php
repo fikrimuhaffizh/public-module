@@ -58,24 +58,20 @@
                                                     @endif
                                                 </div>
                                             </div>
-                                            <div class="btn-list flex-nowrap ms-2">
-                                                <x-ui.button 
-                                                    type="button" 
-                                                    class="btn-icon btn-ghost-primary ajax-modal-btn" 
-                                                    icon="ti ti-pencil" 
-                                                    data-url="{{ route('public.cms.faq.edit', $faq->encrypted_faq_id) }}"
+                                            <x-ui.dropdown class="btn btn-action text-secondary ms-2">
+                                                <x-ui.dropdown-item
+                                                    type="edit"
+                                                    href="javascript:void(0)"
+                                                    :url="route('public.cms.faq.edit', $faq->encrypted_faq_id)"
                                                     data-modal-title="Edit FAQ"
-                                                    title="Edit"
                                                 />
-                                                <x-ui.button 
-                                                    type="button" 
-                                                    class="btn-icon btn-ghost-danger ajax-delete" 
-                                                    icon="ti ti-trash" 
-                                                    data-url="{{ route('public.cms.faq.destroy', $faq->encrypted_faq_id) }}"
-                                                    data-title="Hapus FAQ?"
-                                                    title="Delete"
+                                                <x-ui.dropdown-item
+                                                    type="delete"
+                                                    href="javascript:void(0)"
+                                                    :url="route('public.cms.faq.destroy', $faq->encrypted_faq_id)"
+                                                    title="Hapus FAQ?"
                                                 />
-                                            </div>
+                                            </x-ui.dropdown>
                                         </div>
                                     @endforeach
                                 </div>

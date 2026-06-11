@@ -6,7 +6,9 @@ use Modules\Public\app\Http\Controllers\Cms\PengumumanController;
 use Modules\Public\app\Http\Controllers\Cms\PublicMenuController;
 use Modules\Public\app\Http\Controllers\Cms\PublicPageController;
 use Modules\Public\app\Http\Controllers\Cms\SlideshowController;
+use Modules\Public\app\Http\Controllers\Cms\LandingSettingsController;
 use Modules\Public\app\Http\Controllers\Web\PublicController;
+use App\Http\Middleware\HandleInertiaRequests;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +18,8 @@ use Modules\Public\app\Http\Controllers\Web\PublicController;
 
 // Admin Area (CMS)
 Route::middleware(['auth', 'check.expired'])->prefix('admin/cms')->name('public.cms.')->group(function () {
+    Route::get('landing-template', [LandingSettingsController::class, 'edit'])->name('landing.edit');
+    Route::put('landing-template', [LandingSettingsController::class, 'update'])->name('landing.update');
 
     // FAQ
     Route::post('faq/reorder', [FAQController::class, 'reorder'])->name('faq.reorder');
@@ -58,9 +62,11 @@ Route::middleware(['auth', 'check.expired'])->prefix('admin/cms')->name('public.
 });
 
 // Web Area (Landing Page)
-Route::controller(PublicController::class)->name('public.')->group(function () {
+Route::middleware(HandleInertiaRequests::class)->prefix('public')->controller(PublicController::class)->name('public.')->group(function () {
     Route::get('/', 'home')->name('index');
-    Route::get('/public/preview', 'preview')->name('preview');
+    Route::get('/preview', 'preview')->name('preview');
+    Route::get('/contact-us', 'contact')->name('contact');
+    Route::post('/contact-us', 'sendContact')->middleware('throttle:5,1')->name('contact.send');
     Route::get('/page/{page:slug}', 'showPage')->name('page.show');
     Route::get('/announcements', 'showAllNews')->name('announcements.index');
     Route::get('/news/{pengumuman}', 'showNews')->name('news.show');

@@ -23,22 +23,20 @@
                 </div>
             </div>
         </div>
-        <div class="btn-list">
-            <x-ui.button 
-                type="button" 
-                class="btn-icon btn-ghost-primary ajax-modal-btn" 
-                data-url="{{ route('public.cms.menu.edit', $menu->encrypted_menu_id) }}"
+        <x-ui.dropdown class="btn btn-action text-secondary">
+            <x-ui.dropdown-item
+                type="edit"
+                href="javascript:void(0)"
+                :url="route('public.cms.menu.edit', $menu->encrypted_menu_id)"
                 data-modal-title="Edit Menu"
-                icon="ti ti-pencil" 
             />
-            <x-ui.button 
-                type="button" 
-                class="btn-icon btn-ghost-danger ajax-delete" 
-                data-url="{{ route('public.cms.menu.destroy', $menu->encrypted_menu_id) }}"
-                data-title="Hapus Menu?"
-                icon="ti ti-trash" 
+            <x-ui.dropdown-item
+                type="delete"
+                href="javascript:void(0)"
+                :url="route('public.cms.menu.destroy', $menu->encrypted_menu_id)"
+                title="Hapus Menu?"
             />
-        </div>
+        </x-ui.dropdown>
     </div>
 
     <ul class="list-group list-group-flush sortable-list mt-2">
