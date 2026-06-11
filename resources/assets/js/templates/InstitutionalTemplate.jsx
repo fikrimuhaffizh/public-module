@@ -7,9 +7,11 @@ import {
     CtaSection,
     FaqSection,
     NewsGrid,
+    PartnerCloud,
     PagesGrid,
     PlatformOverview,
     Section,
+    TestimonialSection,
     ValueStrip,
 } from '@public/components/sections/LandingSections';
 
@@ -71,6 +73,7 @@ export default function InstitutionalTemplate({ data }) {
                 image={hero?.image}
                 pageCount={data.pages.length}
             />
+            <PartnerCloud partners={data.partners} />
 
             <Section
                 id="informasi"
@@ -80,6 +83,8 @@ export default function InstitutionalTemplate({ data }) {
             >
                 <PagesGrid pages={data.pages} />
             </Section>
+
+            <TestimonialSection testimonials={data.testimonials} />
 
             <Section id="berita" dark eyebrow="Informasi terkini" title="Berita dan pengumuman">
                 <NewsGrid announcements={data.announcements} />

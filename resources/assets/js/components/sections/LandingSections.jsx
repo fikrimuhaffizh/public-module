@@ -11,6 +11,7 @@ import {
     LayoutDashboard,
     ShieldCheck,
     Sparkles,
+    Star,
     Users,
     Workflow,
 } from 'lucide-react';
@@ -178,6 +179,67 @@ export function ValueStrip() {
                 ))}
             </div>
         </div>
+    );
+}
+
+export function PartnerCloud({ partners }) {
+    if (!partners?.length) return null;
+
+    return (
+        <section className="partner-section">
+            <div className="shell">
+                <Reveal className="partner-heading">
+                    <span className="eyebrow">Dipercaya dan berkolaborasi</span>
+                    <h2>Partner dalam ekosistem kami</h2>
+                </Reveal>
+                <div className="partner-cloud">
+                    {partners.map(partner => {
+                        const content = partner.logo
+                            ? <img src={partner.logo} alt={partner.name} />
+                            : <strong>{partner.name}</strong>;
+
+                        return partner.url
+                            ? <a key={partner.id} href={partner.url} target="_blank" rel="noreferrer" title={partner.name}>{content}</a>
+                            : <div key={partner.id} title={partner.name}>{content}</div>;
+                    })}
+                </div>
+            </div>
+        </section>
+    );
+}
+
+export function TestimonialSection({ testimonials }) {
+    if (!testimonials?.length) return null;
+
+    return (
+        <Section
+            tint
+            eyebrow="Cerita dari komunitas"
+            title="Pengalaman nyata dalam ekosistem kami"
+            text="Kepercayaan dibangun dari layanan yang konsisten dan pengalaman yang bermakna."
+        >
+            <Stagger className="testimonial-grid">
+                {testimonials.slice(0, 6).map(testimonial => (
+                    <SpotlightCard key={testimonial.id} className="testimonial-card">
+                        <div className="testimonial-rating">
+                            {Array.from({ length: testimonial.rating || 5 }).map((_, index) => (
+                                <Star key={index} size={16} fill="currentColor" />
+                            ))}
+                        </div>
+                        <blockquote>“{testimonial.quote}”</blockquote>
+                        <div className="testimonial-person">
+                            {testimonial.photo
+                                ? <img src={testimonial.photo} alt={testimonial.name} />
+                                : <span>{testimonial.name.slice(0, 2).toUpperCase()}</span>}
+                            <div>
+                                <strong>{testimonial.name}</strong>
+                                <small>{[testimonial.position, testimonial.organization].filter(Boolean).join(' · ')}</small>
+                            </div>
+                        </div>
+                    </SpotlightCard>
+                ))}
+            </Stagger>
+        </Section>
     );
 }
 

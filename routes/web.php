@@ -7,6 +7,8 @@ use Modules\Public\app\Http\Controllers\Cms\PublicMenuController;
 use Modules\Public\app\Http\Controllers\Cms\PublicPageController;
 use Modules\Public\app\Http\Controllers\Cms\SlideshowController;
 use Modules\Public\app\Http\Controllers\Cms\LandingSettingsController;
+use Modules\Public\app\Http\Controllers\Cms\PartnerController;
+use Modules\Public\app\Http\Controllers\Cms\TestimonialController;
 use Modules\Public\app\Http\Controllers\Web\PublicController;
 use App\Http\Middleware\HandleInertiaRequests;
 
@@ -46,6 +48,12 @@ Route::middleware(['auth', 'check.expired'])->prefix('admin/cms')->name('public.
     Route::post('slideshow/reorder', [SlideshowController::class, 'reorder'])->name('slideshow.reorder');
     Route::get('slideshow/data', [SlideshowController::class, 'data'])->name('slideshow.data');
     Route::resource('slideshow', SlideshowController::class);
+
+    Route::post('testimonial/reorder', [TestimonialController::class, 'reorder'])->name('testimonial.reorder');
+    Route::resource('testimonial', TestimonialController::class)->except('show');
+
+    Route::post('partner/reorder', [PartnerController::class, 'reorder'])->name('partner.reorder');
+    Route::resource('partner', PartnerController::class)->except('show');
 
     // Pages
     Route::get('public-page/data', [PublicPageController::class, 'data'])->name('page.data');

@@ -6,9 +6,11 @@ import {
     CtaSection,
     FaqSection,
     NewsGrid,
+    PartnerCloud,
     PagesGrid,
     PlatformOverview,
     Section,
+    TestimonialSection,
     ValueStrip,
 } from '@public/components/sections/LandingSections';
 
@@ -48,6 +50,7 @@ export default function EditorialTemplate({ data }) {
                 image={hero?.image}
                 pageCount={data.pages.length}
             />
+            <PartnerCloud partners={data.partners} />
 
             <Section id="berita" eyebrow="Sorotan utama" title="Cerita dan perkembangan terbaru">
                 <NewsGrid announcements={data.announcements} editorial />
@@ -61,6 +64,8 @@ export default function EditorialTemplate({ data }) {
                 </div>
                 <PagesGrid pages={data.pages} />
             </section>
+
+            <TestimonialSection testimonials={data.testimonials} />
 
             <Section dark eyebrow="Informasi praktis" title="Pertanyaan umum" narrow>
                 <FaqSection faqs={data.faqs} />

@@ -30,10 +30,11 @@
                     'institutional' => ['Institusional', 'Tampilan terpercaya dan formal untuk profil institusi.', 'building-bank'],
                     'modern' => ['Modern', 'Visual progresif dengan pengalaman digital yang dinamis.', 'sparkles'],
                     'editorial' => ['Editorial', 'Berorientasi konten dengan tipografi dan berita yang kuat.', 'news'],
+                    'corporate' => ['Corporate', 'Tampilan mewah dan elegan untuk institusi serta mitra korporat.', 'building-skyscraper'],
                 };
             @endphp
             @php($isSelected = old('landing_template', $selectedTemplate) === $template)
-            <div class="col-md-4">
+            <div class="col-md-6 col-xl-3">
                 <label class="card card-link card-link-pop h-100 cursor-pointer {{ $isSelected ? 'border-primary border-2' : '' }}">
                     <div class="card-body">
                         <div class="d-flex align-items-start justify-content-between mb-4">

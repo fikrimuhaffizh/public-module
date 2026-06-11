@@ -7,9 +7,11 @@ import {
     CtaSection,
     FaqSection,
     NewsGrid,
+    PartnerCloud,
     PagesGrid,
     PlatformOverview,
     Section,
+    TestimonialSection,
     ValueStrip,
 } from '@public/components/sections/LandingSections';
 
@@ -69,6 +71,7 @@ export default function ModernTemplate({ data }) {
                 image={hero?.image}
                 pageCount={data.pages.length}
             />
+            <PartnerCloud partners={data.partners} />
 
             <Section
                 id="informasi"
@@ -78,6 +81,8 @@ export default function ModernTemplate({ data }) {
             >
                 <PagesGrid pages={data.pages} />
             </Section>
+
+            <TestimonialSection testimonials={data.testimonials} />
 
             <Section id="berita" tint eyebrow="Tetap terhubung" title="Kabar terbaru kampus">
                 <NewsGrid announcements={data.announcements} />

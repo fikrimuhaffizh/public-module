@@ -52,6 +52,22 @@ class PublicServiceProvider extends BaseModuleServiceProvider
                     ],
                     [
                         'priority'      => 20,
+                        'title'         => 'Testimoni',
+                        'route'         => 'public.cms.testimonial.index',
+                        'active_routes' => ['public.cms.testimonial.*'],
+                        'icon'          => 'message-star',
+                        'permission'    => 'public.cms.testimonial.view',
+                    ],
+                    [
+                        'priority'      => 30,
+                        'title'         => 'Partner',
+                        'route'         => 'public.cms.partner.index',
+                        'active_routes' => ['public.cms.partner.*'],
+                        'icon'          => 'building-community',
+                        'permission'    => 'public.cms.partner.view',
+                    ],
+                    [
+                        'priority'      => 40,
                         'title'         => 'Pengumuman',
                         'route'         => 'public.cms.pengumuman.index',
                         'active_routes' => ['public.cms.pengumuman.*'],
@@ -59,7 +75,7 @@ class PublicServiceProvider extends BaseModuleServiceProvider
                         'permission'    => 'public.cms.pengumuman.view',
                     ],
                     [
-                        'priority'      => 30,
+                        'priority'      => 50,
                         'title'         => 'FAQ',
                         'route'         => 'public.cms.faq.index',
                         'active_routes' => ['public.cms.faq.*'],
@@ -67,7 +83,7 @@ class PublicServiceProvider extends BaseModuleServiceProvider
                         'permission'    => 'public.cms.faq.view',
                     ],
                     [
-                        'priority'      => 40,
+                        'priority'      => 60,
                         'title'         => 'Halaman Statis',
                         'route'         => 'public.cms.page.index',
                         'active_routes' => ['public.cms.page.*'],
@@ -75,7 +91,7 @@ class PublicServiceProvider extends BaseModuleServiceProvider
                         'permission'    => 'public.cms.page.view',
                     ],
                     [
-                        'priority'      => 50,
+                        'priority'      => 70,
                         'title'         => 'Menu Navigasi',
                         'route'         => 'public.cms.menu.index',
                         'active_routes' => ['public.cms.menu.*'],

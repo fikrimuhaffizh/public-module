@@ -10,12 +10,14 @@ use Illuminate\Support\Str;
 use Modules\Public\app\Models\FAQ;
 use Modules\Public\app\Models\Menu;
 use Modules\Public\app\Models\Page;
+use Modules\Public\app\Models\Partner;
 use Modules\Public\app\Models\Pengumuman;
 use Modules\Public\app\Models\Slideshow;
+use Modules\Public\app\Models\Testimonial;
 
 class LandingPageService
 {
-    public const TEMPLATES = ['institutional', 'modern', 'editorial'];
+    public const TEMPLATES = ['institutional', 'modern', 'editorial', 'corporate'];
 
     public function __construct(private TenantConfigService $tenantConfig) {}
 
@@ -80,6 +82,24 @@ class LandingPageService
                     'question' => $faq->question,
                     'answer' => $faq->answer,
                     'category' => $faq->category,
+                ])->values(),
+            'testimonials' => Testimonial::where('is_active', true)->orderBy('seq')->get()
+                ->map(fn (Testimonial $testimonial) => [
+                    'id' => $testimonial->getKey(),
+                    'name' => $testimonial->name,
+                    'position' => $testimonial->position,
+                    'organization' => $testimonial->organization,
+                    'quote' => $testimonial->quote,
+                    'rating' => $testimonial->rating,
+                    'photo' => $testimonial->photo_url,
+                ])->values(),
+            'partners' => Partner::where('is_active', true)->orderBy('seq')->get()
+                ->map(fn (Partner $partner) => [
+                    'id' => $partner->getKey(),
+                    'name' => $partner->name,
+                    'category' => $partner->category,
+                    'url' => $partner->website_url,
+                    'logo' => $partner->logo_url,
                 ])->values(),
             'pages' => Page::where('is_published', true)->orderBy('title')->get()
                 ->map(fn (Page $page) => $this->pageSummary($page))->values(),

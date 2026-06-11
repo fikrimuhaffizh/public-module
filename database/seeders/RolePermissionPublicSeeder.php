@@ -29,6 +29,18 @@ class RolePermissionPublicSeeder extends Seeder
             ['name' => 'public.cms.slideshow.update', 'category' => 'CMS / Landing Page', 'sub_category' => 'Slideshow', 'description' => 'Mengubah data slideshow'],
             ['name' => 'public.cms.slideshow.delete', 'category' => 'CMS / Landing Page', 'sub_category' => 'Slideshow', 'description' => 'Menghapus slideshow'],
 
+            // Testimoni
+            ['name' => 'public.cms.testimonial.view', 'category' => 'CMS / Landing Page', 'sub_category' => 'Testimoni', 'description' => 'Melihat daftar testimoni'],
+            ['name' => 'public.cms.testimonial.create', 'category' => 'CMS / Landing Page', 'sub_category' => 'Testimoni', 'description' => 'Menambah testimoni'],
+            ['name' => 'public.cms.testimonial.update', 'category' => 'CMS / Landing Page', 'sub_category' => 'Testimoni', 'description' => 'Mengubah dan mengurutkan testimoni'],
+            ['name' => 'public.cms.testimonial.delete', 'category' => 'CMS / Landing Page', 'sub_category' => 'Testimoni', 'description' => 'Menghapus testimoni'],
+
+            // Partner
+            ['name' => 'public.cms.partner.view', 'category' => 'CMS / Landing Page', 'sub_category' => 'Partner', 'description' => 'Melihat daftar partner'],
+            ['name' => 'public.cms.partner.create', 'category' => 'CMS / Landing Page', 'sub_category' => 'Partner', 'description' => 'Menambah partner'],
+            ['name' => 'public.cms.partner.update', 'category' => 'CMS / Landing Page', 'sub_category' => 'Partner', 'description' => 'Mengubah dan mengurutkan partner'],
+            ['name' => 'public.cms.partner.delete', 'category' => 'CMS / Landing Page', 'sub_category' => 'Partner', 'description' => 'Menghapus partner'],
+
             // Pengumuman
             ['name' => 'public.cms.pengumuman.view', 'category' => 'CMS / Landing Page', 'sub_category' => 'Pengumuman', 'description' => 'Melihat daftar pengumuman'],
             ['name' => 'public.cms.pengumuman.create', 'category' => 'CMS / Landing Page', 'sub_category' => 'Pengumuman', 'description' => 'Menambah pengumuman baru'],

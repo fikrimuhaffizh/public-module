@@ -37,7 +37,12 @@ export function SiteLayout({ children, title, site, menus, template, preview = f
 }
 
 export function TemplatePicker({ template }) {
-    const labels = { institutional: 'Institusional', modern: 'Modern', editorial: 'Editorial' };
+    const labels = {
+        institutional: 'Institusional',
+        modern: 'Modern',
+        editorial: 'Editorial',
+        corporate: 'Corporate',
+    };
     return <div className="template-picker"><span>Pratinjau:</span>{Object.entries(labels).map(([key, label]) =>
         <a key={key} className={template === key ? 'active' : ''} href={`?template=${key}`}>{label}</a>)}</div>;
 }
