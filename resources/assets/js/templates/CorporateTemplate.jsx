@@ -120,11 +120,9 @@ export default function CorporateTemplate({ data }) {
                     </React.Fragment>
                 );
 
-            case 'clients':
             case 'client':
                 return <PartnerCloud key={key} partners={data.partners} />;
 
-            case 'features':
             case 'feature':
                 return (
                     <section key={key} id="kapabilitas" className="corporate-capabilities">
@@ -155,7 +153,6 @@ export default function CorporateTemplate({ data }) {
                     </section>
                 );
 
-            case 'testimonials':
             case 'testimonial':
                 return featuredTestimonial ? (
                     <section key={key} className="corporate-quote">
@@ -178,7 +175,6 @@ export default function CorporateTemplate({ data }) {
                 ) : null;
 
             case 'pengumuman':
-            case 'announcement':
                 return (
                     <Section key={key}
                         eyebrow={section.pre_title || 'Corporate insights'}

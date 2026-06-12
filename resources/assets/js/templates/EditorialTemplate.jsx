@@ -54,7 +54,6 @@ export default function EditorialTemplate({ data }) {
                     </React.Fragment>
                 );
 
-            case 'features':
             case 'feature':
                 return (
                     <PlatformOverview key={key}
@@ -64,19 +63,16 @@ export default function EditorialTemplate({ data }) {
                     />
                 );
 
-            case 'clients':
             case 'client':
                 return <PartnerCloud key={key} partners={data.partners} />;
 
             case 'pengumuman':
-            case 'announcement':
                 return (
                     <Section key={key} id="berita" eyebrow={section.pre_title || 'Sorotan utama'} title={section.title || 'Cerita dan perkembangan terbaru'}>
                         <NewsGrid announcements={data.announcements} editorial />
                     </Section>
                 );
 
-            case 'products':
             case 'product':
                 return (
                     <section key={key} className="editorial-pages shell">
@@ -89,7 +85,6 @@ export default function EditorialTemplate({ data }) {
                     </section>
                 );
 
-            case 'testimonials':
             case 'testimonial':
                 return <TestimonialSection key={key} testimonials={data.testimonials} />;
 

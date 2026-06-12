@@ -20,7 +20,7 @@ $baseSections = [
         'default_limit' => 1,
         'manage_data_route' => 'public.cms.hero.index',
     ],
-    'products' => [
+    'product' => [
         'name' => 'Produk / Modul',
         'area' => 'middle',
         'component' => 'ProductSection',
@@ -29,7 +29,7 @@ $baseSections = [
         'default_limit' => 6,
         'manage_data_route' => 'public.cms.product.index',
     ],
-    'stats' => [
+    'statistic' => [
         'name' => 'Statistik',
         'area' => 'middle',
         'component' => 'StatsSection',
@@ -38,7 +38,7 @@ $baseSections = [
         'default_limit' => 4,
         'manage_data_route' => 'public.cms.statistic.index',
     ],
-    'features' => [
+    'feature' => [
         'name' => 'Fitur',
         'area' => 'middle',
         'component' => 'FeatureSection',
@@ -47,7 +47,7 @@ $baseSections = [
         'default_limit' => 6,
         'manage_data_route' => 'public.cms.feature.index',
     ],
-    'testimonials' => [
+    'testimonial' => [
         'name' => 'Testimoni',
         'area' => 'middle',
         'component' => 'TestimonialSection',
@@ -56,7 +56,7 @@ $baseSections = [
         'default_limit' => 3,
         'manage_data_route' => 'public.cms.testimonial.index',
     ],
-    'clients' => [
+    'client' => [
         'name' => 'Klien / Logo',
         'area' => 'middle',
         'component' => 'ClientSection',
@@ -103,15 +103,15 @@ $baseSections = [
     ],
 ];
 
-// Add fallback keys (singular/plural, pengumuman/announcement)
+// Add fallback keys (plural/alias forms for backward compat)
 $sections = $baseSections;
 
-// Singular/plural fallbacks
-if (isset($sections['products'])) $sections['product'] = $sections['products'];
-if (isset($sections['stats'])) $sections['statistic'] = $sections['stats'];
-if (isset($sections['features'])) $sections['feature'] = $sections['features'];
-if (isset($sections['testimonials'])) $sections['testimonial'] = $sections['testimonials'];
-if (isset($sections['clients'])) $sections['client'] = $sections['clients'];
+// Plural aliases (backward compat for existing DB records)
+if (isset($sections['product'])) $sections['products'] = $sections['product'];
+if (isset($sections['statistic'])) $sections['stats'] = $sections['statistic'];
+if (isset($sections['feature'])) $sections['features'] = $sections['feature'];
+if (isset($sections['testimonial'])) $sections['testimonials'] = $sections['testimonial'];
+if (isset($sections['client'])) $sections['clients'] = $sections['client'];
 
 // Pengumuman/Announcement fallback
 if (isset($sections['pengumuman'])) $sections['announcement'] = $sections['pengumuman'];

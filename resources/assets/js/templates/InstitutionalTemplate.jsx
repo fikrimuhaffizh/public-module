@@ -66,7 +66,6 @@ export default function InstitutionalTemplate({ data }) {
                     </React.Fragment>
                 );
 
-            case 'features':
             case 'feature':
                 return (
                     <React.Fragment key={key}>
@@ -88,11 +87,9 @@ export default function InstitutionalTemplate({ data }) {
                     </React.Fragment>
                 );
 
-            case 'clients':
             case 'client':
                 return <PartnerCloud key={key} partners={data.partners} />;
 
-            case 'products':
             case 'product':
                 return (
                     <Section key={key}
@@ -105,12 +102,10 @@ export default function InstitutionalTemplate({ data }) {
                     </Section>
                 );
 
-            case 'testimonials':
             case 'testimonial':
                 return <TestimonialSection key={key} testimonials={data.testimonials} />;
 
             case 'pengumuman':
-            case 'announcement':
                 return (
                     <Section key={key} id="berita" dark eyebrow={section.pre_title || 'Informasi terkini'} title={section.title || 'Berita dan pengumuman'}>
                         <NewsGrid announcements={data.announcements} />

@@ -75,7 +75,6 @@ export default function ModernTemplate({ data }) {
                     </React.Fragment>
                 );
 
-            case 'features':
             case 'feature':
                 return (
                     <PlatformOverview key={key}
@@ -85,11 +84,9 @@ export default function ModernTemplate({ data }) {
                     />
                 );
 
-            case 'clients':
             case 'client':
                 return <PartnerCloud key={key} partners={data.partners} />;
 
-            case 'products':
             case 'product':
                 return (
                     <Section key={key}
@@ -102,12 +99,10 @@ export default function ModernTemplate({ data }) {
                     </Section>
                 );
 
-            case 'testimonials':
             case 'testimonial':
                 return <TestimonialSection key={key} testimonials={data.testimonials} />;
 
             case 'pengumuman':
-            case 'announcement':
                 return (
                     <Section key={key} id="berita" tint eyebrow={section.pre_title || 'Tetap terhubung'} title={section.title || 'Kabar terbaru kampus'}>
                         <NewsGrid announcements={data.announcements} />

@@ -66,7 +66,6 @@ export default function LaunchTemplate({ data }) {
                     </section>
                 );
 
-            case 'stats':
             case 'statistic':
                 return landing?.statistics?.length > 0 ? (
                     <section key={key} className="launch-stats">
@@ -84,7 +83,6 @@ export default function LaunchTemplate({ data }) {
                     </section>
                 ) : null;
 
-            case 'features':
             case 'feature':
                 return landing?.features?.length > 0 ? (
                     <Section key={key} eyebrow={section.pre_title || 'Keunggulan'} title={section.title || 'Semua yang dibutuhkan institusi'} text={section.subtitle || 'Fitur dirancang untuk mendukung transformasi digital kampus secara menyeluruh.'}>
@@ -100,7 +98,6 @@ export default function LaunchTemplate({ data }) {
                     </Section>
                 ) : null;
 
-            case 'products':
             case 'product':
                 return landing?.products?.length > 0 ? (
                     <Section key={key} id="modul" tint eyebrow={section.pre_title || 'Ekosistem modul'} title={section.title || 'Solusi modular siap pakai'}>
@@ -123,7 +120,6 @@ export default function LaunchTemplate({ data }) {
                     </Section>
                 ) : null;
 
-            case 'clients':
             case 'client':
                 return landing?.clients?.length > 0 ? (
                     <React.Fragment key={key}>
@@ -150,12 +146,10 @@ export default function LaunchTemplate({ data }) {
                     </React.Fragment>
                 ) : null;
 
-            case 'testimonials':
             case 'testimonial':
                 return <TestimonialSection key={key} testimonials={data.testimonials} />;
 
             case 'pengumuman':
-            case 'announcement':
                 return (
                     <Section key={key} id="berita" eyebrow={section.pre_title || 'Kabar terbaru'} title={section.title || 'Informasi dan pengumuman kampus'}>
                         <NewsGrid announcements={data.announcements} />

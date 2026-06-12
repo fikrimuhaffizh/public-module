@@ -62,7 +62,7 @@ class LandingSection extends Model
 
         // Only use canonical keys (skip singular/plural aliases)
         $canonicalKeys = array_keys(config('landing_sections.sections', []));
-        $aliasKeys = ['product', 'statistic', 'feature', 'testimonial', 'client', 'announcement'];
+        $aliasKeys = ['products', 'stats', 'features', 'testimonials', 'clients', 'announcement'];
 
         foreach (self::registry() as $key => $meta) {
             if (in_array($key, $aliasKeys, true)) {
