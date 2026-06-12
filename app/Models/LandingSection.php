@@ -82,7 +82,7 @@ class LandingSection extends Model
                 'sort_order' => $sort[$area],
                 'limit_data' => $meta['default_limit'] ?? 6,
                 'is_active' => true,
-                'settings' => ['show_title' => true],
+                'settings' => ['show_title' => true, 'text_align' => 'left'],
                 'pre_title' => null,
                 'post_title' => null,
             ];

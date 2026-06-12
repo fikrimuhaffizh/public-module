@@ -3,7 +3,7 @@
         @csrf
         @method('PUT')
         
-        @if(count($sectionMeta['variants'] ?? []) > 0)
+        @if(($isCustomTemplate ?? false) && count($sectionMeta['variants'] ?? []) > 0)
         <div class="mb-3">
             <label class="form-label fw-bold mb-2">Desain Variant</label>
             <div class="row g-2">
@@ -23,6 +23,8 @@
                 @endforeach
             </div>
         </div>
+        @else
+            <input type="hidden" name="variant" value="{{ $section->variant }}">
         @endif
         
         <div class="row g-2">
@@ -47,8 +49,14 @@
         </div>
         
         <div class="row g-2 mt-1">
-            <div class="col-md-12">
-                <x-ui.form-input name="description" label="Deskripsi" :value="$section->description" />
+            <div class="col-md-6">
+                <label class="form-label">Rata Teks</label>
+                <select name="settings[text_align]" class="form-select">
+                    @php($textAlign = data_get($section->settings, 'text_align', 'left'))
+                    <option value="left" @selected($textAlign === 'left')>Kiri</option>
+                    <option value="center" @selected($textAlign === 'center')>Tengah</option>
+                    <option value="right" @selected($textAlign === 'right')>Kanan</option>
+                </select>
             </div>
         </div>
         

@@ -12,7 +12,6 @@ use Modules\Public\app\Models\Menu;
 use Modules\Public\app\Models\Client;
 use Modules\Public\app\Models\Cta;
 use Modules\Public\app\Models\Feature;
-use Modules\Public\app\Models\HeroSection;
 use Modules\Public\app\Models\LandingPageSetting;
 use Modules\Public\app\Models\LandingSection;
 use Modules\Public\app\Models\Page;
@@ -118,11 +117,10 @@ class LandingPageService
 
     public function landingContent(): array
     {
-        $hero = HeroSection::where('is_active', true)->latest('updated_at')->first();
         $cta = Cta::where('is_active', true)->latest('updated_at')->first();
 
         return [
-            'hero' => $hero ? $this->mapHero($hero) : null,
+            'hero' => $this->heroContent(),
             'features' => Feature::where('is_active', true)->orderBy('sort_order')->get()
                 ->map(fn (Feature $item) => $this->mapFeature($item))->values(),
             'products' => Product::where('is_active', true)->orderBy('sort_order')->get()
@@ -213,8 +211,9 @@ class LandingPageService
     }
 
     /**
-     * Lightweight section list (metadata only, no per-section content queries).
-     * Used by non-custom templates that already load content data separately.
+     * Lightweight section list for preset templates.
+     * Presets consume order/status/content overrides only; visual variants are
+     * intentionally reserved for the custom template renderer.
      */
     public function sectionOrder(): array
     {
@@ -230,12 +229,12 @@ class LandingPageService
             'section_key' => $section->section_key,
             'section_name' => $section->section_name,
             'area' => $section->area,
-            'variant' => $section->variant,
             'title' => $section->title,
             'pre_title' => $section->pre_title,
             'post_title' => $section->post_title,
             'subtitle' => $section->subtitle,
             'is_active' => $section->is_active,
+            'settings' => $section->settings,
         ])->values()->toArray();
     }
 
@@ -285,8 +284,7 @@ class LandingPageService
 
         switch ($section->section_key) {
             case 'hero':
-                $hero = HeroSection::where('is_active', true)->latest('updated_at')->first();
-                $data['hero'] = $hero ? $this->mapHero($hero) : null;
+                $data['hero'] = $this->heroContent($section);
                 break;
 
             case 'stats':
@@ -405,15 +403,24 @@ class LandingPageService
         ];
     }
 
-    private function mapHero(HeroSection $hero): array
+    private function heroContent(?LandingSection $section = null): array
     {
+        $section ??= LandingSection::where('tenant_id', sys_tenant_id())
+            ->where('section_key', 'hero')
+            ->first();
+
+        $tenant = Tenant::find(sys_tenant_id());
+        $settings = LandingPageSetting::forCurrentTenant();
+        $siteName = $settings?->site_title ?: $tenant?->name ?: config('app.name');
+        $tagline = $settings?->site_description ?: $tenant?->tagline ?: 'Informasi, layanan, dan inovasi kampus dalam satu ekosistem digital.';
+
         return [
-            'title' => $hero->title,
-            'subtitle' => $hero->subtitle,
-            'description' => $hero->description,
-            'image' => $hero->image_url,
-            'buttonPrimary' => ['text' => $hero->button_primary_text, 'link' => $hero->button_primary_link],
-            'buttonSecondary' => ['text' => $hero->button_secondary_text, 'link' => $hero->button_secondary_link],
+            'title' => $section?->title ?: $siteName,
+            'subtitle' => $section?->subtitle,
+            'description' => $section?->post_title ?: $tagline,
+            'image' => null,
+            'buttonPrimary' => ['text' => 'Masuk', 'link' => route('login')],
+            'buttonSecondary' => ['text' => 'Hubungi Kami', 'link' => route('public.contact')],
         ];
     }
 

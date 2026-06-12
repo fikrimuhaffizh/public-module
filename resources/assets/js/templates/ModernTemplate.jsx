@@ -13,6 +13,8 @@ import {
     Section,
     TestimonialSection,
     ValueStrip,
+    heroCopy,
+    sectionKey,
 } from '@public/components/sections/LandingSections';
 
 export default function ModernTemplate({ data }) {
@@ -22,8 +24,9 @@ export default function ModernTemplate({ data }) {
     const renderSection = (section) => {
         if (!section.is_active) return null;
         const key = section.landing_section_id;
+        const copy = heroCopy(section, hero, data.site);
 
-        switch (section.section_key) {
+        switch (sectionKey(section)) {
             case 'hero':
                 return (
                     <React.Fragment key={key}>
@@ -34,9 +37,9 @@ export default function ModernTemplate({ data }) {
                             <div className="shell modern-hero-grid">
                                 <Reveal className="hero-content">
                                     <Badge><Sparkles size={14} /> {section.pre_title || 'Digital campus platform'}</Badge>
-                                    <h1>{hero?.title || data.site.name}</h1>
-                                    {hero?.subtitle && <p className="hero-subtitle">{hero.subtitle}</p>}
-                                    <p>{hero?.description || data.site.tagline}</p>
+                                    <h1>{copy.title}</h1>
+                                    {copy.subtitle && <p className="hero-subtitle">{copy.subtitle}</p>}
+                                    <p>{copy.description}</p>
                                     <div className="hero-actions">
                                         <Button asChild size="lg">
                                             <a href={hero?.buttonPrimary?.link || '#informasi'}>
@@ -51,7 +54,7 @@ export default function ModernTemplate({ data }) {
                                 <Reveal className="modern-visual" delay={0.15}>
                                     <div className="modern-browser">
                                         <div className="modern-browser-bar"><i /><i /><i /></div>
-                                        {hero?.image && <img src={hero.image} alt={hero.title || data.site.name} />}
+                                        {hero?.image && <img src={hero.image} alt={copy.imageAlt} />}
                                     </div>
                                     <div className="floating-stat">
                                         <strong>{data.pages.length}+</strong>
@@ -81,43 +84,44 @@ export default function ModernTemplate({ data }) {
                         site={data.site}
                         image={hero?.image}
                         pageCount={data.pages.length}
+                        section={section}
                     />
                 );
 
             case 'client':
-                return <PartnerCloud key={key} partners={data.partners} />;
+                return <PartnerCloud key={key} partners={data.partners} section={section} />;
 
             case 'product':
                 return (
-                    <Section key={key}
+                    <Section key={key} section={section}
                         id="informasi"
                         eyebrow={section.pre_title || 'Satu ekosistem'}
                         title={section.title || 'Semua yang dibutuhkan sivitas akademika'}
-                        text={section.subtitle || 'Pengalaman digital yang sederhana di depan, dengan pengelolaan konten yang terstruktur di belakang.'}
+                        text={section.subtitle || section.post_title || 'Pengalaman digital yang sederhana di depan, dengan pengelolaan konten yang terstruktur di belakang.'}
                     >
                         <PagesGrid pages={data.pages} />
                     </Section>
                 );
 
             case 'testimonial':
-                return <TestimonialSection key={key} testimonials={data.testimonials} />;
+                return <TestimonialSection key={key} testimonials={data.testimonials} section={section} />;
 
             case 'pengumuman':
                 return (
-                    <Section key={key} id="berita" tint eyebrow={section.pre_title || 'Tetap terhubung'} title={section.title || 'Kabar terbaru kampus'}>
+                    <Section key={key} section={section} id="berita" tint eyebrow={section.pre_title || 'Tetap terhubung'} title={section.title || 'Kabar terbaru kampus'} text={section.subtitle || section.post_title}>
                         <NewsGrid announcements={data.announcements} />
                     </Section>
                 );
 
             case 'faq':
                 return (
-                    <Section key={key} eyebrow={section.pre_title || 'Butuh jawaban?'} title={section.title || 'Temukan informasi dengan lebih cepat'} narrow>
+                    <Section key={key} section={section} eyebrow={section.pre_title || 'Butuh jawaban?'} title={section.title || 'Temukan informasi dengan lebih cepat'} text={section.subtitle || section.post_title} narrow>
                         <FaqSection faqs={data.faqs} />
                     </Section>
                 );
 
             case 'cta':
-                return <CtaSection key={key} site={data.site} />;
+                return <CtaSection key={key} site={data.site} section={section} />;
 
             default:
                 return null;

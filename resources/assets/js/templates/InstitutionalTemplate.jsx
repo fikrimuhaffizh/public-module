@@ -13,6 +13,8 @@ import {
     Section,
     TestimonialSection,
     ValueStrip,
+    heroCopy,
+    sectionKey,
 } from '@public/components/sections/LandingSections';
 
 const trustItems = [
@@ -31,18 +33,19 @@ export default function InstitutionalTemplate({ data }) {
     const renderSection = (section) => {
         if (!section.is_active) return null;
         const key = section.landing_section_id;
+        const copy = heroCopy(section, hero, data.site);
 
-        switch (section.section_key) {
+        switch (sectionKey(section)) {
             case 'hero':
                 return (
                     <React.Fragment key={key}>
                         <section className="hero hero--institutional" style={heroStyle}>
                             <BackgroundBeams />
-                            <Reveal className="shell hero-content">
+                            <Reveal className={`shell hero-content ${copy.alignClass}`}>
                                 <Badge><Sparkles size={14} /> {section.pre_title || 'Institusi modern, layanan terintegrasi'}</Badge>
-                                <h1>{hero?.title || data.site.name}</h1>
-                                {hero?.subtitle && <p className="hero-subtitle">{hero.subtitle}</p>}
-                                <p>{hero?.description || data.site.tagline}</p>
+                                <h1>{copy.title}</h1>
+                                {copy.subtitle && <p className="hero-subtitle">{copy.subtitle}</p>}
+                                <p>{copy.description}</p>
                                 <div className="hero-actions">
                                     <Button asChild size="lg">
                                         <a href={hero?.buttonPrimary?.link || '#informasi'}>
@@ -83,44 +86,45 @@ export default function InstitutionalTemplate({ data }) {
                             site={data.site}
                             image={hero?.image}
                             pageCount={data.pages.length}
+                            section={section}
                         />
                     </React.Fragment>
                 );
 
             case 'client':
-                return <PartnerCloud key={key} partners={data.partners} />;
+                return <PartnerCloud key={key} partners={data.partners} section={section} />;
 
             case 'product':
                 return (
-                    <Section key={key}
+                    <Section key={key} section={section}
                         id="informasi"
-                        eyebrow="Kapabilitas institusi"
+                        eyebrow={section.pre_title || 'Kapabilitas institusi'}
                         title={section.title || 'Informasi utama dalam satu ekosistem'}
-                        text={section.subtitle || 'Akses profil, layanan, program, dan informasi penting melalui pengalaman digital yang konsisten.'}
+                        text={section.subtitle || section.post_title || 'Akses profil, layanan, program, dan informasi penting melalui pengalaman digital yang konsisten.'}
                     >
                         <PagesGrid pages={data.pages} />
                     </Section>
                 );
 
             case 'testimonial':
-                return <TestimonialSection key={key} testimonials={data.testimonials} />;
+                return <TestimonialSection key={key} testimonials={data.testimonials} section={section} />;
 
             case 'pengumuman':
                 return (
-                    <Section key={key} id="berita" dark eyebrow={section.pre_title || 'Informasi terkini'} title={section.title || 'Berita dan pengumuman'}>
+                    <Section key={key} section={section} id="berita" dark eyebrow={section.pre_title || 'Informasi terkini'} title={section.title || 'Berita dan pengumuman'}>
                         <NewsGrid announcements={data.announcements} />
                     </Section>
                 );
 
             case 'faq':
                 return (
-                    <Section key={key} eyebrow={section.pre_title || 'Pusat bantuan'} title={section.title || 'Pertanyaan yang sering diajukan'} narrow>
+                    <Section key={key} section={section} eyebrow={section.pre_title || 'Pusat bantuan'} title={section.title || 'Pertanyaan yang sering diajukan'} narrow>
                         <FaqSection faqs={data.faqs} />
                     </Section>
                 );
 
             case 'cta':
-                return <CtaSection key={key} site={data.site} />;
+                return <CtaSection key={key} site={data.site} section={section} />;
 
             default:
                 return null;

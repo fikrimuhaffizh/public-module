@@ -4,7 +4,7 @@ import { Link } from '@inertiajs/react';
 import { Badge } from '@public/components/ui/badge';
 import { Button } from '@public/components/ui/button';
 import { BackgroundBeams, Marquee, Reveal, SpotlightCard, Stagger } from '@public/components/motion/effects';
-import { FaqSection, NewsGrid, Section, TestimonialSection } from '@public/components/sections/LandingSections';
+import { FaqSection, NewsGrid, Section, TestimonialSection, heroCopy, sectionKey } from '@public/components/sections/LandingSections';
 
 function IconOrImage({ icon, image, className = '' }) {
     if (image) return <img src={image} alt="" className={className} />;
@@ -23,8 +23,9 @@ export default function LaunchTemplate({ data }) {
     const renderSection = (section) => {
         if (!section.is_active) return null;
         const key = section.landing_section_id;
+        const copy = heroCopy(section, hero, site);
 
-        switch (section.section_key) {
+        switch (sectionKey(section)) {
             case 'hero':
                 return (
                     <section key={key} className="launch-hero" style={heroStyle}>
@@ -34,9 +35,9 @@ export default function LaunchTemplate({ data }) {
                         <div className="shell launch-hero-grid">
                             <Reveal className="launch-hero-copy">
                                 <Badge className="launch-badge"><Zap size={14} /> {section.pre_title || 'Platform kampus terintegrasi'}</Badge>
-                                {hero?.subtitle && <p className="launch-eyebrow">{hero.subtitle}</p>}
-                                <h1>{hero?.title || site.name}</h1>
-                                <p>{hero?.description || site.tagline}</p>
+                                {copy.subtitle && <p className="launch-eyebrow">{copy.subtitle}</p>}
+                                <h1>{copy.title}</h1>
+                                <p>{copy.description}</p>
                                 <div className="hero-actions">
                                     {(hero?.buttonPrimary?.text) && (
                                         <Button asChild size="lg" className="launch-btn-primary">
@@ -57,7 +58,7 @@ export default function LaunchTemplate({ data }) {
                                     <div className="launch-mockup-bar"><span /><span /><span /></div>
                                     <div className="launch-mockup-body">
                                         {hero?.image
-                                            ? <img src={hero.image} alt={hero.title || site.name} />
+                                            ? <img src={hero.image} alt={copy.imageAlt} />
                                             : <div className="launch-mockup-placeholder"><Sparkles size={48} /></div>}
                                     </div>
                                 </div>
@@ -85,7 +86,7 @@ export default function LaunchTemplate({ data }) {
 
             case 'feature':
                 return landing?.features?.length > 0 ? (
-                    <Section key={key} eyebrow={section.pre_title || 'Keunggulan'} title={section.title || 'Semua yang dibutuhkan institusi'} text={section.subtitle || 'Fitur dirancang untuk mendukung transformasi digital kampus secara menyeluruh.'}>
+                    <Section key={key} section={section} eyebrow={section.pre_title || 'Keunggulan'} title={section.title || 'Semua yang dibutuhkan institusi'} text={section.subtitle || section.post_title || 'Fitur dirancang untuk mendukung transformasi digital kampus secara menyeluruh.'}>
                         <Stagger className="launch-bento">
                             {landing.features.map((feature, index) => (
                                 <SpotlightCard key={feature.id} className={`launch-bento-item ${index === 0 ? 'launch-bento-item--lead' : ''}`}>
@@ -100,7 +101,7 @@ export default function LaunchTemplate({ data }) {
 
             case 'product':
                 return landing?.products?.length > 0 ? (
-                    <Section key={key} id="modul" tint eyebrow={section.pre_title || 'Ekosistem modul'} title={section.title || 'Solusi modular siap pakai'}>
+                    <Section key={key} section={section} id="modul" tint eyebrow={section.pre_title || 'Ekosistem modul'} title={section.title || 'Solusi modular siap pakai'} text={section.subtitle || section.post_title}>
                         <Stagger className="launch-products">
                             {landing.products.map((product) => (
                                 <SpotlightCard key={product.id} className="launch-product-card">
@@ -127,8 +128,9 @@ export default function LaunchTemplate({ data }) {
                         <section className="launch-clients">
                             <div className="shell">
                                 <Reveal className="section-heading section-heading--center">
-                                    <span className="eyebrow">Dipercaya</span>
+                                    <span className="eyebrow">{section.pre_title || 'Dipercaya'}</span>
                                     <h2>{section.title || 'Institusi yang memakai platform kami'}</h2>
+                                    {section.subtitle && <p>{section.subtitle}</p>}
                                 </Reveal>
                                 <div className="launch-clients-grid">
                                     {landing.clients.map((client) => (
@@ -147,18 +149,18 @@ export default function LaunchTemplate({ data }) {
                 ) : null;
 
             case 'testimonial':
-                return <TestimonialSection key={key} testimonials={data.testimonials} />;
+                return <TestimonialSection key={key} testimonials={data.testimonials} section={section} />;
 
             case 'pengumuman':
                 return (
-                    <Section key={key} id="berita" eyebrow={section.pre_title || 'Kabar terbaru'} title={section.title || 'Informasi dan pengumuman kampus'}>
+                    <Section key={key} section={section} id="berita" eyebrow={section.pre_title || 'Kabar terbaru'} title={section.title || 'Informasi dan pengumuman kampus'} text={section.subtitle || section.post_title}>
                         <NewsGrid announcements={data.announcements} />
                     </Section>
                 );
 
             case 'faq':
                 return (
-                    <Section key={key} eyebrow={section.pre_title || 'FAQ'} title={section.title || 'Pertanyaan yang sering diajukan'} narrow>
+                    <Section key={key} section={section} eyebrow={section.pre_title || 'FAQ'} title={section.title || 'Pertanyaan yang sering diajukan'} text={section.subtitle || section.post_title} narrow>
                         <FaqSection faqs={data.faqs} />
                     </Section>
                 );
@@ -173,8 +175,11 @@ export default function LaunchTemplate({ data }) {
                     >
                         <div className="shell launch-cta-inner">
                             <Reveal>
-                                <h2>{landing.cta.title}</h2>
-                                {landing.cta.description && <p>{landing.cta.description}</p>}
+                                <span className="eyebrow">{section.pre_title || 'Mulai sekarang'}</span>
+                                <h2>{section.title || landing.cta.title}</h2>
+                                {(section.subtitle || section.post_title || landing.cta.description) && (
+                                    <p>{section.subtitle || section.post_title || landing.cta.description}</p>
+                                )}
                                 {landing.cta.buttonText && (
                                     <Button asChild size="lg" className="launch-btn-primary">
                                         <a href={landing.cta.buttonLink || site.contactUrl}>
@@ -189,8 +194,9 @@ export default function LaunchTemplate({ data }) {
                     <section key={key} className="launch-cta launch-cta--fallback">
                         <div className="shell launch-cta-inner">
                             <Reveal>
-                                <h2>Siap mulai transformasi digital kampus?</h2>
-                                <p>Hubungi tim kami untuk demo dan konsultasi implementasi.</p>
+                                <span className="eyebrow">{section.pre_title || 'Mulai sekarang'}</span>
+                                <h2>{section.title || 'Siap mulai transformasi digital kampus?'}</h2>
+                                <p>{section.subtitle || section.post_title || 'Hubungi tim kami untuk demo dan konsultasi implementasi.'}</p>
                                 <Button asChild size="lg" className="launch-btn-primary">
                                     <Link href={site.contactUrl}>Hubungi Kami <ArrowRight size={18} /></Link>
                                 </Button>

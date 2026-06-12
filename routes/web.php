@@ -9,7 +9,6 @@ use Modules\Public\app\Http\Controllers\Cms\SlideshowController;
 use Modules\Public\app\Http\Controllers\Cms\ClientController;
 use Modules\Public\app\Http\Controllers\Cms\CtaController;
 use Modules\Public\app\Http\Controllers\Cms\FeatureController;
-use Modules\Public\app\Http\Controllers\Cms\HeroSectionController;
 use Modules\Public\app\Http\Controllers\Cms\LandingPageSettingController;
 use Modules\Public\app\Http\Controllers\Cms\LandingSettingsController;
 use Modules\Public\app\Http\Controllers\Cms\PartnerController;
@@ -39,7 +38,6 @@ Route::middleware(['auth', 'check.expired'])->prefix('cms')->name('public.cms.')
     Route::get('landing-settings', [LandingPageSettingController::class, 'edit'])->name('settings.edit');
     Route::put('landing-settings', [LandingPageSettingController::class, 'update'])->name('settings.update');
 
-    Route::resource('hero', HeroSectionController::class)->except('show');
     Route::post('feature/reorder', [FeatureController::class, 'reorder'])->name('feature.reorder');
     Route::resource('feature', FeatureController::class)->except('show');
     Route::post('product/reorder', [ProductController::class, 'reorder'])->name('product.reorder');

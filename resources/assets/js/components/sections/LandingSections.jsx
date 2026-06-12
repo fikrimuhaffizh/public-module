@@ -25,7 +25,56 @@ import { Badge } from '@public/components/ui/badge';
 import { Button } from '@public/components/ui/button';
 import { Reveal, SpotlightCard, Stagger } from '@public/components/motion/effects';
 
+export function sectionKey(section) {
+    const aliases = {
+        products: 'product',
+        stats: 'statistic',
+        features: 'feature',
+        testimonials: 'testimonial',
+        clients: 'client',
+        announcement: 'pengumuman',
+    };
+
+    return aliases[section?.section_key] || section?.section_key;
+}
+
+export function sectionText(section, field, fallback = '') {
+    return section?.[field] || fallback;
+}
+
+export function sectionHeading(section, defaults = {}) {
+    return {
+        eyebrow: sectionText(section, 'pre_title', defaults.eyebrow || ''),
+        title: sectionText(section, 'title', defaults.title || ''),
+        text: sectionText(section, 'subtitle', sectionText(section, 'post_title', defaults.text || '')),
+        align: section?.settings?.text_align || defaults.align || 'left',
+    };
+}
+
+export function headingAlignClass(section, defaults = {}) {
+    const align = sectionHeading(section, defaults).align;
+    return ['left', 'center', 'right'].includes(align) ? `section-heading--${align}` : 'section-heading--left';
+}
+
+export function heroCopy(section, hero, site) {
+    const heading = sectionHeading(section, {
+        title: hero?.title || site.name,
+        text: hero?.description || site.tagline,
+    });
+
+    return {
+        title: heading.title,
+        eyebrow: heading.eyebrow,
+        subtitle: sectionText(section, 'subtitle', hero?.subtitle || ''),
+        description: sectionText(section, 'post_title', hero?.description || site.tagline),
+        imageAlt: heading.title,
+        align: heading.align,
+        alignClass: headingAlignClass(section),
+    };
+}
+
 export function Section({
+    section,
     id,
     eyebrow,
     title,
@@ -34,7 +83,9 @@ export function Section({
     dark = false,
     tint = false,
     narrow = false,
+    align = 'left',
 }) {
+    const heading = sectionHeading(section, { eyebrow, title, text, align });
     const classes = [
         'section',
         dark ? 'section--dark' : '',
@@ -44,10 +95,10 @@ export function Section({
     return (
         <section id={id} className={classes}>
             <div className={`shell ${narrow ? 'shell--narrow' : ''}`}>
-                <Reveal className="section-heading">
-                    <span className="eyebrow">{eyebrow}</span>
-                    <h2>{title}</h2>
-                    {text && <p>{text}</p>}
+                <Reveal className={`section-heading section-heading--${heading.align}`}>
+                    <span className="eyebrow">{heading.eyebrow}</span>
+                    <h2>{heading.title}</h2>
+                    {heading.text && <p>{heading.text}</p>}
                 </Reveal>
                 {children}
             </div>
@@ -108,7 +159,12 @@ export function NewsGrid({ announcements, editorial = false }) {
     );
 }
 
-export function PlatformOverview({ site, image, pageCount = 0 }) {
+export function PlatformOverview({ site, image, pageCount = 0, section }) {
+    const heading = sectionHeading(section, {
+        eyebrow: 'Platform institusi digital',
+        title: 'Satu pengalaman digital untuk seluruh ekosistem kampus',
+        text: `${site.name} menghadirkan akses informasi yang cepat, rapi, dan mudah digunakan oleh mahasiswa, tenaga pendidik, serta masyarakat.`,
+    });
     const capabilities = [
         [LayoutDashboard, 'Satu ruang kerja', 'Informasi dan layanan kampus tersaji dalam pengalaman yang konsisten.'],
         [Workflow, 'Alur terhubung', 'Konten publik terhubung langsung dengan pengelolaan data institusi.'],
@@ -119,12 +175,9 @@ export function PlatformOverview({ site, image, pageCount = 0 }) {
         <section className="saas-overview">
             <div className="shell saas-overview-grid">
                 <Reveal className="saas-copy">
-                    <Badge variant="secondary"><Sparkles size={14} /> Platform institusi digital</Badge>
-                    <h2>Satu pengalaman digital untuk seluruh ekosistem kampus</h2>
-                    <p>
-                        {site.name} menghadirkan akses informasi yang cepat, rapi, dan mudah
-                        digunakan oleh mahasiswa, tenaga pendidik, serta masyarakat.
-                    </p>
+                    <Badge variant="secondary"><Sparkles size={14} /> {heading.eyebrow}</Badge>
+                    <h2>{heading.title}</h2>
+                    <p>{heading.text}</p>
                     <div className="capability-list">
                         {capabilities.map(([Icon, title, description]) => (
                             <div className="capability-item" key={title}>
@@ -182,15 +235,20 @@ export function ValueStrip() {
     );
 }
 
-export function PartnerCloud({ partners }) {
+export function PartnerCloud({ partners, section }) {
     if (!partners?.length) return null;
+    const heading = sectionHeading(section, {
+        eyebrow: 'Dipercaya dan berkolaborasi',
+        title: 'Partner dalam ekosistem kami',
+    });
 
     return (
         <section className="partner-section">
             <div className="shell">
                 <Reveal className="partner-heading">
-                    <span className="eyebrow">Dipercaya dan berkolaborasi</span>
-                    <h2>Partner dalam ekosistem kami</h2>
+                    <span className="eyebrow">{heading.eyebrow}</span>
+                    <h2>{heading.title}</h2>
+                    {heading.text && <p>{heading.text}</p>}
                 </Reveal>
                 <div className="partner-cloud">
                     {partners.map(partner => {
@@ -208,15 +266,20 @@ export function PartnerCloud({ partners }) {
     );
 }
 
-export function TestimonialSection({ testimonials }) {
+export function TestimonialSection({ testimonials, section }) {
     if (!testimonials?.length) return null;
+    const heading = sectionHeading(section, {
+        eyebrow: 'Cerita dari komunitas',
+        title: 'Pengalaman nyata dalam ekosistem kami',
+        text: 'Kepercayaan dibangun dari layanan yang konsisten dan pengalaman yang bermakna.',
+    });
 
     return (
         <Section
             tint
-            eyebrow="Cerita dari komunitas"
-            title="Pengalaman nyata dalam ekosistem kami"
-            text="Kepercayaan dibangun dari layanan yang konsisten dan pengalaman yang bermakna."
+            eyebrow={heading.eyebrow}
+            title={heading.title}
+            text={heading.text}
         >
             <Stagger className="testimonial-grid">
                 {testimonials.slice(0, 6).map(testimonial => (
@@ -243,14 +306,20 @@ export function TestimonialSection({ testimonials }) {
     );
 }
 
-export function CtaSection({ site }) {
+export function CtaSection({ site, section }) {
+    const heading = sectionHeading(section, {
+        eyebrow: 'Mulai terhubung',
+        title: `Temukan informasi dan layanan ${site.name} dalam satu tempat.`,
+    });
+
     return (
         <section className="saas-cta">
             <div className="shell">
                 <Reveal className="saas-cta-card">
                     <div>
-                        <span className="eyebrow">Mulai terhubung</span>
-                        <h2>Temukan informasi dan layanan {site.name} dalam satu tempat.</h2>
+                        <span className="eyebrow">{heading.eyebrow}</span>
+                        <h2>{heading.title}</h2>
+                        {heading.text && <p>{heading.text}</p>}
                     </div>
                     <Button asChild size="lg">
                         <Link href={site.contactUrl}>

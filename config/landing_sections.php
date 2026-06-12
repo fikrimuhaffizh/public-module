@@ -18,7 +18,7 @@ $baseSections = [
         'variants' => ['hero_1' => 'Teks kiri, gambar kanan', 'hero_2' => 'Centered Hero'],
         'default_variant' => 'hero_1',
         'default_limit' => 1,
-        'manage_data_route' => 'public.cms.hero.index',
+        'manage_data_route' => null,
     ],
     'product' => [
         'name' => 'Produk / Modul',
@@ -57,7 +57,7 @@ $baseSections = [
         'manage_data_route' => 'public.cms.testimonial.index',
     ],
     'client' => [
-        'name' => 'Klien / Logo',
+        'name' => 'Client',
         'area' => 'middle',
         'component' => 'ClientSection',
         'variants' => ['logos_1' => 'Grid logo', 'logos_2' => 'Logo carousel'],

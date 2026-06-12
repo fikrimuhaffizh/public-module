@@ -26,6 +26,8 @@ import {
     NewsGrid,
     PartnerCloud,
     Section,
+    heroCopy,
+    sectionKey,
 } from '@public/components/sections/LandingSections';
 
 const pillars = [
@@ -54,8 +56,9 @@ export default function CorporateTemplate({ data }) {
     const renderSection = (section) => {
         if (!section.is_active) return null;
         const key = section.landing_section_id;
+        const copy = heroCopy(section, hero, data.site);
 
-        switch (section.section_key) {
+        switch (sectionKey(section)) {
             case 'hero':
                 return (
                     <React.Fragment key={key}>
@@ -66,9 +69,9 @@ export default function CorporateTemplate({ data }) {
                                     <Badge variant="outline">
                                         <Building2 size={14} /> {section.pre_title || 'Institutional digital excellence'}
                                     </Badge>
-                                    <h1>{hero?.title || data.site.name}</h1>
-                                    {hero?.subtitle && <p className="hero-subtitle">{hero.subtitle}</p>}
-                                    <p>{hero?.description || data.site.tagline}</p>
+                                    <h1>{copy.title}</h1>
+                                    {copy.subtitle && <p className="hero-subtitle">{copy.subtitle}</p>}
+                                    <p>{copy.description}</p>
                                     <div className="hero-actions">
                                         <Button asChild size="lg">
                                             <a href={hero?.buttonPrimary?.link || '#kapabilitas'}>
@@ -87,7 +90,7 @@ export default function CorporateTemplate({ data }) {
                                 </Reveal>
 
                                 <Reveal className="corporate-visual" delay={0.12}>
-                                    {hero?.image && <img src={hero.image} alt={hero.title || data.site.name} />}
+                                    {hero?.image && <img src={hero.image} alt={copy.imageAlt} />}
                                     <div className="corporate-visual-overlay">
                                         <span>Digital presence</span>
                                         <strong>{data.site.name}</strong>
@@ -121,7 +124,7 @@ export default function CorporateTemplate({ data }) {
                 );
 
             case 'client':
-                return <PartnerCloud key={key} partners={data.partners} />;
+                return <PartnerCloud key={key} partners={data.partners} section={section} />;
 
             case 'feature':
                 return (
@@ -132,7 +135,7 @@ export default function CorporateTemplate({ data }) {
                                     <span className="eyebrow">{section.pre_title || 'Kapabilitas utama'}</span>
                                     <h2>{section.title || 'Fondasi digital untuk institusi yang terus bergerak maju'}</h2>
                                 </div>
-                                <p>{section.subtitle || 'Dirancang untuk membangun kepercayaan, memperkuat komunikasi, dan menghadirkan layanan informasi yang berkelas.'}</p>
+                                <p>{section.subtitle || section.post_title || 'Dirancang untuk membangun kepercayaan, memperkuat komunikasi, dan menghadirkan layanan informasi yang berkelas.'}</p>
                             </Reveal>
                             <Stagger className="corporate-bento">
                                 {pillars.map(({ icon: Icon, title, text }, index) => (
@@ -176,10 +179,10 @@ export default function CorporateTemplate({ data }) {
 
             case 'pengumuman':
                 return (
-                    <Section key={key}
+                    <Section key={key} section={section}
                         eyebrow={section.pre_title || 'Corporate insights'}
                         title={section.title || 'Informasi dan perkembangan terbaru'}
-                        text={section.subtitle || 'Ikuti agenda, pencapaian, dan kabar penting dari ekosistem institusi.'}
+                        text={section.subtitle || section.post_title || 'Ikuti agenda, pencapaian, dan kabar penting dari ekosistem institusi.'}
                     >
                         <NewsGrid announcements={data.announcements} />
                     </Section>
@@ -187,7 +190,7 @@ export default function CorporateTemplate({ data }) {
 
             case 'faq':
                 return (
-                    <Section key={key} dark eyebrow={section.pre_title || 'Informasi praktis'} title={section.title || 'Pertanyaan yang sering diajukan'} narrow>
+                    <Section key={key} section={section} dark eyebrow={section.pre_title || 'Informasi praktis'} title={section.title || 'Pertanyaan yang sering diajukan'} narrow>
                         <FaqSection faqs={data.faqs} />
                     </Section>
                 );
@@ -200,6 +203,7 @@ export default function CorporateTemplate({ data }) {
                                 <div>
                                     <span className="eyebrow">{section.pre_title || 'Bangun koneksi bernilai'}</span>
                                     <h2>{section.title || 'Mari membuka peluang kolaborasi berikutnya.'}</h2>
+                                    {(section.subtitle || section.post_title) && <p>{section.subtitle || section.post_title}</p>}
                                 </div>
                                 <Button asChild size="lg">
                                     <Link href={data.site.contactUrl}>Mulai percakapan <ArrowRight /></Link>

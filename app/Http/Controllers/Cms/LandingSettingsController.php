@@ -61,6 +61,7 @@ class LandingSettingsController extends Controller
         return view('public::pages.cms.landing-sections.create-edit-ajax', [
             'section' => $section,
             'sectionMeta' => $sectionMeta,
+            'isCustomTemplate' => $this->landing->template() === 'custom',
         ]);
     }
 
@@ -87,19 +88,23 @@ class LandingSettingsController extends Controller
             'title'         => 'nullable|string|max:191',
             'post_title'    => 'nullable|string|max:100',
             'subtitle'      => 'nullable|string|max:500',
-            'description'   => 'nullable|string|max:1000',
             'limit_data'    => 'nullable|integer|min:1|max:50',
             'settings'      => 'nullable|array',
+            'settings.text_align' => ['nullable', Rule::in(['left', 'center', 'right'])],
         ];
 
-        // Only allow known variant keys (skip if section has no variants)
-        if (!empty($allowedVariants)) {
+        // Variants are only used by the custom template. Preset templates keep
+        // their own visual style and only consume section content/order/status.
+        if ($this->landing->template() === 'custom' && !empty($allowedVariants)) {
             $rules['variant'] = ['required', Rule::in($allowedVariants)];
-        } else {
+        } elseif ($this->landing->template() === 'custom') {
             $rules['variant'] = 'nullable|string|max:50';
         }
 
         $data = $request->validate($rules);
+        if ($this->landing->template() !== 'custom') {
+            unset($data['variant']);
+        }
 
         // Sanitize text fields — strip any HTML tags
         foreach (['pre_title', 'title', 'post_title', 'subtitle'] as $field) {
@@ -107,6 +112,11 @@ class LandingSettingsController extends Controller
                 $data[$field] = strip_tags($data[$field]);
             }
         }
+
+        $data['settings'] = array_replace(
+            $section->settings ?? [],
+            $data['settings'] ?? []
+        );
 
         $this->landing->updateSection($section, $data);
 
