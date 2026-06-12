@@ -26,9 +26,15 @@ use App\Http\Middleware\HandleInertiaRequests;
 */
 
 // Admin Area (CMS)
-Route::middleware(['auth', 'check.expired'])->prefix('admin/cms')->name('public.cms.')->group(function () {
+Route::middleware(['auth', 'check.expired'])->prefix('cms')->name('public.cms.')->group(function () {
+    Route::get('landing', [LandingSettingsController::class, 'index'])->name('landing.index');
     Route::get('landing-template', [LandingSettingsController::class, 'edit'])->name('landing.edit');
     Route::put('landing-template', [LandingSettingsController::class, 'update'])->name('landing.update');
+    Route::get('landing-sections', [LandingSettingsController::class, 'sections'])->name('landing.sections');
+    Route::get('landing-sections/{section}/edit', [LandingSettingsController::class, 'editSection'])->name('landing.section.edit');
+    Route::put('landing-sections/{section}', [LandingSettingsController::class, 'updateSection'])->name('landing.section.update');
+    Route::post('landing-sections/{section}/toggle', [LandingSettingsController::class, 'toggleSection'])->name('landing.section.toggle');
+    Route::post('landing-sections/reorder', [LandingSettingsController::class, 'reorderSections'])->name('landing.sections.reorder');
 
     Route::get('landing-settings', [LandingPageSettingController::class, 'edit'])->name('settings.edit');
     Route::put('landing-settings', [LandingPageSettingController::class, 'update'])->name('settings.update');

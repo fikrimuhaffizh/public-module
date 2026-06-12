@@ -32,6 +32,7 @@
                     'editorial' => ['Editorial', 'Berorientasi konten dengan tipografi dan berita yang kuat.', 'news'],
                     'corporate' => ['Corporate', 'Tampilan mewah dan elegan untuk institusi serta mitra korporat.', 'building-skyscraper'],
                     'launch' => ['Launch UI', 'Desain segar dengan hero, fitur, produk, statistik, dan CTA yang dapat dikelola penuh.', 'rocket'],
+                    'custom' => ['Custom', 'Template sepenuhnya dapat dikustomisasi dengan drag & drop sections.', 'settings'],
                 };
             @endphp
             @php($isSelected = old('landing_template', $selectedTemplate) === $template)

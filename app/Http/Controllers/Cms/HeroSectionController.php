@@ -74,6 +74,8 @@ class HeroSectionController extends Controller
 
     private function deactivateOthers(HeroSection $active): void
     {
-        HeroSection::whereKeyNot($active->getKey())->update(['is_active' => false]);
+        HeroSection::whereKeyNot($active->getKey())
+            ->where('is_active', true)
+            ->update(['is_active' => false]);
     }
 }

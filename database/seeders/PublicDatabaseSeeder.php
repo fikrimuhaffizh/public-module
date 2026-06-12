@@ -12,5 +12,6 @@ class PublicDatabaseSeeder extends Seeder
 
         $this->call(DemoPublicSeeder::class);
         $this->call(LandingContentSeeder::class);
+        $this->call(LandingSectionSeeder::class);
     }
 }

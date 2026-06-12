@@ -6,13 +6,15 @@ import ModernTemplate from '@public/templates/ModernTemplate';
 import EditorialTemplate from '@public/templates/EditorialTemplate';
 import CorporateTemplate from '@public/templates/CorporateTemplate';
 import LaunchTemplate from '@public/templates/LaunchTemplate';
+import CustomTemplate from '@public/templates/CustomTemplate';
 
 const templates = {
-    institutional: InstitutionalTemplate,
-    modern: ModernTemplate,
-    editorial: EditorialTemplate,
-    corporate: CorporateTemplate,
-    launch: LaunchTemplate,
+  institutional: InstitutionalTemplate,
+  modern: ModernTemplate,
+  editorial: EditorialTemplate,
+  corporate: CorporateTemplate,
+  launch: LaunchTemplate,
+  custom: CustomTemplate,
 };
 
 export default function Home() {

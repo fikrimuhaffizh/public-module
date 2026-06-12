@@ -3,6 +3,9 @@
 @section('header')
 <x-ui.page-header title="Testimoni" pretitle="CMS">
     <x-slot:actions>
+        <a href="{{ route('public.cms.landing.index') }}" class="btn btn-outline-secondary">
+            <i class="ti ti-arrow-left me-1"></i>Kembali
+        </a>
         @can('public.cms.testimonial.create')
             <x-ui.button type="create" class="ajax-modal-btn"
                 data-url="{{ route('public.cms.testimonial.create') }}"

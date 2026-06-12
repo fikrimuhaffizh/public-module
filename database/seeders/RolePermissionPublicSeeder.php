@@ -23,6 +23,10 @@ class RolePermissionPublicSeeder extends Seeder
             ['name' => 'public.cms.view', 'category' => 'CMS / Landing Page', 'sub_category' => 'Dashboard', 'description' => 'Melihat menu CMS / Landing Page'],
             ['name' => 'public.cms.update', 'category' => 'CMS / Landing Page', 'sub_category' => 'Pengaturan Landing', 'description' => 'Mengubah template landing page'],
 
+            // Landing Sections
+            ['name' => 'public.cms.landing.sections.view', 'category' => 'CMS / Landing Page', 'sub_category' => 'Landing Sections', 'description' => 'Melihat daftar landing sections'],
+            ['name' => 'public.cms.landing.sections.update', 'category' => 'CMS / Landing Page', 'sub_category' => 'Landing Sections', 'description' => 'Mengubah dan mengurutkan landing sections'],
+
             // Slideshow
             ['name' => 'public.cms.slideshow.view', 'category' => 'CMS / Landing Page', 'sub_category' => 'Slideshow', 'description' => 'Melihat daftar slideshow'],
             ['name' => 'public.cms.slideshow.create', 'category' => 'CMS / Landing Page', 'sub_category' => 'Slideshow', 'description' => 'Menambah slideshow baru'],

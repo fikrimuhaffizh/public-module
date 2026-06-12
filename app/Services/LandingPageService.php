@@ -14,6 +14,7 @@ use Modules\Public\app\Models\Cta;
 use Modules\Public\app\Models\Feature;
 use Modules\Public\app\Models\HeroSection;
 use Modules\Public\app\Models\LandingPageSetting;
+use Modules\Public\app\Models\LandingSection;
 use Modules\Public\app\Models\Page;
 use Modules\Public\app\Models\Partner;
 use Modules\Public\app\Models\Pengumuman;
@@ -24,7 +25,7 @@ use Modules\Public\app\Models\Testimonial;
 
 class LandingPageService
 {
-    public const TEMPLATES = ['institutional', 'modern', 'editorial', 'corporate', 'launch'];
+    public const TEMPLATES = ['institutional', 'modern', 'editorial', 'corporate', 'launch', 'custom'];
 
     public function __construct(private TenantConfigService $tenantConfig) {}
 
@@ -52,7 +53,7 @@ class LandingPageService
     public function shared(string $template, bool $preview = false): array
     {
         $tenant = Tenant::find(sys_tenant_id());
-        $settings = LandingPageSetting::first();
+        $settings = LandingPageSetting::forCurrentTenant();
 
         return [
             'template' => $template,
@@ -87,46 +88,32 @@ class LandingPageService
 
     public function home(string $template, bool $preview = false): array
     {
-        return [
+        $data = [
             ...$this->shared($template, $preview),
             'slides' => Slideshow::where('is_active', true)->orderBy('seq')->get()
-                ->map(fn (Slideshow $slide) => [
-                    'id' => $slide->getKey(),
-                    'title' => $slide->title,
-                    'caption' => $slide->caption,
-                    'image' => $slide->large_url,
-                    'link' => $slide->link,
-                ])->values(),
+                ->map(fn (Slideshow $slide) => $this->mapSlide($slide))->values(),
             'announcements' => $this->announcements(6),
             'faqs' => FAQ::where('is_active', true)->orderBy('seq')->get()
-                ->map(fn (FAQ $faq) => [
-                    'id' => $faq->getKey(),
-                    'question' => $faq->question,
-                    'answer' => $faq->answer,
-                    'category' => $faq->category,
-                ])->values(),
+                ->map(fn (FAQ $faq) => $this->mapFaq($faq))->values(),
             'testimonials' => Testimonial::where('is_active', true)->orderBy('seq')->get()
-                ->map(fn (Testimonial $testimonial) => [
-                    'id' => $testimonial->getKey(),
-                    'name' => $testimonial->name,
-                    'position' => $testimonial->position,
-                    'organization' => $testimonial->organization,
-                    'quote' => $testimonial->quote,
-                    'rating' => $testimonial->rating,
-                    'photo' => $testimonial->photo_url,
-                ])->values(),
+                ->map(fn (Testimonial $t) => $this->mapTestimonial($t))->values(),
             'partners' => Partner::where('is_active', true)->orderBy('seq')->get()
-                ->map(fn (Partner $partner) => [
-                    'id' => $partner->getKey(),
-                    'name' => $partner->name,
-                    'category' => $partner->category,
-                    'url' => $partner->website_url,
-                    'logo' => $partner->logo_url,
-                ])->values(),
+                ->map(fn (Partner $partner) => $this->mapPartner($partner))->values(),
             'pages' => Page::where('is_published', true)->orderBy('title')->get()
                 ->map(fn (Page $page) => $this->pageSummary($page))->values(),
-            'landing' => $this->landingContent(),
         ];
+
+        // Sections list (for show/hide & reorder) — lightweight metadata only for non-custom
+        $data['sections'] = $template === 'custom'
+            ? $this->sections()
+            : $this->sectionOrder();
+
+        // Legacy aggregated data used by LaunchTemplate
+        if ($template !== 'custom') {
+            $data['landing'] = $this->landingContent();
+        }
+
+        return $data;
     }
 
     public function landingContent(): array
@@ -135,53 +122,16 @@ class LandingPageService
         $cta = Cta::where('is_active', true)->latest('updated_at')->first();
 
         return [
-            'hero' => $hero ? [
-                'title' => $hero->title,
-                'subtitle' => $hero->subtitle,
-                'description' => $hero->description,
-                'image' => $hero->image_url,
-                'buttonPrimary' => ['text' => $hero->button_primary_text, 'link' => $hero->button_primary_link],
-                'buttonSecondary' => ['text' => $hero->button_secondary_text, 'link' => $hero->button_secondary_link],
-            ] : null,
+            'hero' => $hero ? $this->mapHero($hero) : null,
             'features' => Feature::where('is_active', true)->orderBy('sort_order')->get()
-                ->map(fn (Feature $item) => [
-                    'id' => $item->getKey(),
-                    'title' => $item->title,
-                    'description' => $item->description,
-                    'icon' => $item->icon,
-                    'image' => $item->image_url,
-                ])->values(),
+                ->map(fn (Feature $item) => $this->mapFeature($item))->values(),
             'products' => Product::where('is_active', true)->orderBy('sort_order')->get()
-                ->map(fn (Product $item) => [
-                    'id' => $item->getKey(),
-                    'name' => $item->name,
-                    'slug' => $item->slug,
-                    'shortDescription' => $item->short_description,
-                    'description' => $item->description,
-                    'image' => $item->image_url,
-                    'demoUrl' => $item->demo_url,
-                ])->values(),
+                ->map(fn (Product $item) => $this->mapProduct($item))->values(),
             'statistics' => Statistic::where('is_active', true)->orderBy('sort_order')->get()
-                ->map(fn (Statistic $item) => [
-                    'id' => $item->getKey(),
-                    'label' => $item->label,
-                    'value' => $item->value,
-                    'icon' => $item->icon,
-                ])->values(),
+                ->map(fn (Statistic $item) => $this->mapStatistic($item))->values(),
             'clients' => Client::where('is_active', true)->orderBy('sort_order')->get()
-                ->map(fn (Client $item) => [
-                    'id' => $item->getKey(),
-                    'name' => $item->name,
-                    'logo' => $item->logo_url,
-                    'website' => $item->website,
-                ])->values(),
-            'cta' => $cta ? [
-                'title' => $cta->title,
-                'description' => $cta->description,
-                'buttonText' => $cta->button_text,
-                'buttonLink' => $cta->button_link,
-                'backgroundImage' => $cta->background_image_url,
-            ] : null,
+                ->map(fn (Client $item) => $this->mapClient($item))->values(),
+            'cta' => $cta ? $this->mapCta($cta) : null,
         ];
     }
 
@@ -191,7 +141,7 @@ class LandingPageService
             ...$this->shared($template),
             'page' => [
                 ...$this->pageSummary($page),
-                'content' => $page->content,
+                'content' => $this->sanitizeHtml($page->content),
             ],
         ];
     }
@@ -202,7 +152,7 @@ class LandingPageService
             ...$this->shared($template),
             'announcement' => [
                 ...$this->announcementSummary($item),
-                'content' => $item->isi,
+                'content' => $this->sanitizeHtml($item->isi),
             ],
             'related' => $this->announcements(3, $item->getKey()),
         ];
@@ -262,6 +212,156 @@ class LandingPageService
         ];
     }
 
+    /**
+     * Lightweight section list (metadata only, no per-section content queries).
+     * Used by non-custom templates that already load content data separately.
+     */
+    public function sectionOrder(): array
+    {
+        $tenantId = sys_tenant_id();
+        $existing = LandingSection::where('tenant_id', $tenantId)->ordered()->get();
+        if ($existing->isEmpty()) {
+            $this->initializeSections($tenantId);
+            $existing = LandingSection::where('tenant_id', $tenantId)->ordered()->get();
+        }
+
+        return $existing->map(fn (LandingSection $section) => [
+            'landing_section_id' => $section->landing_section_id,
+            'section_key' => $section->section_key,
+            'section_name' => $section->section_name,
+            'area' => $section->area,
+            'variant' => $section->variant,
+            'title' => $section->title,
+            'pre_title' => $section->pre_title,
+            'post_title' => $section->post_title,
+            'subtitle' => $section->subtitle,
+            'is_active' => $section->is_active,
+        ])->values()->toArray();
+    }
+
+    public function sections(): array
+    {
+        $tenantId = sys_tenant_id();
+        $existing = LandingSection::where('tenant_id', $tenantId)->ordered()->get();
+        if ($existing->isEmpty()) {
+            $this->initializeSections($tenantId);
+            $existing = LandingSection::where('tenant_id', $tenantId)->ordered()->get();
+        }
+
+        return $existing->map(fn (LandingSection $section) => [
+            ...$section->toArray(),
+            'encrypted_id' => $section->encrypted_landing_section_id,
+        ])->values()->toArray();
+    }
+
+    public function initializeSections(int $tenantId): void
+    {
+        foreach (LandingSection::defaultRows($tenantId) as $row) {
+            LandingSection::create($row);
+        }
+    }
+
+    public function updateSection(LandingSection $section, array $data): void
+    {
+        $section->update($data);
+    }
+
+    public function reorderSections(string $area, array $ids): void
+    {
+        $tenantId = sys_tenant_id();
+        $sortOrder = 1;
+        foreach ($ids as $id) {
+            LandingSection::where('tenant_id', $tenantId)
+                ->where('landing_section_id', decryptId($id))
+                ->update(['sort_order' => $sortOrder++]);
+        }
+    }
+
+    public function sectionData(LandingSection $section): array
+    {
+        $data = [
+            'section' => $section,
+        ];
+
+        switch ($section->section_key) {
+            case 'hero':
+                $hero = HeroSection::where('is_active', true)->latest('updated_at')->first();
+                $data['hero'] = $hero ? $this->mapHero($hero) : null;
+                break;
+
+            case 'stats':
+            case 'statistic':
+                $data['stats'] = Statistic::where('is_active', true)
+                    ->orderBy('sort_order')
+                    ->limit($section->limit_data ?? 4)
+                    ->get()
+                    ->map(fn (Statistic $item) => $this->mapStatistic($item))
+                    ->values();
+                break;
+
+            case 'products':
+            case 'product':
+                $data['products'] = Product::where('is_active', true)
+                    ->orderBy('sort_order')
+                    ->limit($section->limit_data ?? 6)
+                    ->get()
+                    ->map(fn (Product $item) => $this->mapProduct($item))
+                    ->values();
+                break;
+
+            case 'features':
+            case 'feature':
+                $data['features'] = Feature::where('is_active', true)
+                    ->orderBy('sort_order')
+                    ->limit($section->limit_data ?? 6)
+                    ->get()
+                    ->map(fn (Feature $item) => $this->mapFeature($item))
+                    ->values();
+                break;
+
+            case 'testimonials':
+            case 'testimonial':
+                $data['testimonials'] = Testimonial::where('is_active', true)
+                    ->orderBy('seq')
+                    ->limit($section->limit_data ?? 3)
+                    ->get()
+                    ->map(fn (Testimonial $item) => $this->mapTestimonial($item))
+                    ->values();
+                break;
+
+            case 'clients':
+            case 'client':
+                $data['clients'] = Client::where('is_active', true)
+                    ->orderBy('sort_order')
+                    ->limit($section->limit_data ?? 8)
+                    ->get()
+                    ->map(fn (Client $item) => $this->mapClient($item))
+                    ->values();
+                break;
+
+            case 'faq':
+                $data['faqs'] = FAQ::where('is_active', true)
+                    ->orderBy('seq')
+                    ->limit($section->limit_data ?? 8)
+                    ->get()
+                    ->map(fn (FAQ $item) => $this->mapFaq($item))
+                    ->values();
+                break;
+
+            case 'pengumuman':
+            case 'announcement':
+                $data['announcements'] = $this->announcements($section->limit_data ?? 6);
+                break;
+
+            case 'cta':
+                $cta = Cta::where('is_active', true)->latest('updated_at')->first();
+                $data['cta'] = $cta ? $this->mapCta($cta) : null;
+                break;
+        }
+
+        return $data;
+    }
+
     private function pageSummary(Page $page): array
     {
         return [
@@ -269,6 +369,140 @@ class LandingPageService
             'title' => $page->title,
             'excerpt' => Str::limit(strip_tags($page->content), 135),
             'url' => route('public.page.show', $page->slug),
+        ];
+    }
+
+    /**
+     * Strip dangerous HTML elements and attributes to prevent XSS.
+     * Preserves safe formatting tags (p, br, strong, em, ul, ol, li, h2-h6, a, img, table, blockquote).
+     */
+    private function sanitizeHtml(string $html): string
+    {
+        // Remove script/style/iframe/object/embed tags and their contents
+        $html = preg_replace('/<(script|style|iframe|object|embed|form|input|textarea|button)[^>]*>.*?<\/\1>/is', '', $html);
+        // Remove self-closing dangerous tags
+        $html = preg_replace('/<(script|style|iframe|object|embed|form|input|textarea|button)[^>]*\/?>/is', '', $html);
+        // Remove event handlers (onclick, onload, onerror, etc.)
+        $html = preg_replace('/\s+on\w+\s*=\s*(["\']).*?\1/is', '', $html);
+        // Remove javascript: protocol in href/src attributes
+        $html = preg_replace('/(href|src)\s*=\s*(["\'])\s*javascript:/is', '$1=$2#', $html);
+        // Remove data: protocol in src (except data:image)
+        $html = preg_replace('/src\s*=\s*(["\'])\s*data:(?!image)/is', 'src=$1#', $html);
+
+        return $html;
+    }
+
+    // ─── Shared Model Mappers ───────────────────────────────────────
+
+    private function mapSlide(Slideshow $slide): array
+    {
+        return [
+            'id' => $slide->getKey(),
+            'title' => $slide->title,
+            'caption' => $slide->caption,
+            'image' => $slide->large_url,
+            'link' => $slide->link,
+        ];
+    }
+
+    private function mapHero(HeroSection $hero): array
+    {
+        return [
+            'title' => $hero->title,
+            'subtitle' => $hero->subtitle,
+            'description' => $hero->description,
+            'image' => $hero->image_url,
+            'buttonPrimary' => ['text' => $hero->button_primary_text, 'link' => $hero->button_primary_link],
+            'buttonSecondary' => ['text' => $hero->button_secondary_text, 'link' => $hero->button_secondary_link],
+        ];
+    }
+
+    private function mapFeature(Feature $item): array
+    {
+        return [
+            'id' => $item->getKey(),
+            'title' => $item->title,
+            'description' => $item->description,
+            'icon' => $item->icon,
+            'image' => $item->image_url,
+        ];
+    }
+
+    private function mapProduct(Product $item): array
+    {
+        return [
+            'id' => $item->getKey(),
+            'name' => $item->name,
+            'slug' => $item->slug,
+            'shortDescription' => $item->short_description,
+            'description' => $item->description,
+            'image' => $item->image_url,
+            'demoUrl' => $item->demo_url,
+        ];
+    }
+
+    private function mapStatistic(Statistic $item): array
+    {
+        return [
+            'id' => $item->getKey(),
+            'label' => $item->label,
+            'value' => $item->value,
+            'icon' => $item->icon,
+        ];
+    }
+
+    private function mapClient(Client $item): array
+    {
+        return [
+            'id' => $item->getKey(),
+            'name' => $item->name,
+            'logo' => $item->logo_url,
+            'website' => $item->website,
+        ];
+    }
+
+    private function mapCta(Cta $cta): array
+    {
+        return [
+            'title' => $cta->title,
+            'description' => $cta->description,
+            'buttonText' => $cta->button_text,
+            'buttonLink' => $cta->button_link,
+            'backgroundImage' => $cta->background_image_url,
+        ];
+    }
+
+    private function mapFaq(FAQ $item): array
+    {
+        return [
+            'id' => $item->getKey(),
+            'question' => $item->question,
+            'answer' => $item->answer,
+            'category' => $item->category,
+        ];
+    }
+
+    private function mapTestimonial(Testimonial $item): array
+    {
+        return [
+            'id' => $item->getKey(),
+            'name' => $item->name,
+            'position' => $item->position,
+            'organization' => $item->organization,
+            'quote' => $item->quote,
+            'rating' => $item->rating,
+            'photo' => $item->photo_url,
+        ];
+    }
+
+    private function mapPartner(Partner $partner): array
+    {
+        return [
+            'id' => $partner->getKey(),
+            'name' => $partner->name,
+            'category' => $partner->category,
+            'url' => $partner->website_url,
+            'logo' => $partner->logo_url,
         ];
     }
 }

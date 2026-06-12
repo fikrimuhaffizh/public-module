@@ -5,14 +5,32 @@ namespace Modules\Public\app\Http\Controllers\Cms;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Modules\Public\app\Models\LandingSection;
+use Modules\Public\app\Models\LandingPageSetting;
 use Modules\Public\app\Services\LandingPageService;
 
 class LandingSettingsController extends Controller
 {
     public function __construct(private LandingPageService $landing)
     {
-        $this->middleware('permission:public.cms.view')->only('edit');
-        $this->middleware('permission:public.cms.update')->only('update');
+        $this->middleware('permission:public.cms.view')->only(['index', 'edit', 'sections']);
+        $this->middleware('permission:public.cms.update')->only(['update', 'updateSection', 'reorderSections', 'editSection', 'toggleSection']);
+    }
+
+    public function index()
+    {
+        $sections = LandingSection::where('tenant_id', sys_tenant_id())
+            ->ordered()
+            ->get()
+            ->groupBy('area');
+
+        return view('public::pages.cms.landing.index', [
+            'sections' => $sections,
+            'registry' => LandingSection::registry(),
+            'template' => $this->landing->template(),
+            'templates' => LandingPageService::TEMPLATES,
+            'settings' => LandingPageSetting::forCurrentTenant(),
+        ]);
     }
 
     public function edit()
@@ -20,6 +38,29 @@ class LandingSettingsController extends Controller
         return view('public::pages.cms.landing-settings.edit', [
             'selectedTemplate' => $this->landing->template(),
             'templates' => LandingPageService::TEMPLATES,
+        ]);
+    }
+
+    public function sections()
+    {
+        $sections = LandingSection::where('tenant_id', sys_tenant_id())
+            ->ordered()
+            ->get()
+            ->groupBy('area');
+
+        return view('public::pages.cms.landing-sections.index', [
+            'sections' => $sections,
+            'registry' => LandingSection::registry(),
+        ]);
+    }
+
+    public function editSection(LandingSection $section)
+    {
+        $registry = LandingSection::registry();
+        $sectionMeta = $registry[$section->section_key] ?? [];
+        return view('public::pages.cms.landing-sections.create-edit-ajax', [
+            'section' => $section,
+            'sectionMeta' => $sectionMeta,
         ]);
     }
 
@@ -31,7 +72,74 @@ class LandingSettingsController extends Controller
 
         $this->landing->saveTemplate($data['landing_template']);
 
-        return redirect()->route('public.cms.landing.edit')
+        return redirect()->route('public.cms.landing.index')
             ->with('success', 'Template landing page berhasil diperbarui.');
+    }
+
+    public function updateSection(Request $request, LandingSection $section)
+    {
+        $registry = LandingSection::registry();
+        $sectionMeta = $registry[$section->section_key] ?? [];
+        $allowedVariants = array_keys($sectionMeta['variants'] ?? []);
+
+        $rules = [
+            'pre_title'     => 'nullable|string|max:100',
+            'title'         => 'nullable|string|max:191',
+            'post_title'    => 'nullable|string|max:100',
+            'subtitle'      => 'nullable|string|max:500',
+            'description'   => 'nullable|string|max:1000',
+            'limit_data'    => 'nullable|integer|min:1|max:50',
+            'settings'      => 'nullable|array',
+        ];
+
+        // Only allow known variant keys (skip if section has no variants)
+        if (!empty($allowedVariants)) {
+            $rules['variant'] = ['required', Rule::in($allowedVariants)];
+        } else {
+            $rules['variant'] = 'nullable|string|max:50';
+        }
+
+        $data = $request->validate($rules);
+
+        // Sanitize text fields — strip any HTML tags
+        foreach (['pre_title', 'title', 'post_title', 'subtitle'] as $field) {
+            if (isset($data[$field])) {
+                $data[$field] = strip_tags($data[$field]);
+            }
+        }
+
+        $this->landing->updateSection($section, $data);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Section berhasil diperbarui.'
+        ]);
+    }
+
+    public function toggleSection(Request $request, LandingSection $section)
+    {
+        $this->landing->updateSection($section, ['is_active' => !$section->is_active]);
+        
+        if ($request->wantsJson()) {
+            return response()->json(['message' => 'Status section berhasil diperbarui.']);
+        }
+        
+        return back()->with('success', 'Status section berhasil diperbarui.');
+    }
+
+    public function reorderSections(Request $request)
+    {
+        $data = $request->validate([
+            'area' => 'required|string',
+            'ids' => 'required|array',
+        ]);
+
+        $this->landing->reorderSections($data['area'], $data['ids']);
+
+        if ($request->wantsJson()) {
+            return response()->json(['message' => 'Section berhasil diurutkan.']);
+        }
+
+        return back()->with('success', 'Section berhasil diurutkan.');
     }
 }

@@ -15,63 +15,98 @@ import {
 } from '@public/components/sections/LandingSections';
 
 export default function EditorialTemplate({ data }) {
-    const hero = data.slides[0];
+    const sections = data.sections || [];
+    const hero = data.landing?.hero;
 
-    return (
-        <>
-            <Reveal className="editorial-hero shell">
-                <div className="editorial-kicker">
-                    <span>Wawasan</span>
-                    <span>Inovasi</span>
-                    <span>Kolaborasi</span>
-                    <span>Transformasi digital</span>
-                </div>
-                <h1>{hero?.title || data.site.name}</h1>
-                <div className="editorial-hero-grid">
-                    <div className="editorial-image-frame">
-                        {hero?.image && <img src={hero.image} alt={hero.title || data.site.name} />}
-                        <span>Platform informasi institusi</span>
-                    </div>
-                    <div className="editorial-summary">
-                        <p>{hero?.caption || data.site.tagline}</p>
-                        <Button asChild size="lg">
-                            <a href={hero?.link || '#berita'}>
-                                Temukan lebih jauh <ArrowRight size={18} />
-                            </a>
-                        </Button>
-                    </div>
-                </div>
-            </Reveal>
+    const renderSection = (section) => {
+        if (!section.is_active) return null;
+        const key = section.landing_section_id;
 
-            <ValueStrip />
+        switch (section.section_key) {
+            case 'hero':
+                return (
+                    <React.Fragment key={key}>
+                        <Reveal className="editorial-hero shell">
+                            <div className="editorial-kicker">
+                                <span>Wawasan</span>
+                                <span>Inovasi</span>
+                                <span>Kolaborasi</span>
+                                <span>Transformasi digital</span>
+                            </div>
+                            <h1>{hero?.title || data.site.name}</h1>
+                            {hero?.subtitle && <p className="editorial-hero-sub">{hero.subtitle}</p>}
+                            <div className="editorial-hero-grid">
+                                <div className="editorial-image-frame">
+                                    {hero?.image && <img src={hero.image} alt={hero.title || data.site.name} />}
+                                    <span>{section.post_title || 'Platform informasi institusi'}</span>
+                                </div>
+                                <div className="editorial-summary">
+                                    <p>{hero?.description || data.site.tagline}</p>
+                                    <Button asChild size="lg">
+                                        <a href={hero?.buttonPrimary?.link || '#berita'}>
+                                            {hero?.buttonPrimary?.text || 'Temukan lebih jauh'} <ArrowRight size={18} />
+                                        </a>
+                                    </Button>
+                                </div>
+                            </div>
+                        </Reveal>
+                        <ValueStrip />
+                    </React.Fragment>
+                );
 
-            <PlatformOverview
-                site={data.site}
-                image={hero?.image}
-                pageCount={data.pages.length}
-            />
-            <PartnerCloud partners={data.partners} />
+            case 'features':
+            case 'feature':
+                return (
+                    <PlatformOverview key={key}
+                        site={data.site}
+                        image={hero?.image}
+                        pageCount={data.pages.length}
+                    />
+                );
 
-            <Section id="berita" eyebrow="Sorotan utama" title="Cerita dan perkembangan terbaru">
-                <NewsGrid announcements={data.announcements} editorial />
-            </Section>
+            case 'clients':
+            case 'client':
+                return <PartnerCloud key={key} partners={data.partners} />;
 
-            <section className="editorial-pages shell">
-                <div>
-                    <span className="eyebrow">Jelajahi institusi</span>
-                    <h2>Informasi yang membentuk pengalaman akademik</h2>
-                    <p>Akses cepat menuju profil, layanan, program, dan sumber informasi penting.</p>
-                </div>
-                <PagesGrid pages={data.pages} />
-            </section>
+            case 'pengumuman':
+            case 'announcement':
+                return (
+                    <Section key={key} id="berita" eyebrow={section.pre_title || 'Sorotan utama'} title={section.title || 'Cerita dan perkembangan terbaru'}>
+                        <NewsGrid announcements={data.announcements} editorial />
+                    </Section>
+                );
 
-            <TestimonialSection testimonials={data.testimonials} />
+            case 'products':
+            case 'product':
+                return (
+                    <section key={key} className="editorial-pages shell">
+                        <div>
+                            <span className="eyebrow">{section.pre_title || 'Jelajahi institusi'}</span>
+                            <h2>{section.title || 'Informasi yang membentuk pengalaman akademik'}</h2>
+                            <p>{section.subtitle || 'Akses cepat menuju profil, layanan, program, dan sumber informasi penting.'}</p>
+                        </div>
+                        <PagesGrid pages={data.pages} />
+                    </section>
+                );
 
-            <Section dark eyebrow="Informasi praktis" title="Pertanyaan umum" narrow>
-                <FaqSection faqs={data.faqs} />
-            </Section>
+            case 'testimonials':
+            case 'testimonial':
+                return <TestimonialSection key={key} testimonials={data.testimonials} />;
 
-            <CtaSection site={data.site} />
-        </>
-    );
+            case 'faq':
+                return (
+                    <Section key={key} dark eyebrow={section.pre_title || 'Informasi praktis'} title={section.title || 'Pertanyaan umum'} narrow>
+                        <FaqSection faqs={data.faqs} />
+                    </Section>
+                );
+
+            case 'cta':
+                return <CtaSection key={key} site={data.site} />;
+
+            default:
+                return null;
+        }
+    };
+
+    return <>{sections.map(renderSection)}</>;
 }

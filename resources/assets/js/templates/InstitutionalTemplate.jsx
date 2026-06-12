@@ -22,79 +22,115 @@ const trustItems = [
 ];
 
 export default function InstitutionalTemplate({ data }) {
-    const hero = data.slides[0];
+    const sections = data.sections || [];
+    const hero = data.landing?.hero;
     const heroStyle = hero?.image
         ? { backgroundImage: `linear-gradient(90deg, rgba(7,34,65,.96), rgba(7,34,65,.42)), url("${hero.image}")` }
         : undefined;
 
-    return (
-        <>
-            <section className="hero hero--institutional" style={heroStyle}>
-                <BackgroundBeams />
-                <Reveal className="shell hero-content">
-                    <Badge><Sparkles size={14} /> Institusi modern, layanan terintegrasi</Badge>
-                    <h1>{hero?.title || data.site.name}</h1>
-                    <p>{hero?.caption || data.site.tagline}</p>
-                    <div className="hero-actions">
-                        <Button asChild size="lg">
-                            <a href={hero?.link || '#informasi'}>
-                                Jelajahi platform <ArrowRight size={18} />
-                            </a>
-                        </Button>
-                        <Button variant="outline" asChild size="lg">
-                            <a href="#berita">Lihat kabar terbaru</a>
-                        </Button>
-                    </div>
-                </Reveal>
-            </section>
+    const renderSection = (section) => {
+        if (!section.is_active) return null;
+        const key = section.landing_section_id;
 
-            <ValueStrip />
-            <Marquee items={[
-                'Pembelajaran relevan',
-                'Layanan kampus terintegrasi',
-                'Mutu berbasis data',
-                'Kolaborasi industri',
-                'Inovasi berkelanjutan',
-            ]} />
+        switch (section.section_key) {
+            case 'hero':
+                return (
+                    <React.Fragment key={key}>
+                        <section className="hero hero--institutional" style={heroStyle}>
+                            <BackgroundBeams />
+                            <Reveal className="shell hero-content">
+                                <Badge><Sparkles size={14} /> {section.pre_title || 'Institusi modern, layanan terintegrasi'}</Badge>
+                                <h1>{hero?.title || data.site.name}</h1>
+                                {hero?.subtitle && <p className="hero-subtitle">{hero.subtitle}</p>}
+                                <p>{hero?.description || data.site.tagline}</p>
+                                <div className="hero-actions">
+                                    <Button asChild size="lg">
+                                        <a href={hero?.buttonPrimary?.link || '#informasi'}>
+                                            {hero?.buttonPrimary?.text || 'Jelajahi platform'} <ArrowRight size={18} />
+                                        </a>
+                                    </Button>
+                                    <Button variant="outline" asChild size="lg">
+                                        <a href={hero?.buttonSecondary?.link || '#berita'}>{hero?.buttonSecondary?.text || 'Lihat kabar terbaru'}</a>
+                                    </Button>
+                                </div>
+                            </Reveal>
+                        </section>
+                        <ValueStrip />
+                        <Marquee items={[
+                            'Pembelajaran relevan',
+                            'Layanan kampus terintegrasi',
+                            'Mutu berbasis data',
+                            'Kolaborasi industri',
+                            'Inovasi berkelanjutan',
+                        ]} />
+                    </React.Fragment>
+                );
 
-            <section className="trust-strip">
-                <div className="shell trust-grid">
-                    {trustItems.map(([title, text]) => (
-                        <div key={title}>
-                            <CheckCircle2 />
-                            <div><strong>{title}</strong><span>{text}</span></div>
-                        </div>
-                    ))}
-                </div>
-            </section>
+            case 'features':
+            case 'feature':
+                return (
+                    <React.Fragment key={key}>
+                        <section className="trust-strip">
+                            <div className="shell trust-grid">
+                                {trustItems.map(([title, text]) => (
+                                    <div key={title}>
+                                        <CheckCircle2 />
+                                        <div><strong>{title}</strong><span>{text}</span></div>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                        <PlatformOverview
+                            site={data.site}
+                            image={hero?.image}
+                            pageCount={data.pages.length}
+                        />
+                    </React.Fragment>
+                );
 
-            <PlatformOverview
-                site={data.site}
-                image={hero?.image}
-                pageCount={data.pages.length}
-            />
-            <PartnerCloud partners={data.partners} />
+            case 'clients':
+            case 'client':
+                return <PartnerCloud key={key} partners={data.partners} />;
 
-            <Section
-                id="informasi"
-                eyebrow="Kapabilitas institusi"
-                title="Informasi utama dalam satu ekosistem"
-                text="Akses profil, layanan, program, dan informasi penting melalui pengalaman digital yang konsisten."
-            >
-                <PagesGrid pages={data.pages} />
-            </Section>
+            case 'products':
+            case 'product':
+                return (
+                    <Section key={key}
+                        id="informasi"
+                        eyebrow="Kapabilitas institusi"
+                        title={section.title || 'Informasi utama dalam satu ekosistem'}
+                        text={section.subtitle || 'Akses profil, layanan, program, dan informasi penting melalui pengalaman digital yang konsisten.'}
+                    >
+                        <PagesGrid pages={data.pages} />
+                    </Section>
+                );
 
-            <TestimonialSection testimonials={data.testimonials} />
+            case 'testimonials':
+            case 'testimonial':
+                return <TestimonialSection key={key} testimonials={data.testimonials} />;
 
-            <Section id="berita" dark eyebrow="Informasi terkini" title="Berita dan pengumuman">
-                <NewsGrid announcements={data.announcements} />
-            </Section>
+            case 'pengumuman':
+            case 'announcement':
+                return (
+                    <Section key={key} id="berita" dark eyebrow={section.pre_title || 'Informasi terkini'} title={section.title || 'Berita dan pengumuman'}>
+                        <NewsGrid announcements={data.announcements} />
+                    </Section>
+                );
 
-            <Section eyebrow="Pusat bantuan" title="Pertanyaan yang sering diajukan" narrow>
-                <FaqSection faqs={data.faqs} />
-            </Section>
+            case 'faq':
+                return (
+                    <Section key={key} eyebrow={section.pre_title || 'Pusat bantuan'} title={section.title || 'Pertanyaan yang sering diajukan'} narrow>
+                        <FaqSection faqs={data.faqs} />
+                    </Section>
+                );
 
-            <CtaSection site={data.site} />
-        </>
-    );
+            case 'cta':
+                return <CtaSection key={key} site={data.site} />;
+
+            default:
+                return null;
+        }
+    };
+
+    return <>{sections.map(renderSection)}</>;
 }

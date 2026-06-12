@@ -3,6 +3,9 @@
 @section('header')
 <x-ui.page-header :title="ucfirst($type)" pretitle="CMS">
     <x-slot:actions>
+        <a href="{{ route('public.cms.landing.index') }}" class="btn btn-outline-secondary">
+            <i class="ti ti-arrow-left me-1"></i>Kembali
+        </a>
         <x-ui.button type="create" :href="route('public.cms.'.$type . '.create', ['type' => $type])" :text="'Tambah ' . ucfirst($type)" />
     </x-slot:actions>
 </x-ui.page-header>
