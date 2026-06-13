@@ -8,9 +8,7 @@
         <a href="{{ route('public.preview', ['template' => $selectedTemplate]) }}" target="_blank" class="btn btn-outline-primary">
             <i class="ti ti-eye me-1"></i>Pratinjau
         </a>
-        @can('public.cms.update')
-            <x-ui.button type="submit" form="landing-template-form" text="Simpan Template" />
-        @endcan
+        {{-- Auto-save template on selection - button removed --}}
     </x-slot:actions>
 </x-ui.page-header>
 @endsection
@@ -18,7 +16,7 @@
 @section('content')
 <div class="alert alert-info d-flex align-items-center mb-3" role="alert">
     <i class="ti ti-info-circle fs-2 me-2"></i>
-    <div>Pilih salah satu template, lalu klik <strong>Simpan Template</strong>. Pratinjau tidak mengubah template yang sedang digunakan.</div>
+    <div>Pilih salah satu template untuk langsung <strong>diterapkan</strong>. Pratinjau tidak mengubah template yang sedang digunakan.</div>
 </div>
 <form id="landing-template-form" method="POST" action="{{ route('public.cms.landing.update') }}">
     @csrf
@@ -27,12 +25,10 @@
         @foreach($templates as $template)
             @php
                 $details = match($template) {
-                    'institutional' => ['Institusional', 'Tampilan terpercaya dan formal untuk profil institusi.', 'building-bank'],
                     'modern' => ['Modern', 'Visual progresif dengan pengalaman digital yang dinamis.', 'sparkles'],
                     'editorial' => ['Editorial', 'Berorientasi konten dengan tipografi dan berita yang kuat.', 'news'],
                     'corporate' => ['Corporate', 'Tampilan mewah dan elegan untuk institusi serta mitra korporat.', 'building-skyscraper'],
                     'launch' => ['Launch UI', 'Desain segar dengan hero, fitur, produk, statistik, dan CTA yang dapat dikelola penuh.', 'rocket'],
-                    'custom' => ['Custom', 'Template sepenuhnya dapat dikustomisasi dengan drag & drop sections.', 'settings'],
                 };
             @endphp
             @php($isSelected = old('landing_template', $selectedTemplate) === $template)
@@ -58,3 +54,57 @@
     </div>
 </form>
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const templateForm = document.getElementById('landing-template-form');
+    if (templateForm) {
+        const templateInputs = templateForm.querySelectorAll('input[name="landing_template"]');
+        templateInputs.forEach(input => {
+            input.addEventListener('change', function() {
+                const selectedTemplate = this.value;
+                
+                // Update UI immediately for better UX
+                templateInputs.forEach(t => {
+                    const card = t.closest('.card');
+                    if (t.value === selectedTemplate) {
+                        card.classList.add('border-primary', 'border-2');
+                        const badge = card.querySelector('.badge');
+                        if (!badge) {
+                            const newBadge = document.createElement('span');
+                            newBadge.className = 'badge bg-primary-lt';
+                            newBadge.textContent = 'Sedang digunakan';
+                            card.querySelector('.d-flex.align-items-center.gap-2').appendChild(newBadge);
+                        }
+                    } else {
+                        card.classList.remove('border-primary', 'border-2');
+                        const badge = card.querySelector('.badge');
+                        if (badge) badge.remove();
+                    }
+                });
+
+                // Send auto-save request
+                axios.put('{{ route('public.cms.landing.update') }}', {
+                    _token: '{{ csrf_token() }}',
+                    landing_template: selectedTemplate
+                })
+                .then(response => {
+                    window.showSuccessMessage('Template berhasil diubah ke ' + selectedTemplate + '!');
+                })
+                .catch(error => {
+                    console.error('Template save error:', error);
+                    let msg = 'Gagal mengubah template!';
+                    if (error.response?.data?.message) {
+                        msg = error.response.data.message;
+                    } else if (error.response?.data?.errors) {
+                        msg = Object.values(error.response.data.errors).flat().join(', ');
+                    }
+                    window.showErrorMessage(msg);
+                });
+            });
+        });
+    }
+});
+</script>
+@endpush

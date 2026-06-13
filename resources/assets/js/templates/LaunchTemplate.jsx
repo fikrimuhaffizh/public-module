@@ -72,7 +72,7 @@ export default function LaunchTemplate({ data }) {
                     <section key={key} className="launch-stats">
                         <div className="shell">
                             <Stagger className="launch-stats-grid">
-                                {landing.statistics.map((stat) => (
+                                {landing.statistics.slice(0, section.limit_data || landing.statistics.length).map((stat) => (
                                     <SpotlightCard key={stat.id} className="launch-stat-card">
                                         <IconOrImage icon={stat.icon} className="launch-stat-icon" />
                                         <strong>{stat.value}</strong>
@@ -88,7 +88,7 @@ export default function LaunchTemplate({ data }) {
                 return landing?.features?.length > 0 ? (
                     <Section key={key} section={section} eyebrow={section.pre_title || 'Keunggulan'} title={section.title || 'Semua yang dibutuhkan institusi'} text={section.subtitle || section.post_title || 'Fitur dirancang untuk mendukung transformasi digital kampus secara menyeluruh.'}>
                         <Stagger className="launch-bento">
-                            {landing.features.map((feature, index) => (
+                            {landing.features.slice(0, section.limit_data || landing.features.length).map((feature, index) => (
                                 <SpotlightCard key={feature.id} className={`launch-bento-item ${index === 0 ? 'launch-bento-item--lead' : ''}`}>
                                     <IconOrImage icon={feature.icon} image={feature.image} className="launch-feature-icon" />
                                     <h3>{feature.title}</h3>
@@ -103,7 +103,7 @@ export default function LaunchTemplate({ data }) {
                 return landing?.products?.length > 0 ? (
                     <Section key={key} section={section} id="modul" tint eyebrow={section.pre_title || 'Ekosistem modul'} title={section.title || 'Solusi modular siap pakai'} text={section.subtitle || section.post_title}>
                         <Stagger className="launch-products">
-                            {landing.products.map((product) => (
+                            {landing.products.slice(0, section.limit_data || landing.products.length).map((product) => (
                                 <SpotlightCard key={product.id} className="launch-product-card">
                                     {product.image && <img src={product.image} alt={product.name} className="launch-product-image" />}
                                     <div className="launch-product-body">
@@ -154,7 +154,7 @@ export default function LaunchTemplate({ data }) {
             case 'pengumuman':
                 return (
                     <Section key={key} section={section} id="berita" eyebrow={section.pre_title || 'Kabar terbaru'} title={section.title || 'Informasi dan pengumuman kampus'} text={section.subtitle || section.post_title}>
-                        <NewsGrid announcements={data.announcements} />
+                        <NewsGrid announcements={data.announcements} section={section} />
                     </Section>
                 );
 

@@ -99,7 +99,7 @@ export default function ModernTemplate({ data }) {
                         title={section.title || 'Semua yang dibutuhkan sivitas akademika'}
                         text={section.subtitle || section.post_title || 'Pengalaman digital yang sederhana di depan, dengan pengelolaan konten yang terstruktur di belakang.'}
                     >
-                        <PagesGrid pages={data.pages} />
+                        <PagesGrid pages={data.pages} section={section} />
                     </Section>
                 );
 
@@ -109,7 +109,7 @@ export default function ModernTemplate({ data }) {
             case 'pengumuman':
                 return (
                     <Section key={key} section={section} id="berita" tint eyebrow={section.pre_title || 'Tetap terhubung'} title={section.title || 'Kabar terbaru kampus'} text={section.subtitle || section.post_title}>
-                        <NewsGrid announcements={data.announcements} />
+                        <NewsGrid announcements={data.announcements} section={section} />
                     </Section>
                 );
 

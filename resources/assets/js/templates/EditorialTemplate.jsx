@@ -73,7 +73,7 @@ export default function EditorialTemplate({ data }) {
             case 'pengumuman':
                 return (
                     <Section key={key} section={section} id="berita" eyebrow={section.pre_title || 'Sorotan utama'} title={section.title || 'Cerita dan perkembangan terbaru'} text={section.subtitle || section.post_title}>
-                        <NewsGrid announcements={data.announcements} editorial />
+                        <NewsGrid announcements={data.announcements} section={section} editorial />
                     </Section>
                 );
 
@@ -85,7 +85,7 @@ export default function EditorialTemplate({ data }) {
                             <h2>{section.title || 'Informasi yang membentuk pengalaman akademik'}</h2>
                             <p>{section.subtitle || section.post_title || 'Akses cepat menuju profil, layanan, program, dan sumber informasi penting.'}</p>
                         </div>
-                        <PagesGrid pages={data.pages} />
+                        <PagesGrid pages={data.pages} section={section} />
                     </section>
                 );
 

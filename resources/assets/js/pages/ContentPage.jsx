@@ -6,10 +6,10 @@ import { Reveal } from '@public/components/motion/effects';
 import { SiteLayout } from '@public/layouts/PublicLayout';
 
 export default function ContentPage() {
-    const { site, menus, template, page } = usePage().props;
+    const { site, menus, template, sections, page } = usePage().props;
 
     return (
-        <SiteLayout title={page.title} site={site} menus={menus} template={template}>
+        <SiteLayout title={page.title} site={site} menus={menus} template={template} sections={sections}>
             <main className="dynamic-page">
                 <div className="dynamic-page-hero">
                     <Reveal className="shell shell--article">

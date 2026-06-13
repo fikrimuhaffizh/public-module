@@ -19,17 +19,20 @@ class Page extends Model implements HasMedia
 
     protected $primaryKey = 'page_id';
 
-    protected $appends = ['encrypted_page_id'];
+    protected $appends = ['encrypted_page_id', 'main_image_url'];
 
     public function getEncryptedPageIdAttribute()
     {
         return encryptId($this->page_id);
     }
 
+    public function getMainImageUrlAttribute(): ?string
+    {
+        $media = $this->getFirstMedia('main_image');
+        return $media ? sys_media_url($media) : null;
+    }
+
     protected $fillable = [
-        'title',
-        'slug',
-        'content',
         'meta_desc',
         'meta_keywords',
         'is_published',

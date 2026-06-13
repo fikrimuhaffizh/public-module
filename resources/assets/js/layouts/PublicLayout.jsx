@@ -13,9 +13,8 @@ export function SiteLayout({ children, title, site, menus, template, preview = f
     const [open, setOpen] = React.useState(false);
     const pageTitle = seo?.title || (title ? `${title} - ${site.name}` : site.name);
     const pageDesc = seo?.description || site.tagline || '';
-    const isCustomTemplate = template === 'custom';
-    const showHeader = !isCustomTemplate && isSectionActive(sections, 'navbar');
-    const showFooter = !isCustomTemplate && isSectionActive(sections, 'footer');
+    const showHeader = isSectionActive(sections, 'navbar');
+    const showFooter = isSectionActive(sections, 'footer');
 
     return <div className={`theme-${template}`}>
         <Head title={pageTitle}>
@@ -72,12 +71,10 @@ export function SiteLayout({ children, title, site, menus, template, preview = f
 
 export function TemplatePicker({ template }) {
     const labels = {
-        institutional: 'Institusional',
         modern: 'Modern',
         editorial: 'Editorial',
         corporate: 'Corporate',
         launch: 'Launch UI',
-        custom: 'Custom',
     };
     return <div className="template-picker"><span>Pratinjau:</span>{Object.entries(labels).map(([key, label]) =>
         <a key={key} className={template === key ? 'active' : ''} href={`?template=${key}`}>{label}</a>)}</div>;

@@ -81,7 +81,7 @@ class Slideshow extends Model implements HasMedia
         }
         $media = $this->getFirstMedia('slideshow_image');
 
-        return $media ? $media->getUrl() : 'https://via.placeholder.com/1200x600?text=No+Image';
+        return $media ? sys_media_url($media) : 'https://via.placeholder.com/1200x600?text=No+Image';
     }
 
     public function getThumbUrlAttribute()
@@ -92,7 +92,7 @@ class Slideshow extends Model implements HasMedia
         }
         $media = $this->getFirstMedia('slideshow_image');
 
-        return $media ? $media->getUrl('thumb') : 'https://via.placeholder.com/400x400?text=No+Image';
+        return $media ? sys_media_url($media, null, 60, 'thumb') : 'https://via.placeholder.com/400x400?text=No+Image';
     }
 
     public function getLargeUrlAttribute()
@@ -103,6 +103,6 @@ class Slideshow extends Model implements HasMedia
         }
         $media = $this->getFirstMedia('slideshow_image');
 
-        return $media ? $media->getUrl('large') : 'https://via.placeholder.com/1200x600?text=No+Image';
+        return $media ? sys_media_url($media, null, 60, 'large') : 'https://via.placeholder.com/1200x600?text=No+Image';
     }
 }

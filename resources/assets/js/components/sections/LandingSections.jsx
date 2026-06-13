@@ -106,12 +106,13 @@ export function Section({
     );
 }
 
-export function PagesGrid({ pages }) {
+export function PagesGrid({ pages, section }) {
     const icons = [Building2, GraduationCap, BookOpen, Users, ShieldCheck, CalendarDays];
+    const limit = section?.limit_data || 6;
 
     return (
         <Stagger className="feature-grid">
-            {pages.slice(0, 6).map((page, index) => {
+            {pages.slice(0, limit).map((page, index) => {
                 const Icon = icons[index % icons.length];
 
                 return (
@@ -129,12 +130,13 @@ export function PagesGrid({ pages }) {
     );
 }
 
-export function NewsGrid({ announcements, editorial = false }) {
+export function NewsGrid({ announcements, section, editorial = false }) {
     const gridClass = editorial ? 'news-grid news-grid--editorial' : 'news-grid';
+    const limit = section?.limit_data || 6;
 
     return (
         <Stagger className={gridClass}>
-            {announcements.map((item, index) => (
+            {announcements.slice(0, limit).map((item, index) => (
                 <SpotlightCard
                     key={item.id}
                     className={index === 0 && editorial ? 'news-card news-card--lead' : 'news-card'}
@@ -237,6 +239,8 @@ export function ValueStrip() {
 
 export function PartnerCloud({ partners, section }) {
     if (!partners?.length) return null;
+    const limit = section?.limit_data;
+    const visiblePartners = limit ? partners.slice(0, limit) : partners;
     const heading = sectionHeading(section, {
         eyebrow: 'Dipercaya dan berkolaborasi',
         title: 'Partner dalam ekosistem kami',
@@ -251,7 +255,7 @@ export function PartnerCloud({ partners, section }) {
                     {heading.text && <p>{heading.text}</p>}
                 </Reveal>
                 <div className="partner-cloud">
-                    {partners.map(partner => {
+                    {visiblePartners.map(partner => {
                         const content = partner.logo
                             ? <img src={partner.logo} alt={partner.name} />
                             : <strong>{partner.name}</strong>;
@@ -268,6 +272,7 @@ export function PartnerCloud({ partners, section }) {
 
 export function TestimonialSection({ testimonials, section }) {
     if (!testimonials?.length) return null;
+    const limit = section?.limit_data || 6;
     const heading = sectionHeading(section, {
         eyebrow: 'Cerita dari komunitas',
         title: 'Pengalaman nyata dalam ekosistem kami',
@@ -282,7 +287,7 @@ export function TestimonialSection({ testimonials, section }) {
             text={heading.text}
         >
             <Stagger className="testimonial-grid">
-                {testimonials.slice(0, 6).map(testimonial => (
+                {testimonials.slice(0, limit).map(testimonial => (
                     <SpotlightCard key={testimonial.id} className="testimonial-card">
                         <div className="testimonial-rating">
                             {Array.from({ length: testimonial.rating || 5 }).map((_, index) => (

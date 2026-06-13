@@ -41,7 +41,8 @@ class Product extends Model implements HasMedia
 
     public function getImageUrlAttribute(): ?string
     {
-        return $this->getFirstMediaUrl('image', 'card') ?: null;
+        $media = $this->getFirstMedia('image');
+        return $media ? sys_media_url($media, null, 60, 'card') : null;
     }
 
     public function registerMediaCollections(): void

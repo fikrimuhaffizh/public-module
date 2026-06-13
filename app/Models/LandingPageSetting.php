@@ -36,12 +36,14 @@ class LandingPageSetting extends Model implements HasMedia
 
     public function getLogoUrlAttribute(): ?string
     {
-        return $this->getFirstMediaUrl('logo', 'logo') ?: null;
+        $media = $this->getFirstMedia('logo');
+        return $media ? sys_media_url($media, null, 60, 'logo') : null;
     }
 
     public function getFaviconUrlAttribute(): ?string
     {
-        return $this->getFirstMediaUrl('favicon', 'favicon') ?: null;
+        $media = $this->getFirstMedia('favicon');
+        return $media ? sys_media_url($media, null, 60, 'favicon') : null;
     }
 
     public function registerMediaCollections(): void
@@ -53,8 +55,9 @@ class LandingPageSetting extends Model implements HasMedia
     public function registerMediaConversions(?Media $media = null): void
     {
         if ($media?->collection_name === 'logo') {
+            // Use Fit::Max to resize without adding background color
             $this->addMediaConversion('logo')
-                ->fit(Fit::Contain, 320, 120)
+                ->fit(Fit::Max, 320, 120)
                 ->nonQueued();
         }
 

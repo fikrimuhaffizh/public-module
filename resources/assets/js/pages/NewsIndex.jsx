@@ -5,8 +5,8 @@ import { NewsGrid } from '@public/components/sections/LandingSections';
 import { Reveal } from '@public/components/motion/effects';
 
 export default function NewsIndex() {
-    const { site, menus, template, announcements } = usePage().props;
-    return <SiteLayout title="Berita dan Pengumuman" site={site} menus={menus} template={template}>
+    const { site, menus, template, sections, announcements } = usePage().props;
+    return <SiteLayout title="Berita dan Pengumuman" site={site} menus={menus} template={template} sections={sections}>
                 <main className="inner-page">
                     <div className="shell">
                         <Reveal className="inner-hero">

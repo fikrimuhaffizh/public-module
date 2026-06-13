@@ -2,8 +2,8 @@
 
 namespace Modules\Public\app\Services;
 
-use App\Models\Sys\Tenant;
-use App\Services\Sys\TenantConfigService;
+use App\Models\Account\Tenant;
+use App\Services\Account\TenantConfigService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -24,7 +24,7 @@ use Modules\Public\app\Models\Testimonial;
 
 class LandingPageService
 {
-    public const TEMPLATES = ['institutional', 'modern', 'editorial', 'corporate', 'launch', 'custom'];
+    public const TEMPLATES = ['modern', 'editorial', 'corporate', 'launch'];
 
     public function __construct(private TenantConfigService $tenantConfig) {}
 
@@ -38,10 +38,10 @@ class LandingPageService
             sys_tenant_id(),
             'public',
             'landing_template',
-            config('public.landing_template', 'institutional')
+            config('public.landing_template', 'modern')
         );
 
-        return in_array($selected, self::TEMPLATES, true) ? $selected : 'institutional';
+        return in_array($selected, self::TEMPLATES, true) ? $selected : 'modern';
     }
 
     public function saveTemplate(string $template): void
@@ -82,6 +82,8 @@ class LandingPageService
                 'keywords' => $settings?->meta_keywords,
             ],
             'menus' => $this->menus(),
+            // Include sections for navbar/footer visibility on all pages
+            'sections' => $this->sectionOrder(),
         ];
     }
 
@@ -102,15 +104,11 @@ class LandingPageService
                 ->map(fn (Page $page) => $this->pageSummary($page))->values(),
         ];
 
-        // Sections list (for show/hide & reorder) — lightweight metadata only for non-custom
-        $data['sections'] = $template === 'custom'
-            ? $this->sections()
-            : $this->sectionOrder();
+        // Sections list (for show/hide & reorder) — includes variant for all templates
+        $data['sections'] = $this->sectionOrder();
 
-        // Legacy aggregated data used by LaunchTemplate
-        if ($template !== 'custom') {
-            $data['landing'] = $this->landingContent();
-        }
+        // Legacy aggregated data used by templates
+        $data['landing'] = $this->landingContent();
 
         return $data;
     }
@@ -212,8 +210,7 @@ class LandingPageService
 
     /**
      * Lightweight section list for preset templates.
-     * Presets consume order/status/content overrides only; visual variants are
-     * intentionally reserved for the custom template renderer.
+     * Now includes variant for visual customization.
      */
     public function sectionOrder(): array
     {
@@ -234,6 +231,8 @@ class LandingPageService
             'post_title' => $section->post_title,
             'subtitle' => $section->subtitle,
             'is_active' => $section->is_active,
+            'limit_data' => $section->limit_data,
+            'variant' => $section->variant,
             'settings' => $section->settings,
         ])->values()->toArray();
     }

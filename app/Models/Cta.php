@@ -39,7 +39,8 @@ class Cta extends Model implements HasMedia
 
     public function getBackgroundImageUrlAttribute(): ?string
     {
-        return $this->getFirstMediaUrl('background', 'bg') ?: null;
+        $media = $this->getFirstMedia('background');
+        return $media ? sys_media_url($media, null, 60, 'bg') : null;
     }
 
     public function registerMediaCollections(): void

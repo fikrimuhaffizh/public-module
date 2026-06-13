@@ -40,7 +40,7 @@
             <div class="mt-4">
                 <h4 class="card-title mb-3">Cover Image</h4>
                 <div class="text-center">
-                    <img src="{{ $coverMedia->getFullUrl() }}" alt="Cover Image" class="rounded border shadow-sm img-fluid" style="max-height: 250px;">
+                    <img src="{{ sys_media_url($coverMedia) }}" alt="Cover Image" class="rounded border shadow-sm img-fluid" style="max-height: 250px;">
                 </div>
             </div>
         @endif
@@ -62,7 +62,7 @@
                                 <div class="fw-bold">{{ $attachment->file_name }}</div>
                                 <div class="text-muted small">{{ number_format($attachment->size / 1024, 2) }} KB • {{ strtoupper($attachment->extension) }}</div>
                             </div>
-                            <x-ui.button type="link" :href="$attachment->getFullUrl()" text="Download" icon="ti ti-download" class="btn-sm btn-outline-primary" target="_blank" />
+                            <x-ui.button type="link" :href="sys_media_url($attachment)" text="Download" icon="ti ti-download" class="btn-sm btn-outline-primary" target="_blank" />
                         </div>
                     @endforeach
                 </div>
@@ -127,14 +127,14 @@
                         </div>
 
                         @php
-                            $coverMedia = $pengumuman->getFirstMedia('info_cover');
-                            $attachments = $pengumuman->getMedia('info_attachment');
+                            $coverMedia = $pengumuman->getFirstMedia('cover');
+                            $attachments = $pengumuman->getMedia('attachments');
                         @endphp
 
                         @if($coverMedia)
                             <div class="mt-4">
                                 <h4 class="card-title mb-3">Cover Image</h4>
-                                <img src="{{ $coverMedia->getFullUrl() }}" alt="Cover Image" class="rounded border shadow-sm" style="max-height: 300px;">
+                                <img src="{{ sys_media_url($coverMedia) }}" alt="Cover Image" class="rounded border shadow-sm" style="max-height: 300px;">
                             </div>
                         @endif
 
@@ -155,7 +155,7 @@
                                                 <div class="fw-bold">{{ $attachment->file_name }}</div>
                                                 <div class="text-muted small">{{ number_format($attachment->size / 1024, 2) }} KB • {{ strtoupper($attachment->extension) }}</div>
                                             </div>
-                                            <x-ui.button type="link" :href="$attachment->getFullUrl()" text="Download" icon="ti ti-download" class="btn-sm btn-outline-primary" target="_blank" />
+                                            <x-ui.button type="link" :href="sys_media_url($attachment)" text="Download" icon="ti ti-download" class="btn-sm btn-outline-primary" target="_blank" />
                                         </div>
                                     @endforeach
                                 </div>

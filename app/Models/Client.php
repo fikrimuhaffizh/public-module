@@ -38,7 +38,8 @@ class Client extends Model implements HasMedia
 
     public function getLogoUrlAttribute(): ?string
     {
-        return $this->getFirstMediaUrl('logo', 'logo') ?: null;
+        $media = $this->getFirstMedia('logo');
+        return $media ? sys_media_url($media, null, 60, 'logo') : null;
     }
 
     public function registerMediaCollections(): void

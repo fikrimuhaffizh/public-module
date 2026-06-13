@@ -5,7 +5,7 @@
 @section('header')
 <x-ui.page-header title="Landing Sections" pretitle="Landing Page">
     <x-slot:actions>
-        <a href="{{ route('public.preview', ['template' => 'custom']) }}" target="_blank" class="btn btn-outline-primary">
+        <a href="{{ route('public.preview', ['template' => 'modern']) }}" target="_blank" class="btn btn-outline-primary">
             <i class="ti ti-eye me-1"></i>Pratinjau
         </a>
     </x-slot:actions>

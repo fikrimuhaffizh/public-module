@@ -2,7 +2,7 @@
 
 namespace Modules\Public\app\Models;
 
-use App\Models\Sys\User;
+use App\Models\Account\User;
 use App\Traits\BelongsToTenant;
 use App\Traits\Blameable;
 use App\Traits\HashidBinding;
@@ -46,7 +46,7 @@ class Pengumuman extends Model implements HasMedia
      */
     public function penulis()
     {
-        return $this->belongsTo(\App\Models\Sys\User::class, 'penulis_id');
+        return $this->belongsTo(\App\Models\Account\User::class, 'penulis_id');
     }
 
     public function registerMediaCollections(): void
@@ -54,11 +54,9 @@ class Pengumuman extends Model implements HasMedia
         $this->addMediaCollection('cover')
             ->useFallbackUrl(asset('images/no-image.jpg'))
             ->useFallbackPath(public_path('images/no-image.jpg'))
-            ->useDisk('public')
             ->singleFile();
 
         $this->addMediaCollection('attachments')
-            ->useDisk('public')
             ->acceptsMimeTypes([
                 'application/pdf',
                 'application/msword',
@@ -105,7 +103,8 @@ class Pengumuman extends Model implements HasMedia
             return $imageUrl;
         }
 
-        return $this->getFirstMediaUrl('cover');
+        $media = $this->getFirstMedia('cover');
+        return $media ? sys_media_url($media) : asset('images/no-image.jpg');
     }
 
     public function getCoverSmallUrlAttribute()
@@ -115,7 +114,8 @@ class Pengumuman extends Model implements HasMedia
             return $imageUrl;
         }
 
-        return $this->getFirstMediaUrl('cover', 'small');
+        $media = $this->getFirstMedia('cover');
+        return $media ? sys_media_url($media, null, 60, 'small') : asset('images/no-image.jpg');
     }
 
     public function getCoverMediumUrlAttribute()
@@ -125,12 +125,14 @@ class Pengumuman extends Model implements HasMedia
             return $imageUrl;
         }
 
-        return $this->getFirstMediaUrl('cover', 'medium');
+        $media = $this->getFirstMedia('cover');
+        return $media ? sys_media_url($media, null, 60, 'medium') : asset('images/no-image.jpg');
     }
 
     public function getAttachmentsUrlAttribute()
     {
-        return $this->getFirstMediaUrl('attachments');
+        $media = $this->getFirstMedia('attachments');
+        return $media ? sys_media_url($media) : null;
     }
 
     public function getEncryptedPengumumanIdAttribute()

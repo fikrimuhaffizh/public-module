@@ -16,7 +16,7 @@
                     <x-ui.card-body>
                         @if($page->hasMedia('main_image'))
                             <div class="mb-3">
-                                <img src="{{ $page->getFirstMediaUrl('main_image') }}" alt="{{ $page->title }}" class="img-fluid rounded w-100 object-cover" style="max-height: 400px;">
+                                <img src="{{ sys_media_url($page->getFirstMedia('main_image')) }}" alt="{{ $page->title }}" class="img-fluid rounded w-100 object-cover" style="max-height: 400px;">
                             </div>
                         @endif
 
@@ -65,7 +65,7 @@
                         <div class="list-group-item d-flex justify-content-between align-items-center">
                             <div class="text-truncate me-3">
                                 <i class="ti ti-file me-2"></i>
-                                <a href="{{ $media->getUrl() }}" target="_blank" class="text-reset text-truncate">
+                                <a href="{{ sys_media_url($media) }}" target="_blank" class="text-reset text-truncate">
                                     {{ $media->file_name }}
                                 </a>
                             </div>

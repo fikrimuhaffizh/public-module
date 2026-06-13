@@ -2,7 +2,7 @@
 
 namespace Modules\Public\Database\Seeders;
 
-use App\Models\Sys\User;
+use App\Models\Account\User;
 use Illuminate\Database\Seeder;
 use Modules\Public\app\Models\FAQ;
 use Modules\Public\app\Models\Menu;

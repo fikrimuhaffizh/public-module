@@ -27,13 +27,19 @@ import { Badge } from '@public/components/ui/badge';
 import { Button } from '@public/components/ui/button';
 import { Reveal, SpotlightCard, Stagger } from '@public/components/motion/effects';
 
+function alignClass(section) {
+  const align = section?.settings?.text_align || 'center';
+  const map = { left: 'text-left', center: 'text-center', right: 'text-right' };
+  return map[align] || 'text-center';
+}
+
 function SectionHeader({ section, className = "" }) {
   if (!section.title && !section.pre_title && !section.subtitle && !section.post_title) {
     return null;
   }
 
   return (
-    <Reveal className={`text-center mb-12 ${className}`}>
+    <Reveal className={`${alignClass(section)} mb-12 ${className}`}>
       {section.pre_title && <p className="text-sm font-semibold uppercase tracking-wider text-primary mb-2">{section.pre_title}</p>}
       {section.title && <h2 className="text-2xl md:text-3xl font-bold mb-4">{section.title}</h2>}
       {section.post_title && <p className="text-lg text-muted mb-4">{section.post_title}</p>}
@@ -108,8 +114,9 @@ export function HeroSection({ section, data }) {
   if (!hero) return null;
 
   if (variant === 'hero_2') {
+    const align = alignClass(section);
     return (
-      <section className="hero-section text-center py-20">
+      <section className={`hero-section ${align} py-20`}>
         <div className="shell">
           <Reveal>
             {section.pre_title && <p className="text-sm font-semibold uppercase tracking-wider text-primary mb-2">{section.pre_title}</p>}
@@ -117,7 +124,7 @@ export function HeroSection({ section, data }) {
             {section.post_title && <p className="text-xl text-muted mb-4">{section.post_title}</p>}
             {section.subtitle && <p className="text-lg mb-8 max-w-2xl mx-auto">{section.subtitle}</p>}
             {hero.description && !section.subtitle && <p className="text-lg mb-8 max-w-2xl mx-auto">{hero.description}</p>}
-            <div className="flex flex-wrap gap-4 justify-center">
+            <div className={`flex flex-wrap gap-4 ${align === 'text-center' ? 'justify-center' : align === 'text-right' ? 'justify-end' : 'justify-start'}`}>
               {hero.buttonPrimary?.text && (
                 <Button asChild size="lg">
                   <a href={hero.buttonPrimary.link || '#'}>{hero.buttonPrimary.text}</a>
@@ -378,10 +385,11 @@ export function AnnouncementSection({ section, data }) {
 export function CtaSection({ section, data }) {
   const variant = section.variant || 'cta_1';
   const cta = data.landing?.cta;
+  const align = alignClass(section);
 
   return (
     <section className="cta-section py-16 bg-primary text-white">
-      <div className="shell text-center">
+      <div className={`shell ${align}`}>
         <Reveal>
           {section.pre_title && <p className="text-sm font-semibold uppercase tracking-wider text-white/80 mb-2">{section.pre_title}</p>}
           {section.title && <h2 className="text-2xl md:text-3xl font-bold mb-4">{section.title}</h2>}

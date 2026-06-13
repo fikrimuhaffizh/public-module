@@ -67,7 +67,7 @@ export default function CorporateTemplate({ data }) {
                             <div className="shell corporate-hero-grid">
                                 <Reveal className="corporate-hero-copy">
                                     <Badge variant="outline">
-                                        <Building2 size={14} /> {section.pre_title || 'Institutional digital excellence'}
+                                        <Building2 size={14} /> {section.pre_title || 'Digital excellence'}
                                     </Badge>
                                     <h1>{copy.title}</h1>
                                     {copy.subtitle && <p className="hero-subtitle">{copy.subtitle}</p>}
@@ -184,7 +184,7 @@ export default function CorporateTemplate({ data }) {
                         title={section.title || 'Informasi dan perkembangan terbaru'}
                         text={section.subtitle || section.post_title || 'Ikuti agenda, pencapaian, dan kabar penting dari ekosistem institusi.'}
                     >
-                        <NewsGrid announcements={data.announcements} />
+                        <NewsGrid announcements={data.announcements} section={section} />
                     </Section>
                 );
 

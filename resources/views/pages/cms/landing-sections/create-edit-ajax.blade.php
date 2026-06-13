@@ -3,7 +3,7 @@
         @csrf
         @method('PUT')
         
-        @if(($isCustomTemplate ?? false) && count($sectionMeta['variants'] ?? []) > 0)
+        @if(count($sectionMeta['variants'] ?? []) > 0)
         <div class="mb-3">
             <label class="form-label fw-bold mb-2">Desain Variant</label>
             <div class="row g-2">
