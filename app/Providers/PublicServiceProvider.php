@@ -48,18 +48,10 @@ class PublicServiceProvider extends BaseModuleServiceProvider
                     ],
                     [
                         'priority'      => 30,
-                        'title'         => 'Halaman Statis',
-                        'route'         => 'public.cms.page.index',
-                        'active_routes' => ['public.cms.page.*'],
-                        'icon'          => 'file-text',
-                        'permission'    => 'public.cms.page.view',
-                    ],
-                    [
-                        'priority'      => 40,
-                        'title'         => 'Menu Navigasi',
+                        'title'         => 'Halaman & Navigasi',
                         'route'         => 'public.cms.menu.index',
-                        'active_routes' => ['public.cms.menu.*'],
-                        'icon'          => 'list',
+                        'active_routes' => ['public.cms.menu.*', 'public.cms.page.*'],
+                        'icon'          => 'sitemap',
                         'permission'    => 'public.cms.menu.view',
                     ],
                     [

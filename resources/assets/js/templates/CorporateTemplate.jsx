@@ -20,12 +20,15 @@ import {
     CardHeader,
     CardTitle,
 } from '@public/components/ui/card';
-import { Reveal, Stagger } from '@public/components/motion/effects';
+import { Reveal, SpotlightCard, Stagger } from '@public/components/motion/effects';
 import {
     FaqSection,
     NewsGrid,
     PartnerCloud,
+    PagesGrid,
     Section,
+    SectionHeader,
+    combinedText,
     heroCopy,
     sectionKey,
 } from '@public/components/sections/LandingSections';
@@ -50,8 +53,8 @@ const pillars = [
 
 export default function CorporateTemplate({ data }) {
     const sections = data.sections || [];
-    const hero = data.landing?.hero;
-    const featuredTestimonial = data.testimonials?.[0];
+    const { landing } = data;
+    const hero = landing?.hero;
 
     const renderSection = (section) => {
         if (!section.is_active) return null;
@@ -70,8 +73,7 @@ export default function CorporateTemplate({ data }) {
                                         <Building2 size={14} /> {section.pre_title || 'Digital excellence'}
                                     </Badge>
                                     <h1>{copy.title}</h1>
-                                    {copy.subtitle && <p className="hero-subtitle">{copy.subtitle}</p>}
-                                    <p>{copy.description}</p>
+                                    <p>{copy.subtitle}</p>
                                     <div className="hero-actions">
                                         <Button asChild size="lg">
                                             <a href={hero?.buttonPrimary?.link || '#kapabilitas'}>
@@ -126,7 +128,94 @@ export default function CorporateTemplate({ data }) {
             case 'client':
                 return <PartnerCloud key={key} partners={data.partners} section={section} />;
 
-            case 'feature':
+            case 'statistic':
+                return landing?.statistics?.length > 0 ? (
+                    <section key={key} className="corporate-metrics">
+                        <div className="shell">
+                            <SectionHeader section={section} />
+                            <div className="corporate-metrics-grid">
+                                {landing.statistics.slice(0, section.limit_data || 4).map((stat) => (
+                                    <div key={stat.id}>
+                                        <strong>{stat.value}</strong>
+                                        <span>{stat.label}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+                ) : null;
+
+            case 'product':
+                if (landing?.products?.length > 0) {
+                    return (
+                        <Section key={key} section={section} tint
+                            eyebrow={section.pre_title || 'Solusi kami'}
+                            title={section.title || 'Produk dan layanan institusi'}
+                            text={combinedText(section, 'Jelajahi modul dan solusi yang dirancang untuk kebutuhan kampus.')}
+                        >
+                            <Stagger className="corporate-product-grid">
+                                {landing.products.slice(0, section.limit_data || 6).map((product) => (
+                                    <SpotlightCard key={product.id} className="corporate-product-card">
+                                        {product.image && <img src={product.image} alt={product.name} className="corporate-product-image" />}
+                                        <div className="corporate-product-body">
+                                            <h3>{product.name}</h3>
+                                            <p>{product.shortDescription || product.description}</p>
+                                            {product.demoUrl && (
+                                                <a href={product.demoUrl} target="_blank" rel="noreferrer" className="text-link">
+                                                    Lihat demo <ArrowRight size={16} />
+                                                </a>
+                                            )}
+                                        </div>
+                                    </SpotlightCard>
+                                ))}
+                            </Stagger>
+                        </Section>
+                    );
+                }
+                return (
+                    <Section key={key} section={section} tint
+                        eyebrow={section.pre_title || 'Solusi kami'}
+                        title={section.title || 'Produk dan layanan institusi'}
+                        text={combinedText(section, 'Jelajahi modul dan solusi yang dirancang untuk kebutuhan kampus.')}
+                    >
+                        <PagesGrid pages={data.pages} section={section} />
+                    </Section>
+                );
+
+            case 'feature': {
+                const cmsFeatures = landing?.features || [];
+                if (cmsFeatures.length > 0) {
+                    return (
+                        <section key={key} id="kapabilitas" className="corporate-capabilities">
+                            <div className="shell">
+                                <Reveal className="corporate-section-heading">
+                                    <div>
+                                        <span className="eyebrow">{section.pre_title || 'Kapabilitas utama'}</span>
+                                        <h2>{section.title || 'Fondasi digital untuk institusi yang terus bergerak maju'}</h2>
+                                    </div>
+                                    <p>{combinedText(section, 'Dirancang untuk membangun kepercayaan, memperkuat komunikasi, dan menghadirkan layanan informasi yang berkelas.')}</p>
+                                </Reveal>
+                                <Stagger className="corporate-bento">
+                                    {cmsFeatures.slice(0, section.limit_data || 6).map((feature, index) => (
+                                        <SpotlightCard key={feature.id} className={`corporate-pillar ${index === 0 ? 'corporate-pillar--lead' : ''}`}>
+                                            {feature.image
+                                                ? <img src={feature.image} alt={feature.title} className="corporate-feature-image" />
+                                                : feature.icon && <span className="corporate-pillar-icon"><i className={feature.icon} /></span>}
+                                            <CardHeader>
+                                                <CardTitle>{feature.title}</CardTitle>
+                                                <CardDescription>{feature.description}</CardDescription>
+                                            </CardHeader>
+                                            <CardFooter>
+                                                <span>0{index + 1}</span>
+                                                <ArrowRight />
+                                            </CardFooter>
+                                        </SpotlightCard>
+                                    ))}
+                                </Stagger>
+                            </div>
+                        </section>
+                    );
+                }
                 return (
                     <section key={key} id="kapabilitas" className="corporate-capabilities">
                         <div className="shell">
@@ -135,7 +224,7 @@ export default function CorporateTemplate({ data }) {
                                     <span className="eyebrow">{section.pre_title || 'Kapabilitas utama'}</span>
                                     <h2>{section.title || 'Fondasi digital untuk institusi yang terus bergerak maju'}</h2>
                                 </div>
-                                <p>{section.subtitle || section.post_title || 'Dirancang untuk membangun kepercayaan, memperkuat komunikasi, dan menghadirkan layanan informasi yang berkelas.'}</p>
+                                <p>{combinedText(section, 'Dirancang untuk membangun kepercayaan, memperkuat komunikasi, dan menghadirkan layanan informasi yang berkelas.')}</p>
                             </Reveal>
                             <Stagger className="corporate-bento">
                                 {pillars.map(({ icon: Icon, title, text }, index) => (
@@ -155,24 +244,30 @@ export default function CorporateTemplate({ data }) {
                         </div>
                     </section>
                 );
+            }
 
             case 'testimonial':
-                return featuredTestimonial ? (
-                    <section key={key} className="corporate-quote">
+                return data.testimonials?.length > 0 ? (
+                    <section key={key} className="corporate-testimonials">
                         <div className="shell">
-                            <Reveal className="corporate-quote-card">
-                                <Quote />
-                                <blockquote>"{featuredTestimonial.quote}"</blockquote>
-                                <div>
-                                    {featuredTestimonial.photo
-                                        ? <img src={featuredTestimonial.photo} alt={featuredTestimonial.name} />
-                                        : <span>{featuredTestimonial.name.slice(0, 2).toUpperCase()}</span>}
-                                    <p>
-                                        <strong>{featuredTestimonial.name}</strong>
-                                        <small>{[featuredTestimonial.position, featuredTestimonial.organization].filter(Boolean).join(' · ')}</small>
-                                    </p>
-                                </div>
-                            </Reveal>
+                            <SectionHeader section={section} />
+                            <Stagger className="corporate-testimonials-grid">
+                                {data.testimonials.slice(0, section.limit_data || 6).map((testimonial) => (
+                                    <SpotlightCard key={testimonial.id} className="corporate-testimonial-card">
+                                        <Quote className="corporate-testimonial-quote" />
+                                        <blockquote>"{testimonial.quote}"</blockquote>
+                                        <div className="corporate-testimonial-person">
+                                            {testimonial.photo
+                                                ? <img src={testimonial.photo} alt={testimonial.name} />
+                                                : <span>{testimonial.name.slice(0, 2).toUpperCase()}</span>}
+                                            <div>
+                                                <strong>{testimonial.name}</strong>
+                                                <small>{[testimonial.position, testimonial.organization].filter(Boolean).join(' · ')}</small>
+                                            </div>
+                                        </div>
+                                    </SpotlightCard>
+                                ))}
+                            </Stagger>
                         </div>
                     </section>
                 ) : null;
@@ -182,7 +277,7 @@ export default function CorporateTemplate({ data }) {
                     <Section key={key} section={section}
                         eyebrow={section.pre_title || 'Corporate insights'}
                         title={section.title || 'Informasi dan perkembangan terbaru'}
-                        text={section.subtitle || section.post_title || 'Ikuti agenda, pencapaian, dan kabar penting dari ekosistem institusi.'}
+                        text={combinedText(section, 'Ikuti agenda, pencapaian, dan kabar penting dari ekosistem institusi.')}
                     >
                         <NewsGrid announcements={data.announcements} section={section} />
                     </Section>
@@ -190,7 +285,7 @@ export default function CorporateTemplate({ data }) {
 
             case 'faq':
                 return (
-                    <Section key={key} section={section} dark eyebrow={section.pre_title || 'Informasi praktis'} title={section.title || 'Pertanyaan yang sering diajukan'} narrow>
+                    <Section key={key} section={section} dark eyebrow={section.pre_title || 'Informasi praktis'} title={section.title || 'Pertanyaan yang sering diajukan'} text={combinedText(section)} narrow>
                         <FaqSection faqs={data.faqs} />
                     </Section>
                 );
@@ -203,7 +298,7 @@ export default function CorporateTemplate({ data }) {
                                 <div>
                                     <span className="eyebrow">{section.pre_title || 'Bangun koneksi bernilai'}</span>
                                     <h2>{section.title || 'Mari membuka peluang kolaborasi berikutnya.'}</h2>
-                                    {(section.subtitle || section.post_title) && <p>{section.subtitle || section.post_title}</p>}
+                                    {(section.subtitle || section.post_title) && <p>{combinedText(section)}</p>}
                                 </div>
                                 <Button asChild size="lg">
                                     <Link href={data.site.contactUrl}>Mulai percakapan <ArrowRight /></Link>

@@ -59,7 +59,7 @@ class PublicPageController extends Controller
     {
         $this->pageService->createPage($request->validated());
 
-        return redirect()->route('public.cms.page.index')->with('success', 'Halaman berhasil dibuat.');
+        return redirect()->route('public.cms.menu.index')->with('success', 'Halaman berhasil dibuat.');
     }
 
     public function edit(Page $page)
@@ -71,7 +71,7 @@ class PublicPageController extends Controller
     {
         $this->pageService->updatePage($page->getKey(), $request->validated());
 
-        return redirect()->route('public.cms.page.index')->with('success', 'Halaman berhasil diperbarui.');
+        return redirect()->route('public.cms.menu.index')->with('success', 'Halaman berhasil diperbarui.');
     }
 
     public function destroy(Page $page)

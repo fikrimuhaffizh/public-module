@@ -2,7 +2,7 @@ import React from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { Badge } from '@public/components/ui/badge';
 import { Button } from '@public/components/ui/button';
-import { BackgroundBeams, Marquee, Reveal } from '@public/components/motion/effects';
+import { BackgroundBeams, Marquee, Reveal, SpotlightCard, Stagger } from '@public/components/motion/effects';
 import {
     CtaSection,
     FaqSection,
@@ -11,15 +11,18 @@ import {
     PagesGrid,
     PlatformOverview,
     Section,
+    SectionHeader,
     TestimonialSection,
     ValueStrip,
+    combinedText,
     heroCopy,
     sectionKey,
 } from '@public/components/sections/LandingSections';
 
 export default function ModernTemplate({ data }) {
     const sections = data.sections || [];
-    const hero = data.landing?.hero;
+    const { landing } = data;
+    const hero = landing?.hero;
 
     const renderSection = (section) => {
         if (!section.is_active) return null;
@@ -38,8 +41,7 @@ export default function ModernTemplate({ data }) {
                                 <Reveal className="hero-content">
                                     <Badge><Sparkles size={14} /> {section.pre_title || 'Digital campus platform'}</Badge>
                                     <h1>{copy.title}</h1>
-                                    {copy.subtitle && <p className="hero-subtitle">{copy.subtitle}</p>}
-                                    <p>{copy.description}</p>
+                                    <p>{copy.subtitle}</p>
                                     <div className="hero-actions">
                                         <Button asChild size="lg">
                                             <a href={hero?.buttonPrimary?.link || '#informasi'}>
@@ -88,6 +90,23 @@ export default function ModernTemplate({ data }) {
                     />
                 );
 
+            case 'statistic':
+                return landing?.statistics?.length > 0 ? (
+                    <section key={key} className="section section--tint">
+                        <div className="shell">
+                            <SectionHeader section={section}  />
+                            <Stagger className="launch-stats-grid">
+                                {landing.statistics.slice(0, section.limit_data || 4).map((stat) => (
+                                    <SpotlightCard key={stat.id} className="launch-stat-card">
+                                        <strong>{stat.value}</strong>
+                                        <span>{stat.label}</span>
+                                    </SpotlightCard>
+                                ))}
+                            </Stagger>
+                        </div>
+                    </section>
+                ) : null;
+
             case 'client':
                 return <PartnerCloud key={key} partners={data.partners} section={section} />;
 
@@ -97,7 +116,7 @@ export default function ModernTemplate({ data }) {
                         id="informasi"
                         eyebrow={section.pre_title || 'Satu ekosistem'}
                         title={section.title || 'Semua yang dibutuhkan sivitas akademika'}
-                        text={section.subtitle || section.post_title || 'Pengalaman digital yang sederhana di depan, dengan pengelolaan konten yang terstruktur di belakang.'}
+                        text={combinedText(section, 'Pengalaman digital yang sederhana di depan, dengan pengelolaan konten yang terstruktur di belakang.')}
                     >
                         <PagesGrid pages={data.pages} section={section} />
                     </Section>
@@ -108,14 +127,14 @@ export default function ModernTemplate({ data }) {
 
             case 'pengumuman':
                 return (
-                    <Section key={key} section={section} id="berita" tint eyebrow={section.pre_title || 'Tetap terhubung'} title={section.title || 'Kabar terbaru kampus'} text={section.subtitle || section.post_title}>
+                    <Section key={key} section={section} id="berita" tint eyebrow={section.pre_title || 'Tetap terhubung'} title={section.title || 'Kabar terbaru kampus'} text={combinedText(section)}>
                         <NewsGrid announcements={data.announcements} section={section} />
                     </Section>
                 );
 
             case 'faq':
                 return (
-                    <Section key={key} section={section} eyebrow={section.pre_title || 'Butuh jawaban?'} title={section.title || 'Temukan informasi dengan lebih cepat'} text={section.subtitle || section.post_title} narrow>
+                    <Section key={key} section={section} eyebrow={section.pre_title || 'Butuh jawaban?'} title={section.title || 'Temukan informasi dengan lebih cepat'} text={combinedText(section)} narrow>
                         <FaqSection faqs={data.faqs} />
                     </Section>
                 );

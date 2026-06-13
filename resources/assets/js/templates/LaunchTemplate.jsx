@@ -4,7 +4,7 @@ import { Link } from '@inertiajs/react';
 import { Badge } from '@public/components/ui/badge';
 import { Button } from '@public/components/ui/button';
 import { BackgroundBeams, Marquee, Reveal, SpotlightCard, Stagger } from '@public/components/motion/effects';
-import { FaqSection, NewsGrid, Section, TestimonialSection, heroCopy, sectionKey } from '@public/components/sections/LandingSections';
+import { FaqSection, NewsGrid, Section, SectionHeader, TestimonialSection, combinedText, heroCopy, sectionKey } from '@public/components/sections/LandingSections';
 
 function IconOrImage({ icon, image, className = '' }) {
     if (image) return <img src={image} alt="" className={className} />;
@@ -35,9 +35,8 @@ export default function LaunchTemplate({ data }) {
                         <div className="shell launch-hero-grid">
                             <Reveal className="launch-hero-copy">
                                 <Badge className="launch-badge"><Zap size={14} /> {section.pre_title || 'Platform kampus terintegrasi'}</Badge>
-                                {copy.subtitle && <p className="launch-eyebrow">{copy.subtitle}</p>}
                                 <h1>{copy.title}</h1>
-                                <p>{copy.description}</p>
+                                <p>{copy.subtitle}</p>
                                 <div className="hero-actions">
                                     {(hero?.buttonPrimary?.text) && (
                                         <Button asChild size="lg" className="launch-btn-primary">
@@ -71,6 +70,7 @@ export default function LaunchTemplate({ data }) {
                 return landing?.statistics?.length > 0 ? (
                     <section key={key} className="launch-stats">
                         <div className="shell">
+                            <SectionHeader section={section} />
                             <Stagger className="launch-stats-grid">
                                 {landing.statistics.slice(0, section.limit_data || landing.statistics.length).map((stat) => (
                                     <SpotlightCard key={stat.id} className="launch-stat-card">
@@ -86,7 +86,7 @@ export default function LaunchTemplate({ data }) {
 
             case 'feature':
                 return landing?.features?.length > 0 ? (
-                    <Section key={key} section={section} eyebrow={section.pre_title || 'Keunggulan'} title={section.title || 'Semua yang dibutuhkan institusi'} text={section.subtitle || section.post_title || 'Fitur dirancang untuk mendukung transformasi digital kampus secara menyeluruh.'}>
+                    <Section key={key} section={section} eyebrow={section.pre_title || 'Keunggulan'} title={section.title || 'Semua yang dibutuhkan institusi'} text={combinedText(section, 'Fitur dirancang untuk mendukung transformasi digital kampus secara menyeluruh.')}>
                         <Stagger className="launch-bento">
                             {landing.features.slice(0, section.limit_data || landing.features.length).map((feature, index) => (
                                 <SpotlightCard key={feature.id} className={`launch-bento-item ${index === 0 ? 'launch-bento-item--lead' : ''}`}>
@@ -101,7 +101,7 @@ export default function LaunchTemplate({ data }) {
 
             case 'product':
                 return landing?.products?.length > 0 ? (
-                    <Section key={key} section={section} id="modul" tint eyebrow={section.pre_title || 'Ekosistem modul'} title={section.title || 'Solusi modular siap pakai'} text={section.subtitle || section.post_title}>
+                    <Section key={key} section={section} id="modul" tint eyebrow={section.pre_title || 'Ekosistem modul'} title={section.title || 'Solusi modular siap pakai'} text={combinedText(section)}>
                         <Stagger className="launch-products">
                             {landing.products.slice(0, section.limit_data || landing.products.length).map((product) => (
                                 <SpotlightCard key={product.id} className="launch-product-card">
@@ -127,11 +127,7 @@ export default function LaunchTemplate({ data }) {
                         <Marquee items={landing.clients.map((c) => c.name)} />
                         <section className="launch-clients">
                             <div className="shell">
-                                <Reveal className="section-heading section-heading--center">
-                                    <span className="eyebrow">{section.pre_title || 'Dipercaya'}</span>
-                                    <h2>{section.title || 'Institusi yang memakai platform kami'}</h2>
-                                    {section.subtitle && <p>{section.subtitle}</p>}
-                                </Reveal>
+                                <SectionHeader section={section} />
                                 <div className="launch-clients-grid">
                                     {landing.clients.map((client) => (
                                         client.website
@@ -153,14 +149,14 @@ export default function LaunchTemplate({ data }) {
 
             case 'pengumuman':
                 return (
-                    <Section key={key} section={section} id="berita" eyebrow={section.pre_title || 'Kabar terbaru'} title={section.title || 'Informasi dan pengumuman kampus'} text={section.subtitle || section.post_title}>
+                    <Section key={key} section={section} id="berita" eyebrow={section.pre_title || 'Kabar terbaru'} title={section.title || 'Informasi dan pengumuman kampus'} text={combinedText(section)}>
                         <NewsGrid announcements={data.announcements} section={section} />
                     </Section>
                 );
 
             case 'faq':
                 return (
-                    <Section key={key} section={section} eyebrow={section.pre_title || 'FAQ'} title={section.title || 'Pertanyaan yang sering diajukan'} text={section.subtitle || section.post_title} narrow>
+                    <Section key={key} section={section} eyebrow={section.pre_title || 'FAQ'} title={section.title || 'Pertanyaan yang sering diajukan'} text={combinedText(section)} narrow>
                         <FaqSection faqs={data.faqs} />
                     </Section>
                 );
@@ -178,7 +174,7 @@ export default function LaunchTemplate({ data }) {
                                 <span className="eyebrow">{section.pre_title || 'Mulai sekarang'}</span>
                                 <h2>{section.title || landing.cta.title}</h2>
                                 {(section.subtitle || section.post_title || landing.cta.description) && (
-                                    <p>{section.subtitle || section.post_title || landing.cta.description}</p>
+                                    <p>{combinedText(section, landing.cta.description)}</p>
                                 )}
                                 {landing.cta.buttonText && (
                                     <Button asChild size="lg" className="launch-btn-primary">
@@ -196,7 +192,7 @@ export default function LaunchTemplate({ data }) {
                             <Reveal>
                                 <span className="eyebrow">{section.pre_title || 'Mulai sekarang'}</span>
                                 <h2>{section.title || 'Siap mulai transformasi digital kampus?'}</h2>
-                                <p>{section.subtitle || section.post_title || 'Hubungi tim kami untuk demo dan konsultasi implementasi.'}</p>
+                                <p>{combinedText(section, 'Hubungi tim kami untuk demo dan konsultasi implementasi.')}</p>
                                 <Button asChild size="lg" className="launch-btn-primary">
                                     <Link href={site.contactUrl}>Hubungi Kami <ArrowRight size={18} /></Link>
                                 </Button>

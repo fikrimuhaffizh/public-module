@@ -42,11 +42,18 @@ export function sectionText(section, field, fallback = '') {
     return section?.[field] || fallback;
 }
 
+export function combinedText(section, fallback = '') {
+    const subtitle = section?.subtitle?.trim();
+    const postTitle = section?.post_title?.trim();
+    if (subtitle && postTitle) return `${subtitle} — ${postTitle}`;
+    return subtitle || postTitle || fallback;
+}
+
 export function sectionHeading(section, defaults = {}) {
     return {
         eyebrow: sectionText(section, 'pre_title', defaults.eyebrow || ''),
         title: sectionText(section, 'title', defaults.title || ''),
-        text: sectionText(section, 'subtitle', sectionText(section, 'post_title', defaults.text || '')),
+        text: combinedText(section, defaults.text || ''),
         align: section?.settings?.text_align || defaults.align || 'left',
     };
 }
@@ -65,8 +72,7 @@ export function heroCopy(section, hero, site) {
     return {
         title: heading.title,
         eyebrow: heading.eyebrow,
-        subtitle: sectionText(section, 'subtitle', hero?.subtitle || ''),
-        description: sectionText(section, 'post_title', hero?.description || site.tagline),
+        subtitle: combinedText(section, hero?.subtitle || hero?.description || site.tagline || ''),
         imageAlt: heading.title,
         align: heading.align,
         alignClass: headingAlignClass(section),
@@ -96,13 +102,26 @@ export function Section({
         <section id={id} className={classes}>
             <div className={`shell ${narrow ? 'shell--narrow' : ''}`}>
                 <Reveal className={`section-heading section-heading--${heading.align}`}>
-                    <span className="eyebrow">{heading.eyebrow}</span>
-                    <h2>{heading.title}</h2>
+                    {heading.eyebrow && <span className="eyebrow">{heading.eyebrow}</span>}
+                    {heading.title && <h2>{heading.title}</h2>}
                     {heading.text && <p>{heading.text}</p>}
                 </Reveal>
                 {children}
             </div>
         </section>
+    );
+}
+
+export function SectionHeader({ section, className = '' }) {
+    const heading = sectionHeading(section);
+    if (!heading.eyebrow && !heading.title && !heading.text) return null;
+
+    return (
+        <Reveal className={`section-heading section-heading--${heading.align} ${className}`}>
+            {heading.eyebrow && <span className="eyebrow">{heading.eyebrow}</span>}
+            {heading.title && <h2>{heading.title}</h2>}
+            {heading.text && <p>{heading.text}</p>}
+        </Reveal>
     );
 }
 
@@ -165,7 +184,7 @@ export function PlatformOverview({ site, image, pageCount = 0, section }) {
     const heading = sectionHeading(section, {
         eyebrow: 'Platform institusi digital',
         title: 'Satu pengalaman digital untuk seluruh ekosistem kampus',
-        text: `${site.name} menghadirkan akses informasi yang cepat, rapi, dan mudah digunakan oleh mahasiswa, tenaga pendidik, serta masyarakat.`,
+        text: combinedText(section, `${site.name} menghadirkan akses informasi yang cepat, rapi, dan mudah digunakan oleh mahasiswa, tenaga pendidik, serta masyarakat.`),
     });
     const capabilities = [
         [LayoutDashboard, 'Satu ruang kerja', 'Informasi dan layanan kampus tersaji dalam pengalaman yang konsisten.'],
@@ -250,8 +269,8 @@ export function PartnerCloud({ partners, section }) {
         <section className="partner-section">
             <div className="shell">
                 <Reveal className="partner-heading">
-                    <span className="eyebrow">{heading.eyebrow}</span>
-                    <h2>{heading.title}</h2>
+                    {heading.eyebrow && <span className="eyebrow">{heading.eyebrow}</span>}
+                    {heading.title && <h2>{heading.title}</h2>}
                     {heading.text && <p>{heading.text}</p>}
                 </Reveal>
                 <div className="partner-cloud">
@@ -281,6 +300,7 @@ export function TestimonialSection({ testimonials, section }) {
 
     return (
         <Section
+            section={section}
             tint
             eyebrow={heading.eyebrow}
             title={heading.title}
@@ -322,7 +342,7 @@ export function CtaSection({ site, section }) {
             <div className="shell">
                 <Reveal className="saas-cta-card">
                     <div>
-                        <span className="eyebrow">{heading.eyebrow}</span>
+                        {heading.eyebrow && <span className="eyebrow">{heading.eyebrow}</span>}
                         <h2>{heading.title}</h2>
                         {heading.text && <p>{heading.text}</p>}
                     </div>

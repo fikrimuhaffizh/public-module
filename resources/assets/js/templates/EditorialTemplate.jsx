@@ -10,15 +10,18 @@ import {
     PagesGrid,
     PlatformOverview,
     Section,
+    SectionHeader,
     TestimonialSection,
     ValueStrip,
+    combinedText,
     heroCopy,
     sectionKey,
 } from '@public/components/sections/LandingSections';
 
 export default function EditorialTemplate({ data }) {
     const sections = data.sections || [];
-    const hero = data.landing?.hero;
+    const { landing } = data;
+    const hero = landing?.hero;
 
     const renderSection = (section) => {
         if (!section.is_active) return null;
@@ -31,20 +34,19 @@ export default function EditorialTemplate({ data }) {
                     <React.Fragment key={key}>
                         <Reveal className="editorial-hero shell">
                             <div className="editorial-kicker">
-                                <span>Wawasan</span>
+                                <span>{section.pre_title || 'Wawasan'}</span>
                                 <span>Inovasi</span>
                                 <span>Kolaborasi</span>
                                 <span>Transformasi digital</span>
                             </div>
                             <h1>{copy.title}</h1>
-                            {copy.subtitle && <p className="editorial-hero-sub">{copy.subtitle}</p>}
                             <div className="editorial-hero-grid">
                                 <div className="editorial-image-frame">
                                     {hero?.image && <img src={hero.image} alt={copy.imageAlt} />}
                                     <span>{section.post_title || 'Platform informasi institusi'}</span>
                                 </div>
                                 <div className="editorial-summary">
-                                    <p>{copy.description}</p>
+                                    <p>{copy.subtitle}</p>
                                     <Button asChild size="lg">
                                         <a href={hero?.buttonPrimary?.link || '#berita'}>
                                             {hero?.buttonPrimary?.text || 'Temukan lebih jauh'} <ArrowRight size={18} />
@@ -72,7 +74,7 @@ export default function EditorialTemplate({ data }) {
 
             case 'pengumuman':
                 return (
-                    <Section key={key} section={section} id="berita" eyebrow={section.pre_title || 'Sorotan utama'} title={section.title || 'Cerita dan perkembangan terbaru'} text={section.subtitle || section.post_title}>
+                    <Section key={key} section={section} id="berita" eyebrow={section.pre_title || 'Sorotan utama'} title={section.title || 'Cerita dan perkembangan terbaru'} text={combinedText(section)}>
                         <NewsGrid announcements={data.announcements} section={section} editorial />
                     </Section>
                 );
@@ -83,18 +85,33 @@ export default function EditorialTemplate({ data }) {
                         <div>
                             <span className="eyebrow">{section.pre_title || 'Jelajahi institusi'}</span>
                             <h2>{section.title || 'Informasi yang membentuk pengalaman akademik'}</h2>
-                            <p>{section.subtitle || section.post_title || 'Akses cepat menuju profil, layanan, program, dan sumber informasi penting.'}</p>
+                            <p>{combinedText(section, 'Akses cepat menuju profil, layanan, program, dan sumber informasi penting.')}</p>
                         </div>
                         <PagesGrid pages={data.pages} section={section} />
                     </section>
                 );
+
+            case 'statistic':
+                return landing?.statistics?.length > 0 ? (
+                    <section key={key} className="editorial-stats shell">
+                        <SectionHeader section={section} />
+                        <div className="editorial-stats-grid">
+                            {landing.statistics.slice(0, section.limit_data || 4).map((stat) => (
+                                <div key={stat.id} className="editorial-stat">
+                                    <strong>{stat.value}</strong>
+                                    <span>{stat.label}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                ) : null;
 
             case 'testimonial':
                 return <TestimonialSection key={key} testimonials={data.testimonials} section={section} />;
 
             case 'faq':
                 return (
-                    <Section key={key} section={section} dark eyebrow={section.pre_title || 'Informasi praktis'} title={section.title || 'Pertanyaan umum'} text={section.subtitle || section.post_title} narrow>
+                    <Section key={key} section={section} dark eyebrow={section.pre_title || 'Informasi praktis'} title={section.title || 'Pertanyaan umum'} text={combinedText(section)} narrow>
                         <FaqSection faqs={data.faqs} />
                     </Section>
                 );
