@@ -1,11 +1,8 @@
 @extends('layouts.tabler.app')
 
 @section('header')
-<x-ui.page-header title="Manajemen Slideshow" pretitle="Info Publik">
+<x-ui.page-header title="Slideshow" pretitle="Content Management">
     <x-slot:actions>
-        <a href="{{ route('public.cms.landing.index') }}" class="btn btn-outline-secondary">
-            <i class="ti ti-arrow-left me-1"></i>Kembali
-        </a>
         <x-ui.button 
             type="create" 
             class="ajax-modal-btn d-none d-sm-inline-block" 

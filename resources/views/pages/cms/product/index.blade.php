@@ -1,7 +1,7 @@
 @extends('layouts.tabler.app')
 
 @section('header')
-<x-ui.page-header title="Produk / Modul" pretitle="CMS">
+<x-ui.page-header title="Produk / Modul" pretitle="Content Management">
     <x-slot:actions>
         <a href="{{ route('public.cms.landing.index') }}" class="btn btn-outline-secondary">
             <i class="ti ti-arrow-left me-1"></i>Kembali

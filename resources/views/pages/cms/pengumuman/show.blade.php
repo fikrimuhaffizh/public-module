@@ -78,7 +78,7 @@
     @extends('layouts.tabler.app')
 
     @section('header')
-        <x-ui.page-header :title="$pengumuman->judul" pretitle="Announcement Details">
+        <x-ui.page-header :title="$pengumuman->judul" pretitle="Content Management">
             <x-slot:actions>
                 <x-ui.button type="edit" :href="route('public.cms.'.$pengumuman->jenis.'.edit', $pengumuman)" />
                 <x-ui.button type="back" :href="route('public.cms.'.$pengumuman->jenis.'.index')" />

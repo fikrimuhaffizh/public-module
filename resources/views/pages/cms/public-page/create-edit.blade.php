@@ -1,7 +1,7 @@
 @extends('layouts.tabler.app')
 
 @section('header')
-<x-ui.page-header :title="$page->exists ? 'Edit Halaman' : 'Buat Halaman Baru'" pretitle="CMS">
+<x-ui.page-header :title="$page->exists ? 'Edit Halaman' : 'Buat Halaman Baru'" pretitle="Content Management">
     <x-slot:actions>
         <x-ui.button type="back" class="d-none d-sm-inline-block" />
     </x-slot:actions>

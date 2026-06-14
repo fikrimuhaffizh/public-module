@@ -1,7 +1,7 @@
 @extends('layouts.tabler.app')
 
 @section('header')
-<x-ui.page-header :title="$pengumuman->exists ? 'Edit ' . ucfirst($type) : 'Buat ' . ucfirst($type) . ' Baru'" :pretitle="ucfirst($type)">
+<x-ui.page-header :title="$pengumuman->exists ? 'Edit ' . ucfirst($type) : 'Buat ' . ucfirst($type) . ' Baru'" pretitle="Content Management">
     <x-slot:actions>
         <x-ui.button type="back" class="d-none d-sm-inline-block" />
     </x-slot:actions>

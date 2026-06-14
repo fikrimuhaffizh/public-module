@@ -1,7 +1,7 @@
 @extends('layouts.tabler.app')
 
 @section('header')
-<x-ui.page-header title="Partner" pretitle="CMS">
+<x-ui.page-header title="Partner" pretitle="Content Management">
     <x-slot:actions>
         @can('public.cms.partner.create')
             <x-ui.button type="create" class="ajax-modal-btn"

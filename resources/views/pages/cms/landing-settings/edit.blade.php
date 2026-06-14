@@ -3,7 +3,7 @@
 @section('title', 'Template Landing Page')
 
 @section('header')
-<x-ui.page-header title="Template Landing Page" pretitle="CMS">
+<x-ui.page-header title="Template Landing Page" pretitle="Content Management">
     <x-slot:actions>
         <a href="{{ route('public.preview', ['template' => $selectedTemplate]) }}" target="_blank" class="btn btn-outline-primary">
             <i class="ti ti-eye me-1"></i>Pratinjau

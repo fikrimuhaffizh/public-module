@@ -1,7 +1,7 @@
 @extends('layouts.tabler.app')
 
 @section('header')
-<x-ui.page-header title="Manajemen Halaman & Navigasi" pretitle="CMS">
+<x-ui.page-header title="Manajemen Halaman & Navigasi" pretitle="Content Management">
     <x-slot:actions>
         <div class="d-flex gap-2">
             <x-ui.button href="{{ route('public.cms.page.create') }}" type="create" id="btn-add-page" text="Buat Halaman Baru" />

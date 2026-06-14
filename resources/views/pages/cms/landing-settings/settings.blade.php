@@ -3,7 +3,7 @@
 @section('title', 'Pengaturan Landing Page')
 
 @section('header')
-<x-ui.page-header title="Pengaturan Landing Page" pretitle="CMS">
+<x-ui.page-header title="Pengaturan Landing Page" pretitle="Content Management">
     <x-slot:actions>
         @can('public.cms.settings.update')
             <x-ui.button type="submit" form="landing-settings-form" text="Simpan Pengaturan" />

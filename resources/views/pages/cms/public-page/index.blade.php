@@ -1,7 +1,7 @@
 @extends('layouts.tabler.app')
 
 @section('header')
-<x-ui.page-header title="Manajemen Halaman Publik" pretitle="CMS">
+<x-ui.page-header title="Manajemen Halaman Publik" pretitle="Content Management">
     <x-slot:actions>
         <x-ui.button href="{{ route('public.preview') }}" target="_blank" class="btn-outline-secondary" icon="ti ti-external-link" text="Pratinjau Landing Page" />
         <x-ui.button type="create" href="{{ route('public.cms.page.create') }}" text="Tambah Halaman" />

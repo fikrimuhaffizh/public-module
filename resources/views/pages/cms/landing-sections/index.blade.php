@@ -3,7 +3,7 @@
 @section('title', 'Landing Sections')
 
 @section('header')
-<x-ui.page-header title="Landing Sections" pretitle="Landing Page">
+<x-ui.page-header title="Landing Sections" pretitle="Content Management">
     <x-slot:actions>
         <a href="{{ route('public.preview', ['template' => 'modern']) }}" target="_blank" class="btn btn-outline-primary">
             <i class="ti ti-eye me-1"></i>Pratinjau
