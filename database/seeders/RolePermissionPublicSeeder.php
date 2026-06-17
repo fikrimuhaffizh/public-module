@@ -95,8 +95,7 @@ class RolePermissionPublicSeeder extends Seeder
             );
         }
 
-        // Assign permissions to Administrator role
-        // Root excluded — Root only gets root.* permissions (minimal scope)
+        // Assign permissions to Super Administrator
         $permissionNames = collect($permissionData)->pluck('name');
         foreach (['Super Administrator'] as $roleName) {
             Role::where('name', $roleName)
