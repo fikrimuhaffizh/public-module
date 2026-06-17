@@ -117,6 +117,22 @@ document.addEventListener('DOMContentLoaded', function () {
     if (typeof window.loadHugeRTE === 'function') {
         window.loadHugeRTE('#content', {
             height: 600,
+            plugins: 'lists link image code codesample table fullscreen searchreplace',
+            toolbar: 'undo redo | styles | bold italic underline | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | link image table | codesample code | fullscreen',
+            codesample_languages: [
+                { text: 'HTML/XML', value: 'markup' },
+                { text: 'JavaScript', value: 'javascript' },
+                { text: 'CSS', value: 'css' },
+                { text: 'PHP', value: 'php' },
+                { text: 'Python', value: 'python' },
+                { text: 'Java', value: 'java' },
+                { text: 'C', value: 'c' },
+                { text: 'C++', value: 'cpp' },
+                { text: 'SQL', value: 'sql' },
+                { text: 'Bash', value: 'bash' },
+                { text: 'JSON', value: 'json' },
+                { text: 'Markdown', value: 'markdown' },
+            ],
             setup: function (editor) {
                 editor.on('change', function () {
                     editor.save();
