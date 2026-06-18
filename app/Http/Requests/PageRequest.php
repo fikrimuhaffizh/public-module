@@ -9,8 +9,6 @@ class PageRequest extends BaseRequest
 {
     public function rules(): array
     {
-        // Get the page ID from the route if it exists (for update uniqueness)
-        // Assuming route parameter is 'public_page' and it's bound via HashidBinding
         $page = $this->route('page');
         $pageId = $page ? $page->page_id : null;
 
@@ -21,8 +19,10 @@ class PageRequest extends BaseRequest
             'meta_desc' => 'nullable|string|max:255',
             'meta_keywords' => 'nullable|string|max:255',
             'is_published' => 'boolean',
-            'main_image' => 'nullable|file|mimes:jpeg,png,jpg,webp|max:5120', // 5MB
-            'attachments.*' => 'nullable|file|max:10240',                        // 10MB
+            'main_image' => 'nullable|file|mimes:jpeg,png,jpg,webp|max:5120',
+            'attachments.*' => 'nullable|file|max:10240',
+            'menu_position' => 'nullable|in:header,footer_col_1,footer_col_2,footer_col_3',
+            'menu_target' => 'nullable|in:_self,_blank',
         ];
     }
 

@@ -5,12 +5,6 @@
 @section('header')
 <x-ui.page-header title="Landing Page" pretitle="Content Management">
     <x-slot:actions>
-        <a href="{{ route('public.preview', ['template' => $template]) }}" target="_blank" class="btn btn-outline-primary">
-            <i class="ti ti-eye me-1"></i>Pratinjau
-        </a>
-        @can('public.cms.update')
-            {{-- Auto-save template on selection - button removed for auto-save behavior --}}
-        @endcan
         @can('public.cms.settings.update')
             <x-ui.button type="submit" form="landing-settings-form" text="Simpan Pengaturan" class="d-none d-sm-inline-block" />
         @endcan
@@ -104,8 +98,8 @@
                                                     <div class="flex-fill overflow-hidden">
                                                         <div class="font-weight-medium text-truncate" style="font-size: 0.85rem; line-height: 1.2;">{{ $section->section_name }}</div>
                                                         @php $preview = $contentPreview($section); @endphp
-                                                        @if($preview['titles'])<div class="text-truncate" style="font-size: 0.72rem; color: #495057; line-height: 1.3;">{{ $preview['titles'] }}</div>@endif
-                                                        @if($preview['subtitle'])<small class="text-muted text-truncate d-block" style="font-size: 0.68rem; line-height: 1.2;">{{ $preview['subtitle'] }}</small>@endif
+                                                        @if($preview['titles'])<div class="text-truncate section-preview-titles">{{ $preview['titles'] }}</div>@endif
+                                                        @if($preview['subtitle'])<small class="text-muted text-truncate d-block section-preview-subtitle">{{ $preview['subtitle'] }}</small>@endif
                                                     </div>
                                                     <span class="badge {{ $section->is_active ? 'bg-success-lt' : 'bg-secondary-lt' }}">
                                                         {{ $section->is_active ? 'Aktif' : 'Nonaktif' }}
@@ -130,8 +124,8 @@
                                                     <div class="flex-fill overflow-hidden">
                                                         <div class="font-weight-medium text-truncate" style="font-size: 0.85rem; line-height: 1.2;">{{ $section->section_name }}</div>
                                                         @php $preview = $contentPreview($section); @endphp
-                                                        @if($preview['titles'])<div class="text-truncate" style="font-size: 0.72rem; color: #495057; line-height: 1.3;">{{ $preview['titles'] }}</div>@endif
-                                                        @if($preview['subtitle'])<small class="text-muted text-truncate d-block" style="font-size: 0.68rem; line-height: 1.2;">{{ $preview['subtitle'] }}</small>@endif
+                                                        @if($preview['titles'])<div class="text-truncate section-preview-titles">{{ $preview['titles'] }}</div>@endif
+                                                        @if($preview['subtitle'])<small class="text-muted text-truncate d-block section-preview-subtitle">{{ $preview['subtitle'] }}</small>@endif
                                                     </div>
                                                     <span class="badge {{ $section->is_active ? 'bg-success-lt' : 'bg-secondary-lt' }}">
                                                         {{ $section->is_active ? 'Aktif' : 'Nonaktif' }}
@@ -155,8 +149,8 @@
                                                     <div class="flex-fill overflow-hidden">
                                                         <div class="font-weight-medium text-truncate" style="font-size: 0.85rem; line-height: 1.2;">{{ $section->section_name }}</div>
                                                         @php $preview = $contentPreview($section); @endphp
-                                                        @if($preview['titles'])<div class="text-truncate" style="font-size: 0.72rem; color: #495057; line-height: 1.3;">{{ $preview['titles'] }}</div>@endif
-                                                        @if($preview['subtitle'])<small class="text-muted text-truncate d-block" style="font-size: 0.68rem; line-height: 1.2;">{{ $preview['subtitle'] }}</small>@endif
+                                                        @if($preview['titles'])<div class="text-truncate section-preview-titles">{{ $preview['titles'] }}</div>@endif
+                                                        @if($preview['subtitle'])<small class="text-muted text-truncate d-block section-preview-subtitle">{{ $preview['subtitle'] }}</small>@endif
                                                     </div>
                                                     <span class="badge {{ $section->is_active ? 'bg-success-lt' : 'bg-secondary-lt' }}">
                                                         {{ $section->is_active ? 'Aktif' : 'Nonaktif' }}
@@ -204,13 +198,6 @@
                     @method('PUT')
                     <div class="row row-cards">
                         <div class="col-lg-8">
-                            <x-ui.card class="mb-3">
-                                <x-ui.card-header><h3 class="card-title">Informasi Situs</h3></x-ui.card-header>
-                                <x-ui.card-body>
-                                    <x-ui.form-input name="site_title" label="Judul Situs" :value="old('site_title', $settings->site_title)" />
-                                    <x-ui.form-input name="site_description" type="textarea" label="Deskripsi Situs" :value="old('site_description', $settings->site_description)" rows="3" />
-                                </x-ui.card-body>
-                            </x-ui.card>
                             <x-ui.card class="mb-3">
                                 <x-ui.card-header><h3 class="card-title">SEO</h3></x-ui.card-header>
                                 <x-ui.card-body>
@@ -277,6 +264,7 @@
                                     'editorial' => ['Editorial', 'Berorientasi konten dengan tipografi dan berita yang kuat.', 'news'],
                                     'corporate' => ['Corporate', 'Tampilan mewah dan elegan untuk institusi serta mitra korporat.', 'building-skyscraper'],
                                     'launch' => ['Launch UI', 'Desain segar dengan hero, fitur, produk, statistik, dan CTA yang dapat dikelola penuh.', 'rocket'],
+                                    'aurora' => ['Aurora', 'Dark-mode bento grid dengan efek aurora dan glassmorphism untuk nuansa SaaS modern.', 'brand-aurora'],
                                 };
                             @endphp
                             @php($isSelected = old('landing_template', $template) === $templateOption)
@@ -311,8 +299,8 @@
 <style>
 .section-list {
     min-height: 100px;
-    background: #f8f9fa;
-    border: 2px dashed #dee2e6;
+    background: var(--tblr-bg-surface-tertiary, #f8f9fa);
+    border: 2px dashed var(--tblr-border-color, #dee2e6);
     border-radius: 4px;
     padding: 10px;
 }
@@ -321,8 +309,8 @@
     cursor: pointer;
     user-select: none;
     margin-bottom: 6px;
-    background: white;
-    border: 1px dashed #dee2e6;
+    background: var(--tblr-bg-surface, #fff);
+    border: 1px dashed var(--tblr-border-color, #dee2e6);
     padding: 6px 10px;
     border-radius: 4px;
     display: flex;
@@ -331,16 +319,17 @@
     position: relative;
     width: 100%;
     transition: all 0.2s;
+    color: var(--tblr-body-color, inherit);
 }
 
 .section-item.selected {
     border-style: solid;
-    border-color: #206bc4;
-    background: #f1f7ff;
+    border-color: var(--tblr-primary, #206bc4);
+    background: var(--tblr-primary-lt, #f1f7ff);
 }
 
 .section-item .drag-handle {
-    color: #adb5bd;
+    color: var(--tblr-secondary, #adb5bd);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -358,8 +347,8 @@
 
 .section-item:hover {
     border-style: solid;
-    border-color: #206bc4;
-    background: #f1f7ff;
+    border-color: var(--tblr-primary, #206bc4);
+    background: var(--tblr-primary-lt, #f1f7ff);
 }
 
 .section-item.active {
@@ -369,12 +358,36 @@
 
 .ghost {
     opacity: 0.4;
-    background: #c8ebfb !important;
+    background: var(--tblr-primary-lt, #c8ebfb) !important;
 }
 
 .sortable-drag {
-    background: white !important;
+    background: var(--tblr-bg-surface, #fff) !important;
     box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+/* Dark mode overrides for section list text colors */
+[data-bs-theme="dark"] .section-item .text-truncate {
+    color: var(--tblr-secondary, #9aa4b4) !important;
+}
+
+[data-bs-theme="dark"] .section-item .text-muted {
+    color: var(--tblr-secondary, #6e7891) !important;
+}
+
+[data-bs-theme="dark"] h5.text-muted {
+    color: var(--tblr-secondary, #9aa4b4) !important;
+}
+
+.section-preview-titles {
+    font-size: 0.72rem;
+    color: var(--tblr-secondary, #495057);
+    line-height: 1.3;
+}
+
+.section-preview-subtitle {
+    font-size: 0.68rem;
+    line-height: 1.2;
 }
 </style>
 @endpush

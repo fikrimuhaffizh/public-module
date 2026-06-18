@@ -44,6 +44,25 @@
                     <x-ui.card>
                         <x-ui.card-body>
                             <div class="mb-3">
+                                <label class="form-label">Posisi Menu</label>
+                                <select name="menu_position" class="form-select">
+                                    <option value="header" {{ ($linkedMenu->position ?? 'header') === 'header' ? 'selected' : '' }}>Header (Navbar)</option>
+                                    <option value="footer_col_1" {{ ($linkedMenu->position ?? '') === 'footer_col_1' ? 'selected' : '' }}>Footer Kolom 1</option>
+                                    <option value="footer_col_2" {{ ($linkedMenu->position ?? '') === 'footer_col_2' ? 'selected' : '' }}>Footer Kolom 2</option>
+                                    <option value="footer_col_3" {{ ($linkedMenu->position ?? '') === 'footer_col_3' ? 'selected' : '' }}>Footer Kolom 3</option>
+                                </select>
+                                <small class="form-hint">Tentukan di mana item ini tampil di navigasi publik.</small>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Target Link</label>
+                                <select name="menu_target" class="form-select">
+                                    <option value="_self" {{ ($linkedMenu->target ?? '_self') === '_self' ? 'selected' : '' }}>Tab Sama (_self)</option>
+                                    <option value="_blank" {{ ($linkedMenu->target ?? '') === '_blank' ? 'selected' : '' }}>Tab Baru (_blank)</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
                                 <label class="form-label">Status</label>
                                 <div class="form-selectgroup">
                                     <label class="form-selectgroup-item">

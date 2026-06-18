@@ -62,6 +62,15 @@ class PublicServiceProvider extends BaseModuleServiceProvider
                         'icon'          => 'layout',
                         'permission'    => 'public.cms.view',
                     ],
+                    [
+                        'priority'      => 90,
+                        'title'         => 'Pratinjau',
+                        'route'         => 'public.preview',
+                        'active_routes' => [],
+                        'icon'          => 'eye',
+                        'permission'    => 'public.cms.view',
+                        'target'        => '_blank',
+                    ],
                 ],
             ],
         ];

@@ -3,30 +3,9 @@
         @csrf
         @method('PUT')
         
-        @if(count($sectionMeta['variants'] ?? []) > 0)
-        <div class="mb-3">
-            <label class="form-label fw-bold mb-2">Desain Variant</label>
-            <div class="row g-2">
-                @foreach($sectionMeta['variants'] as $variantKey => $variantLabel)
-                    <div class="col-6">
-                        <label class="form-selectgroup-item cursor-pointer d-block">
-                            <input type="radio" name="variant" value="{{ $variantKey }}" class="form-selectgroup-input" {{ $section->variant === $variantKey ? 'checked' : '' }}>
-                            <span class="form-selectgroup-label d-flex align-items-center gap-2 py-2">
-                                <span class="form-selectgroup-check"></span>
-                                <span>
-                                    <span class="fw-medium">{{ $variantLabel }}</span>
-                                    <span class="text-muted small ms-1">({{ $variantKey }})</span>
-                                </span>
-                            </span>
-                        </label>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-        @else
-            <input type="hidden" name="variant" value="{{ $section->variant }}">
-        @endif
+        <input type="hidden" name="variant" value="{{ $section->variant }}">
         
+        @if(!in_array($section->section_key, ['navbar', 'footer']))
         <div class="row g-2">
             <div class="col-md-6">
                 <x-ui.form-input name="pre_title" label="Pre-Judul" :value="$section->pre_title" />
@@ -65,6 +44,25 @@
                 <x-ui.form-input name="limit_data" type="number" label="Limit Data" :value="$section->limit_data" help="Jumlah item yang ditampilkan (1-50)." />
             </div>
         </div>
+        @else
+            <input type="hidden" name="pre_title" value="{{ $section->pre_title }}">
+            <input type="hidden" name="post_title" value="{{ $section->post_title }}">
+            <input type="hidden" name="title" value="{{ $section->title }}">
+            <input type="hidden" name="subtitle" value="{{ $section->subtitle }}">
+            <input type="hidden" name="limit_data" value="{{ $section->limit_data }}">
+            @php($textAlign = data_get($section->settings, 'text_align', 'left'))
+            <input type="hidden" name="settings[text_align]" value="{{ $textAlign }}">
+            <div class="alert alert-info d-flex align-items-center gap-2" role="alert">
+                <i class="ti ti-info-circle fs-3"></i>
+                <div>
+                    @if($section->section_key === 'navbar')
+                        Header hanya menampilkan <strong>Logo</strong> dan <strong>Menu Navigasi</strong>. Kelola item menu di halaman <a href="{{ route('public.cms.public-menu.index') }}" class="alert-link" target="_blank">Menu Publik</a>.
+                    @else
+                        Footer menampilkan informasi situs, navigasi, dan kontak secara otomatis dari pengaturan Configuration.
+                    @endif
+                </div>
+            </div>
+        @endif
     </form>
 </div>
 <script>

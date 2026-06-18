@@ -24,7 +24,7 @@ use Modules\Public\app\Models\Testimonial;
 
 class LandingPageService
 {
-    public const TEMPLATES = ['modern', 'editorial', 'corporate', 'launch'];
+    public const TEMPLATES = ['modern', 'editorial', 'corporate', 'launch', 'aurora'];
 
     public function __construct(private TenantConfigService $tenantConfig) {}
 
@@ -58,8 +58,8 @@ class LandingPageService
             'template' => $template,
             'preview' => $preview,
             'site' => [
-                'name' => $settings?->site_title ?: $tenant?->name ?: config('app.name'),
-                'tagline' => $settings?->site_description ?: $tenant?->tagline ?: 'Informasi, layanan, dan inovasi kampus dalam satu ekosistem digital.',
+                'name' => $tenant?->name ?: config('app.name'),
+                'tagline' => $tenant?->tagline ?: 'Informasi, layanan, dan inovasi kampus dalam satu ekosistem digital.',
                 'address' => $settings?->address ?: $tenant?->address,
                 'email' => $settings?->contact_email ?: $tenant?->email,
                 'phone' => $settings?->contact_phone ?: $tenant?->phone,
@@ -82,6 +82,7 @@ class LandingPageService
                 'keywords' => $settings?->meta_keywords,
             ],
             'menus' => $this->menus(),
+            'footerMenus' => $this->footerMenus(),
             // Include sections for navbar/footer visibility on all pages
             'sections' => $this->sectionOrder(),
         ];
@@ -166,25 +167,43 @@ class LandingPageService
     {
         return Menu::with('page')->whereNull('parent_id')
             ->where('position', 'header')->where('is_active', true)->orderBy('sequence')->get()
-            ->map(fn (Menu $menu) => [
-                'id' => $menu->getKey(),
-                'title' => $menu->title,
-                'url' => match ($menu->type) {
-                    'page' => $menu->page
-                        ? route('public.page.show', ['page' => $menu->page->slug])
-                        : '#',
-                    'route' => $menu->url && Route::has($menu->url)
-                        ? route($menu->url)
-                        : '#',
-                    default => $menu->url ?: '#',
-                },
-                'target' => $menu->target,
-            ])->push([
+            ->map(fn (Menu $menu) => $this->mapMenuItem($menu))
+            ->push([
                 'id' => 'contact',
                 'title' => 'Hubungi Kami',
                 'url' => route('public.contact'),
                 'target' => '_self',
             ])->values();
+    }
+
+    private function footerMenus(): Collection
+    {
+        return Menu::with('page')->whereNull('parent_id')
+            ->where('position', 'like', 'footer%')
+            ->where('is_active', true)
+            ->orderBy('position')
+            ->orderBy('sequence')
+            ->get()
+            ->map(fn (Menu $menu) => $this->mapMenuItem($menu))
+            ->values();
+    }
+
+    private function mapMenuItem(Menu $menu): array
+    {
+        return [
+            'id' => $menu->getKey(),
+            'title' => $menu->title,
+            'url' => match ($menu->type) {
+                'page' => $menu->page
+                    ? route('public.page.show', ['page' => $menu->page->slug])
+                    : '#',
+                'route' => $menu->url && Route::has($menu->url)
+                    ? route($menu->url)
+                    : '#',
+                default => $menu->url ?: '#',
+            },
+            'target' => $menu->target,
+        ];
     }
 
     private function announcements(int $limit, ?int $except = null): Collection
@@ -409,9 +428,8 @@ class LandingPageService
             ->first();
 
         $tenant = Tenant::find(sys_tenant_id());
-        $settings = LandingPageSetting::forCurrentTenant();
-        $siteName = $settings?->site_title ?: $tenant?->name ?: config('app.name');
-        $tagline = $settings?->site_description ?: $tenant?->tagline ?: 'Informasi, layanan, dan inovasi kampus dalam satu ekosistem digital.';
+        $siteName = $tenant?->name ?: config('app.name');
+        $tagline = $tenant?->tagline ?: 'Informasi, layanan, dan inovasi kampus dalam satu ekosistem digital.';
 
         return [
             'title' => $section?->title ?: $siteName,

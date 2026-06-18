@@ -14,7 +14,7 @@ class PublicMenuRequest extends BaseRequest
             'url' => 'nullable|string|max:255',
             'type' => 'required|in:url,page,route',
             'page_id' => 'nullable|exists:cms_page,page_id',
-            'position' => 'required|in:header,footer_col_1,footer_col_2,footer_col_3',
+            'position' => 'required|in:header,footer,footer_col_1,footer_col_2,footer_col_3',
             'target' => 'required|in:_self,_blank',
             'is_active' => 'boolean',
         ];

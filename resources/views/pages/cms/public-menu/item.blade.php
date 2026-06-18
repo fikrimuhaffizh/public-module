@@ -19,7 +19,11 @@
                         <span class="badge bg-secondary-lt ms-2">Draft</span>
                     @endif
                     
-                    <span class="badge bg-azure-lt ms-1">{{ ucfirst($menu->position) }}</span>
+                    @if($menu->position === 'header')
+                        <span class="badge bg-azure-lt ms-1">Header</span>
+                    @else
+                        <span class="badge bg-indigo-lt ms-1">Footer</span>
+                    @endif
                 </div>
             </div>
         </div>

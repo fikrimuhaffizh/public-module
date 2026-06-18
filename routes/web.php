@@ -88,6 +88,7 @@ Route::middleware(['auth', 'check.expired', 'module:public'])->prefix('cms')->na
 
     // Public Menu
     Route::post('public-menu/reorder', [PublicMenuController::class, 'reorder'])->name('menu.reorder');
+    Route::post('public-menu/reorder-position', [PublicMenuController::class, 'reorderPosition'])->name('menu.reorder-position');
     Route::get('public-menu/data', [PublicMenuController::class, 'data'])->name('menu.data');
     Route::resource('public-menu', PublicMenuController::class)
         ->names('menu')

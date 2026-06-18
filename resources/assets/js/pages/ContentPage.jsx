@@ -1,15 +1,20 @@
 import React from 'react';
-import { Link, usePage } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import { ArrowLeft, ArrowRight, FileText } from 'lucide-react';
 import { Button } from '@public/components/ui/button';
 import { Reveal } from '@public/components/motion/effects';
-import { SiteLayout } from '@public/layouts/PublicLayout';
+import { PublicPageLayout } from '@public/layouts/PublicLayout';
 
 export default function ContentPage() {
-    const { site, menus, template, sections, page } = usePage().props;
+    const { site, page } = usePage().props;
 
     return (
-        <SiteLayout title={page.title} site={site} menus={menus} template={template} sections={sections}>
+        <>
+            <Head title={`${page.title} - ${site.name}`}>
+                <meta head-key="description" name="description" content={page.excerpt || ''} />
+                <meta head-key="og:title" property="og:title" content={`${page.title} - ${site.name}`} />
+                {page.excerpt && <meta head-key="og:description" property="og:description" content={page.excerpt} />}
+            </Head>
             <main className="dynamic-page">
                 <div className="dynamic-page-hero">
                     <Reveal className="shell shell--article">
@@ -40,6 +45,8 @@ export default function ContentPage() {
                     </div>
                 </article>
             </main>
-        </SiteLayout>
+        </>
     );
 }
+
+ContentPage.layout = PublicPageLayout;

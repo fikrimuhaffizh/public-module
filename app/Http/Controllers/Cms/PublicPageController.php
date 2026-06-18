@@ -52,7 +52,10 @@ class PublicPageController extends Controller
 
     public function create()
     {
-        return view('public::pages.cms.public-page.create-edit', ['page' => new Page]);
+        return view('public::pages.cms.public-page.create-edit', [
+            'page' => new Page,
+            'linkedMenu' => null,
+        ]);
     }
 
     public function store(PageRequest $request)
@@ -64,7 +67,12 @@ class PublicPageController extends Controller
 
     public function edit(Page $page)
     {
-        return view('public::pages.cms.public-page.create-edit', compact('page'));
+        $linkedMenu = \Modules\Public\app\Models\Menu::where('page_id', $page->page_id)->first();
+
+        return view('public::pages.cms.public-page.create-edit', [
+            'page' => $page,
+            'linkedMenu' => $linkedMenu,
+        ]);
     }
 
     public function update(PageRequest $request, Page $page)

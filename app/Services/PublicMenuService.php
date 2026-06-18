@@ -3,6 +3,7 @@
 namespace Modules\Public\app\Services;
 
 use Modules\Public\app\Models\Menu;
+use Modules\Public\app\Models\Page;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
@@ -69,11 +70,37 @@ class PublicMenuService
         return DB::transaction(function () use ($id) {
             $menu = $this->findById($id);
             $title = $menu->title;
+
+            // Cascade: if this menu links to a CMS page, delete the page too
+            if ($menu->type === 'page' && $menu->page_id) {
+                $page = Page::find($menu->page_id);
+                if ($page) {
+                    $page->delete();
+                }
+            }
+
+            // Also delete child menu items recursively
+            $this->deleteChildren($menu);
+
             $menu->delete();
             logActivity('public_menu', "Hapus menu: {$title}");
 
             return true;
         });
+    }
+
+    private function deleteChildren(Menu $menu): void
+    {
+        foreach ($menu->children as $child) {
+            if ($child->type === 'page' && $child->page_id) {
+                $page = Page::find($child->page_id);
+                if ($page) {
+                    $page->delete();
+                }
+            }
+            $this->deleteChildren($child);
+            $child->delete();
+        }
     }
 
     public function reorderMenus(array $hierarchy, $parentId = null)
@@ -94,6 +121,28 @@ class PublicMenuService
                             $this->reorderMenus($item['children'], $id);
                         }
                     }
+                }
+            }
+
+            return true;
+        });
+    }
+
+    /**
+     * Reorder menus within a specific position (header or footer).
+     * Simple flat reorder — updates sequence only.
+     */
+    public function reorderForPosition(array $ids, string $position): bool
+    {
+        return DB::transaction(function () use ($ids, $position) {
+            foreach ($ids as $index => $encryptedId) {
+                $id = decryptIdIfEncrypted($encryptedId, false);
+                $menu = Menu::find($id);
+                if ($menu) {
+                    $menu->update([
+                        'position' => $position,
+                        'sequence' => $index + 1,
+                    ]);
                 }
             }
 

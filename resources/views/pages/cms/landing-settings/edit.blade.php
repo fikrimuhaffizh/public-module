@@ -3,14 +3,7 @@
 @section('title', 'Template Landing Page')
 
 @section('header')
-<x-ui.page-header title="Template Landing Page" pretitle="Content Management">
-    <x-slot:actions>
-        <a href="{{ route('public.preview', ['template' => $selectedTemplate]) }}" target="_blank" class="btn btn-outline-primary">
-            <i class="ti ti-eye me-1"></i>Pratinjau
-        </a>
-        {{-- Auto-save template on selection - button removed --}}
-    </x-slot:actions>
-</x-ui.page-header>
+<x-ui.page-header title="Template Landing Page" pretitle="Content Management" />
 @endsection
 
 @section('content')
@@ -29,6 +22,7 @@
                     'editorial' => ['Editorial', 'Berorientasi konten dengan tipografi dan berita yang kuat.', 'news'],
                     'corporate' => ['Corporate', 'Tampilan mewah dan elegan untuk institusi serta mitra korporat.', 'building-skyscraper'],
                     'launch' => ['Launch UI', 'Desain segar dengan hero, fitur, produk, statistik, dan CTA yang dapat dikelola penuh.', 'rocket'],
+                    'aurora' => ['Aurora', 'Dark-mode bento grid dengan efek aurora dan glassmorphism untuk nuansa SaaS modern.', 'brand-aurora'],
                 };
             @endphp
             @php($isSelected = old('landing_template', $selectedTemplate) === $template)

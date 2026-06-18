@@ -19,13 +19,6 @@
     <div class="row row-cards">
         <div class="col-lg-8">
             <x-ui.card class="mb-3">
-                <x-ui.card-header><h3 class="card-title">Informasi Situs</h3></x-ui.card-header>
-                <x-ui.card-body>
-                    <x-ui.form-input name="site_title" label="Judul Situs" :value="old('site_title', $settings->site_title)" />
-                    <x-ui.form-input name="site_description" type="textarea" label="Deskripsi Situs" :value="old('site_description', $settings->site_description)" rows="3" />
-                </x-ui.card-body>
-            </x-ui.card>
-            <x-ui.card class="mb-3">
                 <x-ui.card-header><h3 class="card-title">SEO</h3></x-ui.card-header>
                 <x-ui.card-body>
                     <x-ui.form-input name="meta_title" label="Meta Title" :value="old('meta_title', $settings->meta_title)" />
