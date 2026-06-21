@@ -1,7 +1,8 @@
 {
     "name": "Public",
     "alias": "public",
-    "description": "Public-facing pages, assets, and layouts",
+    "title": "Publik",
+    "description": "Halaman publik, landing page, dan layout eksternal",
     "keywords": [],
     "priority": 45,
     "providers": [
