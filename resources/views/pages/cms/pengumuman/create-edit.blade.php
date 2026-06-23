@@ -1,4 +1,4 @@
-@extends('layouts.tabler.app')
+@extends('public::layouts.public-layout')
 
 @section('header')
 <x-ui.page-header :title="$pengumuman->exists ? 'Edit ' . ucfirst($type) : 'Buat ' . ucfirst($type) . ' Baru'" pretitle="Content Management">

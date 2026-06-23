@@ -75,7 +75,7 @@
         </x-slot:footer>
     </x-ui.form-modal>
 @else
-    @extends('layouts.tabler.app')
+    @extends('public::layouts.public-layout')
 
     @section('header')
         <x-ui.page-header :title="$pengumuman->judul" pretitle="Content Management">

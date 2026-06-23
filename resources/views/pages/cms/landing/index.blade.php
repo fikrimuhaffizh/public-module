@@ -1,4 +1,4 @@
-@extends('layouts.tabler.app')
+@extends('public::layouts.public-layout')
 
 @section('title', 'Landing Page')
 

@@ -1,4 +1,4 @@
-@extends('layouts.tabler.app')
+@extends('public::layouts.public-layout')
 
 @section('header')
 <x-ui.page-header :title="$page->exists ? 'Edit Halaman' : 'Buat Halaman Baru'" pretitle="Content Management">

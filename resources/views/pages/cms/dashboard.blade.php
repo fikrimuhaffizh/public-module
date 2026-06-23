@@ -1,4 +1,4 @@
-@extends('layouts.tabler.app')
+@extends('public::layouts.public-layout')
 
 @section('content')
         <div class="row row-cards">

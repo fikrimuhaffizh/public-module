@@ -1,4 +1,4 @@
-@extends('layouts.tabler.app')
+@extends('public::layouts.public-layout')
 
 @section('header')
 <x-ui.page-header title="Produk / Modul" pretitle="Content Management">

@@ -1,16 +1,12 @@
 {
     "name": "Public",
     "alias": "public",
-    "title": "Publik",
-    "description": "Halaman publik, landing page, dan layout eksternal",
-    "keywords": [],
+    "title": "Publik & Landing Page",
+    "description": "Halaman publik, landing page, CMS, dan layout eksternal",
+    "group": "platform",
     "priority": 45,
-    "providers": [
-        "Modules\\Public\\Providers\\PublicServiceProvider"
-    ],
+    "providers": ["Modules\\Public\\Providers\\PublicServiceProvider"],
     "aliases": {},
     "files": [],
-    "seeders": [
-        "Modules\\Public\\Database\\Seeders\\PublicDatabaseSeeder"
-    ]
+    "seeders": ["Modules\\Public\\Database\\Seeders\\PublicDatabaseSeeder"]
 }

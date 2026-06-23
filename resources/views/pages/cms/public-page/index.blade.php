@@ -1,4 +1,4 @@
-@extends('layouts.tabler.app')
+@extends('public::layouts.public-layout')
 
 @section('header')
 <x-ui.page-header title="Manajemen Halaman Publik" pretitle="Content Management">
@@ -13,6 +13,7 @@
         <x-ui.card-header>
             <x-ui.datatable-toolbar dataTableId="table-public-pages" :filter="false" />
         </x-ui.card-header>
+            <x-ui.card-body class="p-0">
             <x-ui.datatable
                 id="table-public-pages"
                 route="{{ route('public.cms.page.data') }}"
@@ -25,6 +26,7 @@
                     ['data' => 'action', 'name' => 'action', 'title' => 'Aksi', 'orderable' => false, 'searchable' => false, 'class' => 'text-center']
                 ]"
             />
+        </x-ui.card-body>
     </x-ui.card>
 
 @endsection
