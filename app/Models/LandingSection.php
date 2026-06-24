@@ -16,8 +16,6 @@ class LandingSection extends Model
 
     protected $primaryKey = 'landing_section_id';
 
-    protected $appends = ['encrypted_landing_section_id'];
-
     protected $fillable = [
         'section_key',
         'section_name',
@@ -44,11 +42,6 @@ class LandingSection extends Model
         'settings' => 'array',
         'limit_data' => 'integer',
     ];
-
-    public function getEncryptedLandingSectionIdAttribute(): string
-    {
-        return encryptId($this->getKey());
-    }
 
     public static function registry(): array
     {

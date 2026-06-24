@@ -20,7 +20,7 @@ class Testimonial extends Model implements HasMedia
 
     protected $primaryKey = 'testimonial_id';
 
-    protected $appends = ['encrypted_testimonial_id', 'photo_url'];
+    protected $appends = ['photo_url'];
 
     protected $fillable = [
         'name',
@@ -36,11 +36,6 @@ class Testimonial extends Model implements HasMedia
         'is_active' => 'boolean',
         'rating' => 'integer',
     ];
-
-    public function getEncryptedTestimonialIdAttribute(): string
-    {
-        return encryptId($this->getKey());
-    }
 
     public function getPhotoUrlAttribute(): ?string
     {

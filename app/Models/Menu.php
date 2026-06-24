@@ -17,13 +17,6 @@ class Menu extends Model
 
     protected $primaryKey = 'menu_id';
 
-    protected $appends = ['encrypted_menu_id'];
-
-    public function getEncryptedMenuIdAttribute()
-    {
-        return encryptId($this->menu_id);
-    }
-
     protected $fillable = [
         'parent_id',
         'title',

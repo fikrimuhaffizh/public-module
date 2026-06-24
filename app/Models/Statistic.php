@@ -16,8 +16,6 @@ class Statistic extends Model
 
     protected $primaryKey = 'statistic_id';
 
-    protected $appends = ['encrypted_statistic_id'];
-
     protected $fillable = [
         'label',
         'value',
@@ -27,9 +25,4 @@ class Statistic extends Model
     ];
 
     protected $casts = ['is_active' => 'boolean'];
-
-    public function getEncryptedStatisticIdAttribute(): string
-    {
-        return encryptId($this->getKey());
-    }
 }

@@ -135,8 +135,4 @@ class Pengumuman extends Model implements HasMedia
         return $media ? sys_media_url($media) : null;
     }
 
-    public function getEncryptedPengumumanIdAttribute()
-    {
-        return encryptId($this->pengumuman_id);
-    }
 }

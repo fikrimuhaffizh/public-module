@@ -20,7 +20,7 @@ class Cta extends Model implements HasMedia
 
     protected $primaryKey = 'cta_id';
 
-    protected $appends = ['encrypted_cta_id', 'background_image_url'];
+    protected $appends = ['background_image_url'];
 
     protected $fillable = [
         'title',
@@ -31,11 +31,6 @@ class Cta extends Model implements HasMedia
     ];
 
     protected $casts = ['is_active' => 'boolean'];
-
-    public function getEncryptedCtaIdAttribute(): string
-    {
-        return encryptId($this->getKey());
-    }
 
     public function getBackgroundImageUrlAttribute(): ?string
     {

@@ -20,7 +20,7 @@ class HeroSection extends Model implements HasMedia
 
     protected $primaryKey = 'hero_id';
 
-    protected $appends = ['encrypted_hero_id', 'image_url'];
+    protected $appends = ['image_url'];
 
     protected $fillable = [
         'title',
@@ -34,11 +34,6 @@ class HeroSection extends Model implements HasMedia
     ];
 
     protected $casts = ['is_active' => 'boolean'];
-
-    public function getEncryptedHeroIdAttribute(): string
-    {
-        return encryptId($this->getKey());
-    }
 
     public function getImageUrlAttribute(): ?string
     {

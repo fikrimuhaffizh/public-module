@@ -1,367 +1,174 @@
-# DOMAIN Spec — Modul Public (CMS)
+# Public
 
-Module: Public | Prefix DB: `cms_` | Route prefix: `cms` | Permission prefix: `cms`
+Modul Public adalah lapisan CMS (Content Management System) yang menyajikan tampilan portal publik perguruan tinggi dan halaman landing page. Modul ini mengelola konten editorial (halaman statis, pengumuman, FAQ, slideshow, testimonial, partner/klien), blok layout landing page (hero, fitur, produk, statistik, CTA), konfigurasi metadata situs, dan struktur menu navigasi publik. Seluruh tabel menggunakan prefix `cms_` dan bersifat multi-tenant melalui kolom `tenant_id`.
 
-## 1. Tujuan Modul
-Mengelola website portal luar perguruan tinggi, termasuk pengelolaan artikel berita, pengumuman, halaman statis prodi, banner dinamis, serta formulir hubungi kami.
+Modul Public tidak menjalankan logika bisnis inti sistem akademik; fungsinya adalah permukaan komunikasi keluar (halaman marketing, profil prodi, berita, dan pengumuman resmi) yang dapat dikelola oleh admin humas/konten tanpa menyentuh modul akademik.
 
-## 2. Diagram Alur & Relasi
+## Daftar Tabel
 
-### 2.1 Alur Publikasi Konten
+| #  | Tabel                        | Deskripsi Singkat                                                                  |
+|----|------------------------------|------------------------------------------------------------------------------------|
+| 1  | `cms_page`                   | Halaman statis/profil prodi yang dapat ditautkan dari menu.                        |
+| 2  | `cms_menu`                   | Item menu navigasi (header/footer) dengan struktur hierarkis dan target tautan.   |
+| 3  | `cms_pengumuman`             | Pengumuman resmi perguruan tinggi, lengkap dengan penulis dan status publikasi.   |
+| 4  | `cms_slideshow`              | Banner slideshow berurutan untuk halaman beranda.                                  |
+| 5  | `cms_faq`                    | Pertanyaan umum (FAQ) yang ditampilkan di halaman publik.                         |
+| 6  | `cms_testimonial`            | Testimoni pengguna/mitra dengan rating dan urutan tampil.                          |
+| 7  | `cms_partner`                | Daftar mitra/lembaga kerja sama yang ditampilkan di halaman publik.                |
+| 8  | `cms_hero_sections`          | Blok hero utama pada landing page (judul, subjudul, tombol CTA).                   |
+| 9  | `cms_features`               | Daftar fitur/keunggulan pada landing page.                                         |
+| 10 | `cms_products`               | Daftar produk/layanan yang dipromosikan pada landing page.                         |
+| 11 | `cms_statistics`             | Statistik numerik prestatif pada landing page (akreditasi, mahasiswa, dll).        |
+| 12 | `cms_clients`                | Daftar klien/kustomer yang ditampilkan pada landing page.                          |
+| 13 | `cms_ctas`                   | Blok Call-To-Action tambahan pada landing page.                                    |
+| 14 | `cms_landing_page_settings`  | Pengaturan global landing page per tenant (judul situs, kontak, sosial media).     |
+| 15 | `cms_landing_sections`       | Orkestrasi section landing page (area, komponen, urutan, settings JSON).           |
+
+## Entity Relationship Diagram
+
 ```mermaid
-flowchart TD
-    A["Tulis Artikel / Pengumuman"] --> B["Petakan ke Kategori"]
-    B --> C["Set Status = Publish"]
-    C --> D["Sistem Render di Homepage Publik"]
-    D --> E["Pengunjung Baca Konten"]
+erDiagram
+    cms_page ||--o{ cms_menu : "linked by page_id"
+    cms_menu ||--o{ cms_menu : "self parent_id"
+    cms_page {
+        bigint page_id PK
+        string slug
+        string title
+        longText content
+        boolean is_published
+    }
+    cms_menu {
+        bigint menu_id PK
+        bigint parent_id FK
+        bigint page_id FK
+        string type
+        string position
+        string target
+        int sequence
+        boolean is_active
+    }
+    cms_pengumuman {
+        bigint pengumuman_id PK
+        bigint penulis_id FK
+        string judul
+        text isi
+        string jenis
+        boolean is_published
+        timestamp published_at
+    }
+    cms_slideshow {
+        bigint id PK
+        string image_url
+        string title
+        int seq
+        boolean is_active
+    }
+    cms_faq {
+        bigint faq_id PK
+        string question
+        text answer
+        string category
+        int seq
+        boolean is_active
+    }
+    cms_testimonial {
+        bigint testimonial_id PK
+        string name
+        string position
+        text quote
+        tinyint rating
+        int seq
+        boolean is_active
+    }
+    cms_partner {
+        bigint partner_id PK
+        string name
+        string category
+        string website_url
+        int seq
+        boolean is_active
+    }
+    cms_hero_sections {
+        bigint hero_id PK
+        string title
+        string subtitle
+        text description
+        boolean is_active
+    }
+    cms_features {
+        bigint feature_id PK
+        string title
+        text description
+        string icon
+        int sort_order
+        boolean is_active
+    }
+    cms_products {
+        bigint product_id PK
+        string name
+        string slug
+        text description
+        int sort_order
+        boolean is_active
+    }
+    cms_statistics {
+        bigint statistic_id PK
+        string label
+        string value
+        string icon
+        int sort_order
+        boolean is_active
+    }
+    cms_clients {
+        bigint client_id PK
+        string name
+        string website
+        int sort_order
+        boolean is_active
+    }
+    cms_ctas {
+        bigint cta_id PK
+        string title
+        text description
+        string button_text
+        string button_link
+        boolean is_active
+    }
+    cms_landing_page_settings {
+        bigint id PK
+        bigint tenant_id
+        string site_title
+        string contact_email
+        text address
+    }
+    cms_landing_sections {
+        bigint landing_section_id PK
+        string section_key
+        string area
+        string component_name
+        string variant
+        int sort_order
+        boolean is_active
+        json settings
+    }
 ```
 
-### 2.2 Relasi Tabel
-```mermaid
-classDiagram
-    Category "1" --> "*" Post : mengelompokkan
-    Post "1" --> "*" Media : memiliki gambar
-```
+## Relasi ke Modul Lain
 
-## 2. Entitas & Tabel (Auto-Generated)
+- `cms_pengumuman.penulis_id` → `users.id` (Account)
+- `cms_menu.page_id` → `cms_page.page_id` (internal modul ini, dengan `nullOnDelete` agar halaman yang dihapus tidak menghapus menu)
+- `cms_menu.parent_id` → `cms_menu.menu_id` (self-reference untuk struktur pohon menu)
+- Seluruh tabel memuat `tenant_id` untuk isolasi multi-tenant (modul Sys/Saas)
+- Field blameable `created_by`/`updated_by`/`deleted_by` menyimpan identifier user (Account) yang melakukan aksi
 
-#### `cms_page`
+## Catatan Domain
 
-| Kolom | Tipe | Keterangan |
-| --- | --- | --- |
-| `page_id` | `id` | |
-| `tenant_id` | `unsignedBigInteger` | |
-| `title` | `string` | |
-| `slug` | `string` | |
-| `content` | `longText` | |
-| `meta_desc` | `text` | |
-| `meta_keywords` | `text` | |
-| `is_published` | `boolean` | |
-| `created_by` | `string` | |
-| `updated_by` | `string` | |
-| `deleted_by` | `string` | |
-| `created_at` | `timestamp` | |
-| `updated_at` | `timestamp` | |
-| `deleted_at` | `timestamp` | |
-
-#### `cms_menu`
-
-| Kolom | Tipe | Keterangan |
-| --- | --- | --- |
-| `menu_id` | `id` | |
-| `tenant_id` | `unsignedBigInteger` | |
-| `parent_id` | `unsignedBigInteger` | |
-| `title` | `string` | |
-| `type` | `string` | |
-| `url` | `string` | |
-| `route` | `string` | |
-| `page_id` | `unsignedBigInteger` | |
-| `position` | `string` | |
-| `target` | `string` | |
-| `sequence` | `integer` | |
-| `is_active` | `boolean` | |
-| `created_by` | `string` | |
-| `updated_by` | `string` | |
-| `deleted_by` | `string` | |
-| `parent_id` | `foreign` | |
-| `page_id` | `foreign` | |
-| `created_at` | `timestamp` | |
-| `updated_at` | `timestamp` | |
-| `deleted_at` | `timestamp` | |
-
-#### `cms_pengumuman`
-
-| Kolom | Tipe | Keterangan |
-| --- | --- | --- |
-| `pengumuman_id` | `id` | |
-| `tenant_id` | `unsignedBigInteger` | |
-| `penulis_id` | `unsignedBigInteger` | |
-| `judul` | `string` | |
-| `isi` | `text` | |
-| `jenis` | `string` | |
-| `is_published` | `boolean` | |
-| `image_url` | `string` | |
-| `published_at` | `timestamp` | |
-| `created_by` | `string` | |
-| `updated_by` | `string` | |
-| `deleted_by` | `string` | |
-| `penulis_id` | `foreign` | |
-| `created_at` | `timestamp` | |
-| `updated_at` | `timestamp` | |
-| `deleted_at` | `timestamp` | |
-
-#### `cms_slideshow`
-
-| Kolom | Tipe | Keterangan |
-| --- | --- | --- |
-| `tenant_id` | `unsignedBigInteger` | |
-| `image_url` | `string` | |
-| `title` | `string` | |
-| `caption` | `string` | |
-| `link` | `string` | |
-| `seq` | `integer` | |
-| `is_active` | `boolean` | |
-| `created_by` | `string` | |
-| `updated_by` | `string` | |
-| `deleted_by` | `string` | |
-| `id` | `id` | |
-| `created_at` | `timestamp` | |
-| `updated_at` | `timestamp` | |
-| `deleted_at` | `timestamp` | |
-
-#### `cms_faq`
-
-| Kolom | Tipe | Keterangan |
-| --- | --- | --- |
-| `faq_id` | `id` | |
-| `tenant_id` | `unsignedBigInteger` | |
-| `question` | `string` | |
-| `answer` | `text` | |
-| `category` | `string` | |
-| `seq` | `integer` | |
-| `is_active` | `boolean` | |
-| `created_by` | `string` | |
-| `updated_by` | `string` | |
-| `deleted_by` | `string` | |
-| `created_at` | `timestamp` | |
-| `updated_at` | `timestamp` | |
-| `deleted_at` | `timestamp` | |
-
-#### `cms_testimonial`
-
-| Kolom | Tipe | Keterangan |
-| --- | --- | --- |
-| `testimonial_id` | `id` | |
-| `tenant_id` | `unsignedBigInteger` | |
-| `name` | `string` | |
-| `position` | `string` | |
-| `organization` | `string` | |
-| `quote` | `text` | |
-| `rating` | `unsignedTinyInteger` | |
-| `seq` | `unsignedInteger` | |
-| `is_active` | `boolean` | |
-| `created_by` | `string` | |
-| `updated_by` | `string` | |
-| `deleted_by` | `string` | |
-| `created_at` | `timestamp` | |
-| `updated_at` | `timestamp` | |
-| `deleted_at` | `timestamp` | |
-
-#### `cms_partner`
-
-| Kolom | Tipe | Keterangan |
-| --- | --- | --- |
-| `partner_id` | `id` | |
-| `tenant_id` | `unsignedBigInteger` | |
-| `name` | `string` | |
-| `category` | `string` | |
-| `website_url` | `string` | |
-| `seq` | `unsignedInteger` | |
-| `is_active` | `boolean` | |
-| `created_by` | `string` | |
-| `updated_by` | `string` | |
-| `deleted_by` | `string` | |
-| `created_at` | `timestamp` | |
-| `updated_at` | `timestamp` | |
-| `deleted_at` | `timestamp` | |
-
-#### `cms_hero_sections`
-
-| Kolom | Tipe | Keterangan |
-| --- | --- | --- |
-| `hero_id` | `id` | |
-| `tenant_id` | `unsignedBigInteger` | |
-| `title` | `string` | |
-| `subtitle` | `string` | |
-| `description` | `text` | |
-| `button_primary_text` | `string` | |
-| `button_primary_link` | `string` | |
-| `button_secondary_text` | `string` | |
-| `button_secondary_link` | `string` | |
-| `is_active` | `boolean` | |
-| `created_by` | `string` | |
-| `created_by_id` | `unsignedBigInteger` | |
-| `updated_by` | `string` | |
-| `updated_by_id` | `unsignedBigInteger` | |
-| `deleted_by` | `string` | |
-| `deleted_by_id` | `unsignedBigInteger` | |
-| `created_at` | `timestamp` | |
-| `updated_at` | `timestamp` | |
-| `deleted_at` | `timestamp` | |
-
-#### `cms_features`
-
-| Kolom | Tipe | Keterangan |
-| --- | --- | --- |
-| `feature_id` | `id` | |
-| `tenant_id` | `unsignedBigInteger` | |
-| `title` | `string` | |
-| `description` | `text` | |
-| `icon` | `string` | |
-| `sort_order` | `unsignedInteger` | |
-| `is_active` | `boolean` | |
-| `created_by` | `string` | |
-| `created_by_id` | `unsignedBigInteger` | |
-| `updated_by` | `string` | |
-| `updated_by_id` | `unsignedBigInteger` | |
-| `deleted_by` | `string` | |
-| `deleted_by_id` | `unsignedBigInteger` | |
-| `created_at` | `timestamp` | |
-| `updated_at` | `timestamp` | |
-| `deleted_at` | `timestamp` | |
-
-#### `cms_products`
-
-| Kolom | Tipe | Keterangan |
-| --- | --- | --- |
-| `product_id` | `id` | |
-| `tenant_id` | `unsignedBigInteger` | |
-| `name` | `string` | |
-| `slug` | `string` | |
-| `short_description` | `string` | |
-| `description` | `text` | |
-| `demo_url` | `string` | |
-| `sort_order` | `unsignedInteger` | |
-| `is_active` | `boolean` | |
-| `created_by` | `string` | |
-| `created_by_id` | `unsignedBigInteger` | |
-| `updated_by` | `string` | |
-| `updated_by_id` | `unsignedBigInteger` | |
-| `deleted_by` | `string` | |
-| `deleted_by_id` | `unsignedBigInteger` | |
-| `created_at` | `timestamp` | |
-| `updated_at` | `timestamp` | |
-| `deleted_at` | `timestamp` | |
-
-#### `cms_statistics`
-
-| Kolom | Tipe | Keterangan |
-| --- | --- | --- |
-| `statistic_id` | `id` | |
-| `tenant_id` | `unsignedBigInteger` | |
-| `label` | `string` | |
-| `value` | `string` | |
-| `icon` | `string` | |
-| `sort_order` | `unsignedInteger` | |
-| `is_active` | `boolean` | |
-| `created_by` | `string` | |
-| `created_by_id` | `unsignedBigInteger` | |
-| `updated_by` | `string` | |
-| `updated_by_id` | `unsignedBigInteger` | |
-| `deleted_by` | `string` | |
-| `deleted_by_id` | `unsignedBigInteger` | |
-| `created_at` | `timestamp` | |
-| `updated_at` | `timestamp` | |
-| `deleted_at` | `timestamp` | |
-
-#### `cms_clients`
-
-| Kolom | Tipe | Keterangan |
-| --- | --- | --- |
-| `client_id` | `id` | |
-| `tenant_id` | `unsignedBigInteger` | |
-| `name` | `string` | |
-| `website` | `string` | |
-| `sort_order` | `unsignedInteger` | |
-| `is_active` | `boolean` | |
-| `created_by` | `string` | |
-| `created_by_id` | `unsignedBigInteger` | |
-| `updated_by` | `string` | |
-| `updated_by_id` | `unsignedBigInteger` | |
-| `deleted_by` | `string` | |
-| `deleted_by_id` | `unsignedBigInteger` | |
-| `created_at` | `timestamp` | |
-| `updated_at` | `timestamp` | |
-| `deleted_at` | `timestamp` | |
-
-#### `cms_ctas`
-
-| Kolom | Tipe | Keterangan |
-| --- | --- | --- |
-| `cta_id` | `id` | |
-| `tenant_id` | `unsignedBigInteger` | |
-| `title` | `string` | |
-| `description` | `text` | |
-| `button_text` | `string` | |
-| `button_link` | `string` | |
-| `is_active` | `boolean` | |
-| `created_by` | `string` | |
-| `created_by_id` | `unsignedBigInteger` | |
-| `updated_by` | `string` | |
-| `updated_by_id` | `unsignedBigInteger` | |
-| `deleted_by` | `string` | |
-| `deleted_by_id` | `unsignedBigInteger` | |
-| `created_at` | `timestamp` | |
-| `updated_at` | `timestamp` | |
-| `deleted_at` | `timestamp` | |
-
-#### `cms_landing_page_settings`
-
-| Kolom | Tipe | Keterangan |
-| --- | --- | --- |
-| `tenant_id` | `unsignedBigInteger` | |
-| `site_title` | `string` | |
-| `site_description` | `text` | |
-| `meta_title` | `string` | |
-| `meta_description` | `text` | |
-| `meta_keywords` | `text` | |
-| `contact_email` | `string` | |
-| `contact_phone` | `string` | |
-| `whatsapp` | `string` | |
-| `address` | `text` | |
-| `facebook_url` | `string` | |
-| `instagram_url` | `string` | |
-| `linkedin_url` | `string` | |
-| `youtube_url` | `string` | |
-| `created_by` | `string` | |
-| `created_by_id` | `unsignedBigInteger` | |
-| `updated_by` | `string` | |
-| `updated_by_id` | `unsignedBigInteger` | |
-| `id` | `id` | |
-| `created_at` | `timestamp` | |
-| `updated_at` | `timestamp` | |
-
-#### `cms_landing_sections`
-
-| Kolom | Tipe | Keterangan |
-| --- | --- | --- |
-| `landing_section_id` | `id` | |
-| `tenant_id` | `unsignedBigInteger` | |
-| `section_key` | `string` | |
-| `section_name` | `string` | |
-| `area` | `string` | |
-| `component_name` | `string` | |
-| `variant` | `string` | |
-| `title` | `string` | |
-| `pre_title` | `string` | |
-| `post_title` | `string` | |
-| `subtitle` | `string` | |
-| `description` | `text` | |
-| `sort_order` | `unsignedInteger` | |
-| `limit_data` | `unsignedSmallInteger` | |
-| `is_active` | `boolean` | |
-| `settings` | `json` | |
-| `created_by` | `string` | |
-| `created_by_id` | `unsignedBigInteger` | |
-| `updated_by` | `string` | |
-| `updated_by_id` | `unsignedBigInteger` | |
-| `created_at` | `timestamp` | |
-| `updated_at` | `timestamp` | |
-
-## 3. Diagram Urutan Pengiriman Kontak Publik
-```mermaid
-sequenceDiagram
-    autonumber
-    actor Guest as Pengunjung Website
-    participant CMS as CMS Engine
-    actor Admin as Admin Humas
-    
-    Guest->>CMS: Isi Formulir Hubungi Kami
-    CMS->>CMS: Simpan Pesan ke cms_inquiries
-    CMS-->>Admin: Kirim Notifikasi Pesan Masuk
-    Admin->>CMS: Tulis Balasan & Kirim
-    CMS-->>Guest: Kirim Email Balasan Otomatis
-```
-
-## 5. Aturan Bisnis
-1.  Formulir hubungi kami dilindungi oleh Captcha untuk mencegah serangan spamming bot.
+- `cms_menu.type` menggunakan nilai `link` (URL eksternal/manual), `page` (tautan internal ke `cms_page.page_id`), atau `route` (nama route Laravel).
+- `cms_menu.position` menyimpan lokasi penempatan menu, utamanya `header` dan `footer` (dapat diperluas: `sidebar`, dll).
+- `cms_menu.target` mengikuti konvensi HTML: `_self` (default) atau `_blank` untuk membuka tab baru.
+- `cms_landing_sections.area` menandakan area render: `header`, `content`, atau `footer`; setiap section dikunci unik per tenant melalui `unique(tenant_id, section_key)`.
+- `cms_landing_page_settings` menerapkan `unique(tenant_id)` sehingga satu tenant hanya memiliki satu baris konfigurasi global landing page.
+- `cms_products` menerapkan `unique(tenant_id, slug)` agar slug produk unik dalam scope tenant.
+- `cms_page.slug` bersifat global-unique (tanpa scope tenant) untuk menjamin URL halaman publik stabil lintas tenant (pada umumnya tenant = 1 untuk landing publik).
+- `cms_pengumuman.penulis_id` merujuk ke `users.id`; bila penulis dihapus, FK menggunakan default `RESTRICT` (diverifikasi saat delete user), sehingga pengumuman orphan dapat dicegah.
+- Hampir seluruh tabel CMS mengaktifkan `softDeletes` dan field blameable untuk audit trail.

@@ -20,7 +20,7 @@ class Product extends Model implements HasMedia
 
     protected $primaryKey = 'product_id';
 
-    protected $appends = ['encrypted_product_id', 'image_url'];
+    protected $appends = ['image_url'];
 
     protected $fillable = [
         'name',
@@ -33,11 +33,6 @@ class Product extends Model implements HasMedia
     ];
 
     protected $casts = ['is_active' => 'boolean'];
-
-    public function getEncryptedProductIdAttribute(): string
-    {
-        return encryptId($this->getKey());
-    }
 
     public function getImageUrlAttribute(): ?string
     {

@@ -20,7 +20,7 @@ class Partner extends Model implements HasMedia
 
     protected $primaryKey = 'partner_id';
 
-    protected $appends = ['encrypted_partner_id', 'logo_url'];
+    protected $appends = ['logo_url'];
 
     protected $fillable = [
         'name',
@@ -31,11 +31,6 @@ class Partner extends Model implements HasMedia
     ];
 
     protected $casts = ['is_active' => 'boolean'];
-
-    public function getEncryptedPartnerIdAttribute(): string
-    {
-        return encryptId($this->getKey());
-    }
 
     public function getLogoUrlAttribute(): ?string
     {

@@ -20,7 +20,7 @@ class Client extends Model implements HasMedia
 
     protected $primaryKey = 'client_id';
 
-    protected $appends = ['encrypted_client_id', 'logo_url'];
+    protected $appends = ['logo_url'];
 
     protected $fillable = [
         'name',
@@ -30,11 +30,6 @@ class Client extends Model implements HasMedia
     ];
 
     protected $casts = ['is_active' => 'boolean'];
-
-    public function getEncryptedClientIdAttribute(): string
-    {
-        return encryptId($this->getKey());
-    }
 
     public function getLogoUrlAttribute(): ?string
     {

@@ -19,12 +19,7 @@ class Slideshow extends Model implements HasMedia
 
     protected $table = 'cms_slideshow';
 
-    protected $appends = ['encrypted_slideshow_id', 'has_image', 'is_external_image'];
-
-    public function getEncryptedSlideshowIdAttribute()
-    {
-        return encryptId($this->id);
-    }
+    protected $appends = ['has_image', 'is_external_image'];
 
     public function getHasImageAttribute()
     {

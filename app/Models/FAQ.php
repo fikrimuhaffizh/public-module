@@ -17,13 +17,6 @@ class FAQ extends Model
 
     protected $primaryKey = 'faq_id';
 
-    protected $appends = ['encrypted_faq_id'];
-
-    public function getEncryptedFaqIdAttribute()
-    {
-        return encryptId($this->faq_id);
-    }
-
     protected $fillable = [
         'question',
         'answer',

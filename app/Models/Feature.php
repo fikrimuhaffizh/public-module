@@ -20,7 +20,7 @@ class Feature extends Model implements HasMedia
 
     protected $primaryKey = 'feature_id';
 
-    protected $appends = ['encrypted_feature_id', 'image_url'];
+    protected $appends = ['image_url'];
 
     protected $fillable = [
         'title',
@@ -31,11 +31,6 @@ class Feature extends Model implements HasMedia
     ];
 
     protected $casts = ['is_active' => 'boolean'];
-
-    public function getEncryptedFeatureIdAttribute(): string
-    {
-        return encryptId($this->getKey());
-    }
 
     public function getImageUrlAttribute(): ?string
     {
