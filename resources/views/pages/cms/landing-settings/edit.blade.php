@@ -23,6 +23,9 @@
                     'corporate' => ['Corporate', 'Tampilan mewah dan elegan untuk institusi serta mitra korporat.', 'building-skyscraper'],
                     'launch' => ['Launch UI', 'Desain segar dengan hero, fitur, produk, statistik, dan CTA yang dapat dikelola penuh.', 'rocket'],
                     'aurora' => ['Aurora', 'Dark-mode bento grid dengan efek aurora dan glassmorphism untuk nuansa SaaS modern.', 'brand-aurora'],
+                    'enterprise' => ['Enterprise', 'Tampilan profesional monokrom dengan aksen biru, fokus pada kepercayaan dan data.', 'shield-check'],
+                    'registration' => ['Registration', 'Berorientasi pendaftaran dengan form ringkasan, langkah-langkah, dan testimoni.', 'clipboard-check'],
+                    'profile' => ['Profile', 'Elegant company profile dengan tipografi serif, kutipan, dan visual bersih.', 'building-arch'],
                 };
             @endphp
             @php($isSelected = old('landing_template', $selectedTemplate) === $template)

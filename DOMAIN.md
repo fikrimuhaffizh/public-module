@@ -153,6 +153,69 @@ erDiagram
     }
 ```
 
+## Template Landing Page
+
+Modul Public menggunakan **Inertia.js + React** untuk merender landing page publik. Terdapat 8 template dengan palet, tipografi, dan tata letak yang berbeda. Masing-masing template mengimplementasikan section yang sama (hero, feature, product, statistic, client, testimonial, pengumuman, faq, cta) dengan interpretasi visual yang unik.
+
+### Daftar Template
+
+| #  | Key            | File                              | Palet Utama          | Karakter                        | Cocok Untuk                            |
+|----|----------------|-----------------------------------|----------------------|---------------------------------|----------------------------------------|
+| 1  | `modern`       | `ModernTemplate.jsx`              | Ungu (#6d4aff)      | Startup tech, browser mockup    | Teknologi, startup kampus              |
+| 2  | `editorial`    | `EditorialTemplate.jsx`           | Oranye (#b34719)    | Serif, warm, editorial          | Publikasi, portal berita               |
+| 3  | `corporate`    | `CorporateTemplate.jsx`           | Navy/emas           | Grid lines, structured          | Institusi formal, pemerintahan         |
+| 4  | `launch`       | `LaunchTemplate.jsx`              | Indigo/gelap        | Dark gradient, product launch   | Peluncuran produk, event               |
+| 5  | `aurora`       | `AuroraTemplate.jsx`              | Ungu/glassmorphism  | Dark/light, artistik            | Kreatif, desain, portofolio            |
+| 6  | `enterprise`   | `EnterpriseTemplate.jsx`          | Biru (#2563eb)      | Clean monochrome, minimal SaaS  | Enterprise SaaS, B2B, company profile  |
+| 7  | `registration` | `RegistrationTemplate.jsx`        | Emerald (#059669)   | Form-centric, warm              | Pendaftaran, admissions, program       |
+| 8  | `profile`      | `ProfileTemplate.jsx`             | Indigo (#6366f1)    | Elegant editorial, serif        | Company profile, professional services |
+
+### Arsitektur Template
+
+```
+Template menerima 1 prop: data (dari Inertia usePage().props)
+  └── data.sections[]   → urutan & aktivasi section dari CMS
+  └── data.landing      → hero, features, products, statistics, clients, CTA
+  └── data.site         → nama, logo, kontak, sosial media
+  └── data.menus        → navigasi header
+  └── data.pages        → halaman statis
+  └── data.announcements → pengumuman/berita
+  └── data.partners     → mitra/klien
+  └── data.testimonials → testimoni
+  └── data.faqs         → FAQ
+  └── data.template     → key template aktif
+```
+
+Setiap template adalah **satu file JSX default export** di `resources/assets/js/templates/`. Template **wajib** menghormati `section.is_active` — jika `false`, section tidak dirender.
+
+### Registrasi Template
+
+| Langkah | File |
+|---------|------|
+| Daftarkan di konstanta | `app/Services/LandingPageService.php` → `TEMPLATES` array |
+| Import & mapping | `resources/assets/js/pages/Home.jsx` → `templates` object |
+| Label preview | `resources/assets/js/layouts/PublicLayout.jsx` → `TemplatePicker` labels |
+| CSS tema | `resources/assets/css/landing.css` → `.theme-{key}` block |
+
+### Mekanisme Tema CSS
+
+Class tema (`theme-{key}`) di-apply oleh `PublicLayout.jsx` di wrapper div utama. Setiap tema mendefinisikan CSS custom properties:
+
+```css
+.theme-enterprise {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --foreground: #0f172a;
+    --background: #ffffff;
+    --card: #ffffff;
+    --border: #e2e8f0;
+    --muted: #64748b;
+    --section-tint: #f8fafc;
+}
+```
+
+Kelas komponen (`.ui-button`, `.ui-badge`, `.spotlight-card`, `.section--tint`, `.section--dark`) di-override per tema untuk konsistensi visual.
+
 ## Relasi ke Modul Lain
 
 - `cms_pengumuman.penulis_id` → `users.id` (Account)

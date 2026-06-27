@@ -37,13 +37,11 @@
                     <option value="right" @selected($textAlign === 'right')>Kanan</option>
                 </select>
             </div>
-        </div>
-        
-        <div class="row g-2 mt-1">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <x-ui.form-input name="limit_data" type="number" label="Limit Data" :value="$section->limit_data" help="Jumlah item yang ditampilkan (1-50)." />
             </div>
         </div>
+        
         @else
             <input type="hidden" name="pre_title" value="{{ $section->pre_title }}">
             <input type="hidden" name="post_title" value="{{ $section->post_title }}">

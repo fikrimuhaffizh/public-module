@@ -6,6 +6,9 @@ import EditorialTemplate from '@public/templates/EditorialTemplate';
 import CorporateTemplate from '@public/templates/CorporateTemplate';
 import LaunchTemplate from '@public/templates/LaunchTemplate';
 import AuroraTemplate from '@public/templates/AuroraTemplate';
+import EnterpriseTemplate from '@public/templates/EnterpriseTemplate';
+import RegistrationTemplate from '@public/templates/RegistrationTemplate';
+import ProfileTemplate from '@public/templates/ProfileTemplate';
 
 const templates = {
   modern: ModernTemplate,
@@ -13,6 +16,9 @@ const templates = {
   corporate: CorporateTemplate,
   launch: LaunchTemplate,
   aurora: AuroraTemplate,
+  enterprise: EnterpriseTemplate,
+  registration: RegistrationTemplate,
+  profile: ProfileTemplate,
 };
 
 export default function Home() {

@@ -97,6 +97,9 @@ export function TemplatePicker({ template }) {
         corporate: 'Corporate',
         launch: 'Launch UI',
         aurora: 'Aurora',
+        enterprise: 'Enterprise',
+        registration: 'Registration',
+        profile: 'Profile',
     };
     return <div className="template-picker"><span>Pratinjau:</span>{Object.entries(labels).map(([key, label]) =>
         <a key={key} className={template === key ? 'active' : ''} href={`?template=${key}`}>{label}</a>)}</div>;

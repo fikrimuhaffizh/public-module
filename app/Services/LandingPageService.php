@@ -24,7 +24,7 @@ use Modules\Public\app\Models\Testimonial;
 
 class LandingPageService
 {
-    public const TEMPLATES = ['modern', 'editorial', 'corporate', 'launch', 'aurora'];
+    public const TEMPLATES = ['modern', 'editorial', 'corporate', 'launch', 'aurora', 'enterprise', 'registration', 'profile'];
 
     public function __construct(private TenantConfigService $tenantConfig) {}
 
