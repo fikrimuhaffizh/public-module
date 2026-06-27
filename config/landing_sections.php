@@ -27,7 +27,7 @@ $baseSections = [
         'variants' => ['product_1' => 'Card grid', 'product_2' => 'Horizontal showcase'],
         'default_variant' => 'product_1',
         'default_limit' => 6,
-        'manage_data_route' => 'public.cms.product.index',
+        'manage_data_route' => 'cms.product.index',
     ],
     'statistic' => [
         'name' => 'Statistik',
@@ -36,7 +36,7 @@ $baseSections = [
         'variants' => ['stats_1' => 'Counter sederhana', 'stats_2' => 'Card statistik'],
         'default_variant' => 'stats_1',
         'default_limit' => 4,
-        'manage_data_route' => 'public.cms.statistic.index',
+        'manage_data_route' => 'cms.statistic.index',
     ],
     'feature' => [
         'name' => 'Fitur',
@@ -45,7 +45,7 @@ $baseSections = [
         'variants' => ['feature_1' => 'Grid 3 kolom', 'feature_2' => 'Icon card'],
         'default_variant' => 'feature_1',
         'default_limit' => 6,
-        'manage_data_route' => 'public.cms.feature.index',
+        'manage_data_route' => 'cms.feature.index',
     ],
     'testimonial' => [
         'name' => 'Testimoni',
@@ -54,7 +54,7 @@ $baseSections = [
         'variants' => ['testimonial_1' => 'Card grid', 'testimonial_2' => 'Highlighted'],
         'default_variant' => 'testimonial_1',
         'default_limit' => 3,
-        'manage_data_route' => 'public.cms.testimonial.index',
+        'manage_data_route' => 'cms.testimonial.index',
     ],
     'client' => [
         'name' => 'Client',
@@ -63,7 +63,7 @@ $baseSections = [
         'variants' => ['logos_1' => 'Grid logo', 'logos_2' => 'Logo carousel'],
         'default_variant' => 'logos_1',
         'default_limit' => 8,
-        'manage_data_route' => 'public.cms.client.index',
+        'manage_data_route' => 'cms.client.index',
     ],
     'faq' => [
         'name' => 'FAQ',
@@ -72,7 +72,7 @@ $baseSections = [
         'variants' => ['faq_1' => 'Accordion', 'faq_2' => 'Dua kolom'],
         'default_variant' => 'faq_1',
         'default_limit' => 8,
-        'manage_data_route' => 'public.cms.faq.index',
+        'manage_data_route' => 'cms.faq.index',
     ],
     'pengumuman' => [
         'name' => 'Pengumuman',
@@ -81,7 +81,7 @@ $baseSections = [
         'variants' => ['announcement_1' => 'News grid', 'announcement_2' => 'List kompak'],
         'default_variant' => 'announcement_1',
         'default_limit' => 6,
-        'manage_data_route' => 'public.cms.pengumuman.index',
+        'manage_data_route' => 'cms.pengumuman.index',
     ],
     'cta' => [
         'name' => 'Call To Action',
@@ -90,7 +90,7 @@ $baseSections = [
         'variants' => ['cta_1' => 'Simple CTA', 'cta_2' => 'CTA background image'],
         'default_variant' => 'cta_1',
         'default_limit' => 1,
-        'manage_data_route' => 'public.cms.cta.index',
+        'manage_data_route' => 'cms.cta.index',
     ],
     'footer' => [
         'name' => 'Footer',

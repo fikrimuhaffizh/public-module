@@ -503,8 +503,8 @@ img {
 }
 
 .theme-modern {
-    --primary: #6d4aff;
-    --primary-dark: #4c2bd9;
+    --primary: #1d4ed8;
+    --primary-dark: #1e40af;
     --foreground: #17152a
 }
 
@@ -2243,8 +2243,8 @@ img {
 
 /* Launch UI template */
 .theme-launch {
-    --primary: #6366f1;
-    --primary-dark: #4338ca;
+    --primary: #1e40af;
+    --primary-dark: #1e3a8a;
     --foreground: #0b1020;
     --muted: #64748b;
     --border: #e2e8f0;
@@ -2261,7 +2261,7 @@ img {
 
 .theme-launch .brand-mark {
     border-radius: 12px;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6)
+    background: linear-gradient(135deg, #1e40af, #0ea5e9)
 }
 
 .theme-launch .brand-logo {
@@ -2271,8 +2271,8 @@ img {
 
 .theme-launch .ui-button {
     border-radius: 12px;
-    background: linear-gradient(135deg, #6366f1, #7c3aed);
-    box-shadow: 0 8px 24px rgba(99, 102, 241, .28)
+    background: linear-gradient(135deg, #1e40af, #0284c7);
+    box-shadow: 0 8px 24px rgba(30, 64, 175, .28)
 }
 
 .theme-launch .ui-button--outline {
@@ -2282,9 +2282,9 @@ img {
 }
 
 .launch-badge {
-    background: rgba(99, 102, 241, .12) !important;
-    color: #4338ca !important;
-    border: 1px solid rgba(99, 102, 241, .2)
+    background: rgba(30, 64, 175, .12) !important;
+    color: #1e3a8a !important;
+    border: 1px solid rgba(30, 64, 175, .2)
 }
 
 .launch-hero {
@@ -2309,7 +2309,7 @@ img {
     right: 20%;
     width: 420px;
     height: 420px;
-    background: rgba(99, 102, 241, .35)
+    background: rgba(30, 64, 175, .35)
 }
 
 .launch-hero-glow--two {
@@ -2317,7 +2317,7 @@ img {
     left: -60px;
     width: 500px;
     height: 500px;
-    background: rgba(139, 92, 246, .25)
+    background: rgba(14, 165, 233, .25)
 }
 
 .launch-hero-grid {
@@ -2355,7 +2355,7 @@ img {
 }
 
 .launch-btn-primary {
-    background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+    background: linear-gradient(135deg, #1e40af, #0ea5e9) !important;
     border: 0 !important
 }
 
@@ -2438,8 +2438,8 @@ img {
     height: 44px;
     place-items: center;
     border-radius: 12px;
-    background: linear-gradient(135deg, rgba(99, 102, 241, .12), rgba(139, 92, 246, .08));
-    color: #6366f1;
+    background: linear-gradient(135deg, rgba(30, 64, 175, .12), rgba(14, 165, 233, .08));
+    color: #1e40af;
     font-size: 20px
 }
 
@@ -2478,7 +2478,7 @@ img {
     height: 48px;
     place-items: center;
     border-radius: 14px;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    background: linear-gradient(135deg, #1e40af, #0ea5e9);
     color: #fff;
     font-size: 22px;
     object-fit: cover
@@ -2564,7 +2564,7 @@ img {
 }
 
 .launch-client-logo:hover {
-    border-color: #6366f1;
+    border-color: #1e40af;
     transform: translateY(-2px)
 }
 
@@ -2598,7 +2598,7 @@ img {
 }
 
 .launch-cta--fallback {
-    background: linear-gradient(135deg, #050814, #4338ca)
+    background: linear-gradient(135deg, #050814, #1e3a8a)
 }
 
 .launch-cta-inner {
@@ -2714,8 +2714,8 @@ img {
 .theme-aurora {
     --background: #08090f;
     --foreground: #e8eaf0;
-    --primary: #7c5cff;
-    --primary-dark: #5a3fd4;
+    --primary: #0ea5e9;
+    --primary-dark: #0284c7;
     --muted: #7a8399;
     --border: rgba(255, 255, 255, .08);
     --card: rgba(255, 255, 255, .04);
@@ -2730,11 +2730,11 @@ img {
 }
 
 .theme-aurora .brand-mark {
-    background: linear-gradient(135deg, #7c5cff, #00d4ff)
+    background: linear-gradient(135deg, #0ea5e9, #00d4ff)
 }
 
 .theme-aurora .ui-button {
-    background: linear-gradient(135deg, #7c5cff, #5a3fd4)
+    background: linear-gradient(135deg, #0ea5e9, #0284c7)
 }
 
 .theme-aurora .ui-button--outline {
@@ -2744,9 +2744,9 @@ img {
 }
 
 .theme-aurora .ui-badge {
-    background: rgba(124, 92, 255, .15);
-    border-color: rgba(124, 92, 255, .25);
-    color: #c4b5fd
+    background: rgba(14, 165, 233, .15);
+    border-color: rgba(14, 165, 233, .25);
+    color: #a5f3fc
 }
 
 .theme-aurora .section-heading h2 {
@@ -2754,7 +2754,7 @@ img {
 }
 
 .theme-aurora .eyebrow {
-    color: #7c5cff
+    color: #0ea5e9
 }
 
 .theme-aurora .spotlight-card {
@@ -2781,7 +2781,7 @@ img {
 }
 
 .theme-aurora .site-footer a:hover {
-    color: #7c5cff
+    color: #0ea5e9
 }
 
 .theme-aurora .site-footer strong {
@@ -2790,8 +2790,8 @@ img {
 
 .theme-aurora .news-card { background: var(--card); border-color: var(--border) }
 .theme-aurora .news-meta span { color: var(--muted) }
-.theme-aurora .text-link { color: #7c5cff }
-.theme-aurora .faq-list [data-state="open"] { color: #7c5cff }
+.theme-aurora .text-link { color: #0ea5e9 }
+.theme-aurora .faq-list [data-state="open"] { color: #0ea5e9 }
 .theme-aurora .accordion-trigger { color: var(--foreground) }
 .theme-aurora .accordion-content { color: var(--muted) }
 
@@ -2799,8 +2799,8 @@ img {
 .theme-aurora[data-theme="light"] {
     --background: #f5f5fa;
     --foreground: #1a1b2e;
-    --primary: #6d4aff;
-    --primary-dark: #4c2bd9;
+    --primary: #0ea5e9;
+    --primary-dark: #0284c7;
     --muted: #5a6178;
     --border: rgba(0, 0, 0, .08);
     --card: rgba(255, 255, 255, .8);
@@ -2828,7 +2828,7 @@ img {
 }
 
 .theme-aurora[data-theme="light"] .site-footer a:hover {
-    color: #6d4aff
+    color: #0ea5e9
 }
 
 .theme-aurora[data-theme="light"] .site-footer strong {
@@ -2841,14 +2841,14 @@ img {
 
 .theme-aurora[data-theme="light"] .ui-button--outline {
     background: transparent;
-    border-color: rgba(109, 74, 255, .35);
-    color: #6d4aff
+    border-color: rgba(14, 165, 233, .35);
+    color: #0ea5e9
 }
 
 .theme-aurora[data-theme="light"] .ui-badge {
-    background: rgba(109, 74, 255, .1);
-    border-color: rgba(109, 74, 255, .2);
-    color: #6d4aff
+    background: rgba(14, 165, 233, .1);
+    border-color: rgba(14, 165, 233, .2);
+    color: #0ea5e9
 }
 
 .theme-aurora[data-theme="light"] .spotlight-card {
@@ -2870,7 +2870,7 @@ img {
 
 /* Aurora light mode — gradient text */
 .theme-aurora[data-theme="light"] .aurora-gradient-text {
-    background: linear-gradient(135deg, #1a1b2e 20%, #6d4aff 60%, #0090b3 100%);
+    background: linear-gradient(135deg, #1a1b2e 20%, #0ea5e9 60%, #0090b3 100%);
     -webkit-background-clip: text;
     background-clip: text
 }
@@ -2880,12 +2880,12 @@ img {
 
 /* Aurora light mode — outline button */
 .aurora-btn-outline {
-    border-color: rgba(109, 74, 255, .35) !important;
-    color: #6d4aff !important
+    border-color: rgba(14, 165, 233, .35) !important;
+    color: #0ea5e9 !important
 }
 .theme-aurora[data-theme="light"] .aurora-btn-outline {
-    border-color: rgba(109, 74, 255, .35) !important;
-    color: #6d4aff !important
+    border-color: rgba(14, 165, 233, .35) !important;
+    color: #0ea5e9 !important
 }
 
 /* Aurora light mode — mockup */
@@ -2922,7 +2922,7 @@ img {
 
 /* Aurora light mode — stat gradient */
 .theme-aurora[data-theme="light"] .aurora-stat-card strong {
-    background: linear-gradient(135deg, #1a1b2e, #6d4aff);
+    background: linear-gradient(135deg, #1a1b2e, #0ea5e9);
     -webkit-background-clip: text;
     background-clip: text
 }
@@ -2952,8 +2952,8 @@ img {
 }
 
 .aurora-theme-toggle:hover {
-    border-color: #7c5cff;
-    color: #7c5cff
+    border-color: #0ea5e9;
+    color: #0ea5e9
 }
 
 /* Aurora light mode — CTA blobs */
@@ -2961,7 +2961,7 @@ img {
 
 /* Aurora shared utilities */
 .aurora-gradient-text {
-    background: linear-gradient(135deg, #fff 20%, #7c5cff 60%, #00d4ff 100%);
+    background: linear-gradient(135deg, #fff 20%, #0ea5e9 60%, #00d4ff 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text
@@ -2977,7 +2977,7 @@ img {
 
 .aurora-blob--one {
     width: 560px; height: 560px;
-    background: radial-gradient(circle, #7c5cff 0%, transparent 70%);
+    background: radial-gradient(circle, #0ea5e9 0%, transparent 70%);
     top: -180px; left: -120px;
     animation: aurora-drift 12s ease-in-out infinite alternate
 }
@@ -2995,14 +2995,14 @@ img {
 }
 
 .aurora-btn-primary {
-    background: linear-gradient(135deg, #7c5cff, #5a3fd4) !important;
+    background: linear-gradient(135deg, #0ea5e9, #0284c7) !important;
     border: none;
-    box-shadow: 0 0 32px rgba(124, 92, 255, .3)
+    box-shadow: 0 0 32px rgba(14, 165, 233, .3)
 }
 
 .aurora-btn-outline {
-    border-color: rgba(124, 92, 255, .4) !important;
-    color: #c4b5fd !important
+    border-color: rgba(14, 165, 233, .4) !important;
+    color: #a5f3fc !important
 }
 
 /* Hero */
@@ -3034,8 +3034,8 @@ img {
 }
 
 .aurora-badge {
-    background: rgba(124, 92, 255, .12) !important;
-    border-color: rgba(124, 92, 255, .3) !important
+    background: rgba(14, 165, 233, .12) !important;
+    border-color: rgba(14, 165, 233, .3) !important
 }
 
 /* Mockup */
@@ -3098,8 +3098,8 @@ img {
     width: 100%;
     height: 200px;
     border-radius: 8px;
-    background: rgba(124, 92, 255, .08);
-    color: #7c5cff
+    background: rgba(14, 165, 233, .08);
+    color: #0ea5e9
 }
 
 /* Trust strip */
@@ -3126,7 +3126,7 @@ img {
     color: var(--muted)
 }
 
-.aurora-trust-inner svg { color: #7c5cff }
+.aurora-trust-inner svg { color: #0ea5e9 }
 
 /* Sections */
 .aurora-section { padding: 80px 0 }
@@ -3148,14 +3148,14 @@ img {
 }
 
 .aurora-stat-icon {
-    color: #7c5cff;
+    color: #0ea5e9;
     margin-bottom: 12px
 }
 
 .aurora-stat-card strong {
     display: block;
     font: 800 40px Manrope, sans-serif;
-    background: linear-gradient(135deg, #fff, #7c5cff);
+    background: linear-gradient(135deg, #fff, #0ea5e9);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text
@@ -3188,7 +3188,7 @@ img {
 
 .aurora-bento-icon {
     font-size: 28px;
-    color: #7c5cff;
+    color: #0ea5e9;
     margin-bottom: 16px
 }
 
@@ -3252,7 +3252,7 @@ img {
     gap: 6px;
     font-size: 13px;
     font-weight: 600;
-    color: #7c5cff
+    color: #0ea5e9
 }
 
 /* Marquee */
@@ -3307,7 +3307,7 @@ img {
 }
 
 .aurora-quote-icon {
-    color: rgba(124, 92, 255, .4);
+    color: rgba(14, 165, 233, .4);
     margin-bottom: 16px
 }
 
@@ -3331,7 +3331,7 @@ img {
 .aurora-testimonial-author span {
     width: 36px; height: 36px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    background: linear-gradient(135deg, #7c5cff, #00d4ff);
+    background: linear-gradient(135deg, #0ea5e9, #00d4ff);
     font-size: 12px; font-weight: 700; color: #fff
 }
 
@@ -3374,7 +3374,7 @@ img {
 
 .aurora-cta-blob--one {
     width: 500px; height: 500px;
-    background: #7c5cff;
+    background: #0ea5e9;
     bottom: -200px; left: 10%
 }
 
@@ -3705,9 +3705,9 @@ img {
    Theme 8 — Profile (Premium Redesign — modern professional services)
    ============================================= */
 .theme-profile {
-    --primary: #6366f1;
-    --primary-dark: #4f46e5;
-    --primary-light: rgba(99,102,241,.08);
+    --primary: #1e293b;
+    --primary-dark: #0f172a;
+    --primary-light: rgba(30,41,59,.08);
     --section-tint: #f8f9fd;
     --foreground: #0f0f1a;
     --muted: #6b7280;
@@ -3720,14 +3720,14 @@ img {
 .theme-profile .site-header { background: rgba(255,255,255,.92); border-bottom: 1px solid var(--border); backdrop-filter: blur(12px) }
 .theme-profile .brand-mark { color: var(--primary) }
 .theme-profile .ui-button { background: var(--primary); color: #fff; border: none; border-radius: 12px; font-weight: 600; padding: 12px 28px; transition: .2s }
-.theme-profile .ui-button:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(99,102,241,.25) }
+.theme-profile .ui-button:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(30,41,59,.25) }
 .theme-profile .ui-button--outline { background: transparent; color: var(--foreground); border: 1.5px solid var(--border); border-radius: 12px; font-weight: 600; transition: .2s }
 .theme-profile .ui-button--outline:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light) }
 .theme-profile .ui-badge { background: var(--primary-light); color: var(--primary); border: none; border-radius: 100px; padding: 6px 16px; font-weight: 600; font-size: 12px }
 .theme-profile .ui-badge--outline { background: transparent; border: 1.5px solid var(--border); color: var(--muted); border-radius: 100px }
 .theme-profile .eyebrow { font-size: 12px; text-transform: uppercase; letter-spacing: .1em; font-weight: 700; color: var(--primary) }
 .theme-profile .spotlight-card { border: 1px solid var(--border); border-radius: 20px; background: var(--card); transition: .25s }
-.theme-profile .spotlight-card:hover { border-color: var(--primary); box-shadow: 0 8px 30px rgba(99,102,241,.08); transform: translateY(-2px) }
+.theme-profile .spotlight-card:hover { border-color: var(--primary); box-shadow: 0 8px 30px rgba(30,41,59,.08); transform: translateY(-2px) }
 .theme-profile .text-link { color: var(--primary); font-size: 13px; display: inline-flex; align-items: center; gap: 4px; font-weight: 600 }
 .theme-profile .site-footer { background: #0f0f1a; color: rgba(255,255,255,.6) }
 .theme-profile .site-footer a { color: rgba(255,255,255,.5) }
@@ -3818,8 +3818,8 @@ img {
     position: relative;
     border-radius: 24px;
     overflow: hidden;
-    background: #eef2ff;
-    box-shadow: 0 20px 60px rgba(99,102,241,.12)
+    background: #f1f5f9;
+    box-shadow: 0 20px 60px rgba(30,41,59,.12)
 }
 .profile-hero-image { width: 100%; display: block; aspect-ratio: 4/3; object-fit: cover }
 .profile-hero-image-placeholder {
@@ -3961,7 +3961,7 @@ img {
 }
 .profile-product-card:hover {
     border-color: var(--primary);
-    box-shadow: 0 8px 30px rgba(99,102,241,.08);
+    box-shadow: 0 8px 30px rgba(30,41,59,.08);
     transform: translateY(-2px)
 }
 .profile-product-img {
@@ -4175,7 +4175,7 @@ img {
 .profile-cta-inner .ui-button:hover {
     background: rgba(255,255,255,.9);
     transform: translateY(-1px);
-    box-shadow: 0 8px 24px rgba(99,102,241,.25)
+    box-shadow: 0 8px 24px rgba(30,41,59,.25)
 }
 
 /* ── Responsive ─────────────────────────────────────── */
@@ -4201,4 +4201,264 @@ img {
     .profile-journey-timeline { grid-template-columns: 1fr }
     .profile-stats-strip-grid { grid-template-columns: 1fr }
     .profile-hero { padding: 20px 0 0 }
+}
+/* =============================================
+   Theme 9 — Campus (University / Academic)
+   ============================================= */
+.theme-campus {
+    --primary: #0d766e;
+    --primary-dark: #0b5e57;
+    --primary-light: rgba(13,118,110,.10);
+    --section-tint: #f0fdfa;
+    --foreground: #0f172a;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --card: #ffffff;
+    --background: #ffffff;
+    background: var(--background);
+    color: var(--foreground)
+}
+.theme-campus .site-header { background: rgba(255,255,255,.92); border-bottom: 1px solid var(--border); backdrop-filter: blur(18px) }
+.theme-campus .brand-mark { background: var(--primary); color: #fff }
+.theme-campus .ui-button { background: var(--primary); color: #fff; border: none }
+.theme-campus .ui-button:hover { background: var(--primary-dark) }
+.theme-campus .ui-button--outline { background: transparent; color: var(--foreground); border: 1px solid var(--border) }
+.theme-campus .ui-button--outline:hover { border-color: var(--primary); color: var(--primary) }
+.theme-campus .ui-badge { background: var(--primary-light); color: var(--primary); border: 1px solid rgba(13,118,110,.2) }
+.theme-campus .eyebrow { color: var(--primary) }
+.theme-campus .text-link { color: var(--primary) }
+.theme-campus .section--tint { background: var(--section-tint) }
+.theme-campus .section--dark { background: #0b3b36; color: #fff }
+.theme-campus .section--dark .section-heading h2 { color: #fff }
+.theme-campus .section--dark .section-heading p { color: #9ab7b3 }
+.theme-campus .spotlight-card { border: 1px solid var(--border); border-radius: 16px; background: var(--card) }
+.theme-campus .site-footer { background: #0b2a27; color: rgba(255,255,255,.62) }
+.theme-campus .site-footer a { color: rgba(255,255,255,.55) }
+.theme-campus .site-footer a:hover { color: #fff }
+.theme-campus .site-footer strong { color: #fff }
+
+.campus-hero { position: relative; overflow: hidden; padding: 64px 0 72px; background: radial-gradient(120% 120% at 80% -10%, #f0fdfa 0%, #fff 55%) }
+.campus-grid-bg { position: absolute; inset: 0; background-image: radial-gradient(rgba(13,118,110,.10) 1px, transparent 1px); background-size: 26px 26px; -webkit-mask-image: radial-gradient(100% 80% at 70% 0%, #000 30%, transparent 75%); mask-image: radial-gradient(100% 80% at 70% 0%, #000 30%, transparent 75%); opacity: .5 }
+.campus-blob { position: absolute; border-radius: 50%; filter: blur(60px); pointer-events: none }
+.campus-blob--one { width: 420px; height: 420px; background: #14b8a6; top: -120px; right: -80px; opacity: .35 }
+.campus-blob--two { width: 320px; height: 320px; background: #5eead4; bottom: -120px; left: -60px; opacity: .25 }
+.campus-hero-grid { position: relative; display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center }
+.campus-hero-copy h1 { font: 800 clamp(34px,5vw,54px)/1.08 Manrope, sans-serif; margin: 18px 0 18px; color: var(--foreground) }
+.campus-hero-copy p { font-size: 18px; color: var(--muted); line-height: 1.7; max-width: 540px }
+.campus-badge { background: var(--primary-light); color: var(--primary); border: 1px solid rgba(13,118,110,.2) }
+.campus-hero-stats { display: flex; gap: 32px; margin-top: 30px; flex-wrap: wrap }
+.campus-hero-stats strong { display: block; font: 800 26px Manrope, sans-serif; color: var(--primary) }
+.campus-hero-stats span { font-size: 13px; color: var(--muted) }
+.campus-photo { position: relative; border-radius: 22px; overflow: hidden; box-shadow: 0 30px 70px rgba(2,44,38,.18); aspect-ratio: 4/3; background: linear-gradient(135deg, #0d766e, #0f172a) }
+.campus-photo img { width: 100%; height: 100%; object-fit: cover }
+.campus-photo-fallback { display: grid; place-items: center; height: 100%; color: #fff; opacity: .85 }
+.campus-photo-badge { position: absolute; left: 18px; bottom: 18px; display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.95); color: var(--primary); font-weight: 700; font-size: 13px; padding: 8px 14px; border-radius: 999px; box-shadow: 0 8px 24px rgba(0,0,0,.15) }
+
+.campus-highlight-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px }
+.campus-highlight-card { padding: 26px 22px }
+.campus-highlight-icon { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 13px; background: var(--primary-light); color: var(--primary); margin-bottom: 16px }
+.campus-highlight-card h3 { font: 700 17px Manrope, sans-serif; margin: 0 0 8px }
+.campus-highlight-card p { font-size: 14px; color: var(--muted); line-height: 1.6; margin: 0 }
+
+.campus-stat-band { background: linear-gradient(135deg, var(--primary), #0b5e57); color: #fff }
+.campus-stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; padding: 44px 0 }
+.campus-stat strong { display: block; font: 800 40px Manrope, sans-serif; line-height: 1 }
+.campus-stat span { font-size: 14px; opacity: .85; margin-top: 8px; display: block }
+
+.campus-cta { padding: 80px 0 }
+.campus-cta-card { background: linear-gradient(135deg, #0b3b36, #0d766e); color: #fff; border-radius: 26px; padding: 56px; text-align: center }
+.campus-cta-card .eyebrow { color: #5eead4 }
+.campus-cta-card h2 { font: 800 clamp(26px,3.5vw,38px) Manrope, sans-serif; margin: 12px 0 14px }
+.campus-cta-card p { color: rgba(255,255,255,.85); max-width: 620px; margin: 0 auto 26px }
+.campus-cta-card .ui-button { background: #fff; color: var(--primary) }
+.campus-cta-card .ui-button:hover { background: #f0fdfa }
+
+@media (max-width: 980px) {
+    .campus-hero-grid { grid-template-columns: 1fr; gap: 40px }
+    .campus-highlight-grid { grid-template-columns: repeat(2, 1fr) }
+    .campus-stat-grid { grid-template-columns: repeat(2, 1fr) }
+}
+@media (max-width: 600px) {
+    .campus-highlight-grid { grid-template-columns: 1fr }
+    .campus-stat-grid { grid-template-columns: 1fr 1fr }
+    .campus-cta-card { padding: 40px 24px }
+}
+
+/* =============================================
+   Theme 10 — Admissions (Enrollment / Pendaftaran)
+   ============================================= */
+.theme-admissions {
+    --primary: #9f1239;
+    --primary-dark: #881337;
+    --primary-light: rgba(159,18,57,.10);
+    --section-tint: #fff1f5;
+    --foreground: #1a0a10;
+    --muted: #6b5760;
+    --border: #f3dde2;
+    --card: #ffffff;
+    --background: #fffafc;
+    background: var(--background);
+    color: var(--foreground)
+}
+.theme-admissions .site-header { background: rgba(255,250,252,.93); border-bottom: 1px solid var(--border); backdrop-filter: blur(18px) }
+.theme-admissions .brand-mark { background: var(--primary); color: #fff }
+.theme-admissions .ui-button { background: var(--primary); color: #fff; border: none }
+.theme-admissions .ui-button:hover { background: var(--primary-dark) }
+.theme-admissions .ui-button--outline { background: #fff; color: var(--primary); border: 1px solid var(--border) }
+.theme-admissions .ui-button--outline:hover { border-color: var(--primary) }
+.theme-admissions .ui-badge { background: var(--primary-light); color: var(--primary); border: 1px solid rgba(159,18,57,.18) }
+.theme-admissions .eyebrow { color: var(--primary) }
+.theme-admissions .text-link { color: var(--primary) }
+.theme-admissions .section--tint { background: var(--section-tint) }
+.theme-admissions .section--dark { background: #4c0a22; color: #fff }
+.theme-admissions .section--dark .section-heading h2 { color: #fff }
+.theme-admissions .section--dark .section-heading p { color: #e7b9c5 }
+.theme-admissions .spotlight-card { border: 1px solid var(--border); border-radius: 16px; background: var(--card) }
+.theme-admissions .site-footer { background: #3d0819; color: rgba(255,255,255,.6) }
+.theme-admissions .site-footer a { color: rgba(255,255,255,.55) }
+.theme-admissions .site-footer a:hover { color: #fff }
+.theme-admissions .site-footer strong { color: #fff }
+
+.admissions-hero { position: relative; padding: 60px 0 36px; background: radial-gradient(110% 90% at 85% 0%, #fff1f5 0%, #fffafc 60%) }
+.admissions-hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 50px; align-items: center }
+.admissions-hero-copy h1 { font: 800 clamp(32px,4.8vw,52px)/1.1 Manrope, sans-serif; margin: 16px 0 18px; color: var(--foreground) }
+.admissions-hero-copy p { font-size: 18px; color: var(--muted); line-height: 1.7; max-width: 520px }
+.admissions-badge { background: var(--primary-light); color: var(--primary); border: 1px solid rgba(159,18,57,.2) }
+.admissions-photo { position: relative; border-radius: 22px; overflow: hidden; box-shadow: 0 30px 70px rgba(77,10,34,.2); aspect-ratio: 4/3; background: linear-gradient(135deg, #9f1239, #1a0a10) }
+.admissions-photo img { width: 100%; height: 100%; object-fit: cover }
+.admissions-photo-fallback { display: grid; place-items: center; height: 100%; color: #fff; opacity: .85 }
+.admissions-photo-card { position: absolute; right: 18px; bottom: 18px; background: #fff; border-radius: 14px; padding: 12px 16px; box-shadow: 0 10px 30px rgba(0,0,0,.18); text-align: center }
+.admissions-photo-card strong { display: block; color: var(--primary); font: 800 16px Manrope, sans-serif }
+.admissions-photo-card span { font-size: 12px; color: var(--muted) }
+
+.admissions-steps { padding: 48px 0 64px }
+.admissions-steps-head { text-align: center; margin-bottom: 34px }
+.admissions-steps-head h2 { font: 800 clamp(24px,3vw,34px) Manrope, sans-serif; margin: 8px 0 0 }
+.admissions-steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px }
+.admissions-step { position: relative; padding: 26px 22px }
+.admissions-step-num { position: absolute; top: 18px; right: 20px; font: 800 34px Manrope, sans-serif; color: var(--primary); opacity: .15 }
+.admissions-step-icon { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 12px; background: var(--primary-light); color: var(--primary); margin-bottom: 14px }
+.admissions-step h3 { font: 700 16px Manrope, sans-serif; margin: 0 0 6px }
+.admissions-step p { font-size: 13px; color: var(--muted); line-height: 1.55; margin: 0 }
+
+.admissions-why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px }
+.admissions-why-card { padding: 26px 22px }
+.admissions-why-icon { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 13px; background: var(--primary-light); color: var(--primary); margin-bottom: 16px }
+.admissions-why-card h3 { font: 700 16px Manrope, sans-serif; margin: 0 0 8px }
+.admissions-why-card p { font-size: 14px; color: var(--muted); line-height: 1.6; margin: 0 }
+
+.admissions-stat-band { background: linear-gradient(135deg, var(--primary), #4c0a22); color: #fff }
+.admissions-stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; padding: 44px 0 }
+.admissions-stat strong { display: block; font: 800 38px Manrope, sans-serif; line-height: 1 }
+.admissions-stat span { font-size: 14px; opacity: .85; margin-top: 8px; display: block }
+
+.admissions-cta { padding: 80px 0 }
+.admissions-cta-card { background: linear-gradient(135deg, #4c0a22, #9f1239); color: #fff; border-radius: 26px; padding: 56px; text-align: center }
+.admissions-cta-card .eyebrow { color: #fbb6bd }
+.admissions-cta-card h2 { font: 800 clamp(26px,3.5vw,38px) Manrope, sans-serif; margin: 12px 0 14px }
+.admissions-cta-card p { color: rgba(255,255,255,.85); max-width: 620px; margin: 0 auto 26px }
+.admissions-cta-card .ui-button { background: #fff; color: var(--primary) }
+.admissions-cta-card .ui-button:hover { background: #fff1f5 }
+
+@media (max-width: 980px) {
+    .admissions-hero-grid { grid-template-columns: 1fr; gap: 40px }
+    .admissions-steps-grid { grid-template-columns: repeat(2, 1fr) }
+    .admissions-why-grid { grid-template-columns: repeat(2, 1fr) }
+    .admissions-stat-grid { grid-template-columns: repeat(2, 1fr) }
+}
+@media (max-width: 600px) {
+    .admissions-steps-grid { grid-template-columns: 1fr }
+    .admissions-why-grid { grid-template-columns: 1fr }
+    .admissions-cta-card { padding: 40px 24px }
+}
+
+/* =============================================
+   Theme 11 — Tracer (Alumni & Tracer Study)
+   ============================================= */
+.theme-tracer {
+    --primary: #1e3a8a;
+    --primary-dark: #172554;
+    --primary-light: rgba(30,58,138,.10);
+    --accent: #0d9488;
+    --section-tint: #f1f5fb;
+    --foreground: #0f172a;
+    --muted: #5b6678;
+    --border: #e3e8f1;
+    --card: #ffffff;
+    --background: #ffffff;
+    background: var(--background);
+    color: var(--foreground)
+}
+.theme-tracer .site-header { background: rgba(255,255,255,.93); border-bottom: 1px solid var(--border); backdrop-filter: blur(18px) }
+.theme-tracer .brand-mark { background: var(--primary); color: #fff }
+.theme-tracer .ui-button { background: var(--primary); color: #fff; border: none }
+.theme-tracer .ui-button:hover { background: var(--primary-dark) }
+.theme-tracer .ui-button--outline { background: transparent; color: var(--foreground); border: 1px solid var(--border) }
+.theme-tracer .ui-button--outline:hover { border-color: var(--primary); color: var(--primary) }
+.theme-tracer .ui-badge { background: var(--primary-light); color: var(--primary); border: 1px solid rgba(30,58,138,.18) }
+.theme-tracer .eyebrow { color: var(--primary) }
+.theme-tracer .text-link { color: var(--primary) }
+.theme-tracer .section--tint { background: var(--section-tint) }
+.theme-tracer .section--dark { background: #0b1d4d; color: #fff }
+.theme-tracer .section--dark .section-heading h2 { color: #fff }
+.theme-tracer .section--dark .section-heading p { color: #aab6d8 }
+.theme-tracer .spotlight-card { border: 1px solid var(--border); border-radius: 16px; background: var(--card) }
+.theme-tracer .site-footer { background: #0b1530; color: rgba(255,255,255,.62) }
+.theme-tracer .site-footer a { color: rgba(255,255,255,.55) }
+.theme-tracer .site-footer a:hover { color: #fff }
+.theme-tracer .site-footer strong { color: #fff }
+
+.tracer-hero { position: relative; overflow: hidden; padding: 64px 0 72px; background: radial-gradient(120% 120% at 85% -10%, #f1f5fb 0%, #fff 55%) }
+.tracer-grid-bg { position: absolute; inset: 0; background-image: linear-gradient(rgba(30,58,138,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(30,58,138,.06) 1px, transparent 1px); background-size: 38px 38px; -webkit-mask-image: radial-gradient(100% 80% at 75% 0%, #000 25%, transparent 75%); mask-image: radial-gradient(100% 80% at 75% 0%, #000 25%, transparent 75%); opacity: .8 }
+.tracer-hero-grid { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center }
+.tracer-hero-copy h1 { font: 800 clamp(32px,4.8vw,52px)/1.1 Manrope, sans-serif; margin: 16px 0 18px; color: var(--foreground) }
+.tracer-hero-copy p { font-size: 18px; color: var(--muted); line-height: 1.7; max-width: 520px }
+.tracer-badge { background: var(--primary-light); color: var(--primary); border: 1px solid rgba(30,58,138,.2) }
+
+.tracer-dashboard { background: #fff; border: 1px solid var(--border); border-radius: 18px; box-shadow: 0 30px 70px rgba(11,29,77,.18); overflow: hidden }
+.tracer-dash-bar { display: flex; align-items: center; gap: 6px; padding: 12px 16px; background: #f8fafc; border-bottom: 1px solid var(--border) }
+.tracer-dash-bar i { width: 10px; height: 10px; border-radius: 50%; background: #cbd5e1 }
+.tracer-dash-bar span { margin-left: auto; font-size: 12px; font-weight: 600; color: var(--muted) }
+.tracer-dash-body { padding: 22px }
+.tracer-metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 22px }
+.tracer-metric { border: 1px solid var(--border); border-radius: 12px; padding: 14px; background: #f8fafc }
+.tracer-metric strong { display: block; font: 800 20px Manrope, sans-serif; color: var(--primary) }
+.tracer-metric span { font-size: 11px; color: var(--muted) }
+.tracer-chart { display: flex; align-items: flex-end; gap: 10px; height: 130px; padding: 14px; border: 1px solid var(--border); border-radius: 12px; background: #f8fafc; margin-bottom: 18px }
+.tracer-bar { flex: 1; border-radius: 6px 6px 0 0; background: linear-gradient(180deg, var(--accent), #0f766e) }
+.tracer-response-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 8px }
+.tracer-response-label strong { color: var(--primary) }
+.tracer-response-track { height: 10px; border-radius: 999px; background: #e2e8f0; overflow: hidden }
+.tracer-response-track i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--primary), var(--accent)) }
+
+.tracer-stat-band { padding: 56px 0 }
+.tracer-stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; margin-top: 30px }
+.tracer-stat-card { padding: 28px 24px; text-align: center }
+.tracer-stat-card strong { display: block; font: 800 36px Manrope, sans-serif; color: var(--primary); line-height: 1 }
+.tracer-stat-card span { font-size: 14px; color: var(--muted); margin-top: 8px; display: block }
+
+.tracer-reason-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px }
+.tracer-reason-card { padding: 26px 22px }
+.tracer-reason-icon { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 13px; background: var(--primary-light); color: var(--primary); margin-bottom: 16px }
+.tracer-reason-card h3 { font: 700 16px Manrope, sans-serif; margin: 0 0 8px }
+.tracer-reason-card p { font-size: 14px; color: var(--muted); line-height: 1.6; margin: 0 }
+
+.tracer-cta { padding: 80px 0 }
+.tracer-cta-card { background: linear-gradient(135deg, #0b1d4d, #1e3a8a); color: #fff; border-radius: 26px; padding: 56px; text-align: center }
+.tracer-cta-card .eyebrow { color: #93c5fd }
+.tracer-cta-card h2 { font: 800 clamp(26px,3.5vw,38px) Manrope, sans-serif; margin: 12px 0 14px }
+.tracer-cta-card p { color: rgba(255,255,255,.85); max-width: 620px; margin: 0 auto 26px }
+.tracer-cta-card .ui-button { background: #fff; color: var(--primary) }
+.tracer-cta-card .ui-button:hover { background: #f1f5fb }
+
+@media (max-width: 980px) {
+    .tracer-hero-grid { grid-template-columns: 1fr; gap: 40px }
+    .tracer-reason-grid { grid-template-columns: repeat(2, 1fr) }
+    .tracer-stat-grid { grid-template-columns: repeat(2, 1fr) }
+}
+@media (max-width: 600px) {
+    .tracer-reason-grid { grid-template-columns: 1fr }
+    .tracer-stat-grid { grid-template-columns: 1fr 1fr }
+    .tracer-cta-card { padding: 40px 24px }
+    .tracer-metric-grid { grid-template-columns: 1fr }
 }

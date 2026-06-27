@@ -3,12 +3,12 @@
 @section('header')
 <x-ui.page-header title="Produk / Modul" pretitle="Content Management">
     <x-slot:actions>
-        <a href="{{ route('public.cms.landing.index') }}" class="btn btn-outline-secondary">
+        <a href="{{ route('cms.landing.index') }}" class="btn btn-outline-secondary">
             <i class="ti ti-arrow-left me-1"></i>Kembali
         </a>
         @can('public.cms.product.create')
             <x-ui.button type="create" class="ajax-modal-btn"
-                data-url="{{ route('public.cms.product.create') }}"
+                data-url="{{ route('cms.product.create') }}"
                 data-modal-title="Tambah Produk" text="Tambah Produk" />
         @endcan
     </x-slot:actions>
@@ -27,10 +27,10 @@
                         <div class="position-absolute top-0 end-0 mt-2 me-2">
                             <x-ui.dropdown class="btn btn-action text-secondary">
                                 @can('public.cms.product.update')
-                                    <x-ui.dropdown-item type="edit" href="javascript:void(0)" :url="route('public.cms.product.edit', $product)" data-modal-title="Edit Produk" />
+                                    <x-ui.dropdown-item type="edit" href="javascript:void(0)" :url="route('cms.product.edit', $product)" data-modal-title="Edit Produk" />
                                 @endcan
                                 @can('public.cms.product.delete')
-                                    <x-ui.dropdown-item type="delete" href="javascript:void(0)" :url="route('public.cms.product.destroy', $product)" title="Hapus Produk?" />
+                                    <x-ui.dropdown-item type="delete" href="javascript:void(0)" :url="route('cms.product.destroy', $product)" title="Hapus Produk?" />
                                 @endcan
                             </x-ui.dropdown>
                         </div>
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
     Sortable.create(grid, {
         animation: 150,
         handle: '.cursor-move',
-        onEnd: () => axios.post('{{ route('public.cms.product.reorder') }}', {
+        onEnd: () => axios.post('{{ route('cms.product.reorder') }}', {
             order: [...grid.children].map(item => item.dataset.id),
             _token: '{{ csrf_token() }}'
         }).then(() => window.showSuccessMessage('Urutan produk diperbarui.'))

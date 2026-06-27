@@ -46,7 +46,7 @@
                             <p class="fs-4 opacity-75 mb-4">Sistem Informasi Manajemen Terpadu Politeknik Caltex Riau</p>
                             <div class="d-flex flex-wrap gap-2 mt-3">
                                 <x-ui.button href="{{ route('sys.notifications.index') }}" style="light" class="px-4 py-2 shadow-sm" text="Semua Notifikasi" icon="ti ti-bell" />
-                                <x-ui.button href="{{ route('public.cms.pengumuman.index') }}" style="outline-light" class="px-4 py-2" text="Pusat Pengumuman" icon="ti ti-news" />
+                                <x-ui.button href="{{ route('cms.pengumuman.index') }}" style="outline-light" class="px-4 py-2" text="Pusat Pengumuman" icon="ti ti-news" />
                             </div>
                         </div>
                         <div class="ms-auto d-none d-lg-block opacity-10 position-absolute end-0 me-4">
@@ -70,7 +70,7 @@
                                 </div>
                                 <div class="timeline-event-card shadow-none border-0 p-0">
                                     <div class="fw-bold fs-3 text-dark mb-1">
-                                        <a href="{{ route('public.cms.pengumuman.show', $announcement->pengumuman_id) }}" class="text-reset text-decoration-none">{{ $announcement->judul }}</a>
+                                        <a href="{{ route('cms.pengumuman.show', $announcement->pengumuman_id) }}" class="text-reset text-decoration-none">{{ $announcement->judul }}</a>
                                     </div>
                                     <div class="text-muted small mb-1">
                                         <i class="ti ti-clock me-1"></i> {{ formatTanggalIndo($announcement->created_at) }}
@@ -85,7 +85,7 @@
                             @endforelse
                         </ul>
                         <div class="mt-3 border-top pt-3 text-center">
-                            <a href="{{ route('public.cms.pengumuman.index') }}" class="text-danger fw-bold text-decoration-none small">
+                            <a href="{{ route('cms.pengumuman.index') }}" class="text-danger fw-bold text-decoration-none small">
                                <i class="ti ti-chevron-right me-1"></i> Lihat Semua
                             </a>
                         </div>
@@ -117,7 +117,7 @@
                                         <span class="text-muted small">{{ $news->created_at->diffForHumans() }}</span>
                                     </div>
                                     <h4 class="card-title mb-2 fw-semibold">
-                                        <a href="{{ route('public.cms.pengumuman.show', $news->pengumuman_id) }}" class="text-dark text-decoration-none stretched-link">{{ $news->judul }}</a>
+                                        <a href="{{ route('cms.pengumuman.show', $news->pengumuman_id) }}" class="text-dark text-decoration-none stretched-link">{{ $news->judul }}</a>
                                     </h4>
                                     <p class="text-secondary mb-3 small">{{ Str::limit(strip_tags($news->isi), 120) }}</p>
                                     <div class="d-flex align-items-center">

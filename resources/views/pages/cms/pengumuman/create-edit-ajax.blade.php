@@ -1,7 +1,7 @@
 <x-ui.form-modal
     id_form="{{ $pengumuman->exists ? 'editPengumumanForm' : 'createPengumumanForm' }}"
     title="{{ ($pengumuman->exists ? 'Edit ' : 'Buat ') . ucfirst($type) }}"
-    route="{{ $pengumuman->exists ? route('public.cms.'.$type.'.update', $pengumuman->encrypted_pengumuman_id) : route('public.cms.'.$type.'.store') }}"
+    route="{{ $pengumuman->exists ? route('cms.'.$type.'.update', $pengumuman->encrypted_pengumuman_id) : route('cms.'.$type.'.store') }}"
     method="{{ $pengumuman->exists ? 'PUT' : 'POST' }}"
     enctype="multipart/form-data"
 >

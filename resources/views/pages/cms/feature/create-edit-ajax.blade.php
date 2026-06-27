@@ -1,6 +1,6 @@
 <x-ui.form-modal
     :title="$feature->exists ? 'Edit Fitur' : 'Tambah Fitur'"
-    :route="$feature->exists ? route('public.cms.feature.update', $feature) : route('public.cms.feature.store')"
+    :route="$feature->exists ? route('cms.feature.update', $feature) : route('cms.feature.store')"
     :method="$feature->exists ? 'PUT' : 'POST'"
     enctype="multipart/form-data"
 >

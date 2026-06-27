@@ -42,7 +42,7 @@ class HeroSectionController extends Controller
             $this->deactivateOthers($hero);
         }
 
-        return jsonSuccess('Hero section berhasil ditambahkan.', route('public.cms.hero.index'));
+        return jsonSuccess('Hero section berhasil ditambahkan.', route('cms.hero.index'));
     }
 
     public function edit(HeroSection $hero)
@@ -62,7 +62,7 @@ class HeroSectionController extends Controller
             $this->deactivateOthers($hero);
         }
 
-        return jsonSuccess('Hero section berhasil diperbarui.', route('public.cms.hero.index'));
+        return jsonSuccess('Hero section berhasil diperbarui.', route('cms.hero.index'));
     }
 
     public function destroy(HeroSection $hero)

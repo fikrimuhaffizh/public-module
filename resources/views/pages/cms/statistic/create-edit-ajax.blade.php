@@ -1,6 +1,6 @@
 <x-ui.form-modal
     :title="$statistic->exists ? 'Edit Statistik' : 'Tambah Statistik'"
-    :route="$statistic->exists ? route('public.cms.statistic.update', $statistic) : route('public.cms.statistic.store')"
+    :route="$statistic->exists ? route('cms.statistic.update', $statistic) : route('cms.statistic.store')"
     :method="$statistic->exists ? 'PUT' : 'POST'"
 >
     <x-ui.form-input name="label" label="Label" :value="$statistic->label" placeholder="Kampus Mitra" required />

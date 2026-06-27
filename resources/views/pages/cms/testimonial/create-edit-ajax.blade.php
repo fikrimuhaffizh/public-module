@@ -1,6 +1,6 @@
 <x-ui.form-modal
     :title="$testimonial->exists ? 'Edit Testimoni' : 'Tambah Testimoni'"
-    :route="$testimonial->exists ? route('public.cms.testimonial.update', $testimonial) : route('public.cms.testimonial.store')"
+    :route="$testimonial->exists ? route('cms.testimonial.update', $testimonial) : route('cms.testimonial.store')"
     :method="$testimonial->exists ? 'PUT' : 'POST'"
     enctype="multipart/form-data"
 >

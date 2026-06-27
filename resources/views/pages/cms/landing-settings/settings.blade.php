@@ -1,9 +1,9 @@
 @extends('public::layouts.public-layout')
 
-@section('title', 'Pengaturan Landing Page')
+@section('title', 'Configuration')
 
 @section('header')
-<x-ui.page-header title="Pengaturan Landing Page" pretitle="Content Management">
+<x-ui.page-header title="Configuration" pretitle="Content Management">
     <x-slot:actions>
         @can('public.cms.settings.update')
             <x-ui.button type="submit" form="landing-settings-form" text="Simpan Pengaturan" />
@@ -13,7 +13,7 @@
 @endsection
 
 @section('content')
-<form id="landing-settings-form" method="POST" action="{{ route('public.cms.settings.update') }}" enctype="multipart/form-data">
+<form id="landing-settings-form" method="POST" action="{{ route('cms.settings.update') }}" enctype="multipart/form-data">
     @csrf
     @method('PUT')
     <div class="row row-cards">

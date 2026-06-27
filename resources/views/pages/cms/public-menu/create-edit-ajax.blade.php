@@ -1,6 +1,6 @@
 <x-ui.form-modal
     :title="$menu->exists ? 'Edit Menu' : 'Tambah Menu'"
-    :route="$menu->exists ? route('public.cms.menu.update', $menu->encrypted_menu_id) : route('public.cms.menu.store')"
+    :route="$menu->exists ? route('cms.menu.update', $menu->encrypted_menu_id) : route('cms.menu.store')"
     :method="$menu->exists ? 'PUT' : 'POST'"
 >
     

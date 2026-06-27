@@ -3,12 +3,12 @@
 @section('header')
 <x-ui.page-header title="Fitur" pretitle="Content Management">
     <x-slot:actions>
-        <a href="{{ route('public.cms.landing.index') }}" class="btn btn-outline-secondary">
+        <a href="{{ route('cms.landing.index') }}" class="btn btn-outline-secondary">
             <i class="ti ti-arrow-left me-1"></i>Kembali
         </a>
         @can('public.cms.feature.create')
             <x-ui.button type="create" class="ajax-modal-btn"
-                data-url="{{ route('public.cms.feature.create') }}"
+                data-url="{{ route('cms.feature.create') }}"
                 data-modal-title="Tambah Fitur" text="Tambah Fitur" />
         @endcan
     </x-slot:actions>
@@ -35,10 +35,10 @@
                 <span class="badge {{ $feature->is_active ? 'bg-success-lt' : 'bg-secondary-lt' }}">{{ $feature->is_active ? 'Aktif' : 'Draft' }}</span>
                 <x-ui.dropdown class="btn btn-action text-secondary">
                     @can('public.cms.feature.update')
-                        <x-ui.dropdown-item type="edit" href="javascript:void(0)" :url="route('public.cms.feature.edit', $feature)" data-modal-title="Edit Fitur" />
+                        <x-ui.dropdown-item type="edit" href="javascript:void(0)" :url="route('cms.feature.edit', $feature)" data-modal-title="Edit Fitur" />
                     @endcan
                     @can('public.cms.feature.delete')
-                        <x-ui.dropdown-item type="delete" href="javascript:void(0)" :url="route('public.cms.feature.destroy', $feature)" title="Hapus Fitur?" />
+                        <x-ui.dropdown-item type="delete" href="javascript:void(0)" :url="route('cms.feature.destroy', $feature)" title="Hapus Fitur?" />
                     @endcan
                 </x-ui.dropdown>
             </div>
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
     Sortable.create(list, {
         animation: 150,
         handle: '.cursor-move',
-        onEnd: () => axios.post('{{ route('public.cms.feature.reorder') }}', {
+        onEnd: () => axios.post('{{ route('cms.feature.reorder') }}', {
             order: [...list.children].map(item => item.dataset.id),
             _token: '{{ csrf_token() }}'
         }).then(() => window.showSuccessMessage('Urutan fitur diperbarui.'))

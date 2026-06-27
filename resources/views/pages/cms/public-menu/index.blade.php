@@ -4,15 +4,15 @@
 <x-ui.page-header title="Manajemen Halaman & Navigasi" pretitle="Content Management">
     <x-slot:actions>
         <div class="btn-group" role="group">
-            <a href="{{ route('public.cms.page.create') }}" class="btn btn-primary">
+            <a href="{{ route('cms.page.create') }}" class="btn btn-primary">
                 <i class="ti ti-file-text me-1"></i> Tambah Halaman
             </a>
             <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"></button>
             <div class="dropdown-menu">
-                <a href="{{ route('public.cms.page.create') }}" class="dropdown-item">
+                <a href="{{ route('cms.page.create') }}" class="dropdown-item">
                     <i class="ti ti-file-text me-2"></i> Halaman (dengan konten)
                 </a>
-                <a href="javascript:void(0)" class="dropdown-item ajax-modal-btn" data-url="{{ route('public.cms.menu.create') }}">
+                <a href="javascript:void(0)" class="dropdown-item ajax-modal-btn" data-url="{{ route('cms.menu.create') }}">
                     <i class="ti ti-link me-2"></i> Link / URL Eksternal
                 </a>
             </div>
@@ -49,7 +49,7 @@
                     <x-ui.datatable-toolbar dataTableId="items-table" :filter="false" />
                     <x-ui.datatable
                         id="items-table"
-                        route="{{ route('public.cms.menu.data') }}"
+                        route="{{ route('cms.menu.data') }}"
                         :columns="[
                             ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex', 'title' => 'No', 'orderable' => false, 'searchable' => false, 'class' => 'text-center'],
                             ['data' => 'title', 'name' => 'title', 'title' => 'Judul'],
@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function () {
             ids.push(li.dataset.id);
         });
 
-        axios.post('{{ route("public.cms.menu.reorder-position") }}', {
+        axios.post('{{ route("cms.menu.reorder-position") }}', {
             ids: ids,
             position: positionValue
         })

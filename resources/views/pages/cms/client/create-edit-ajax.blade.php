@@ -1,6 +1,6 @@
 <x-ui.form-modal
     :title="$client->exists ? 'Edit Klien' : 'Tambah Klien'"
-    :route="$client->exists ? route('public.cms.client.update', $client) : route('public.cms.client.store')"
+    :route="$client->exists ? route('cms.client.update', $client) : route('cms.client.store')"
     :method="$client->exists ? 'PUT' : 'POST'"
     enctype="multipart/form-data"
 >

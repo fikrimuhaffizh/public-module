@@ -35,7 +35,7 @@ class StatisticController extends Controller
         $data['sort_order'] = (int) Statistic::max('sort_order') + 1;
         Statistic::create($data);
 
-        return jsonSuccess('Statistik berhasil ditambahkan.', route('public.cms.statistic.index'));
+        return jsonSuccess('Statistik berhasil ditambahkan.', route('cms.statistic.index'));
     }
 
     public function edit(Statistic $statistic)
@@ -47,7 +47,7 @@ class StatisticController extends Controller
     {
         $statistic->update($request->validated());
 
-        return jsonSuccess('Statistik berhasil diperbarui.', route('public.cms.statistic.index'));
+        return jsonSuccess('Statistik berhasil diperbarui.', route('cms.statistic.index'));
     }
 
     public function destroy(Statistic $statistic)

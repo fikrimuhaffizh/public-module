@@ -3,13 +3,13 @@
 @section('header')
 <x-ui.page-header title="Manajemen FAQ" pretitle="Content Management">
     <x-slot:actions>
-        <a href="{{ route('public.cms.landing.index') }}" class="btn btn-outline-secondary">
+        <a href="{{ route('cms.landing.index') }}" class="btn btn-outline-secondary">
             <i class="ti ti-arrow-left me-1"></i>Kembali
         </a>
         <x-ui.button 
             type="create" 
             class="ajax-modal-btn d-none d-sm-inline-block" 
-            data-url="{{ route('public.cms.faq.create') }}" 
+            data-url="{{ route('cms.faq.create') }}" 
             data-modal-title="Tambah FAQ" 
             text="Tambah FAQ" 
         />
@@ -65,13 +65,13 @@
                                                 <x-ui.dropdown-item
                                                     type="edit"
                                                     href="javascript:void(0)"
-                                                    :url="route('public.cms.faq.edit', $faq->encrypted_faq_id)"
+                                                    :url="route('cms.faq.edit', $faq->encrypted_faq_id)"
                                                     data-modal-title="Edit FAQ"
                                                 />
                                                 <x-ui.dropdown-item
                                                     type="delete"
                                                     href="javascript:void(0)"
-                                                    :url="route('public.cms.faq.destroy', $faq->encrypted_faq_id)"
+                                                    :url="route('cms.faq.destroy', $faq->encrypted_faq_id)"
                                                     title="Hapus FAQ?"
                                                 />
                                             </x-ui.dropdown>
@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         // Send to server
-        axios.post('{{ route("public.cms.faq.reorder") }}', { order: orderData })
+        axios.post('{{ route("cms.faq.reorder") }}', { order: orderData })
             .then(response => {
                 showSuccessMessage('Urutan & Kategori berhasil diperbarui');
             })

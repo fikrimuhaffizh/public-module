@@ -3,12 +3,12 @@
 @section('header')
 <x-ui.page-header title="Statistik" pretitle="Content Management">
     <x-slot:actions>
-        <a href="{{ route('public.cms.landing.index') }}" class="btn btn-outline-secondary">
+        <a href="{{ route('cms.landing.index') }}" class="btn btn-outline-secondary">
             <i class="ti ti-arrow-left me-1"></i>Kembali
         </a>
         @can('public.cms.statistic.create')
             <x-ui.button type="create" class="ajax-modal-btn"
-                data-url="{{ route('public.cms.statistic.create') }}"
+                data-url="{{ route('cms.statistic.create') }}"
                 data-modal-title="Tambah Statistik" text="Tambah Statistik" />
         @endcan
     </x-slot:actions>
@@ -31,10 +31,10 @@
                 <span class="badge {{ $statistic->is_active ? 'bg-success-lt' : 'bg-secondary-lt' }}">{{ $statistic->is_active ? 'Aktif' : 'Draft' }}</span>
                 <x-ui.dropdown class="btn btn-action text-secondary">
                     @can('public.cms.statistic.update')
-                        <x-ui.dropdown-item type="edit" href="javascript:void(0)" :url="route('public.cms.statistic.edit', $statistic)" data-modal-title="Edit Statistik" />
+                        <x-ui.dropdown-item type="edit" href="javascript:void(0)" :url="route('cms.statistic.edit', $statistic)" data-modal-title="Edit Statistik" />
                     @endcan
                     @can('public.cms.statistic.delete')
-                        <x-ui.dropdown-item type="delete" href="javascript:void(0)" :url="route('public.cms.statistic.destroy', $statistic)" title="Hapus Statistik?" />
+                        <x-ui.dropdown-item type="delete" href="javascript:void(0)" :url="route('cms.statistic.destroy', $statistic)" title="Hapus Statistik?" />
                     @endcan
                 </x-ui.dropdown>
             </div>
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
     Sortable.create(list, {
         animation: 150,
         handle: '.cursor-move',
-        onEnd: () => axios.post('{{ route('public.cms.statistic.reorder') }}', {
+        onEnd: () => axios.post('{{ route('cms.statistic.reorder') }}', {
             order: [...list.children].map(item => item.dataset.id),
             _token: '{{ csrf_token() }}'
         }).then(() => window.showSuccessMessage('Urutan statistik diperbarui.'))

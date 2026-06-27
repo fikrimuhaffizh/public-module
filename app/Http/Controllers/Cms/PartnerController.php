@@ -41,7 +41,7 @@ class PartnerController extends Controller
             $partner->addMediaFromRequest('logo')->toMediaCollection('logo');
         }
 
-        return jsonSuccess('Partner berhasil ditambahkan.', route('public.cms.partner.index'));
+        return jsonSuccess('Partner berhasil ditambahkan.', route('cms.partner.index'));
     }
 
     public function edit(Partner $partner)
@@ -57,7 +57,7 @@ class PartnerController extends Controller
             $partner->addMediaFromRequest('logo')->toMediaCollection('logo');
         }
 
-        return jsonSuccess('Partner berhasil diperbarui.', route('public.cms.partner.index'));
+        return jsonSuccess('Partner berhasil diperbarui.', route('cms.partner.index'));
     }
 
     public function destroy(Partner $partner)

@@ -1,17 +1,16 @@
 @php
-    use App\Http\Controllers\Sys\ThemeTablerController;
+    use App\Contracts\ThemeEngineInterface;
 
-    // Load theme controller
-    $themeController = app(ThemeTablerController::class);
-    $themeData = $themeController->getThemeData('tabler');
-    $layoutData = $themeController->getLayoutData('tabler');
+    $themeEngine = app(ThemeEngineInterface::class);
+    $themeData = $themeEngine->getThemeData('tabler');
+    $layoutData = $themeEngine->getLayoutData('tabler');
 
     $dark = ($themeData['theme'] ?? 'light') === 'dark';
     $tenantName = sys_tenant_name();
 @endphp
 
 <!DOCTYPE html>
-<html lang="en" {!! $themeController->getHtmlAttributes('tabler') !!}>
+<html lang="en" {!! $themeEngine->getHtmlAttributes('tabler') !!}>
 
 <head>
     <meta charset="utf-8" />
@@ -25,7 +24,7 @@
     @yield('css')
     
     @vite(['resources/themes/tabler/assets/css/tabler.css'])
-    {!! $themeController->getStyleBlock('tabler') !!}
+    {!! $themeEngine->getStyleBlock('tabler') !!}
 
     @stack('styles')
 

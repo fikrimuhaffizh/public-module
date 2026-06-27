@@ -35,7 +35,7 @@ class LandingPageSettingController extends Controller
             $settings->addMediaFromRequest('favicon')->toMediaCollection('favicon');
         }
 
-        return redirect()->route('public.cms.landing.index')
+        return redirect()->route('cms.landing.index')
             ->with('success', 'Pengaturan landing page berhasil disimpan.');
     }
 }

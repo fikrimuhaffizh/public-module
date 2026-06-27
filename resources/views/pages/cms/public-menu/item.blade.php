@@ -31,13 +31,13 @@
             <x-ui.dropdown-item
                 type="edit"
                 href="javascript:void(0)"
-                :url="route('public.cms.menu.edit', $menu->encrypted_menu_id)"
+                :url="route('cms.menu.edit', $menu->encrypted_menu_id)"
                 data-modal-title="Edit Menu"
             />
             <x-ui.dropdown-item
                 type="delete"
                 href="javascript:void(0)"
-                :url="route('public.cms.menu.destroy', $menu->encrypted_menu_id)"
+                :url="route('cms.menu.destroy', $menu->encrypted_menu_id)"
                 title="Hapus Menu?"
             />
         </x-ui.dropdown>

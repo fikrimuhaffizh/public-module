@@ -42,7 +42,7 @@ class ProductController extends Controller
             $product->addMediaFromRequest('image')->toMediaCollection('image');
         }
 
-        return jsonSuccess('Produk berhasil ditambahkan.', route('public.cms.product.index'));
+        return jsonSuccess('Produk berhasil ditambahkan.', route('cms.product.index'));
     }
 
     public function edit(Product $product)
@@ -60,7 +60,7 @@ class ProductController extends Controller
             $product->addMediaFromRequest('image')->toMediaCollection('image');
         }
 
-        return jsonSuccess('Produk berhasil diperbarui.', route('public.cms.product.index'));
+        return jsonSuccess('Produk berhasil diperbarui.', route('cms.product.index'));
     }
 
     public function destroy(Product $product)

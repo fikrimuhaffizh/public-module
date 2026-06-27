@@ -6,7 +6,7 @@
         <x-ui.button 
             type="create" 
             class="ajax-modal-btn d-none d-sm-inline-block" 
-            data-url="{{ route('public.cms.slideshow.create') }}" 
+            data-url="{{ route('cms.slideshow.create') }}" 
             data-modal-title="Tambah Slideshow"
             text="Tambah Slideshow" 
         />
@@ -25,7 +25,7 @@
                 <x-ui.button 
                     type="create" 
                     class="ajax-modal-btn" 
-                    data-url="{{ route('public.cms.slideshow.create') }}" 
+                    data-url="{{ route('cms.slideshow.create') }}" 
                     data-modal-title="Tambah Slideshow"
                     text="Tambah Slideshow" 
                 />
@@ -34,7 +34,7 @@
     @else
         <div class="row row-cards" id="slideshow-grid">
             @foreach($slideshows as $slide)
-                <div class="col-md-6 col-lg-4" data-id="{{ $slide->encrypted_slideshow_id }}">
+                <div class="col-md-6 col-lg-3" data-id="{{ $slide->encrypted_slideshow_id }}">
                     <x-ui.card class="card-sm">
                         <div class="d-block position-relative">
                             @if($slide->has_image)
@@ -75,13 +75,13 @@
                                 <x-ui.dropdown-item
                                     type="edit"
                                     href="javascript:void(0)"
-                                    :url="route('public.cms.slideshow.edit', $slide->encrypted_slideshow_id)"
+                                    :url="route('cms.slideshow.edit', $slide->encrypted_slideshow_id)"
                                     data-modal-title="Edit Slideshow"
                                 />
                                 <x-ui.dropdown-item
                                     type="delete"
                                     href="javascript:void(0)"
-                                    :url="route('public.cms.slideshow.destroy', $slide->encrypted_slideshow_id)"
+                                    :url="route('cms.slideshow.destroy', $slide->encrypted_slideshow_id)"
                                     title="Hapus Slideshow?"
                                 />
                             </x-ui.dropdown>
@@ -114,7 +114,7 @@
             order.push(el.getAttribute('data-id'));
         });
 
-        axios.post('{{ route('public.cms.slideshow.reorder') }}', {
+        axios.post('{{ route('cms.slideshow.reorder') }}', {
             order: order,
             _token: '{{ csrf_token() }}'
         })

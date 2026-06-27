@@ -1,6 +1,6 @@
 <x-ui.form-modal
     :title="$slideshow->exists ? 'Edit Slideshow' : 'Tambah Slideshow'"
-    :route="$slideshow->exists ? route('public.cms.slideshow.update', $slideshow->encrypted_slideshow_id) : route('public.cms.slideshow.store')"
+    :route="$slideshow->exists ? route('cms.slideshow.update', $slideshow->encrypted_slideshow_id) : route('cms.slideshow.store')"
     :method="$slideshow->exists ? 'PUT' : 'POST'"
     enctype="multipart/form-data"
 >

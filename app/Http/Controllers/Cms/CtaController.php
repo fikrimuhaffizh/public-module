@@ -42,7 +42,7 @@ class CtaController extends Controller
             $this->deactivateOthers($cta);
         }
 
-        return jsonSuccess('CTA berhasil ditambahkan.', route('public.cms.cta.index'));
+        return jsonSuccess('CTA berhasil ditambahkan.', route('cms.cta.index'));
     }
 
     public function edit(Cta $cta)
@@ -62,7 +62,7 @@ class CtaController extends Controller
             $this->deactivateOthers($cta);
         }
 
-        return jsonSuccess('CTA berhasil diperbarui.', route('public.cms.cta.index'));
+        return jsonSuccess('CTA berhasil diperbarui.', route('cms.cta.index'));
     }
 
     public function destroy(Cta $cta)

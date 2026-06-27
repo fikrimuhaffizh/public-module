@@ -79,7 +79,7 @@ class LandingSettingsController extends Controller
             ]);
         }
 
-        return redirect()->route('public.cms.landing.index')
+        return redirect()->route('cms.landing.index')
             ->with('success', 'Template landing page berhasil diperbarui.');
     }
 

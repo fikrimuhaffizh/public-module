@@ -1,6 +1,6 @@
 <x-ui.form-modal
     :title="$partner->exists ? 'Edit Partner' : 'Tambah Partner'"
-    :route="$partner->exists ? route('public.cms.partner.update', $partner) : route('public.cms.partner.store')"
+    :route="$partner->exists ? route('cms.partner.update', $partner) : route('cms.partner.store')"
     :method="$partner->exists ? 'PUT' : 'POST'"
     enctype="multipart/form-data"
 >

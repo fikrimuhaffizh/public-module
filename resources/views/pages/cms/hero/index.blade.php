@@ -3,12 +3,12 @@
 @section('header')
 <x-ui.page-header title="Hero Section" pretitle="Content Management">
     <x-slot:actions>
-        <a href="{{ route('public.cms.landing.index') }}" class="btn btn-outline-secondary">
+        <a href="{{ route('cms.landing.index') }}" class="btn btn-outline-secondary">
             <i class="ti ti-arrow-left me-1"></i>Kembali
         </a>
         @can('public.cms.hero.create')
             <x-ui.button type="create" class="ajax-modal-btn"
-                data-url="{{ route('public.cms.hero.create') }}"
+                data-url="{{ route('cms.hero.create') }}"
                 data-modal-title="Tambah Hero Section" text="Tambah Hero" />
         @endcan
     </x-slot:actions>
@@ -31,12 +31,12 @@
                             <x-ui.dropdown class="btn btn-action text-secondary">
                                 @can('public.cms.hero.update')
                                     <x-ui.dropdown-item type="edit" href="javascript:void(0)"
-                                        :url="route('public.cms.hero.edit', $hero)"
+                                        :url="route('cms.hero.edit', $hero)"
                                         data-modal-title="Edit Hero Section" />
                                 @endcan
                                 @can('public.cms.hero.delete')
                                     <x-ui.dropdown-item type="delete" href="javascript:void(0)"
-                                        :url="route('public.cms.hero.destroy', $hero)"
+                                        :url="route('cms.hero.destroy', $hero)"
                                         title="Hapus Hero?" />
                                 @endcan
                             </x-ui.dropdown>

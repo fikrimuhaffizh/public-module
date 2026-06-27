@@ -1,6 +1,6 @@
 <x-ui.form-modal
     :title="$hero->exists ? 'Edit Hero Section' : 'Tambah Hero Section'"
-    :route="$hero->exists ? route('public.cms.hero.update', $hero) : route('public.cms.hero.store')"
+    :route="$hero->exists ? route('cms.hero.update', $hero) : route('cms.hero.store')"
     :method="$hero->exists ? 'PUT' : 'POST'"
     enctype="multipart/form-data"
 >

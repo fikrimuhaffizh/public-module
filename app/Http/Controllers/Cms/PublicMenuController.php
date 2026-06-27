@@ -70,8 +70,8 @@ class PublicMenuController extends Controller
             })
             ->addColumn('action', function ($row) {
                 $editUrl = $row->type === 'page' && $row->page
-                    ? route('public.cms.page.edit', $row->page->encrypted_page_id)
-                    : route('public.cms.menu.edit', $row->encrypted_menu_id);
+                    ? route('cms.page.edit', $row->page->encrypted_page_id)
+                    : route('cms.menu.edit', $row->encrypted_menu_id);
 
                 $isModal = $row->type !== 'page';
 
@@ -79,7 +79,7 @@ class PublicMenuController extends Controller
                     'editUrl' => $editUrl,
                     'editModal' => $isModal,
                     'viewUrl' => null,
-                    'deleteUrl' => route('public.cms.menu.destroy', $row->encrypted_menu_id),
+                    'deleteUrl' => route('cms.menu.destroy', $row->encrypted_menu_id),
                     'deleteTitle' => 'Hapus item ini?',
                 ])->render();
             })
@@ -103,7 +103,7 @@ class PublicMenuController extends Controller
     {
         $this->menuService->createMenu($request->validated());
 
-        return jsonSuccess('Menu berhasil ditambahkan.', route('public.cms.menu.index'));
+        return jsonSuccess('Menu berhasil ditambahkan.', route('cms.menu.index'));
     }
 
     public function edit(Menu $menu)
@@ -122,14 +122,14 @@ class PublicMenuController extends Controller
     {
         $this->menuService->updateMenu($menu->getKey(), $request->validated());
 
-        return jsonSuccess('Menu berhasil diperbarui.', route('public.cms.menu.index'));
+        return jsonSuccess('Menu berhasil diperbarui.', route('cms.menu.index'));
     }
 
     public function destroy(Menu $menu)
     {
         $this->menuService->deleteMenu($menu->getKey());
 
-        return jsonSuccess('Menu berhasil dihapus.', route('public.cms.menu.index'));
+        return jsonSuccess('Menu berhasil dihapus.', route('cms.menu.index'));
     }
 
     public function reorder(ReorderRequest $request)

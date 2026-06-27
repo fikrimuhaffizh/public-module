@@ -1,6 +1,6 @@
 <x-ui.form-modal
     :title="$cta->exists ? 'Edit CTA' : 'Tambah CTA'"
-    :route="$cta->exists ? route('public.cms.cta.update', $cta) : route('public.cms.cta.store')"
+    :route="$cta->exists ? route('cms.cta.update', $cta) : route('cms.cta.store')"
     :method="$cta->exists ? 'PUT' : 'POST'"
     enctype="multipart/form-data"
 >

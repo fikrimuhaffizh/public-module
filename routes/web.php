@@ -25,7 +25,7 @@ use App\Http\Middleware\HandleInertiaRequests;
 */
 
 // Admin Area (CMS)
-Route::middleware(['auth', 'check.expired', 'module:public'])->prefix('cms')->name('public.cms.')->group(function () {
+Route::middleware(['auth', 'check.expired', 'module:public'])->prefix('cms')->name('cms.')->group(function () {
     Route::get('landing', [LandingSettingsController::class, 'index'])->name('landing.index');
     Route::get('landing-template', [LandingSettingsController::class, 'edit'])->name('landing.edit');
     Route::put('landing-template', [LandingSettingsController::class, 'update'])->name('landing.update');

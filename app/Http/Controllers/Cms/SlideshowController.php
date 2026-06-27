@@ -12,7 +12,13 @@ use Yajra\DataTables\Facades\DataTables;
 
 class SlideshowController extends Controller
 {
-    public function __construct(protected SlideshowService $slideshowService) {}
+    public function __construct(protected SlideshowService $slideshowService)
+    {
+        $this->middleware('permission:public.cms.slideshow.view')->only(['index', 'data']);
+        $this->middleware('permission:public.cms.slideshow.create')->only(['create', 'store']);
+        $this->middleware('permission:public.cms.slideshow.update')->only(['edit', 'update', 'reorder']);
+        $this->middleware('permission:public.cms.slideshow.delete')->only(['destroy']);
+    }
 
     public function index()
     {
@@ -58,9 +64,9 @@ class SlideshowController extends Controller
             })
             ->addColumn('action', function ($row) {
                 return view('components.ui.datatables-actions', [
-                    'editUrl' => route('public.cms.slideshow.edit', $row->encrypted_slideshow_id),
+                    'editUrl' => route('cms.slideshow.edit', $row->encrypted_slideshow_id),
                     'editModal' => true,
-                    'deleteUrl' => route('public.cms.slideshow.destroy', $row->encrypted_slideshow_id),
+                    'deleteUrl' => route('cms.slideshow.destroy', $row->encrypted_slideshow_id),
                 ])->render();
             })
             ->rawColumns(['image_url', 'is_active', 'action'])
@@ -76,7 +82,7 @@ class SlideshowController extends Controller
     {
         $this->slideshowService->createSlideshow($request->validated());
 
-        return jsonSuccess('Slideshow berhasil ditambahkan.', route('public.cms.slideshow.index'));
+        return jsonSuccess('Slideshow berhasil ditambahkan.', route('cms.slideshow.index'));
     }
 
     public function edit(Slideshow $slideshow)
@@ -88,13 +94,13 @@ class SlideshowController extends Controller
     {
         $this->slideshowService->updateSlideshow($slideshow->getKey(), $request->validated());
 
-        return jsonSuccess('Slideshow berhasil diperbarui.', route('public.cms.slideshow.index'));
+        return jsonSuccess('Slideshow berhasil diperbarui.', route('cms.slideshow.index'));
     }
 
     public function destroy(Slideshow $slideshow)
     {
         $this->slideshowService->deleteSlideshow($slideshow->getKey());
 
-        return jsonSuccess('Slideshow berhasil dihapus.', route('public.cms.slideshow.index'));
+        return jsonSuccess('Slideshow berhasil dihapus.', route('cms.slideshow.index'));
     }
 }

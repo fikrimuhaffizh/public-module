@@ -3,7 +3,7 @@
 @section('header')
 <x-ui.page-header title="Manajemen Halaman Publik" pretitle="Content Management">
     <x-slot:actions>
-        <x-ui.button type="create" href="{{ route('public.cms.page.create') }}" text="Tambah Halaman" />
+        <x-ui.button type="create" href="{{ route('cms.page.create') }}" text="Tambah Halaman" />
     </x-slot:actions>
 </x-ui.page-header>
 @endsection
@@ -16,7 +16,7 @@
             <x-ui.card-body class="p-0">
             <x-ui.datatable
                 id="table-public-pages"
-                route="{{ route('public.cms.page.data') }}"
+                route="{{ route('cms.page.data') }}"
                 :columns="[
                     ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex', 'title' => 'No', 'orderable' => false, 'searchable' => false, 'class' => 'text-center'],
                     ['data' => 'title', 'name' => 'title', 'title' => 'Judul'],

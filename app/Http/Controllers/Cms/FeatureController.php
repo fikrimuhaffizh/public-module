@@ -40,7 +40,7 @@ class FeatureController extends Controller
             $feature->addMediaFromRequest('image')->toMediaCollection('image');
         }
 
-        return jsonSuccess('Fitur berhasil ditambahkan.', route('public.cms.feature.index'));
+        return jsonSuccess('Fitur berhasil ditambahkan.', route('cms.feature.index'));
     }
 
     public function edit(Feature $feature)
@@ -56,7 +56,7 @@ class FeatureController extends Controller
             $feature->addMediaFromRequest('image')->toMediaCollection('image');
         }
 
-        return jsonSuccess('Fitur berhasil diperbarui.', route('public.cms.feature.index'));
+        return jsonSuccess('Fitur berhasil diperbarui.', route('cms.feature.index'));
     }
 
     public function destroy(Feature $feature)

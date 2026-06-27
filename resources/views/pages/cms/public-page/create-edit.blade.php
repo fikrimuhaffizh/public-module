@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-        <form action="{{ $page->exists ? route('public.cms.page.update', $page->encrypted_page_id) : route('public.cms.page.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ $page->exists ? route('cms.page.update', $page->encrypted_page_id) : route('cms.page.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @if($page->exists)
                 @method('PUT')

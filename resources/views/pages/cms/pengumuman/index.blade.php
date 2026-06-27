@@ -3,7 +3,7 @@
 @section('header')
 <x-ui.page-header :title="ucfirst($type)" pretitle="Content Management">
     <x-slot:actions>
-        <x-ui.button type="create" :href="route('public.cms.'.$type . '.create', ['type' => $type])" :text="'Tambah ' . ucfirst($type)" />
+        <x-ui.button type="create" :href="route('cms.'.$type . '.create', ['type' => $type])" :text="'Tambah ' . ucfirst($type)" />
     </x-slot:actions>
 </x-ui.page-header>
 @endsection
@@ -65,7 +65,7 @@
                     ]
                 ];
             @endphp
-            <x-ui.datatable :id="$type . '-table'" :route="route('public.cms.'.$type.'.data')" :columns="$columns" :order="[[4, 'desc']]" />
+            <x-ui.datatable :id="$type . '-table'" :route="route('cms.'.$type.'.data')" :columns="$columns" :order="[[4, 'desc']]" />
         </x-ui.card-body>
     </x-ui.card>
 @endsection

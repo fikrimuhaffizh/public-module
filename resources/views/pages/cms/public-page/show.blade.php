@@ -3,7 +3,7 @@
 @section('header')
 <x-ui.page-header :title="$page->title" pretitle="Content Management">
     <x-slot:actions>
-        <x-ui.button type="edit" :href="route('public.cms.page.edit', $page->encrypted_page_id)" />
+        <x-ui.button type="edit" :href="route('cms.page.edit', $page->encrypted_page_id)" />
         <x-ui.button type="back" />
     </x-slot:actions>
 </x-ui.page-header>

@@ -161,14 +161,17 @@ Modul Public menggunakan **Inertia.js + React** untuk merender landing page publ
 
 | #  | Key            | File                              | Palet Utama          | Karakter                        | Cocok Untuk                            |
 |----|----------------|-----------------------------------|----------------------|---------------------------------|----------------------------------------|
-| 1  | `modern`       | `ModernTemplate.jsx`              | Ungu (#6d4aff)      | Startup tech, browser mockup    | Teknologi, startup kampus              |
+| 1  | `modern`       | `ModernTemplate.jsx`              | Biru (#1d4ed8)      | Startup tech, browser mockup    | Teknologi, startup kampus              |
 | 2  | `editorial`    | `EditorialTemplate.jsx`           | Oranye (#b34719)    | Serif, warm, editorial          | Publikasi, portal berita               |
 | 3  | `corporate`    | `CorporateTemplate.jsx`           | Navy/emas           | Grid lines, structured          | Institusi formal, pemerintahan         |
-| 4  | `launch`       | `LaunchTemplate.jsx`              | Indigo/gelap        | Dark gradient, product launch   | Peluncuran produk, event               |
-| 5  | `aurora`       | `AuroraTemplate.jsx`              | Ungu/glassmorphism  | Dark/light, artistik            | Kreatif, desain, portofolio            |
+| 4  | `launch`       | `LaunchTemplate.jsx`              | Biru (#1e40af)      | Dark gradient, product launch   | Peluncuran produk, event               |
+| 5  | `aurora`       | `AuroraTemplate.jsx`              | Cyan/glassmorphism  | Dark/light, artistik            | Kreatif, desain, portofolio            |
 | 6  | `enterprise`   | `EnterpriseTemplate.jsx`          | Biru (#2563eb)      | Clean monochrome, minimal SaaS  | Enterprise SaaS, B2B, company profile  |
 | 7  | `registration` | `RegistrationTemplate.jsx`        | Emerald (#059669)   | Form-centric, warm              | Pendaftaran, admissions, program       |
-| 8  | `profile`      | `ProfileTemplate.jsx`             | Indigo (#6366f1)    | Elegant editorial, serif        | Company profile, professional services |
+| 8  | `profile`      | `ProfileTemplate.jsx`             | Slate (#1e293b)     | Elegant editorial, serif        | Company profile, professional services |
+| 9  | `campus`       | `CampusTemplate.jsx`              | Teal (#0d766e)      | Akademik, hero foto + stats     | Beranda kampus, universitas            |
+| 10 | `admissions`   | `AdmissionsTemplate.jsx`          | Maroon (#9f1239)    | Pendaftaran, alur langkah       | PMB, pendaftaran mahasiswa             |
+| 11 | `tracer`       | `TracerTemplate.jsx`              | Navy (#1e3a8a)      | Dashboard data, alumni          | Tracer study, jejak alumni             |
 
 ### Arsitektur Template
 

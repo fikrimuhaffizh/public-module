@@ -43,7 +43,7 @@ class TestimonialController extends Controller
             $testimonial->addMediaFromRequest('photo')->toMediaCollection('photo');
         }
 
-        return jsonSuccess('Testimoni berhasil ditambahkan.', route('public.cms.testimonial.index'));
+        return jsonSuccess('Testimoni berhasil ditambahkan.', route('cms.testimonial.index'));
     }
 
     public function edit(Testimonial $testimonial)
@@ -59,7 +59,7 @@ class TestimonialController extends Controller
             $testimonial->addMediaFromRequest('photo')->toMediaCollection('photo');
         }
 
-        return jsonSuccess('Testimoni berhasil diperbarui.', route('public.cms.testimonial.index'));
+        return jsonSuccess('Testimoni berhasil diperbarui.', route('cms.testimonial.index'));
     }
 
     public function destroy(Testimonial $testimonial)

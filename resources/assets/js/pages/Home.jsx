@@ -9,6 +9,9 @@ import AuroraTemplate from '@public/templates/AuroraTemplate';
 import EnterpriseTemplate from '@public/templates/EnterpriseTemplate';
 import RegistrationTemplate from '@public/templates/RegistrationTemplate';
 import ProfileTemplate from '@public/templates/ProfileTemplate';
+import CampusTemplate from '@public/templates/CampusTemplate';
+import AdmissionsTemplate from '@public/templates/AdmissionsTemplate';
+import TracerTemplate from '@public/templates/TracerTemplate';
 
 const templates = {
   modern: ModernTemplate,
@@ -19,6 +22,9 @@ const templates = {
   enterprise: EnterpriseTemplate,
   registration: RegistrationTemplate,
   profile: ProfileTemplate,
+  campus: CampusTemplate,
+  admissions: AdmissionsTemplate,
+  tracer: TracerTemplate,
 };
 
 export default function Home() {

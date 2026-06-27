@@ -1,5 +1,5 @@
 <div class="section-edit-form">
-    <form id="section-edit-form" action="{{ route('public.cms.landing.section.update', $section) }}" method="POST">
+    <form id="section-edit-form" action="{{ route('cms.landing.section.update', $section) }}" method="POST">
         @csrf
         @method('PUT')
         
@@ -54,7 +54,7 @@
                 <i class="ti ti-info-circle fs-3"></i>
                 <div>
                     @if($section->section_key === 'navbar')
-                        Header hanya menampilkan <strong>Logo</strong> dan <strong>Menu Navigasi</strong>. Kelola item menu di halaman <a href="{{ route('public.cms.public-menu.index') }}" class="alert-link" target="_blank">Menu Publik</a>.
+                        Header hanya menampilkan <strong>Logo</strong> dan <strong>Menu Navigasi</strong>. Kelola item menu di halaman <a href="{{ route('cms.public-menu.index') }}" class="alert-link" target="_blank">Menu Publik</a>.
                     @else
                         Footer menampilkan informasi situs, navigasi, dan kontak secara otomatis dari pengaturan Configuration.
                     @endif

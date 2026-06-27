@@ -39,11 +39,11 @@
                                                             icon="ti ti-power"
                                                             label="{{ $section->is_active ? 'Nonaktifkan' : 'Aktifkan' }}"
                                                             class="ajax-toggle"
-                                                            data-url="{{ route('public.cms.landing.section.toggle', $section) }}"
+                                                            data-url="{{ route('cms.landing.section.toggle', $section) }}"
                                                             data-token="{{ csrf_token() }}"
                                                         />
                                                         <x-ui.dropdown-item type="edit" href="javascript:void(0)"
-                                                            :url="route('public.cms.landing.section.edit', $section)"
+                                                            :url="route('cms.landing.section.edit', $section)"
                                                             data-modal-title="Edit {{ $section->section_name }}" />
                                                     @endcan
                                                     @if($registry[$section->section_key]['manage_data_route'])
@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function () {
             ghostClass: 'bg-indigo-lt',
             onEnd: () => {
                 const ids = [...middleSections.children].map(item => item.dataset.id);
-                axios.post('{{ route('public.cms.landing.sections.reorder') }}', {
+                axios.post('{{ route('cms.landing.sections.reorder') }}', {
                     area: 'middle',
                     ids: ids,
                     _token: '{{ csrf_token() }}',

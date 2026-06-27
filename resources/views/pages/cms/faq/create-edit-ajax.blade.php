@@ -1,6 +1,6 @@
 <x-ui.form-modal
     :title="$faq->exists ? 'Edit FAQ' : 'Tambah FAQ'"
-    :route="$faq->exists ? route('public.cms.faq.update', $faq->encrypted_faq_id) : route('public.cms.faq.store')"
+    :route="$faq->exists ? route('cms.faq.update', $faq->encrypted_faq_id) : route('cms.faq.store')"
     :method="$faq->exists ? 'PUT' : 'POST'"
 >
     <x-ui.form-input 

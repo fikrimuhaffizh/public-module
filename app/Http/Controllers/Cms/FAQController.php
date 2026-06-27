@@ -28,7 +28,7 @@ class FAQController extends Controller
     {
         $this->faqService->createFAQ($request->validated());
 
-        return jsonSuccess('FAQ berhasil ditambahkan.', route('public.cms.faq.index'));
+        return jsonSuccess('FAQ berhasil ditambahkan.', route('cms.faq.index'));
     }
 
     public function edit(FAQ $faq)
@@ -40,14 +40,14 @@ class FAQController extends Controller
     {
         $this->faqService->updateFAQ($faq->getKey(), $request->validated());
 
-        return jsonSuccess('FAQ berhasil diperbarui.', route('public.cms.faq.index'));
+        return jsonSuccess('FAQ berhasil diperbarui.', route('cms.faq.index'));
     }
 
     public function destroy(FAQ $faq)
     {
         $this->faqService->deleteFAQ($faq->getKey());
 
-        return jsonSuccess('FAQ berhasil dihapus.', route('public.cms.faq.index'));
+        return jsonSuccess('FAQ berhasil dihapus.', route('cms.faq.index'));
     }
 
     public function reorder(ReorderRequest $request)

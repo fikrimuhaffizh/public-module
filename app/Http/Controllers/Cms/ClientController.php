@@ -40,7 +40,7 @@ class ClientController extends Controller
             $client->addMediaFromRequest('logo')->toMediaCollection('logo');
         }
 
-        return jsonSuccess('Klien berhasil ditambahkan.', route('public.cms.client.index'));
+        return jsonSuccess('Klien berhasil ditambahkan.', route('cms.client.index'));
     }
 
     public function edit(Client $client)
@@ -56,7 +56,7 @@ class ClientController extends Controller
             $client->addMediaFromRequest('logo')->toMediaCollection('logo');
         }
 
-        return jsonSuccess('Klien berhasil diperbarui.', route('public.cms.client.index'));
+        return jsonSuccess('Klien berhasil diperbarui.', route('cms.client.index'));
     }
 
     public function destroy(Client $client)

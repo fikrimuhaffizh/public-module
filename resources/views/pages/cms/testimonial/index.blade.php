@@ -3,12 +3,12 @@
 @section('header')
 <x-ui.page-header title="Testimoni" pretitle="Content Management">
     <x-slot:actions>
-        <a href="{{ route('public.cms.landing.index') }}" class="btn btn-outline-secondary">
+        <a href="{{ route('cms.landing.index') }}" class="btn btn-outline-secondary">
             <i class="ti ti-arrow-left me-1"></i>Kembali
         </a>
         @can('public.cms.testimonial.create')
             <x-ui.button type="create" class="ajax-modal-btn"
-                data-url="{{ route('public.cms.testimonial.create') }}"
+                data-url="{{ route('cms.testimonial.create') }}"
                 data-modal-title="Tambah Testimoni" text="Tambah Testimoni" />
         @endcan
     </x-slot:actions>
@@ -39,12 +39,12 @@
                                     <x-ui.dropdown class="btn btn-action text-secondary">
                                         @can('public.cms.testimonial.update')
                                             <x-ui.dropdown-item type="edit" href="javascript:void(0)"
-                                                :url="route('public.cms.testimonial.edit', $testimonial)"
+                                                :url="route('cms.testimonial.edit', $testimonial)"
                                                 data-modal-title="Edit Testimoni" />
                                         @endcan
                                         @can('public.cms.testimonial.delete')
                                             <x-ui.dropdown-item type="delete" href="javascript:void(0)"
-                                                :url="route('public.cms.testimonial.destroy', $testimonial)"
+                                                :url="route('cms.testimonial.destroy', $testimonial)"
                                                 title="Hapus Testimoni?" />
                                         @endcan
                                     </x-ui.dropdown>
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
     Sortable.create(grid, {
         animation: 150,
         handle: '.cursor-move',
-        onEnd: () => axios.post('{{ route('public.cms.testimonial.reorder') }}', {
+        onEnd: () => axios.post('{{ route('cms.testimonial.reorder') }}', {
             order: [...grid.children].map(item => item.dataset.id),
             _token: '{{ csrf_token() }}'
         }).then(() => window.showSuccessMessage('Urutan testimoni diperbarui.'))

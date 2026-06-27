@@ -100,6 +100,9 @@ export function TemplatePicker({ template }) {
         enterprise: 'Enterprise',
         registration: 'Registration',
         profile: 'Profile',
+        campus: 'Campus',
+        admissions: 'Admissions',
+        tracer: 'Tracer',
     };
     return <div className="template-picker"><span>Pratinjau:</span>{Object.entries(labels).map(([key, label]) =>
         <a key={key} className={template === key ? 'active' : ''} href={`?template=${key}`}>{label}</a>)}</div>;

@@ -11,7 +11,7 @@
     <i class="ti ti-info-circle fs-2 me-2"></i>
     <div>Pilih salah satu template untuk langsung <strong>diterapkan</strong>. Pratinjau tidak mengubah template yang sedang digunakan.</div>
 </div>
-<form id="landing-template-form" method="POST" action="{{ route('public.cms.landing.update') }}">
+<form id="landing-template-form" method="POST" action="{{ route('cms.landing.update') }}">
     @csrf
     @method('PUT')
     <div class="row row-cards">
@@ -26,6 +26,9 @@
                     'enterprise' => ['Enterprise', 'Tampilan profesional monokrom dengan aksen biru, fokus pada kepercayaan dan data.', 'shield-check'],
                     'registration' => ['Registration', 'Berorientasi pendaftaran dengan form ringkasan, langkah-langkah, dan testimoni.', 'clipboard-check'],
                     'profile' => ['Profile', 'Elegant company profile dengan tipografi serif, kutipan, dan visual bersih.', 'building-arch'],
+                    'campus' => ['Campus', 'Beranda kampus akademik dengan foto, highlight bericon, program, dan statistik.', 'school'],
+                    'admissions' => ['Admissions', 'Halaman pendaftaran dengan alur langkah, jalur masuk, dan informasi biaya.', 'clipboard-list'],
+                    'tracer' => ['Tracer Study', 'Jejak alumni dengan dashboard data, metrik lulusan, dan kuesioner tracer.', 'chart-bar'],
                 };
             @endphp
             @php($isSelected = old('landing_template', $selectedTemplate) === $template)
@@ -82,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
 
                 // Send auto-save request
-                axios.put('{{ route('public.cms.landing.update') }}', {
+                axios.put('{{ route('cms.landing.update') }}', {
                     _token: '{{ csrf_token() }}',
                     landing_template: selectedTemplate
                 })

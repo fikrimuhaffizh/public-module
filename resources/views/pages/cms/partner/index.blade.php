@@ -5,7 +5,7 @@
     <x-slot:actions>
         @can('public.cms.partner.create')
             <x-ui.button type="create" class="ajax-modal-btn"
-                data-url="{{ route('public.cms.partner.create') }}"
+                data-url="{{ route('cms.partner.create') }}"
                 data-modal-title="Tambah Partner" text="Tambah Partner" />
         @endcan
     </x-slot:actions>
@@ -25,12 +25,12 @@
                             <x-ui.dropdown class="btn btn-action text-secondary">
                                 @can('public.cms.partner.update')
                                     <x-ui.dropdown-item type="edit" href="javascript:void(0)"
-                                        :url="route('public.cms.partner.edit', $partner)"
+                                        :url="route('cms.partner.edit', $partner)"
                                         data-modal-title="Edit Partner" />
                                 @endcan
                                 @can('public.cms.partner.delete')
                                     <x-ui.dropdown-item type="delete" href="javascript:void(0)"
-                                        :url="route('public.cms.partner.destroy', $partner)"
+                                        :url="route('cms.partner.destroy', $partner)"
                                         title="Hapus Partner?" />
                                 @endcan
                             </x-ui.dropdown>
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
     Sortable.create(grid, {
         animation: 150,
         handle: '.cursor-move',
-        onEnd: () => axios.post('{{ route('public.cms.partner.reorder') }}', {
+        onEnd: () => axios.post('{{ route('cms.partner.reorder') }}', {
             order: [...grid.children].map(item => item.dataset.id),
             _token: '{{ csrf_token() }}'
         }).then(() => window.showSuccessMessage('Urutan partner diperbarui.'))

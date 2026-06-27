@@ -3,12 +3,12 @@
 @section('header')
 <x-ui.page-header title="Call To Action" pretitle="Content Management">
     <x-slot:actions>
-        <a href="{{ route('public.cms.landing.index') }}" class="btn btn-outline-secondary">
+        <a href="{{ route('cms.landing.index') }}" class="btn btn-outline-secondary">
             <i class="ti ti-arrow-left me-1"></i>Kembali
         </a>
         @can('public.cms.cta.create')
             <x-ui.button type="create" class="ajax-modal-btn"
-                data-url="{{ route('public.cms.cta.create') }}"
+                data-url="{{ route('cms.cta.create') }}"
                 data-modal-title="Tambah CTA" text="Tambah CTA" />
         @endcan
     </x-slot:actions>
@@ -30,10 +30,10 @@
                         <div class="position-absolute top-0 end-0 mt-2 me-2">
                             <x-ui.dropdown class="btn btn-action text-secondary">
                                 @can('public.cms.cta.update')
-                                    <x-ui.dropdown-item type="edit" href="javascript:void(0)" :url="route('public.cms.cta.edit', $cta)" data-modal-title="Edit CTA" />
+                                    <x-ui.dropdown-item type="edit" href="javascript:void(0)" :url="route('cms.cta.edit', $cta)" data-modal-title="Edit CTA" />
                                 @endcan
                                 @can('public.cms.cta.delete')
-                                    <x-ui.dropdown-item type="delete" href="javascript:void(0)" :url="route('public.cms.cta.destroy', $cta)" title="Hapus CTA?" />
+                                    <x-ui.dropdown-item type="delete" href="javascript:void(0)" :url="route('cms.cta.destroy', $cta)" title="Hapus CTA?" />
                                 @endcan
                             </x-ui.dropdown>
                         </div>

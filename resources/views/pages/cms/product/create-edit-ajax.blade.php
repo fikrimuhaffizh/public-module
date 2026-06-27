@@ -1,6 +1,6 @@
 <x-ui.form-modal
     :title="$product->exists ? 'Edit Produk' : 'Tambah Produk'"
-    :route="$product->exists ? route('public.cms.product.update', $product) : route('public.cms.product.store')"
+    :route="$product->exists ? route('cms.product.update', $product) : route('cms.product.store')"
     :method="$product->exists ? 'PUT' : 'POST'"
     enctype="multipart/form-data"
 >

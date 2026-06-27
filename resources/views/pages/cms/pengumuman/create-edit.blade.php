@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-        <form action="{{ $pengumuman->exists ? route('public.cms.'.$type.'.update', $pengumuman->encrypted_pengumuman_id) : route('public.cms.'.$type.'.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ $pengumuman->exists ? route('cms.'.$type.'.update', $pengumuman->encrypted_pengumuman_id) : route('cms.'.$type.'.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @if($pengumuman->exists)
                 @method('PUT')

@@ -71,7 +71,7 @@
         
         <x-slot:footer>
             <x-ui.button type="cancel" data-bs-dismiss="modal" text="Tutup" />
-            <x-ui.button type="edit" :href="route('public.cms.'.$pengumuman->jenis.'.edit', $pengumuman)" class="ms-auto" />
+            <x-ui.button type="edit" :href="route('cms.'.$pengumuman->jenis.'.edit', $pengumuman)" class="ms-auto" />
         </x-slot:footer>
     </x-ui.form-modal>
 @else
@@ -80,8 +80,8 @@
     @section('header')
         <x-ui.page-header :title="$pengumuman->judul" pretitle="Content Management">
             <x-slot:actions>
-                <x-ui.button type="edit" :href="route('public.cms.'.$pengumuman->jenis.'.edit', $pengumuman)" />
-                <x-ui.button type="back" :href="route('public.cms.'.$pengumuman->jenis.'.index')" />
+                <x-ui.button type="edit" :href="route('cms.'.$pengumuman->jenis.'.edit', $pengumuman)" />
+                <x-ui.button type="back" :href="route('cms.'.$pengumuman->jenis.'.index')" />
             </x-slot:actions>
         </x-ui.page-header>
     @endsection
@@ -165,10 +165,10 @@
                         <div class="mt-4 pt-3 border-top d-flex justify-content-between">
                             <x-ui.button type="delete" 
                                         class="ajax-delete"
-                                        :data-url="route('public.cms.'.$pengumuman->jenis.'.destroy', $pengumuman)"
+                                        :data-url="route('cms.'.$pengumuman->jenis.'.destroy', $pengumuman)"
                                         data-title="Hapus {{ ucfirst($pengumuman->jenis) }}"
                                         data-text="Apakah Anda yakin ingin menghapus data ini? Tindakan ini tidak dapat dibatalkan."
-                                        data-redirect="{{ route('public.cms.'.$pengumuman->jenis.'.index') }}"
+                                        data-redirect="{{ route('cms.'.$pengumuman->jenis.'.index') }}"
                                         icon="ti ti-trash" />
                         </div>
                     </x-ui.card-body>
