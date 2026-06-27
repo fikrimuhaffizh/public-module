@@ -11,9 +11,9 @@ class SlideshowRequest extends BaseRequest
         $rules = [
             'title' => 'nullable|string|max:191',
             'caption' => 'nullable|string',
-            'link' => 'nullable|url',
+            'link' => 'nullable|',
             'seq' => 'nullable|integer',
-            'image_url' => 'nullable|url',
+            'image_url' => 'nullable|',
             'is_active' => 'nullable',
         ];
 
