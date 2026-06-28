@@ -6,10 +6,8 @@
     "description": "Landing page, CMS, and external layout",
     "group": "platform",
     "priority": 45,
-    "route": "cms.landing.index",
     "icon": "world-www",
     "providers": ["Modules\\Public\\Providers\\PublicServiceProvider"],
-    "aliases": {},
-    "files": [],
+    "permission_seeder": "Modules\\\\Public\\\\Database\\\\Seeders\\\\RolePermissionPublicSeeder",
     "seeders": ["Modules\\Public\\Database\\Seeders\\PublicDatabaseSeeder"]
 }
