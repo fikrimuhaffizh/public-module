@@ -64,11 +64,13 @@ class LandingPageService
                 'email' => $settings?->contact_email ?: $tenant?->email,
                 'phone' => $settings?->contact_phone ?: $tenant?->phone,
                 'whatsapp' => $settings?->whatsapp,
-                'logo' => $settings?->logo_url,
-                'favicon' => $settings?->favicon_url,
-                'homeUrl' => route('public.index'),
+                'logo' => $tenant?->logoNavbarUrl() ?: $settings?->logo_url,
+                'logoNavbar' => $tenant?->logoNavbarUrl() ?: $settings?->logo_url,
+                'logoFooter' => $tenant?->logoFooterUrl(),
+                'favicon' => $settings?->favicon_url ?: $tenant?->faviconUrl(),
+                'homeUrl' => Route::has('public.index') ? route('public.index') : url('/'),
                 'contactUrl' => route('public.contact'),
-                'loginUrl' => route('login'),
+                'loginUrl' => route('auth.login'),
                 'social' => [
                     'facebook' => $settings?->facebook_url,
                     'instagram' => $settings?->instagram_url,
@@ -436,7 +438,7 @@ class LandingPageService
             'subtitle' => $section?->subtitle,
             'description' => $section?->post_title ?: $tagline,
             'image' => null,
-            'buttonPrimary' => ['text' => 'Masuk', 'link' => route('login')],
+            'buttonPrimary' => ['text' => 'Masuk', 'link' => route('auth.login')],
             'buttonSecondary' => ['text' => 'Hubungi Kami', 'link' => route('public.contact')],
         ];
     }

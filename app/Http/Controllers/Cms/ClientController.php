@@ -20,14 +20,14 @@ class ClientController extends Controller
 
     public function index()
     {
-        return view('public::pages.cms.client.index', [
+        return view('public::pages.cms.section.client.index', [
             'clients' => Client::orderBy('sort_order')->get(),
         ]);
     }
 
     public function create()
     {
-        return view('public::pages.cms.client.create-edit-ajax', ['client' => new Client]);
+        return view('public::pages.cms.section.client.create-edit-ajax', ['client' => new Client]);
     }
 
     public function store(ClientRequest $request)
@@ -45,7 +45,7 @@ class ClientController extends Controller
 
     public function edit(Client $client)
     {
-        return view('public::pages.cms.client.create-edit-ajax', compact('client'));
+        return view('public::pages.cms.section.client.create-edit-ajax', compact('client'));
     }
 
     public function update(ClientRequest $request, Client $client)

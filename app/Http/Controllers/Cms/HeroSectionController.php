@@ -19,14 +19,14 @@ class HeroSectionController extends Controller
 
     public function index()
     {
-        return view('public::pages.cms.hero.index', [
+        return view('public::pages.cms.section.hero.index', [
             'heroes' => HeroSection::orderByDesc('is_active')->orderByDesc('updated_at')->get(),
         ]);
     }
 
     public function create()
     {
-        return view('public::pages.cms.hero.create-edit-ajax', ['hero' => new HeroSection]);
+        return view('public::pages.cms.section.hero.create-edit-ajax', ['hero' => new HeroSection]);
     }
 
     public function store(HeroSectionRequest $request)
@@ -47,7 +47,7 @@ class HeroSectionController extends Controller
 
     public function edit(HeroSection $hero)
     {
-        return view('public::pages.cms.hero.create-edit-ajax', compact('hero'));
+        return view('public::pages.cms.section.hero.create-edit-ajax', compact('hero'));
     }
 
     public function update(HeroSectionRequest $request, HeroSection $hero)

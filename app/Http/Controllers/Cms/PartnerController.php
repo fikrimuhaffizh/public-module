@@ -20,14 +20,14 @@ class PartnerController extends Controller
 
     public function index()
     {
-        return view('public::pages.cms.partner.index', [
+        return view('public::pages.cms.section.partner.index', [
             'partners' => Partner::orderBy('seq')->get(),
         ]);
     }
 
     public function create()
     {
-        return view('public::pages.cms.partner.create-edit-ajax', ['partner' => new Partner]);
+        return view('public::pages.cms.section.partner.create-edit-ajax', ['partner' => new Partner]);
     }
 
     public function store(PartnerRequest $request)
@@ -46,7 +46,7 @@ class PartnerController extends Controller
 
     public function edit(Partner $partner)
     {
-        return view('public::pages.cms.partner.create-edit-ajax', compact('partner'));
+        return view('public::pages.cms.section.partner.create-edit-ajax', compact('partner'));
     }
 
     public function update(PartnerRequest $request, Partner $partner)

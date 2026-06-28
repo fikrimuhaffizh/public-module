@@ -16,12 +16,12 @@ class FAQController extends Controller
     {
         $faqs = $this->faqService->getAllGrouped();
 
-        return view('public::pages.cms.faq.index', compact('faqs'));
+        return view('public::pages.cms.section.faq.index', compact('faqs'));
     }
 
     public function create()
     {
-        return view('public::pages.cms.faq.create-edit-ajax', ['faq' => new FAQ]);
+        return view('public::pages.cms.section.faq.create-edit-ajax', ['faq' => new FAQ]);
     }
 
     public function store(FAQRequest $request)
@@ -33,7 +33,7 @@ class FAQController extends Controller
 
     public function edit(FAQ $faq)
     {
-        return view('public::pages.cms.faq.create-edit-ajax', compact('faq'));
+        return view('public::pages.cms.section.faq.create-edit-ajax', compact('faq'));
     }
 
     public function update(FAQRequest $request, FAQ $faq)

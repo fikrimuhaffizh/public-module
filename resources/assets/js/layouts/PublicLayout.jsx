@@ -56,12 +56,21 @@ export function PublicPageLayout({ children }) {
                 <div className="shell footer-grid">
                     <div>
                         <div className="brand brand--footer">
-                            {site.logo
-                                ? <img src={site.logo} alt={siteName} className="brand-logo" />
+                            {site.logoFooter
+                                ? <img src={site.logoFooter} alt={siteName} className="brand-logo" />
                                 : <span className="brand-mark"><GraduationCap size={24} /></span>}
                             <span>{siteName}</span>
                         </div>
                         <p>{site?.tagline}</p>
+                        {/* Social Media */}
+                        {(site?.social?.facebook || site?.social?.instagram || site?.social?.linkedin || site?.social?.youtube) && (
+                            <div className="footer-socials">
+                                {site.social.facebook && <a href={site.social.facebook} target="_blank" rel="noreferrer" aria-label="Facebook">&#xf09a;</a>}
+                                {site.social.instagram && <a href={site.social.instagram} target="_blank" rel="noreferrer" aria-label="Instagram">&#xf16d;</a>}
+                                {site.social.linkedin && <a href={site.social.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">&#xf08c;</a>}
+                                {site.social.youtube && <a href={site.social.youtube} target="_blank" rel="noreferrer" aria-label="YouTube">&#xf167;</a>}
+                            </div>
+                        )}
                     </div>
                     <div>
                         <strong>Navigasi</strong>
@@ -77,6 +86,12 @@ export function PublicPageLayout({ children }) {
                         <strong>Kontak</strong>
                         {site?.address && <span>{site.address}</span>}
                         {site?.email && <a href={`mailto:${site.email}`}>{site.email}</a>}
+                        {site?.phone && <a href={`tel:${site.phone}`}>{site.phone}</a>}
+                        {site?.whatsapp && (
+                            <a href={`https://wa.me/${site.whatsapp}`} target="_blank" rel="noreferrer">
+                                WhatsApp
+                            </a>
+                        )}
                         <span>&copy; {new Date().getFullYear()} {siteName}</span>
                     </div>
                 </div>

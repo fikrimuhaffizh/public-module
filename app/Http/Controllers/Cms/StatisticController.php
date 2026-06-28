@@ -19,14 +19,14 @@ class StatisticController extends Controller
 
     public function index()
     {
-        return view('public::pages.cms.statistic.index', [
+        return view('public::pages.cms.section.statistic.index', [
             'statistics' => Statistic::orderBy('sort_order')->get(),
         ]);
     }
 
     public function create()
     {
-        return view('public::pages.cms.statistic.create-edit-ajax', ['statistic' => new Statistic]);
+        return view('public::pages.cms.section.statistic.create-edit-ajax', ['statistic' => new Statistic]);
     }
 
     public function store(StatisticRequest $request)
@@ -40,7 +40,7 @@ class StatisticController extends Controller
 
     public function edit(Statistic $statistic)
     {
-        return view('public::pages.cms.statistic.create-edit-ajax', compact('statistic'));
+        return view('public::pages.cms.section.statistic.create-edit-ajax', compact('statistic'));
     }
 
     public function update(StatisticRequest $request, Statistic $statistic)

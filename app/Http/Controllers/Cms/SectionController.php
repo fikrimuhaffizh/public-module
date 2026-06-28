@@ -9,7 +9,7 @@ use Modules\Public\app\Models\LandingSection;
 use Modules\Public\app\Models\LandingPageSetting;
 use Modules\Public\app\Services\LandingPageService;
 
-class LandingSettingsController extends Controller
+class SectionController extends Controller
 {
     public function __construct(private LandingPageService $landing)
     {
@@ -24,7 +24,7 @@ class LandingSettingsController extends Controller
             ->get()
             ->groupBy('area');
 
-        return view('public::pages.cms.landing.index', [
+        return view('public::pages.cms.section.index', [
             'sections' => $sections,
             'registry' => LandingSection::registry(),
             'template' => $this->landing->template(),
@@ -35,7 +35,7 @@ class LandingSettingsController extends Controller
 
     public function edit()
     {
-        return view('public::pages.cms.landing-settings.edit', [
+        return view('public::pages.cms.section.settings', [
             'selectedTemplate' => $this->landing->template(),
             'templates' => LandingPageService::TEMPLATES,
         ]);
@@ -43,22 +43,15 @@ class LandingSettingsController extends Controller
 
     public function sections()
     {
-        $sections = LandingSection::where('tenant_id', sys_tenant_id())
-            ->ordered()
-            ->get()
-            ->groupBy('area');
-
-        return view('public::pages.cms.landing-sections.index', [
-            'sections' => $sections,
-            'registry' => LandingSection::registry(),
-        ]);
+        // Redirect ke halaman utama landing yang sudah include section management
+        return redirect()->route('cms.section.index');
     }
 
     public function editSection(LandingSection $section)
     {
         $registry = LandingSection::registry();
         $sectionMeta = $registry[$section->section_key] ?? [];
-        return view('public::pages.cms.landing-sections.create-edit-ajax', [
+        return view('public::pages.cms.section.create-edit-ajax', [
             'section' => $section,
             'sectionMeta' => $sectionMeta,
         ]);
@@ -79,7 +72,7 @@ class LandingSettingsController extends Controller
             ]);
         }
 
-        return redirect()->route('cms.landing.index')
+        return redirect()->route('cms.section.index')
             ->with('success', 'Template landing page berhasil diperbarui.');
     }
 
@@ -123,6 +116,23 @@ class LandingSettingsController extends Controller
 
         $this->landing->updateSection($section, $data);
 
+        // Handle Logo Uploads (if any)
+        $tenant = \App\Models\Account\Tenant::find(sys_tenant_id());
+        if ($tenant) {
+            foreach (['logo_navbar', 'logo_footer'] as $logoCollection) {
+                if ($request->hasFile($logoCollection)) {
+                    $request->validate([
+                        $logoCollection => 'file|mimes:png,svg,webp,jpg,jpeg|max:2048'
+                    ]);
+                    $file = $request->file($logoCollection);
+                    $tenant->clearMediaCollection($logoCollection);
+                    $tenant->addMedia($file)
+                        ->usingFileName($logoCollection . '.' . $file->getClientOriginalExtension())
+                        ->toMediaCollection($logoCollection);
+                }
+            }
+        }
+
         return response()->json([
             'success' => true,
             'message' => 'Section berhasil diperbarui.'
@@ -154,5 +164,40 @@ class LandingSettingsController extends Controller
         }
 
         return back()->with('success', 'Section berhasil diurutkan.');
+    }
+
+    public function uploadLogo(Request $request)
+    {
+        $request->validate([
+            'logo' => 'required|file|mimes:png,svg,webp,jpg,jpeg|max:2048',
+            'collection' => 'required|in:logo_navbar,logo_footer',
+        ]);
+
+        $tenant = \App\Models\Account\Tenant::find(sys_tenant_id());
+        if (! $tenant) {
+            return response()->json(['message' => 'Tenant tidak ditemukan.'], 404);
+        }
+
+        $collection = $request->input('collection');
+        $tenant->clearMediaCollection($collection);
+        $tenant->addMedia($request->file('logo'))
+            ->usingFileName($collection . '.' . $request->file('logo')->getClientOriginalExtension())
+            ->toMediaCollection($collection);
+
+        return response()->json(['success' => true, 'message' => 'Logo berhasil diupload.']);
+    }
+
+    public function deleteLogo(string $collection)
+    {
+        if (! in_array($collection, ['logo_navbar', 'logo_footer'], true)) {
+            abort(404);
+        }
+
+        $tenant = \App\Models\Account\Tenant::find(sys_tenant_id());
+        if ($tenant) {
+            $tenant->clearMediaCollection($collection);
+        }
+
+        return response()->json(['success' => true, 'message' => 'Logo berhasil dihapus.']);
     }
 }

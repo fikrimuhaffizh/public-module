@@ -20,14 +20,14 @@ class FeatureController extends Controller
 
     public function index()
     {
-        return view('public::pages.cms.feature.index', [
+        return view('public::pages.cms.section.feature.index', [
             'features' => Feature::orderBy('sort_order')->get(),
         ]);
     }
 
     public function create()
     {
-        return view('public::pages.cms.feature.create-edit-ajax', ['feature' => new Feature]);
+        return view('public::pages.cms.section.feature.create-edit-ajax', ['feature' => new Feature]);
     }
 
     public function store(FeatureRequest $request)
@@ -45,7 +45,7 @@ class FeatureController extends Controller
 
     public function edit(Feature $feature)
     {
-        return view('public::pages.cms.feature.create-edit-ajax', compact('feature'));
+        return view('public::pages.cms.section.feature.create-edit-ajax', compact('feature'));
     }
 
     public function update(FeatureRequest $request, Feature $feature)

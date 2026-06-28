@@ -19,14 +19,14 @@ class CtaController extends Controller
 
     public function index()
     {
-        return view('public::pages.cms.cta.index', [
+        return view('public::pages.cms.section.cta.index', [
             'ctas' => Cta::orderByDesc('is_active')->orderByDesc('updated_at')->get(),
         ]);
     }
 
     public function create()
     {
-        return view('public::pages.cms.cta.create-edit-ajax', ['cta' => new Cta]);
+        return view('public::pages.cms.section.cta.create-edit-ajax', ['cta' => new Cta]);
     }
 
     public function store(CtaRequest $request)
@@ -47,7 +47,7 @@ class CtaController extends Controller
 
     public function edit(Cta $cta)
     {
-        return view('public::pages.cms.cta.create-edit-ajax', compact('cta'));
+        return view('public::pages.cms.section.cta.create-edit-ajax', compact('cta'));
     }
 
     public function update(CtaRequest $request, Cta $cta)

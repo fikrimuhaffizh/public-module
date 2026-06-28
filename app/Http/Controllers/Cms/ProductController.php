@@ -21,14 +21,14 @@ class ProductController extends Controller
 
     public function index()
     {
-        return view('public::pages.cms.product.index', [
+        return view('public::pages.cms.section.product.index', [
             'products' => Product::orderBy('sort_order')->get(),
         ]);
     }
 
     public function create()
     {
-        return view('public::pages.cms.product.create-edit-ajax', ['product' => new Product]);
+        return view('public::pages.cms.section.product.create-edit-ajax', ['product' => new Product]);
     }
 
     public function store(ProductRequest $request)
@@ -47,7 +47,7 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        return view('public::pages.cms.product.create-edit-ajax', compact('product'));
+        return view('public::pages.cms.section.product.create-edit-ajax', compact('product'));
     }
 
     public function update(ProductRequest $request, Product $product)

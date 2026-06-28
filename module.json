@@ -1,8 +1,9 @@
 {
     "name": "Public",
     "alias": "public",
-    "title": "Publik & Landing Page",
-    "description": "Halaman publik, landing page, CMS, dan layout eksternal",
+    "route_prefix": "cms",
+    "title": "Landing Page",
+    "description": "Landing page, CMS, and external layout",
     "group": "platform",
     "priority": 45,
     "route": "cms.landing.index",

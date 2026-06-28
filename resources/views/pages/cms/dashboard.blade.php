@@ -39,7 +39,7 @@
                 <x-ui.card class="card-md border-0 shadow-sm overflow-hidden" style="background: linear-gradient(135deg, #1e3a5f 0%, #2c3e50 50%, #34495e 100%); color: white; border-radius: 12px;">
                     <x-ui.card-body class="d-flex align-items-center py-5 position-relative">
                         <div class="me-4 d-none d-md-block">
-                            <span class="avatar avatar-xl rounded-circle border border-2 border-white-50 shadow-sm" style="background-image: url(https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=0054a6&color=fff&size=128)"></span>
+                            <span class="avatar avatar-xl rounded-circle border border-2 border-white-50 shadow-sm">{{ strtoupper(substr(auth()->user()->name, 0, 2)) }}</span>
                         </div>
                         <div class="flex-grow-1">
                             <h1 class="display-6 fw-bold mb-2">Selamat Datang, {{ explode(' ', auth()->user()->name)[0] }}! 👋</h1>

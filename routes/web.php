@@ -10,7 +10,7 @@ use Modules\Public\app\Http\Controllers\Cms\ClientController;
 use Modules\Public\app\Http\Controllers\Cms\CtaController;
 use Modules\Public\app\Http\Controllers\Cms\FeatureController;
 use Modules\Public\app\Http\Controllers\Cms\LandingPageSettingController;
-use Modules\Public\app\Http\Controllers\Cms\LandingSettingsController;
+use Modules\Public\app\Http\Controllers\Cms\SectionController;
 use Modules\Public\app\Http\Controllers\Cms\PartnerController;
 use Modules\Public\app\Http\Controllers\Cms\ProductController;
 use Modules\Public\app\Http\Controllers\Cms\StatisticController;
@@ -26,17 +26,28 @@ use App\Http\Middleware\HandleInertiaRequests;
 
 // Admin Area (CMS)
 Route::middleware(['auth', 'check.expired', 'module:public'])->prefix('cms')->name('cms.')->group(function () {
-    Route::get('landing', [LandingSettingsController::class, 'index'])->name('landing.index');
-    Route::get('landing-template', [LandingSettingsController::class, 'edit'])->name('landing.edit');
-    Route::put('landing-template', [LandingSettingsController::class, 'update'])->name('landing.update');
-    Route::get('landing-sections', [LandingSettingsController::class, 'sections'])->name('landing.sections');
-    Route::get('landing-sections/{section}/edit', [LandingSettingsController::class, 'editSection'])->name('landing.section.edit');
-    Route::put('landing-sections/{section}', [LandingSettingsController::class, 'updateSection'])->name('landing.section.update');
-    Route::post('landing-sections/{section}/toggle', [LandingSettingsController::class, 'toggleSection'])->name('landing.section.toggle');
-    Route::post('landing-sections/reorder', [LandingSettingsController::class, 'reorderSections'])->name('landing.sections.reorder');
+    // Section Management (was landing)
+    Route::get('section', [SectionController::class, 'index'])->name('section.index');
+    Route::get('section/template', [SectionController::class, 'edit'])->name('section.template');
+    Route::put('section/template', [SectionController::class, 'update'])->name('section.template.update');
+    Route::get('section/{section}/edit', [SectionController::class, 'editSection'])->name('section.edit');
+    Route::put('section/{section}', [SectionController::class, 'updateSection'])->name('section.update');
+    Route::post('section/{section}/toggle', [SectionController::class, 'toggleSection'])->name('section.toggle');
+    Route::post('section/reorder', [SectionController::class, 'reorderSections'])->name('section.reorder');
+    Route::post('section/upload-logo', [SectionController::class, 'uploadLogo'])->name('section.upload-logo');
+    Route::delete('section/delete-logo/{collection}', [SectionController::class, 'deleteLogo'])->name('section.delete-logo');
+
+    // Legacy redirects (backward compatibility)
+    Route::redirect('landing', '/cms/section')->name('landing.index');
+    Route::redirect('landing-template', '/cms/section/template')->name('landing.edit');
+    Route::redirect('landing-sections', '/cms/section')->name('landing.sections');
 
     Route::get('landing-settings', [LandingPageSettingController::class, 'edit'])->name('settings.edit');
     Route::put('landing-settings', [LandingPageSettingController::class, 'update'])->name('settings.update');
+
+    // Hero
+    Route::get('hero/data', [Modules\Public\app\Http\Controllers\Cms\HeroSectionController::class, 'data'])->name('hero.data');
+    Route::resource('hero', Modules\Public\app\Http\Controllers\Cms\HeroSectionController::class)->except('show');
 
     Route::post('feature/reorder', [FeatureController::class, 'reorder'])->name('feature.reorder');
     Route::resource('feature', FeatureController::class)->except('show');

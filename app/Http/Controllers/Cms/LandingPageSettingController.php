@@ -17,7 +17,7 @@ class LandingPageSettingController extends Controller
 
     public function edit()
     {
-        return view('public::pages.cms.landing-settings.settings', [
+        return view('public::pages.cms.landing-settings', [
             'settings' => LandingPageSetting::forCurrentTenant(),
         ]);
     }
@@ -35,7 +35,6 @@ class LandingPageSettingController extends Controller
             $settings->addMediaFromRequest('favicon')->toMediaCollection('favicon');
         }
 
-        return redirect()->route('cms.landing.index')
-            ->with('success', 'Pengaturan landing page berhasil disimpan.');
+        return back()->with('success', 'Pengaturan landing page berhasil disimpan.');
     }
 }

@@ -1,9 +1,9 @@
 @extends('public::layouts.public-layout')
 
 @section('header')
-<x-ui.page-header title="Hero Section" pretitle="Content Management">
+<x-ui.page-header title="Hero" pretitle="Landing Page">
     <x-slot:actions>
-        <a href="{{ route('cms.landing.index') }}" class="btn btn-outline-secondary">
+        <a href="{{ route('cms.section.index') }}" class="btn btn-outline-secondary">
             <i class="ti ti-arrow-left me-1"></i>Kembali
         </a>
         @can('public.cms.hero.create')

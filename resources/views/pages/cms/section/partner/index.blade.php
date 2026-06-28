@@ -1,7 +1,7 @@
 @extends('public::layouts.public-layout')
 
 @section('header')
-<x-ui.page-header title="Partner" pretitle="Content Management">
+<x-ui.page-header title="Partner" pretitle="Landing Page">
     <x-slot:actions>
         @can('public.cms.partner.create')
             <x-ui.button type="create" class="ajax-modal-btn"

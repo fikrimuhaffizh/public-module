@@ -3,7 +3,7 @@
 @section('title', 'Landing Page')
 
 @section('header')
-<x-ui.page-header title="Landing Page" pretitle="Content Management"/>
+<x-ui.page-header title="Section" pretitle="Landing Page" />
 @endsection
 
 @section('content')
@@ -54,12 +54,12 @@
                                     @php
                                         $icon = $sectionIcons[$section->section_key] ?? 'layout';
                                     @endphp
-                                    <div class="section-item {{ $section->is_active ? 'active' : '' }} cursor-pointer" data-section='@json($section)' data-edit-url="{{ route('cms.landing.section.edit', $section) }}" data-manage-url="{{ isset($registry[$section->section_key]['manage_data_route']) ? ($registry[$section->section_key]['manage_data_route'] ? route($registry[$section->section_key]['manage_data_route']) : '') : '' }}" data-toggle-url="{{ route('cms.landing.section.toggle', $section) }}">
+                                    <div class="section-item {{ $section->is_active ? 'active' : '' }} cursor-pointer" data-section='@json($section)' data-edit-url="{{ route('cms.section.edit', $section) }}" data-manage-url="{{ isset($registry[$section->section_key]['manage_data_route']) ? ($registry[$section->section_key]['manage_data_route'] ? route($registry[$section->section_key]['manage_data_route']) : '') : '' }}" data-toggle-url="{{ route('cms.section.toggle', $section) }}">
                                         <i class="ti ti-{{ $icon }} text-muted" style="font-size: 1.1rem;"></i>
                                         <div class="flex-fill overflow-hidden">
                                             <div class="font-weight-medium text-truncate" style="font-size: 0.85rem; line-height: 1.2;">{{ $section->section_name }}</div>
                                         </div>
-                                        <a href="javascript:void(0)" class="section-visibility-toggle" data-url="{{ route('cms.landing.section.toggle', $section) }}" onclick="event.stopPropagation()" title="{{ $section->is_active ? 'Sembunyikan' : 'Tampilkan' }}">
+                                        <a href="javascript:void(0)" class="section-visibility-toggle" data-url="{{ route('cms.section.toggle', $section) }}" onclick="event.stopPropagation()" title="{{ $section->is_active ? 'Sembunyikan' : 'Tampilkan' }}">
                                             <i class="ti ti-{{ $section->is_active ? 'eye' : 'eye-off' }} section-visibility-icon {{ $section->is_active ? '' : 'text-muted' }}"></i>
                                         </a>
                                     </div>
@@ -76,13 +76,13 @@
                                     @php
                                         $icon = $sectionIcons[$section->section_key] ?? 'layout';
                                     @endphp
-                                    <div class="section-item {{ $section->is_active ? 'active' : '' }} cursor-pointer" data-id="{{ $section->encrypted_landing_section_id }}" data-section='@json($section)' data-edit-url="{{ route('cms.landing.section.edit', $section) }}" data-manage-url="{{ $registry[$section->section_key]['manage_data_route'] ? route($registry[$section->section_key]['manage_data_route']) : '' }}" data-toggle-url="{{ route('cms.landing.section.toggle', $section) }}">
+                                    <div class="section-item {{ $section->is_active ? 'active' : '' }} cursor-pointer" data-id="{{ $section->encrypted_landing_section_id }}" data-section='@json($section)' data-edit-url="{{ route('cms.section.edit', $section) }}" data-manage-url="{{ $registry[$section->section_key]['manage_data_route'] ? route($registry[$section->section_key]['manage_data_route']) : '' }}" data-toggle-url="{{ route('cms.section.toggle', $section) }}">
                                         <div class="drag-handle"><i class="ti ti-grip-vertical"></i></div>
                                         <i class="ti ti-{{ $icon }} text-muted" style="font-size: 1.1rem;"></i>
                                         <div class="flex-fill overflow-hidden">
                                             <div class="font-weight-medium text-truncate" style="font-size: 0.85rem; line-height: 1.2;">{{ $section->section_name }}</div>
                                         </div>
-                                        <a href="javascript:void(0)" class="section-visibility-toggle" data-url="{{ route('cms.landing.section.toggle', $section) }}" onclick="event.stopPropagation()" title="{{ $section->is_active ? 'Sembunyikan' : 'Tampilkan' }}">
+                                        <a href="javascript:void(0)" class="section-visibility-toggle" data-url="{{ route('cms.section.toggle', $section) }}" onclick="event.stopPropagation()" title="{{ $section->is_active ? 'Sembunyikan' : 'Tampilkan' }}">
                                             <i class="ti ti-{{ $section->is_active ? 'eye' : 'eye-off' }} section-visibility-icon {{ $section->is_active ? '' : 'text-muted' }}"></i>
                                         </a>
                                     </div>
@@ -99,12 +99,12 @@
                                     @php
                                         $icon = $sectionIcons[$section->section_key] ?? 'layout';
                                     @endphp
-                                    <div class="section-item {{ $section->is_active ? 'active' : '' }} cursor-pointer" data-section='@json($section)' data-edit-url="{{ route('cms.landing.section.edit', $section) }}" data-manage-url="{{ isset($registry[$section->section_key]['manage_data_route']) ? ($registry[$section->section_key]['manage_data_route'] ? route($registry[$section->section_key]['manage_data_route']) : '') : '' }}" data-toggle-url="{{ route('cms.landing.section.toggle', $section) }}">
+                                    <div class="section-item {{ $section->is_active ? 'active' : '' }} cursor-pointer" data-section='@json($section)' data-edit-url="{{ route('cms.section.edit', $section) }}" data-manage-url="{{ isset($registry[$section->section_key]['manage_data_route']) ? ($registry[$section->section_key]['manage_data_route'] ? route($registry[$section->section_key]['manage_data_route']) : '') : '' }}" data-toggle-url="{{ route('cms.section.toggle', $section) }}">
                                         <i class="ti ti-{{ $icon }} text-muted" style="font-size: 1.1rem;"></i>
                                         <div class="flex-fill overflow-hidden">
                                             <div class="font-weight-medium text-truncate" style="font-size: 0.85rem; line-height: 1.2;">{{ $section->section_name }}</div>
                                         </div>
-                                        <a href="javascript:void(0)" class="section-visibility-toggle" data-url="{{ route('cms.landing.section.toggle', $section) }}" onclick="event.stopPropagation()" title="{{ $section->is_active ? 'Sembunyikan' : 'Tampilkan' }}">
+                                        <a href="javascript:void(0)" class="section-visibility-toggle" data-url="{{ route('cms.section.toggle', $section) }}" onclick="event.stopPropagation()" title="{{ $section->is_active ? 'Sembunyikan' : 'Tampilkan' }}">
                                             <i class="ti ti-{{ $section->is_active ? 'eye' : 'eye-off' }} section-visibility-icon {{ $section->is_active ? '' : 'text-muted' }}"></i>
                                         </a>
                                     </div>
@@ -121,9 +121,6 @@
                 <x-ui.card-header title="{!! '<span id=\'section-editor-title\'>Pilih Section</span>' !!}">
                     <x-slot:actions>
                         <div class="d-flex align-items-center gap-2" id="panel-actions">
-                            <a id="manage-data-btn" href="#" class="btn btn-sm btn-outline-primary" style="display: none;">
-                                <i class="ti ti-database-edit me-1"></i>Kelola Data
-                            </a>
                             <button id="save-section-btn" class="btn btn-sm btn-primary" style="display: none;">
                                 <i class="ti ti-device-floppy me-1"></i>Simpan
                             </button>
@@ -256,7 +253,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     let selectedSectionEl = null;
     const saveBtn = document.getElementById('save-section-btn');
-    const manageBtn = document.getElementById('manage-data-btn');
     const closeBtn = document.getElementById('close-editor-btn');
 
     // Save button click handler
@@ -303,14 +299,6 @@ document.addEventListener('DOMContentLoaded', function () {
         saveBtn.style.display = 'inline-flex';
         saveBtn.innerHTML = '<i class="ti ti-device-floppy me-1"></i>Simpan';
         saveBtn.disabled = false;
-
-        // Manage data button
-        if (manageUrl) {
-            manageBtn.href = manageUrl;
-            manageBtn.style.display = 'inline-flex';
-        } else {
-            manageBtn.style.display = 'none';
-        }
 
         editorBody.innerHTML = '<div class="text-center py-8"><span class="spinner-border text-primary" role="status"></span></div>';
 
@@ -374,7 +362,6 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('section-editor-body').innerHTML = '<div class="text-center text-muted py-8"><i class="ti ti-layout-2 fs-2 mb-2 d-block"></i><p class="mb-0">Klik salah satu section di daftar sebelah kiri untuk mengeditnya</p></div>';
         this.style.display = 'none';
         saveBtn.style.display = 'none';
-        manageBtn.style.display = 'none';
     });
 
     // Click on section items
@@ -396,7 +383,7 @@ document.addEventListener('DOMContentLoaded', function () {
             sortClass: 'sortable-drag',
             onEnd: () => {
                 const ids = [...middleSections.children].map(item => item.dataset.id);
-                axios.post('{{ route('cms.landing.sections.reorder') }}', {
+                axios.post('{{ route('cms.section.reorder') }}', {
                     area: 'middle',
                     ids: ids,
                     _token: '{{ csrf_token() }}',
@@ -434,7 +421,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
 
                 // Send auto-save request
-                axios.put('{{ route('cms.landing.update') }}', {
+                axios.put('{{ route('cms.section.template.update') }}', {
                     _token: '{{ csrf_token() }}',
                     landing_template: selectedTemplate
                 })

@@ -3,7 +3,7 @@
 @section('title', 'Template Landing Page')
 
 @section('header')
-<x-ui.page-header title="Template Landing Page" pretitle="Content Management" />
+<x-ui.page-header title="Template" pretitle="Landing Page" />
 @endsection
 
 @section('content')
@@ -11,7 +11,7 @@
     <i class="ti ti-info-circle fs-2 me-2"></i>
     <div>Pilih salah satu template untuk langsung <strong>diterapkan</strong>. Pratinjau tidak mengubah template yang sedang digunakan.</div>
 </div>
-<form id="landing-template-form" method="POST" action="{{ route('cms.landing.update') }}">
+<form id="landing-template-form" method="POST" action="{{ route('cms.section.template.update') }}">
     @csrf
     @method('PUT')
     <div class="row row-cards">
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
 
                 // Send auto-save request
-                axios.put('{{ route('cms.landing.update') }}', {
+                axios.put('{{ route('cms.section.template.update') }}', {
                     _token: '{{ csrf_token() }}',
                     landing_template: selectedTemplate
                 })

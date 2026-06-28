@@ -20,14 +20,14 @@ class TestimonialController extends Controller
 
     public function index()
     {
-        return view('public::pages.cms.testimonial.index', [
+        return view('public::pages.cms.section.testimonial.index', [
             'testimonials' => Testimonial::orderBy('seq')->get(),
         ]);
     }
 
     public function create()
     {
-        return view('public::pages.cms.testimonial.create-edit-ajax', [
+        return view('public::pages.cms.section.testimonial.create-edit-ajax', [
             'testimonial' => new Testimonial,
         ]);
     }
@@ -48,7 +48,7 @@ class TestimonialController extends Controller
 
     public function edit(Testimonial $testimonial)
     {
-        return view('public::pages.cms.testimonial.create-edit-ajax', compact('testimonial'));
+        return view('public::pages.cms.section.testimonial.create-edit-ajax', compact('testimonial'));
     }
 
     public function update(TestimonialRequest $request, Testimonial $testimonial)
