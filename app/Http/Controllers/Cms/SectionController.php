@@ -8,6 +8,7 @@ use Illuminate\Validation\Rule;
 use Modules\Public\Models\LandingSection;
 use Modules\Public\Models\LandingPageSetting;
 use Modules\Public\Services\LandingPageService;
+use Modules\Account\Models\Tenant;
 
 class SectionController extends Controller
 {
@@ -117,7 +118,7 @@ class SectionController extends Controller
         $this->landing->updateSection($section, $data);
 
         // Handle Logo Uploads (if any)
-        $tenant = \App\Models\Account\Tenant::find(sys_tenant_id());
+        $tenant = Tenant::find(sys_tenant_id());
         if ($tenant) {
             foreach (['logo_navbar', 'logo_footer'] as $logoCollection) {
                 if ($request->hasFile($logoCollection)) {
@@ -173,7 +174,7 @@ class SectionController extends Controller
             'collection' => 'required|in:logo_navbar,logo_footer',
         ]);
 
-        $tenant = \App\Models\Account\Tenant::find(sys_tenant_id());
+        $tenant = Tenant::find(sys_tenant_id());
         if (! $tenant) {
             return response()->json(['message' => 'Tenant tidak ditemukan.'], 404);
         }
@@ -193,7 +194,7 @@ class SectionController extends Controller
             abort(404);
         }
 
-        $tenant = \App\Models\Account\Tenant::find(sys_tenant_id());
+        $tenant = Tenant::find(sys_tenant_id());
         if ($tenant) {
             $tenant->clearMediaCollection($collection);
         }

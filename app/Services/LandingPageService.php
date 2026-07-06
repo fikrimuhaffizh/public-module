@@ -2,8 +2,8 @@
 
 namespace Modules\Public\Services;
 
-use App\Models\Account\Tenant;
-use App\Services\Account\TenantConfigService;
+use Modules\Account\Models\Tenant;
+use Modules\Account\Services\TenantConfigService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;

@@ -2,7 +2,7 @@
 
 namespace Modules\Public\Models;
 
-use App\Models\Account\User;
+use Modules\Account\Models\User;
 use App\Traits\BelongsToTenant;
 use App\Traits\Blameable;
 use App\Traits\HashidBinding;
@@ -46,7 +46,7 @@ class Pengumuman extends Model implements HasMedia
      */
     public function penulis()
     {
-        return $this->belongsTo(\App\Models\Account\User::class, 'penulis_id');
+        return $this->belongsTo(User::class, 'penulis_id');
     }
 
     public function registerMediaCollections(): void

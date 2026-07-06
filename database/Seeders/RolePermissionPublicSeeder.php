@@ -2,9 +2,10 @@
 
 namespace Modules\Public\Database\Seeders;
 
-use App\Models\Account\Permission;
-use App\Models\Account\Role;
+use Modules\Account\Models\Permission;
+use Modules\Account\Models\Role;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\PermissionRegistrar;
 
 class RolePermissionPublicSeeder extends Seeder
 {
@@ -74,7 +75,7 @@ class RolePermissionPublicSeeder extends Seeder
 
     public function run(): void
     {
-        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         $tenantId = 1;
 

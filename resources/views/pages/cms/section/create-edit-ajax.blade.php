@@ -1,3 +1,7 @@
+@php
+    use Modules\Account\Models\Tenant;
+@endphp
+
 <div class="section-edit-form">
     <form id="section-edit-form" action="{{ route('cms.section.update', $section) }}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -48,7 +52,7 @@
         
         @else
             @php
-                $tenant = \App\Models\Account\Tenant::find(sys_tenant_id());
+                $tenant = Tenant::find(sys_tenant_id());
                 $logoCollection = $section->section_key === 'navbar' ? 'logo_navbar' : 'logo_footer';
                 $logoUrl = $section->section_key === 'navbar' ? $tenant->logoNavbarUrl() : $tenant->logoFooterUrl();
             @endphp
