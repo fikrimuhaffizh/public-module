@@ -12,7 +12,7 @@ use Modules\Public\Models\Pengumuman;
 use Modules\Public\Models\Slideshow;
 use Modules\Public\Models\Testimonial;
 
-class DemoPublicSeeder extends Seeder
+class DemoSeeder extends Seeder
 {
     public function run(): void
     {
@@ -27,6 +27,7 @@ class DemoPublicSeeder extends Seeder
         Testimonial::withoutGlobalScopes()->where('tenant_id', $tenantId)->forceDelete();
         Partner::withoutGlobalScopes()->where('tenant_id', $tenantId)->forceDelete();
 
+        // Pages & Menu
         $pages = collect([
             ['Tentang Kampus', 'tentang-kampus'],
             ['Visi dan Misi', 'visi-dan-misi'],
@@ -58,6 +59,7 @@ class DemoPublicSeeder extends Seeder
             ]);
         }
 
+        // Pengumuman
         foreach (range(1, 12) as $index) {
             Pengumuman::create([
                 'tenant_id' => $tenantId,
@@ -70,29 +72,44 @@ class DemoPublicSeeder extends Seeder
             ]);
         }
 
-        foreach (range(1, 8) as $index) {
-            FAQ::create([
-                'tenant_id' => $tenantId,
-                'question' => 'Pertanyaan umum kampus nomor '.$index.'?',
-                'answer' => 'Jawaban informatif untuk pertanyaan umum nomor '.$index.'.',
-                'category' => ['Akademik', 'PMB', 'Layanan', 'Fasilitas'][$index % 4],
-                'seq' => $index,
-                'is_active' => true,
-            ]);
-        }
+        // FAQ
+        FAQ::updateOrCreate(['tenant_id' => 1, 'seq' => 1], [
+            'tenant_id' => 1, 'question' => 'Bagaimana cara mendaftar sebagai mahasiswa baru?',
+            'answer' => 'Pendaftaran dapat dilakukan secara online melalui portal PMB.', 'category' => 'Pendaftaran',
+            'seq' => 1, 'is_active' => true, 'created_by' => 1,
+        ]);
+        FAQ::updateOrCreate(['tenant_id' => 1, 'seq' => 2], [
+            'tenant_id' => 1, 'question' => 'Program studi apa saja yang tersedia?',
+            'answer' => 'Kami memiliki berbagai program studi di bidang Teknik, Komputer, Akuntansi, dan lainnya.',
+            'category' => 'Akademik', 'seq' => 2, 'is_active' => true, 'created_by' => 1,
+        ]);
+        FAQ::updateOrCreate(['tenant_id' => 1, 'seq' => 3], [
+            'tenant_id' => 1, 'question' => 'Kapan batas waktu pengajuan software lab?',
+            'answer' => 'Pengajuan software lab biasanya dibuka di awal setiap semester.',
+            'category' => 'Fasilitas Lab', 'seq' => 3, 'is_active' => true, 'created_by' => 1,
+        ]);
 
-        foreach (range(1, 5) as $index) {
-            Slideshow::create([
-                'tenant_id' => $tenantId,
-                'image_url' => 'static/img/slides/slide-'.$index.'.jpg',
-                'title' => 'Informasi Kampus '.$index,
-                'caption' => 'Sorotan program dan fasilitas kampus.',
-                'link' => '/public/preview',
-                'seq' => $index,
-                'is_active' => true,
-            ]);
-        }
+        // Slideshow
+        Slideshow::updateOrCreate(['tenant_id' => 1, 'seq' => 1], [
+            'tenant_id' => 1, 'image_url' => 'static/img/slides/slide-1.jpg',
+            'title' => 'Excellence in Education',
+            'caption' => 'Empowering the next generation of industry leaders through innovative technology.',
+            'link' => 'https://example.com/pmb', 'seq' => 1, 'is_active' => true, 'created_by' => 1,
+        ]);
+        Slideshow::updateOrCreate(['tenant_id' => 1, 'seq' => 2], [
+            'tenant_id' => 1, 'image_url' => 'static/img/slides/slide-2.jpg',
+            'title' => 'Modern Laboratory Facilities',
+            'caption' => 'State-of-the-art labs equipped with the latest industry-standard software.',
+            'link' => 'https://example.com/fasilitas', 'seq' => 2, 'is_active' => true, 'created_by' => 1,
+        ]);
+        Slideshow::updateOrCreate(['tenant_id' => 1, 'seq' => 3], [
+            'tenant_id' => 1, 'image_url' => 'static/img/slides/slide-3.jpg',
+            'title' => 'Vibrant Campus Life',
+            'caption' => 'A supportive and diverse community where students can grow.',
+            'link' => 'https://example.com/kemahasiswaan', 'seq' => 3, 'is_active' => true, 'created_by' => 1,
+        ]);
 
+        // Testimonials
         collect([
             ['Nadia Pratama', 'Alumni', 'Program Studi Teknologi Informasi', 'Platform kampus membantu saya menemukan layanan dan informasi akademik dengan jauh lebih cepat.'],
             ['Rizky Mahendra', 'Mahasiswa', 'Fakultas Teknik', 'Informasi kegiatan, pengumuman, dan layanan kampus terasa lebih terhubung dan mudah dipahami.'],
@@ -100,17 +117,13 @@ class DemoPublicSeeder extends Seeder
             ['Andi Saputra', 'Mitra Industri', 'Nusantara Digital', 'Kami melihat komitmen institusi terhadap transformasi digital dan kolaborasi yang berkelanjutan.'],
         ])->each(function (array $item, int $index) use ($tenantId) {
             Testimonial::create([
-                'tenant_id' => $tenantId,
-                'name' => $item[0],
-                'position' => $item[1],
-                'organization' => $item[2],
-                'quote' => $item[3],
-                'rating' => 5,
-                'seq' => $index + 1,
-                'is_active' => true,
+                'tenant_id' => $tenantId, 'name' => $item[0], 'position' => $item[1],
+                'organization' => $item[2], 'quote' => $item[3], 'rating' => 5,
+                'seq' => $index + 1, 'is_active' => true,
             ]);
         });
 
+        // Partners
         collect([
             ['Nusantara Digital', 'Industri Teknologi', 'https://example.com'],
             ['Bank Mitra Indonesia', 'Industri Keuangan', 'https://example.com'],
@@ -120,12 +133,8 @@ class DemoPublicSeeder extends Seeder
             ['Future Manufacturing', 'Industri Manufaktur', 'https://example.com'],
         ])->each(function (array $item, int $index) use ($tenantId) {
             Partner::create([
-                'tenant_id' => $tenantId,
-                'name' => $item[0],
-                'category' => $item[1],
-                'website_url' => $item[2],
-                'seq' => $index + 1,
-                'is_active' => true,
+                'tenant_id' => $tenantId, 'name' => $item[0], 'category' => $item[1],
+                'website_url' => $item[2], 'seq' => $index + 1, 'is_active' => true,
             ]);
         });
     }

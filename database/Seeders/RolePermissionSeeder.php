@@ -7,7 +7,7 @@ use Modules\Account\Models\Role;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\PermissionRegistrar;
 
-class RolePermissionPublicSeeder extends Seeder
+class RolePermissionSeeder extends Seeder
 {
     public static function getPermissions(): array
     {

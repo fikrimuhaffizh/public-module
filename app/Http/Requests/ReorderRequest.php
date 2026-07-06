@@ -3,7 +3,6 @@
 namespace Modules\Public\Http\Requests;
 
 use App\Http\Requests\BaseRequest;
-use Illuminate\Contracts\Validation\ValidationRule;
 
 class ReorderRequest extends BaseRequest
 {
