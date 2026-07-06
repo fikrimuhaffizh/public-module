@@ -3,10 +3,8 @@
     "description": "Public-facing pages, assets, and layouts",
     "autoload": {
         "psr-4": {
-            "Modules\\Public\\app\\": "app/",
             "Modules\\Public\\": "app/",
-            "Modules\\Public\\Database\\Seeders\\": "database/seeders/",
-            "App\\Http\\Controllers\\Public\\": "app/Http/Controllers/"
+            "Modules\\Public\\Database\\Seeders\\": "database/seeders/"
         }
     }
 }

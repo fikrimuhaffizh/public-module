@@ -1,15 +1,15 @@
 <?php
 
-namespace Modules\Public\app\Http\Controllers\Web;
+namespace Modules\Public\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use Modules\Public\app\Models\Page;
-use Modules\Public\app\Models\Pengumuman;
-use Modules\Public\app\Services\LandingPageService;
+use Modules\Public\Models\Page;
+use Modules\Public\Models\Pengumuman;
+use Modules\Public\Services\LandingPageService;
 
 class PublicController extends Controller
 {

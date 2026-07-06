@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Public\app\Http\Controllers\Cms;
+namespace Modules\Public\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Arr;
-use Modules\Public\app\Http\Requests\CtaRequest;
-use Modules\Public\app\Models\Cta;
+use Modules\Public\Http\Requests\CtaRequest;
+use Modules\Public\Models\Cta;
 
 class CtaController extends Controller
 {

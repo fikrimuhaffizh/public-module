@@ -2,7 +2,7 @@
 
 namespace Modules\Public\Database\Seeders;
 
-use Modules\Public\app\Models\Slideshow;
+use Modules\Public\Models\Slideshow;
 use Illuminate\Database\Seeder;
 
 class SlideshowSeeder extends Seeder

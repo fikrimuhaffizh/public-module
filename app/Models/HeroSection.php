@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Public\app\Models;
+namespace Modules\Public\Models;
 
 use App\Traits\BelongsToTenant;
 use App\Traits\Blameable;

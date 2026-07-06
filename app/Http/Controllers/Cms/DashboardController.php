@@ -1,10 +1,10 @@
 <?php
 
-namespace Modules\Public\app\Http\Controllers\Cms;
+namespace Modules\Public\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
-use Modules\Public\app\Models\Pengumuman;
-use Modules\Public\app\Models\Slideshow;
+use Modules\Public\Models\Pengumuman;
+use Modules\Public\Models\Slideshow;
 
 class DashboardController extends Controller
 {

@@ -1,13 +1,13 @@
 <?php
 
-namespace Modules\Public\app\Http\Controllers\Cms;
+namespace Modules\Public\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Modules\Public\app\Http\Requests\ProductRequest;
-use Modules\Public\app\Http\Requests\ReorderRequest;
-use Modules\Public\app\Models\Product;
+use Modules\Public\Http\Requests\ProductRequest;
+use Modules\Public\Http\Requests\ReorderRequest;
+use Modules\Public\Models\Product;
 
 class ProductController extends Controller
 {

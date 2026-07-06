@@ -1,21 +1,21 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Public\app\Http\Controllers\Cms\FAQController;
-use Modules\Public\app\Http\Controllers\Cms\PengumumanController;
-use Modules\Public\app\Http\Controllers\Cms\PublicMenuController;
-use Modules\Public\app\Http\Controllers\Cms\PublicPageController;
-use Modules\Public\app\Http\Controllers\Cms\SlideshowController;
-use Modules\Public\app\Http\Controllers\Cms\ClientController;
-use Modules\Public\app\Http\Controllers\Cms\CtaController;
-use Modules\Public\app\Http\Controllers\Cms\FeatureController;
-use Modules\Public\app\Http\Controllers\Cms\LandingPageSettingController;
-use Modules\Public\app\Http\Controllers\Cms\SectionController;
-use Modules\Public\app\Http\Controllers\Cms\PartnerController;
-use Modules\Public\app\Http\Controllers\Cms\ProductController;
-use Modules\Public\app\Http\Controllers\Cms\StatisticController;
-use Modules\Public\app\Http\Controllers\Cms\TestimonialController;
-use Modules\Public\app\Http\Controllers\Web\PublicController;
+use Modules\Public\Http\Controllers\Cms\FAQController;
+use Modules\Public\Http\Controllers\Cms\PengumumanController;
+use Modules\Public\Http\Controllers\Cms\PublicMenuController;
+use Modules\Public\Http\Controllers\Cms\PublicPageController;
+use Modules\Public\Http\Controllers\Cms\SlideshowController;
+use Modules\Public\Http\Controllers\Cms\ClientController;
+use Modules\Public\Http\Controllers\Cms\CtaController;
+use Modules\Public\Http\Controllers\Cms\FeatureController;
+use Modules\Public\Http\Controllers\Cms\LandingPageSettingController;
+use Modules\Public\Http\Controllers\Cms\SectionController;
+use Modules\Public\Http\Controllers\Cms\PartnerController;
+use Modules\Public\Http\Controllers\Cms\ProductController;
+use Modules\Public\Http\Controllers\Cms\StatisticController;
+use Modules\Public\Http\Controllers\Cms\TestimonialController;
+use Modules\Public\Http\Controllers\Web\PublicController;
 use App\Http\Middleware\HandleInertiaRequests;
 
 /*
@@ -46,8 +46,8 @@ Route::middleware(['auth', 'check.expired', 'module:public'])->prefix('cms')->na
     Route::put('landing-settings', [LandingPageSettingController::class, 'update'])->name('settings.update');
 
     // Hero
-    Route::get('hero/data', [Modules\Public\app\Http\Controllers\Cms\HeroSectionController::class, 'data'])->name('hero.data');
-    Route::resource('hero', Modules\Public\app\Http\Controllers\Cms\HeroSectionController::class)->except('show');
+    Route::get('hero/data', [Modules\Public\Http\Controllers\Cms\HeroSectionController::class, 'data'])->name('hero.data');
+    Route::resource('hero', Modules\Public\Http\Controllers\Cms\HeroSectionController::class)->except('show');
 
     Route::post('feature/reorder', [FeatureController::class, 'reorder'])->name('feature.reorder');
     Route::resource('feature', FeatureController::class)->except('show');

@@ -3,13 +3,13 @@
 namespace Modules\Public\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Modules\Public\app\Models\Client;
-use Modules\Public\app\Models\Cta;
-use Modules\Public\app\Models\Feature;
-use Modules\Public\app\Models\HeroSection;
-use Modules\Public\app\Models\LandingPageSetting;
-use Modules\Public\app\Models\Product;
-use Modules\Public\app\Models\Statistic;
+use Modules\Public\Models\Client;
+use Modules\Public\Models\Cta;
+use Modules\Public\Models\Feature;
+use Modules\Public\Models\HeroSection;
+use Modules\Public\Models\LandingPageSetting;
+use Modules\Public\Models\Product;
+use Modules\Public\Models\Statistic;
 
 class LandingContentSeeder extends Seeder
 {

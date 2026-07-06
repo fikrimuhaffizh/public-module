@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Public\app\Http\Controllers\Cms;
+namespace Modules\Public\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
-use Modules\Public\app\Http\Requests\ReorderRequest;
-use Modules\Public\app\Http\Requests\StatisticRequest;
-use Modules\Public\app\Models\Statistic;
+use Modules\Public\Http\Requests\ReorderRequest;
+use Modules\Public\Http\Requests\StatisticRequest;
+use Modules\Public\Models\Statistic;
 
 class StatisticController extends Controller
 {

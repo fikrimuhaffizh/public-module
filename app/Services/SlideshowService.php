@@ -1,8 +1,8 @@
 <?php
 
-namespace Modules\Public\app\Services;
+namespace Modules\Public\Services;
 
-use Modules\Public\app\Models\Slideshow;
+use Modules\Public\Models\Slideshow;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 

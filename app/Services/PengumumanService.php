@@ -1,8 +1,8 @@
 <?php
 
-namespace Modules\Public\app\Services;
+namespace Modules\Public\Services;
 
-use Modules\Public\app\Models\Pengumuman;
+use Modules\Public\Models\Pengumuman;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;

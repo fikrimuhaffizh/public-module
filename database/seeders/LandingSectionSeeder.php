@@ -3,7 +3,7 @@
 namespace Modules\Public\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Modules\Public\app\Models\LandingSection;
+use Modules\Public\Models\LandingSection;
 
 class LandingSectionSeeder extends Seeder
 {

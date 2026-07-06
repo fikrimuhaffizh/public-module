@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Public\app\Http\Controllers\Cms;
+namespace Modules\Public\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Arr;
-use Modules\Public\app\Http\Requests\HeroSectionRequest;
-use Modules\Public\app\Models\HeroSection;
+use Modules\Public\Http\Requests\HeroSectionRequest;
+use Modules\Public\Models\HeroSection;
 
 class HeroSectionController extends Controller
 {

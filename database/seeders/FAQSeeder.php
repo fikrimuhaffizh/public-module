@@ -2,7 +2,7 @@
 
 namespace Modules\Public\Database\Seeders;
 
-use Modules\Public\app\Models\FAQ;
+use Modules\Public\Models\FAQ;
 use Illuminate\Database\Seeder;
 
 class FAQSeeder extends Seeder

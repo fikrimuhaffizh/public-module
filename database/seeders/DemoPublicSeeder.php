@@ -4,13 +4,13 @@ namespace Modules\Public\Database\Seeders;
 
 use App\Models\Account\User;
 use Illuminate\Database\Seeder;
-use Modules\Public\app\Models\FAQ;
-use Modules\Public\app\Models\Menu;
-use Modules\Public\app\Models\Page;
-use Modules\Public\app\Models\Partner;
-use Modules\Public\app\Models\Pengumuman;
-use Modules\Public\app\Models\Slideshow;
-use Modules\Public\app\Models\Testimonial;
+use Modules\Public\Models\FAQ;
+use Modules\Public\Models\Menu;
+use Modules\Public\Models\Page;
+use Modules\Public\Models\Partner;
+use Modules\Public\Models\Pengumuman;
+use Modules\Public\Models\Slideshow;
+use Modules\Public\Models\Testimonial;
 
 class DemoPublicSeeder extends Seeder
 {

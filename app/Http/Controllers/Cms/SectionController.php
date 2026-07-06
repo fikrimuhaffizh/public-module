@@ -1,13 +1,13 @@
 <?php
 
-namespace Modules\Public\app\Http\Controllers\Cms;
+namespace Modules\Public\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Modules\Public\app\Models\LandingSection;
-use Modules\Public\app\Models\LandingPageSetting;
-use Modules\Public\app\Services\LandingPageService;
+use Modules\Public\Models\LandingSection;
+use Modules\Public\Models\LandingPageSetting;
+use Modules\Public\Services\LandingPageService;
 
 class SectionController extends Controller
 {

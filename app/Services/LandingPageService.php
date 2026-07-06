@@ -1,26 +1,26 @@
 <?php
 
-namespace Modules\Public\app\Services;
+namespace Modules\Public\Services;
 
 use App\Models\Account\Tenant;
 use App\Services\Account\TenantConfigService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
-use Modules\Public\app\Models\FAQ;
-use Modules\Public\app\Models\Menu;
-use Modules\Public\app\Models\Client;
-use Modules\Public\app\Models\Cta;
-use Modules\Public\app\Models\Feature;
-use Modules\Public\app\Models\LandingPageSetting;
-use Modules\Public\app\Models\LandingSection;
-use Modules\Public\app\Models\Page;
-use Modules\Public\app\Models\Partner;
-use Modules\Public\app\Models\Pengumuman;
-use Modules\Public\app\Models\Product;
-use Modules\Public\app\Models\Slideshow;
-use Modules\Public\app\Models\Statistic;
-use Modules\Public\app\Models\Testimonial;
+use Modules\Public\Models\FAQ;
+use Modules\Public\Models\Menu;
+use Modules\Public\Models\Client;
+use Modules\Public\Models\Cta;
+use Modules\Public\Models\Feature;
+use Modules\Public\Models\LandingPageSetting;
+use Modules\Public\Models\LandingSection;
+use Modules\Public\Models\Page;
+use Modules\Public\Models\Partner;
+use Modules\Public\Models\Pengumuman;
+use Modules\Public\Models\Product;
+use Modules\Public\Models\Slideshow;
+use Modules\Public\Models\Statistic;
+use Modules\Public\Models\Testimonial;
 
 class LandingPageService
 {

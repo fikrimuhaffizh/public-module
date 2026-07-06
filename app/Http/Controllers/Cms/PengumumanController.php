@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\Public\app\Http\Controllers\Cms;
+namespace Modules\Public\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
-use Modules\Public\app\Http\Requests\PengumumanRequest;
-use Modules\Public\app\Models\Pengumuman;
+use Modules\Public\Http\Requests\PengumumanRequest;
+use Modules\Public\Models\Pengumuman;
 use App\Models\Account\User;
-use Modules\Public\app\Services\PengumumanService;
+use Modules\Public\Services\PengumumanService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 

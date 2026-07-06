@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\Public\app\Http\Controllers\Cms;
+namespace Modules\Public\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
-use Modules\Public\app\Http\Requests\FAQRequest;
-use Modules\Public\app\Models\FAQ;
-use Modules\Public\app\Http\Requests\ReorderRequest;
-use Modules\Public\app\Services\FAQService;
+use Modules\Public\Http\Requests\FAQRequest;
+use Modules\Public\Models\FAQ;
+use Modules\Public\Http\Requests\ReorderRequest;
+use Modules\Public\Services\FAQService;
 
 class FAQController extends Controller
 {

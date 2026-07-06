@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\Public\app\Http\Controllers\Cms;
+namespace Modules\Public\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Arr;
-use Modules\Public\app\Http\Requests\ReorderRequest;
-use Modules\Public\app\Http\Requests\TestimonialRequest;
-use Modules\Public\app\Models\Testimonial;
+use Modules\Public\Http\Requests\ReorderRequest;
+use Modules\Public\Http\Requests\TestimonialRequest;
+use Modules\Public\Models\Testimonial;
 
 class TestimonialController extends Controller
 {

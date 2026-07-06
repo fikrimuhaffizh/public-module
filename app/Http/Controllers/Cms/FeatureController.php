@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\Public\app\Http\Controllers\Cms;
+namespace Modules\Public\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Arr;
-use Modules\Public\app\Http\Requests\FeatureRequest;
-use Modules\Public\app\Http\Requests\ReorderRequest;
-use Modules\Public\app\Models\Feature;
+use Modules\Public\Http\Requests\FeatureRequest;
+use Modules\Public\Http\Requests\ReorderRequest;
+use Modules\Public\Models\Feature;
 
 class FeatureController extends Controller
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\Public\app\Http\Controllers\Cms;
+namespace Modules\Public\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
-use Modules\Public\app\Http\Requests\PageRequest;
-use Modules\Public\app\Services\PageService;
+use Modules\Public\Http\Requests\PageRequest;
+use Modules\Public\Services\PageService;
 use Illuminate\Http\Request;
-use Modules\Public\app\Models\Page;
+use Modules\Public\Models\Page;
 use Yajra\DataTables\Facades\DataTables;
 
 class PublicPageController extends Controller
@@ -67,7 +67,7 @@ class PublicPageController extends Controller
 
     public function edit(Page $page)
     {
-        $linkedMenu = \Modules\Public\app\Models\Menu::where('page_id', $page->page_id)->first();
+        $linkedMenu = \Modules\Public\Models\Menu::where('page_id', $page->page_id)->first();
 
         return view('public::pages.cms.public-page.create-edit', [
             'page' => $page,

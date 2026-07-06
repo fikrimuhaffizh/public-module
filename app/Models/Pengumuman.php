@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Public\app\Models;
+namespace Modules\Public\Models;
 
 use App\Models\Account\User;
 use App\Traits\BelongsToTenant;

@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\Public\app\Http\Controllers\Cms;
+namespace Modules\Public\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
-use Modules\Public\app\Http\Requests\ReorderRequest;
-use Modules\Public\app\Http\Requests\SlideshowRequest;
-use Modules\Public\app\Models\Slideshow;
-use Modules\Public\app\Services\SlideshowService;
+use Modules\Public\Http\Requests\ReorderRequest;
+use Modules\Public\Http\Requests\SlideshowRequest;
+use Modules\Public\Models\Slideshow;
+use Modules\Public\Services\SlideshowService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 

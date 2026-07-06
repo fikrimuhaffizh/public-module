@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Public\app\Http\Controllers\Cms;
+namespace Modules\Public\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Arr;
-use Modules\Public\app\Http\Requests\LandingPageSettingRequest;
-use Modules\Public\app\Models\LandingPageSetting;
+use Modules\Public\Http\Requests\LandingPageSettingRequest;
+use Modules\Public\Models\LandingPageSetting;
 
 class LandingPageSettingController extends Controller
 {

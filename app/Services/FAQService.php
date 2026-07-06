@@ -1,8 +1,8 @@
 <?php
 
-namespace Modules\Public\app\Services;
+namespace Modules\Public\Services;
 
-use Modules\Public\app\Models\FAQ;
+use Modules\Public\Models\FAQ;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 

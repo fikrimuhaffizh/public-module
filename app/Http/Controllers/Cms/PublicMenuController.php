@@ -1,14 +1,14 @@
 <?php
 
-namespace Modules\Public\app\Http\Controllers\Cms;
+namespace Modules\Public\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Modules\Public\app\Http\Requests\PublicMenuRequest;
-use Modules\Public\app\Http\Requests\ReorderRequest;
-use Modules\Public\app\Models\Menu;
-use Modules\Public\app\Models\Page;
-use Modules\Public\app\Services\PublicMenuService;
+use Modules\Public\Http\Requests\PublicMenuRequest;
+use Modules\Public\Http\Requests\ReorderRequest;
+use Modules\Public\Models\Menu;
+use Modules\Public\Models\Page;
+use Modules\Public\Services\PublicMenuService;
 use Yajra\DataTables\Facades\DataTables;
 
 class PublicMenuController extends Controller
