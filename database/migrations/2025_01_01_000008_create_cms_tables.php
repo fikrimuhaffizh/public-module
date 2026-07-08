@@ -3,8 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Database\Migrations\BaseMigration;
 
-return new class extends Migration
+return new class extends BaseMigration
 {
     /**
      * Run the migrations for CMS (Content Management System) module.
@@ -30,6 +31,9 @@ return new class extends Migration
                 $table->string('created_by')->nullable();
                 $table->string('updated_by')->nullable();
                 $table->string('deleted_by')->nullable();
+                $table->unsignedBigInteger('created_by_id')->nullable();
+                $table->unsignedBigInteger('updated_by_id')->nullable();
+                $table->unsignedBigInteger('deleted_by_id')->nullable();
             });
         }
 
@@ -56,6 +60,9 @@ return new class extends Migration
                 $table->string('created_by')->nullable();
                 $table->string('updated_by')->nullable();
                 $table->string('deleted_by')->nullable();
+                $table->unsignedBigInteger('created_by_id')->nullable();
+                $table->unsignedBigInteger('updated_by_id')->nullable();
+                $table->unsignedBigInteger('deleted_by_id')->nullable();
 
                 $table->foreign('parent_id')->references('menu_id')->on('cms_menu')->onDelete('cascade');
                 $table->foreign('page_id')->references('page_id')->on('cms_page')->onDelete('set null');
@@ -83,6 +90,9 @@ return new class extends Migration
                 $table->string('created_by')->nullable();
                 $table->string('updated_by')->nullable();
                 $table->string('deleted_by')->nullable();
+                $table->unsignedBigInteger('created_by_id')->nullable();
+                $table->unsignedBigInteger('updated_by_id')->nullable();
+                $table->unsignedBigInteger('deleted_by_id')->nullable();
 
                 $table->foreign('penulis_id')->references('id')->on('users');
                 $table->index(['jenis', 'is_published', 'published_at'], 'idx_pengumuman_main');
@@ -94,7 +104,7 @@ return new class extends Migration
         // =====================================================================
         if (!Schema::hasTable('cms_slideshow')) {
             Schema::create('cms_slideshow', function (Blueprint $table) {
-                $table->id();
+                $table->id('slideshow_id');
                 $table->unsignedBigInteger('tenant_id')->default(1)->index();
                 $table->string('image_url');
                 $table->string('title')->nullable();
@@ -107,6 +117,9 @@ return new class extends Migration
                 $table->string('created_by')->nullable();
                 $table->string('updated_by')->nullable();
                 $table->string('deleted_by')->nullable();
+                $table->unsignedBigInteger('created_by_id')->nullable();
+                $table->unsignedBigInteger('updated_by_id')->nullable();
+                $table->unsignedBigInteger('deleted_by_id')->nullable();
 
                 $table->timestamps();
                 $table->softDeletes();
@@ -131,6 +144,9 @@ return new class extends Migration
                 $table->string('created_by')->nullable();
                 $table->string('updated_by')->nullable();
                 $table->string('deleted_by')->nullable();
+                $table->unsignedBigInteger('created_by_id')->nullable();
+                $table->unsignedBigInteger('updated_by_id')->nullable();
+                $table->unsignedBigInteger('deleted_by_id')->nullable();
             });
         }
 
@@ -153,6 +169,9 @@ return new class extends Migration
                 $table->string('created_by')->nullable();
                 $table->string('updated_by')->nullable();
                 $table->string('deleted_by')->nullable();
+                $table->unsignedBigInteger('created_by_id')->nullable();
+                $table->unsignedBigInteger('updated_by_id')->nullable();
+                $table->unsignedBigInteger('deleted_by_id')->nullable();
             });
         }
 
@@ -173,6 +192,9 @@ return new class extends Migration
                 $table->string('created_by')->nullable();
                 $table->string('updated_by')->nullable();
                 $table->string('deleted_by')->nullable();
+                $table->unsignedBigInteger('created_by_id')->nullable();
+                $table->unsignedBigInteger('updated_by_id')->nullable();
+                $table->unsignedBigInteger('deleted_by_id')->nullable();
             });
         }
 
@@ -191,14 +213,7 @@ return new class extends Migration
                 $table->string('button_secondary_text')->nullable();
                 $table->string('button_secondary_link')->nullable();
                 $table->boolean('is_active')->default(false);
-                $table->timestamps();
-                $table->softDeletes();
-                $table->string('created_by')->nullable();
-                $table->unsignedBigInteger('created_by_id')->nullable();
-                $table->string('updated_by')->nullable();
-                $table->unsignedBigInteger('updated_by_id')->nullable();
-                $table->string('deleted_by')->nullable();
-                $table->unsignedBigInteger('deleted_by_id')->nullable();
+                $this->addStandardColumns($table);
             });
         }
 
@@ -211,14 +226,7 @@ return new class extends Migration
                 $table->string('icon')->nullable();
                 $table->unsignedInteger('sort_order')->default(0);
                 $table->boolean('is_active')->default(true);
-                $table->timestamps();
-                $table->softDeletes();
-                $table->string('created_by')->nullable();
-                $table->unsignedBigInteger('created_by_id')->nullable();
-                $table->string('updated_by')->nullable();
-                $table->unsignedBigInteger('updated_by_id')->nullable();
-                $table->string('deleted_by')->nullable();
-                $table->unsignedBigInteger('deleted_by_id')->nullable();
+                $this->addStandardColumns($table);
             });
         }
 
@@ -233,14 +241,7 @@ return new class extends Migration
                 $table->string('demo_url')->nullable();
                 $table->unsignedInteger('sort_order')->default(0);
                 $table->boolean('is_active')->default(true);
-                $table->timestamps();
-                $table->softDeletes();
-                $table->string('created_by')->nullable();
-                $table->unsignedBigInteger('created_by_id')->nullable();
-                $table->string('updated_by')->nullable();
-                $table->unsignedBigInteger('updated_by_id')->nullable();
-                $table->string('deleted_by')->nullable();
-                $table->unsignedBigInteger('deleted_by_id')->nullable();
+                $this->addStandardColumns($table);
                 $table->unique(['tenant_id', 'slug']);
             });
         }
@@ -254,14 +255,7 @@ return new class extends Migration
                 $table->string('icon')->nullable();
                 $table->unsignedInteger('sort_order')->default(0);
                 $table->boolean('is_active')->default(true);
-                $table->timestamps();
-                $table->softDeletes();
-                $table->string('created_by')->nullable();
-                $table->unsignedBigInteger('created_by_id')->nullable();
-                $table->string('updated_by')->nullable();
-                $table->unsignedBigInteger('updated_by_id')->nullable();
-                $table->string('deleted_by')->nullable();
-                $table->unsignedBigInteger('deleted_by_id')->nullable();
+                $this->addStandardColumns($table);
             });
         }
 
@@ -273,14 +267,7 @@ return new class extends Migration
                 $table->string('website')->nullable();
                 $table->unsignedInteger('sort_order')->default(0);
                 $table->boolean('is_active')->default(true);
-                $table->timestamps();
-                $table->softDeletes();
-                $table->string('created_by')->nullable();
-                $table->unsignedBigInteger('created_by_id')->nullable();
-                $table->string('updated_by')->nullable();
-                $table->unsignedBigInteger('updated_by_id')->nullable();
-                $table->string('deleted_by')->nullable();
-                $table->unsignedBigInteger('deleted_by_id')->nullable();
+                $this->addStandardColumns($table);
             });
         }
 
@@ -293,20 +280,13 @@ return new class extends Migration
                 $table->string('button_text')->nullable();
                 $table->string('button_link')->nullable();
                 $table->boolean('is_active')->default(false);
-                $table->timestamps();
-                $table->softDeletes();
-                $table->string('created_by')->nullable();
-                $table->unsignedBigInteger('created_by_id')->nullable();
-                $table->string('updated_by')->nullable();
-                $table->unsignedBigInteger('updated_by_id')->nullable();
-                $table->string('deleted_by')->nullable();
-                $table->unsignedBigInteger('deleted_by_id')->nullable();
+                $this->addStandardColumns($table);
             });
         }
 
         if (! Schema::hasTable('cms_landing_page_settings')) {
             Schema::create('cms_landing_page_settings', function (Blueprint $table) {
-                $table->id();
+                $table->id('setting_id');
                 $table->unsignedBigInteger('tenant_id')->default(1)->unique();
                 $table->string('site_title')->nullable();
                 $table->text('site_description')->nullable();

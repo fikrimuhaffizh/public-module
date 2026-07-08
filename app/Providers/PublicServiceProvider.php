@@ -22,10 +22,18 @@ class PublicServiceProvider extends BaseModuleServiceProvider
     {
         return [
             [
+                'priority'      => 0,
+                'title'         => 'Dashboard',
+                'route'         => 'cms.dashboard',
+                'active_routes' => ['cms.dashboard'],
+                'icon'          => 'home',
+                'permission'    => null,
+            ],
+            [
                 'priority'      => 1,
                 'title'         => 'Section',
                 'route'         => 'cms.section.index',
-                'active_routes' => ['cms.section.index', 'cms.section.*'],
+                'active_routes' => ['cms.section.index', 'cms.section.edit', 'cms.section.update', 'cms.section.toggle', 'cms.section.reorder'],
                 'icon'          => 'layout-2',
                 'permission'    => 'public.cms.view',
             ],
@@ -60,14 +68,6 @@ class PublicServiceProvider extends BaseModuleServiceProvider
                 'icon'     => 'world-www',
                 'children' => [
                     [
-                        'priority'      => 1,
-                        'title'         => 'Hero',
-                        'route'         => 'cms.hero.index',
-                        'active_routes' => ['cms.hero.*'],
-                        'icon'          => 'rocket',
-                        'permission'    => 'public.cms.view',
-                    ],
-                    [
                         'priority'      => 2,
                         'title'         => 'Fitur',
                         'route'         => 'cms.feature.index',
@@ -88,7 +88,7 @@ class PublicServiceProvider extends BaseModuleServiceProvider
                         'title'         => 'Testimoni',
                         'route'         => 'cms.testimonial.index',
                         'active_routes' => ['cms.testimonial.*'],
-                        'icon'          => 'message-circle-heart',
+                        'icon'          => 'message-star',
                         'permission'    => 'public.cms.view',
                     ],
                     [
@@ -104,7 +104,7 @@ class PublicServiceProvider extends BaseModuleServiceProvider
                         'title'         => 'Klien',
                         'route'         => 'cms.client.index',
                         'active_routes' => ['cms.client.*'],
-                        'icon'          => 'brand-tailwind',
+                        'icon'          => 'users-group',
                         'permission'    => 'public.cms.view',
                     ],
                     [
@@ -120,7 +120,7 @@ class PublicServiceProvider extends BaseModuleServiceProvider
                         'title'         => 'FAQ',
                         'route'         => 'cms.faq.index',
                         'active_routes' => ['cms.faq.*'],
-                        'icon'          => 'help-circle',
+                        'icon'          => 'help',
                         'permission'    => 'public.cms.view',
                     ],
                     [
@@ -128,7 +128,7 @@ class PublicServiceProvider extends BaseModuleServiceProvider
                         'title'         => 'Partner',
                         'route'         => 'cms.partner.index',
                         'active_routes' => ['cms.partner.*'],
-                        'icon'          => 'handshake',
+                        'icon'          => 'building-community',
                         'permission'    => 'public.cms.view',
                     ],
                     [
@@ -163,7 +163,7 @@ class PublicServiceProvider extends BaseModuleServiceProvider
                 'route'         => 'public.preview',
                 'active_routes' => ['public.preview'],
                 'icon'          => 'eye',
-                'permission'    => null,
+                'permission'    => null
             ],
         ];
     }

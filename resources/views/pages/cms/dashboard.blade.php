@@ -13,12 +13,21 @@
                     <div class="carousel-inner">
                         @foreach($slideshows as $index => $slide)
                         <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                            @if($slide->link)
-                                <a href="{{ $slide->link }}" target="_blank">
-                                    <img src="{{ $slide->large_url }}" class="d-block w-100" style="height: 400px; object-fit: cover; cursor: pointer;" alt="{{ $slide->title }}">
-                                </a>
+                            @if($slide->large_url)
+                                @if($slide->link)
+                                    <a href="{{ $slide->link }}" target="_blank">
+                                        <img src="{{ $slide->large_url }}" class="d-block w-100" style="height: 400px; object-fit: cover; cursor: pointer;" alt="{{ $slide->title }}">
+                                    </a>
+                                @else
+                                    <img src="{{ $slide->large_url }}" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="{{ $slide->title }}">
+                                @endif
                             @else
-                                <img src="{{ $slide->large_url }}" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="{{ $slide->title }}">
+                                <div class="d-flex align-items-center justify-content-center bg-light" style="height: 400px;">
+                                    <div class="text-center text-muted">
+                                        <i class="ti ti-photo-off" style="font-size: 3rem;"></i>
+                                        <p class="mt-2 mb-0">{{ $slide->title ?: 'Tanpa Gambar' }}</p>
+                                    </div>
+                                </div>
                             @endif
                         </div>
                         @endforeach
@@ -35,25 +44,42 @@
             </div>
             @endif
 
-            <div class="col-12 d-none">
-                <x-ui.card class="card-md border-0 shadow-sm overflow-hidden" style="background: linear-gradient(135deg, #1e3a5f 0%, #2c3e50 50%, #34495e 100%); color: white; border-radius: 12px;">
-                    <x-ui.card-body class="d-flex align-items-center py-5 position-relative">
-                        <div class="me-4 d-none d-md-block">
-                            <span class="avatar avatar-xl rounded-circle border border-2 border-white-50 shadow-sm">{{ strtoupper(substr(auth()->user()->name, 0, 2)) }}</span>
-                        </div>
-                        <div class="flex-grow-1">
-                            <h1 class="display-6 fw-bold mb-2">Selamat Datang, {{ explode(' ', auth()->user()->name)[0] }}! 👋</h1>
-                            <p class="fs-4 opacity-75 mb-4">Sistem Informasi Manajemen Terpadu Politeknik Caltex Riau</p>
-                            <div class="d-flex flex-wrap gap-2 mt-3">
-                                <x-ui.button href="{{ route('sys.notifications.index') }}" style="light" class="px-4 py-2 shadow-sm" text="Semua Notifikasi" icon="ti ti-bell" />
-                                <x-ui.button href="{{ route('cms.pengumuman.index') }}" style="outline-light" class="px-4 py-2" text="Pusat Pengumuman" icon="ti ti-news" />
-                            </div>
-                        </div>
-                        <div class="ms-auto d-none d-lg-block opacity-10 position-absolute end-0 me-4">
-                            <i class="ti ti-school" style="font-size: 10rem;"></i>
-                        </div>
-                    </x-ui.card-body>
-                </x-ui.card>
+            <!-- Module Stats -->
+            <div class="col-12 mt-4">
+                <div class="row g-3">
+                    <div class="col-md-3 col-6">
+                        <x-ui.card class="border-0 shadow-sm" style="border-radius: 12px;">
+                            <x-ui.card-body class="text-center py-3">
+                                <div class="text-muted small mb-1"><i class="ti ti-photo me-1"></i>Slideshow</div>
+                                <div class="fs-2 fw-bold">{{ $stats['total_slideshows'] }}</div>
+                            </x-ui.card-body>
+                        </x-ui.card>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <x-ui.card class="border-0 shadow-sm" style="border-radius: 12px;">
+                            <x-ui.card-body class="text-center py-3">
+                                <div class="text-muted small mb-1"><i class="ti ti-speakerphone me-1"></i>Pengumuman</div>
+                                <div class="fs-2 fw-bold">{{ $stats['total_announcements'] }}</div>
+                            </x-ui.card-body>
+                        </x-ui.card>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <x-ui.card class="border-0 shadow-sm" style="border-radius: 12px;">
+                            <x-ui.card-body class="text-center py-3">
+                                <div class="text-muted small mb-1"><i class="ti ti-news me-1"></i>Berita</div>
+                                <div class="fs-2 fw-bold">{{ $stats['total_news'] }}</div>
+                            </x-ui.card-body>
+                        </x-ui.card>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <x-ui.card class="border-0 shadow-sm" style="border-radius: 12px;">
+                            <x-ui.card-body class="text-center py-3">
+                                <div class="text-muted small mb-1"><i class="ti ti-file-text me-1"></i>Halaman</div>
+                                <div class="fs-2 fw-bold">{{ $stats['total_pages'] }}</div>
+                            </x-ui.card-body>
+                        </x-ui.card>
+                    </div>
+                </div>
             </div>
 
             <div class="col-lg-5 mt-4">

@@ -4,17 +4,14 @@ namespace Modules\Public\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
 use Modules\Public\Models\Pengumuman;
+use Modules\Public\Models\Page;
+use Modules\Public\Models\Menu;
 use Modules\Public\Models\Slideshow;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        // Slideshow
-        $slideshows = Slideshow::where('is_active', true)
-            ->orderBy('seq', 'asc')
-            ->get();
-
         // Slideshow
         $slideshows = Slideshow::where('is_active', true)
             ->orderBy('seq', 'asc')
@@ -34,6 +31,15 @@ class DashboardController extends Controller
             ->limit(5)
             ->get();
 
-        return view('public::pages.cms.dashboard', compact('slideshows', 'recentNews', 'recentAnnouncements'));
+        // Module stats
+        $stats = [
+            'total_slideshows' => Slideshow::count(),
+            'total_announcements' => Pengumuman::where('jenis', 'cms_pengumuman')->count(),
+            'total_news' => Pengumuman::where('jenis', 'artikel_berita')->count(),
+            'total_pages' => Page::count(),
+            'total_menus' => Menu::count(),
+        ];
+
+        return view('public::pages.cms.dashboard', compact('slideshows', 'recentNews', 'recentAnnouncements', 'stats'));
     }
 }

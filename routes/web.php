@@ -26,6 +26,8 @@ use App\Http\Middleware\HandleInertiaRequests;
 
 // Admin Area (CMS)
 Route::middleware(['auth', 'check.expired', 'module:public'])->prefix('cms')->name('cms.')->group(function () {
+    Route::get('/dashboard', [Modules\Public\Http\Controllers\Cms\DashboardController::class, 'index'])->name('dashboard');
+
     // Section Management (was landing)
     Route::get('section', [SectionController::class, 'index'])->name('section.index');
     Route::get('section/template', [SectionController::class, 'edit'])->name('section.template');
@@ -44,10 +46,6 @@ Route::middleware(['auth', 'check.expired', 'module:public'])->prefix('cms')->na
 
     Route::get('landing-settings', [LandingPageSettingController::class, 'edit'])->name('settings.edit');
     Route::put('landing-settings', [LandingPageSettingController::class, 'update'])->name('settings.update');
-
-    // Hero
-    Route::get('hero/data', [Modules\Public\Http\Controllers\Cms\HeroSectionController::class, 'data'])->name('hero.data');
-    Route::resource('hero', Modules\Public\Http\Controllers\Cms\HeroSectionController::class)->except('show');
 
     Route::post('feature/reorder', [FeatureController::class, 'reorder'])->name('feature.reorder');
     Route::resource('feature', FeatureController::class)->except('show');

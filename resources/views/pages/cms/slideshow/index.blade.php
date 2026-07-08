@@ -69,7 +69,7 @@
                         </x-ui.card-body>
                         <x-ui.card-footer class="d-flex py-3">
                             <span class="cursor-move text-secondary me-auto" title="Drag to reorder">
-                                <i class="ti ti-grid-dots fs-2"></i>
+                                <i class="ti ti-grip-vertical fs-2"></i>
                             </span>
                             <x-ui.dropdown class="btn btn-action text-secondary">
                                 <x-ui.dropdown-item

@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 use Modules\Public\Models\Client;
 use Modules\Public\Models\Cta;
 use Modules\Public\Models\Feature;
-use Modules\Public\Models\HeroSection;
 use Modules\Public\Models\LandingPageSetting;
 use Modules\Public\Models\LandingSection;
 use Modules\Public\Models\Product;
@@ -26,24 +25,11 @@ class RefSeeder extends Seeder
 
     private function seedLandingContent(int $tenantId): void
     {
-        HeroSection::withoutGlobalScopes()->where('tenant_id', $tenantId)->forceDelete();
         Feature::withoutGlobalScopes()->where('tenant_id', $tenantId)->forceDelete();
         Product::withoutGlobalScopes()->where('tenant_id', $tenantId)->forceDelete();
         Statistic::withoutGlobalScopes()->where('tenant_id', $tenantId)->forceDelete();
         Client::withoutGlobalScopes()->where('tenant_id', $tenantId)->forceDelete();
         Cta::withoutGlobalScopes()->where('tenant_id', $tenantId)->forceDelete();
-
-        HeroSection::create([
-            'tenant_id' => $tenantId,
-            'title' => 'Transformasi Digital Kampus Terintegrasi',
-            'subtitle' => 'Ekosistem Pemutu',
-            'description' => 'Kelola akademik, administrasi, dan layanan kampus dalam satu platform yang modern, aman, dan mudah digunakan.',
-            'button_primary_text' => 'Mulai Sekarang',
-            'button_primary_link' => '/login',
-            'button_secondary_text' => 'Hubungi Kami',
-            'button_secondary_link' => '/public/contact-us',
-            'is_active' => true,
-        ]);
 
         collect([
             ['Integrasi Penuh', 'Semua modul terhubung dalam satu ekosistem data.', 'ti ti-plug-connected'],

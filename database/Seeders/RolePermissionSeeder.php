@@ -12,6 +12,7 @@ class RolePermissionSeeder extends Seeder
     public static function getPermissions(): array
     {
         return [
+            ['name' => 'cms.dashboard.view', 'category' => 'CMS / Landing Page', 'sub_category' => 'Dashboard', 'description' => 'Melihat dashboard CMS'],
             ['name' => 'public.cms.view', 'category' => 'CMS / Landing Page', 'sub_category' => 'Dashboard', 'description' => 'Melihat menu CMS / Landing Page'],
             ['name' => 'public.cms.update', 'category' => 'CMS / Landing Page', 'sub_category' => 'Pengaturan Landing', 'description' => 'Mengubah template landing page'],
             ['name' => 'public.cms.landing.sections.view', 'category' => 'CMS / Landing Page', 'sub_category' => 'Landing Sections', 'description' => 'Melihat daftar landing sections'],
@@ -46,10 +47,6 @@ class RolePermissionSeeder extends Seeder
             ['name' => 'public.cms.menu.delete', 'category' => 'CMS / Landing Page', 'sub_category' => 'Menu Navigasi', 'description' => 'Menghapus menu navigasi'],
             ['name' => 'public.cms.settings.view', 'category' => 'CMS / Landing Page', 'sub_category' => 'Pengaturan Landing', 'description' => 'Melihat pengaturan landing page'],
             ['name' => 'public.cms.settings.update', 'category' => 'CMS / Landing Page', 'sub_category' => 'Pengaturan Landing', 'description' => 'Mengubah pengaturan landing page'],
-            ['name' => 'public.cms.hero.view', 'category' => 'CMS / Landing Page', 'sub_category' => 'Hero Section', 'description' => 'Melihat daftar hero section'],
-            ['name' => 'public.cms.hero.create', 'category' => 'CMS / Landing Page', 'sub_category' => 'Hero Section', 'description' => 'Menambah hero section'],
-            ['name' => 'public.cms.hero.update', 'category' => 'CMS / Landing Page', 'sub_category' => 'Hero Section', 'description' => 'Mengubah hero section'],
-            ['name' => 'public.cms.hero.delete', 'category' => 'CMS / Landing Page', 'sub_category' => 'Hero Section', 'description' => 'Menghapus hero section'],
             ['name' => 'public.cms.feature.view', 'category' => 'CMS / Landing Page', 'sub_category' => 'Fitur', 'description' => 'Melihat daftar fitur'],
             ['name' => 'public.cms.feature.create', 'category' => 'CMS / Landing Page', 'sub_category' => 'Fitur', 'description' => 'Menambah fitur'],
             ['name' => 'public.cms.feature.update', 'category' => 'CMS / Landing Page', 'sub_category' => 'Fitur', 'description' => 'Mengubah dan mengurutkan fitur'],
