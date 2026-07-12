@@ -2,23 +2,24 @@
     "name": "Public",
     "alias": "public",
     "route_prefix": "cms",
-    "title": "Landing Page",
-    "description": "Landing page, CMS, and external layout",
-    "group": "platform",
-    "priority": 45,
-    "icon": "world-www",
     "providers": [
         "Modules\\Public\\Providers\\PublicServiceProvider"
     ],
     "permission_seeder": "Modules\\\\Public\\\\Database\\\\Seeders\\\\RolePermissionSeeder",
-    "seeders": [
-        "Modules\\Public\\Database\\Seeders\\DatabaseSeeder"
-    ],
     "migration": {
         "seeds": [
             "Modules\\Public\\Database\\Seeders\\DatabaseSeeder",
             "Modules\\Account\\Database\\Seeders\\RolePermissionSeeder"
         ]
     },
-    "route_default": "cms.dashboard"
+    "portal": {
+        "title": "Landing Page",
+        "description": "Landing page, CMS, and external layout",
+        "icon": "world-www",
+        "group": "platform",
+        "priority": 45,
+        "route": "cms.dashboard",
+        "status": "ready",
+        "message": null
+    }
 }
