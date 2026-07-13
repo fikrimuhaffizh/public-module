@@ -13,6 +13,8 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class LandingPageSetting extends Model implements HasMedia
 {
     use BelongsToTenant, Blameable, InteractsWithMedia;
+use App\Traits\HashidBinding;
+use App\Traits\SoftDeletes;
 
     protected $table = 'cms_landing_page_settings';
 

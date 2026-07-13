@@ -8,11 +8,11 @@ use Illuminate\Validation\Rule;
 use Modules\Public\Models\LandingSection;
 use Modules\Public\Models\LandingPageSetting;
 use Modules\Public\Services\LandingPageService;
-use Modules\Account\Models\Tenant;
+use Modules\Account\Services\TenantService;
 
 class SectionController extends Controller
 {
-    public function __construct(private LandingPageService $landing)
+    public function __construct(private LandingPageService $landing, private TenantService $tenantService)
     {
         $this->middleware('permission:public.cms.view')->only(['index', 'edit', 'sections']);
         $this->middleware('permission:public.cms.update')->only(['update', 'updateSection', 'reorderSections', 'editSection', 'toggleSection']);
@@ -118,7 +118,7 @@ class SectionController extends Controller
         $this->landing->updateSection($section, $data);
 
         // Handle Logo Uploads (if any)
-        $tenant = Tenant::find(sys_tenant_id());
+        $tenant = $this->tenantService->findById(sys_tenant_id());
         if ($tenant) {
             foreach (['logo_navbar', 'logo_footer'] as $logoCollection) {
                 if ($request->hasFile($logoCollection)) {
@@ -174,7 +174,7 @@ class SectionController extends Controller
             'collection' => 'required|in:logo_navbar,logo_footer',
         ]);
 
-        $tenant = Tenant::find(sys_tenant_id());
+        $tenant = $this->tenantService->findById(sys_tenant_id());
         if (! $tenant) {
             return response()->json(['message' => 'Tenant tidak ditemukan.'], 404);
         }
@@ -194,7 +194,7 @@ class SectionController extends Controller
             abort(404);
         }
 
-        $tenant = Tenant::find(sys_tenant_id());
+        $tenant = $this->tenantService->findById(sys_tenant_id());
         if ($tenant) {
             $tenant->clearMediaCollection($collection);
         }

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class LandingSection extends Model
 {
     use BelongsToTenant, Blameable, HashidBinding;
+use App\Traits\SoftDeletes;
 
     protected $table = 'cms_landing_sections';
 

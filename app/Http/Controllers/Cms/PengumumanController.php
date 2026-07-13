@@ -5,14 +5,14 @@ namespace Modules\Public\Http\Controllers\Cms;
 use App\Http\Controllers\Controller;
 use Modules\Public\Http\Requests\PengumumanRequest;
 use Modules\Public\Models\Pengumuman;
-use Modules\Account\Models\User;
+use Modules\Account\Services\UserService;
 use Modules\Public\Services\PengumumanService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
 class PengumumanController extends Controller
 {
-    public function __construct(protected PengumumanService $pengumumanService) {}
+    public function __construct(protected PengumumanService $pengumumanService, protected UserService $userService) {}
 
     public function index(Request $request)
     {
@@ -26,7 +26,7 @@ class PengumumanController extends Controller
 
     public function create($type = 'pengumuman')
     {
-        $penulisOptions = User::all();
+        $penulisOptions = $this->userService->getAll();
         $pengumuman = new Pengumuman;
 
         return view('public::pages.cms.pengumuman.create-edit', compact('type', 'penulisOptions', 'pengumuman'));
@@ -55,7 +55,7 @@ class PengumumanController extends Controller
 
     public function edit(Pengumuman $pengumuman)
     {
-        $penulisOptions = User::all();
+        $penulisOptions = $this->userService->getAll();
         $type = $pengumuman->jenis;
 
         return view('public::pages.cms.pengumuman.create-edit', compact('pengumuman', 'type', 'penulisOptions'));
