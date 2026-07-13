@@ -2,16 +2,18 @@
 
 namespace Modules\Public\Models;
 
-use App\Traits\BelongsToTenant;
-use App\Traits\Blameable;
-use App\Traits\HashidBinding;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Traits\BelongsToTenant;
+use App\Traits\Blameable;
+use App\Traits\HashidBinding;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class LandingSection extends Model
 {
-    use BelongsToTenant, Blameable, HashidBinding;
-use App\Traits\SoftDeletes;
+    use BelongsToTenant, Blameable, HashidBinding, SoftDeletes;
+
 
     protected $table = 'cms_landing_sections';
 

@@ -2,19 +2,20 @@
 
 namespace Modules\Public\Models;
 
-use App\Traits\BelongsToTenant;
-use App\Traits\Blameable;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
+use App\Traits\BelongsToTenant;
+use App\Traits\Blameable;
+use App\Traits\HashidBinding;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class LandingPageSetting extends Model implements HasMedia
 {
-    use BelongsToTenant, Blameable, InteractsWithMedia;
-use App\Traits\HashidBinding;
-use App\Traits\SoftDeletes;
+    use BelongsToTenant, Blameable, HashidBinding, SoftDeletes;
 
     protected $table = 'cms_landing_page_settings';
 
