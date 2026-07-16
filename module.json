@@ -21,5 +21,9 @@
         "route": "cms.dashboard",
         "status": "ready",
         "message": null
-    }
+    },
+    "requires": [
+        "Account"
+    ],
+    "priority": 30
 }

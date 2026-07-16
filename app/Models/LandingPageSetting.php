@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class LandingPageSetting extends Model implements HasMedia
 {
-    use BelongsToTenant, Blameable, HashidBinding, SoftDeletes;
+    use BelongsToTenant, Blameable, HashidBinding, InteractsWithMedia, SoftDeletes;
 
     protected $table = 'cms_landing_page_settings';
 
