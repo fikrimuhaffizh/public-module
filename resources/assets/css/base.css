@@ -483,3 +483,56 @@ img {
     line-height: 1.7
 }
 
+/* ════════════════════════════════════════════════════════════════════
+   RESPONSIVE — Mobile breakpoints untuk section navbar & footer
+   ════════════════════════════════════════════════════════════════════ */
+
+/* ── Navbar: tablet ≤860px ──────────────────────────────────────── */
+@media (max-width: 860px) {
+    .desktop-nav { display: none }
+    .mobile-toggle { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 0; background: transparent; color: var(--foreground); cursor: pointer }
+    .nav-actions .ui-button { display: none }
+    .nav-wrap { gap: 12px }
+    .site-header--rows .nav-rows-menu { display: none }
+    .mobile-nav { display: block; padding: 0 0 18px }
+    .mobile-nav a { display: block; padding: 10px 0; font-weight: 600; color: var(--foreground) }
+}
+
+/* ── Navbar: mobile ≤600px ──────────────────────────────────────── */
+@media (max-width: 600px) {
+    .nav-wrap { height: auto; min-height: 60px; padding: 8px 0 }
+    .brand-logo { max-height: 36px }
+    .brand-mark { width: 36px; height: 36px }
+    .brand { gap: 8px }
+
+    /* Center mode: grid collapse → stack */
+    .nav-wrap--center { display: flex; justify-content: space-between }
+    .nav-wrap--center .desktop-nav,
+    .nav-wrap--center .brand,
+    .nav-wrap--center .nav-actions { grid-column: auto }
+}
+
+/* ── Footer: mobile ≤768px ──────────────────────────────────────── */
+@media (max-width: 768px) {
+    .footer-grid { grid-template-columns: 1fr; gap: 32px; text-align: center }
+    .footer-grid > div { align-items: center }
+    .footer-grid p { max-width: 100% }
+    .site-footer { padding: 40px 0 }
+    .footer-corp-top { flex-direction: column; align-items: center; text-align: center }
+    .footer-center { padding: 36px 0 28px }
+    .footer-center-nav { gap: 12px }
+    .footer-center-bottom { flex-direction: column; align-items: center; gap: 8px }
+    .footer-bigtype-cta { flex-direction: column; text-align: center }
+    .footer-bigtype-bottom { flex-direction: column; align-items: center; text-align: center }
+}
+
+/* ── Footer: mobile ≤576px ──────────────────────────────────────── */
+@media (max-width: 576px) {
+    .site-footer { padding: 32px 0 }
+    .footer-grid { gap: 24px }
+    .brand-logo { max-height: 36px }
+    .brand-mark { width: 36px; height: 36px }
+    .brand { gap: 8px }
+    .brand--footer { flex-direction: column; text-align: center; gap: 6px }
+    .footer-socials { justify-content: center }
+}

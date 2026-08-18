@@ -108,3 +108,13 @@
     .nav-dock { width: 100%; border-radius: 18px; justify-content: space-between }
     .nav-dock-menu, .nav-dock-cta { display: none }
 }
+
+/* ── Rows mode: tablet/mobile ──────────────────────────────────── */
+@media (max-width: 860px) {
+    .site-header--rows .nav-rows-menu { display: none }
+}
+
+/* ── No-login mode: tablet/mobile ──────────────────────────────── */
+@media (max-width: 860px) {
+    .site-header--nologin .nav-right-group { gap: 10px }
+}
