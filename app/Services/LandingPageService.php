@@ -24,13 +24,14 @@ use Modules\Public\Models\Testimonial;
 
 class LandingPageService
 {
-    public const TEMPLATES = ['modern', 'editorial', 'corporate', 'launch', 'aurora', 'enterprise', 'registration', 'profile', 'campus', 'admissions', 'tracer'];
-
-    public function __construct(private TenantConfigService $tenantConfig) {}
+    public function __construct(
+        private TenantConfigService $tenantConfig,
+        private ThemeRegistry $themes,
+    ) {}
 
     public function template(?string $previewTemplate = null): string
     {
-        if (in_array($previewTemplate, self::TEMPLATES, true)) {
+        if ($this->themes->isValid($previewTemplate)) {
             return $previewTemplate;
         }
 
@@ -38,15 +39,152 @@ class LandingPageService
             sys_tenant_id(),
             'public',
             'landing_template',
-            config('public.landing_template', 'modern')
+            config('public.landing_template', $this->themes->default())
         );
 
-        return in_array($selected, self::TEMPLATES, true) ? $selected : 'modern';
+        return $this->themes->isValid($selected) ? $selected : $this->themes->default();
     }
 
     public function saveTemplate(string $template): void
     {
         $this->tenantConfig->set(sys_tenant_id(), 'public', 'landing_template', $template);
+    }
+
+    /** Daftar key tema valid (untuk Rule::in di validasi). */
+    public function themeKeys(): array
+    {
+        return $this->themes->keys();
+    }
+
+    /** Tema dikelompokkan per kategori (institutional / umkm) untuk UI CMS. */
+    public function themeGroups(): array
+    {
+        return $this->themes->categories();
+    }
+
+    /**
+     * Desain tersimpan (dari tombol "Terapkan ke landing" di /preview).
+     * Format: { template, paletteKey, font, card, nav, button, radius, dark,
+     * customCss, sectionVariants, sectionColors } — sama seperti state
+     * customizer frontend, dipakai landing asli (non-preview) sebagai basis.
+     */
+    public function design(): ?array
+    {
+        return LandingPageSetting::forCurrentTenant()->design;
+    }
+
+    /**
+     * Simpan tema aktif + desain landing per-tenant.
+     * Template disimpan ke konfigurasi tenant (landing_template), desain
+     * penuh (palet, font, variant & warna section) ke kolom JSON settings.
+     */
+    public function saveDesign(string $template, array $design): void
+    {
+        if (! $this->themes->isValid($template)) {
+            abort(422, 'Tema tidak valid.');
+        }
+
+        $this->saveTemplate($template);
+
+        $settings = LandingPageSetting::forCurrentTenant();
+        $settings->design = array_merge($design, ['template' => $template]);
+        $settings->save();
+
+        // Hapus media latar section yang tidak lagi direferensikan desain
+        // tersimpan, agar file tidak menumpuk di collection 'section_backgrounds'.
+        $this->pruneOrphanBackgrounds($design['sectionColors'] ?? []);
+    }
+
+    /**
+     * Hapus media latar section (collection 'section_backgrounds') yang tidak
+     * lagi direferensikan oleh desain tersimpan. Dipanggil setiap desain
+     * diterapkan ke landing agar file tidak menumpuk.
+     *
+     * @param array<string, array> $sectionColors [section_key => colors patch]
+     */
+    private function pruneOrphanBackgrounds(array $sectionColors): void
+    {
+        // UUID media yang masih dipakai lewat URL /file/{uuid}/...
+        $usedUuids = collect($sectionColors)
+            ->pluck('image')
+            ->filter()
+            ->map(fn (string $url) => preg_match(
+                '#/file/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})#i',
+                $url,
+                $matches
+            ) ? $matches[1] : null)
+            ->filter()
+            ->unique()
+            ->values();
+
+        $tenant = Tenant::find(sys_tenant_id());
+        if (! $tenant) {
+            return;
+        }
+
+        $tenant->getMedia('section_backgrounds')
+            ->reject(fn ($media) => $usedUuids->contains($media->uuid))
+            ->each(fn ($media) => $media->delete());
+    }
+
+    /**
+     * Simpan pengaturan per-section (mis. navbar → show_topbar) ke settings
+     * section DB, di-merge dengan settings yang sudah ada.
+     * Dipanggil dari "Terapkan ke landing" (saveDesign) di /preview.
+     *
+     * @param array<string, array> $sectionSettings [section_key => settings patch]
+     */
+    public function saveSectionSettings(array $sectionSettings): void
+    {
+        $tenantId = sys_tenant_id();
+
+        foreach ($sectionSettings as $sectionKey => $settings) {
+            if (! is_string($sectionKey) || ! is_array($settings) || empty($settings)) {
+                continue;
+            }
+
+            // Frontend memakai camelCase (showTopbar); DB memakai snake_case.
+            $normalized = [];
+            foreach ($settings as $k => $v) {
+                $normalized[Str::snake($k)] = $v;
+            }
+            $settings = $normalized;
+
+            $section = LandingSection::where('tenant_id', $tenantId)
+                ->where('section_key', $sectionKey)
+                ->first();
+
+            if (! $section) {
+                continue;
+            }
+
+            // Kolom khusus dipisah dari settings JSON.
+            if (array_key_exists('active', $settings)) {
+                $section->is_active = (bool) $settings['active'];
+                unset($settings['active']);
+            }
+            if (array_key_exists('title', $settings)) {
+                $section->title = $settings['title'] !== '' ? $settings['title'] : null;
+                unset($settings['title']);
+            }
+            if (array_key_exists('pre_title', $settings)) {
+                $section->pre_title = $settings['pre_title'] !== '' ? $settings['pre_title'] : null;
+                unset($settings['pre_title']);
+            }
+            if (array_key_exists('subtitle', $settings)) {
+                $section->subtitle = $settings['subtitle'] !== '' ? $settings['subtitle'] : null;
+                unset($settings['subtitle']);
+            }
+            if (array_key_exists('limit_data', $settings)) {
+                $section->limit_data = max(1, (int) $settings['limit_data']);
+                unset($settings['limit_data']);
+            }
+
+            if (! empty($settings)) {
+                $section->settings = array_replace($section->settings ?? [], $settings);
+            }
+            $section->save();
+        }
     }
 
     public function shared(string $template, bool $preview = false): array
@@ -57,8 +195,14 @@ class LandingPageService
         return [
             'template' => $template,
             'preview' => $preview,
+            // Desain tersimpan dari /preview (landing asli memakainya sebagai basis)
+            'design' => $this->design(),
+            // Metadata semua tema (dari ThemeRegistry) — untuk TemplatePicker frontend.
+            'themeOptions' => $this->themes->all(),
             'site' => [
                 'name' => $tenant?->name ?: config('app.name'),
+                'title' => $tenant?->name ?: config('app.name'),
+                'description' => $tenant?->tagline,
                 'tagline' => $tenant?->tagline ?: 'Informasi, layanan, dan inovasi kampus dalam satu ekosistem digital.',
                 'address' => $settings?->address ?: $tenant?->address,
                 'email' => $settings?->contact_email ?: $tenant?->email,
@@ -162,6 +306,11 @@ class LandingPageService
         return [
             ...$this->shared($template),
             'announcements' => $this->announcements(24),
+            'header' => [
+                'eyebrow' => 'Kabar kampus',
+                'title' => 'Berita dan pengumuman',
+                'excerpt' => 'Ikuti perkembangan, agenda, dan informasi terbaru dari institusi.',
+            ],
         ];
     }
 
@@ -254,7 +403,7 @@ class LandingPageService
             'is_active' => $section->is_active,
             'limit_data' => $section->limit_data,
             'variant' => $section->variant,
-            'settings' => $section->settings,
+            'settings' => is_string($section->settings) ? json_decode($section->settings, true) : $section->settings,
         ])->values()->toArray();
     }
 
@@ -295,6 +444,68 @@ class LandingPageService
                 ->update(['sort_order' => $sortOrder++]);
         }
     }
+
+
+
+    /**
+
+     * Urutkan ulang seluruh section sekaligus — termasuk pindah area
+
+     * (top/middle/bottom). Dipakai drag & drop dari Theme Settings offcanvas.
+
+     *
+
+     * @param array<int, array{id: string, area: string}> $order urutan global
+
+     */
+
+    public function reorderSectionsGlobal(array $order): void
+
+    {
+
+        $tenantId = sys_tenant_id();
+
+        $sort = ['top' => 0, 'middle' => 0, 'bottom' => 0];
+
+
+
+        foreach ($order as $item) {
+
+            if (! is_array($item) || empty($item['id']) || empty($item['area'])) {
+
+                continue;
+
+            }
+
+
+
+            $area = in_array($item['area'], ['top', 'middle', 'bottom'], true) ? $item['area'] : null;
+
+            if ($area === null) {
+
+                continue;
+
+            }
+
+
+
+            $id = decryptIdIfEncrypted($item['id']);
+
+            $sort[$area]++;
+
+
+
+            LandingSection::where('tenant_id', $tenantId)
+
+                ->where('landing_section_id', $id)
+
+                ->update(['area' => $area, 'sort_order' => $sort[$area]]);
+
+        }
+
+    }
+
+
 
     public function sectionData(LandingSection $section): array
     {
@@ -430,6 +641,7 @@ class LandingPageService
             ->first();
 
         $tenant = Tenant::find(sys_tenant_id());
+        $settings = LandingPageSetting::forCurrentTenant();
         $siteName = $tenant?->name ?: config('app.name');
         $tagline = $tenant?->tagline ?: 'Informasi, layanan, dan inovasi kampus dalam satu ekosistem digital.';
 
@@ -440,6 +652,16 @@ class LandingPageService
             'image' => null,
             'buttonPrimary' => ['text' => 'Masuk', 'link' => route('auth.login')],
             'buttonSecondary' => ['text' => 'Hubungi Kami', 'link' => route('public.contact')],
+            // CTA utama di hero: WhatsApp bila nomor tersedia (frontend memakainya
+            // sebagai tombol utama), fallback ke buttonPrimary di atas.
+            'whatsapp' => $settings?->whatsapp,
+            // Microcopy anti-keberatan di bawah tombol hero (bisa di-override
+            // per-tenant lewat CMS bila kolomnya ditambahkan nanti).
+            'microcopy' => [
+                'Respon cepat via WhatsApp',
+                'Gratis konsultasi',
+                'Tanpa komitmen',
+            ],
         ];
     }
 

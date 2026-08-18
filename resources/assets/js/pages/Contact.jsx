@@ -25,11 +25,6 @@ export default function Contact() {
         </Head>
         <main className="inner-page">
             <div className="shell">
-                <Reveal className="inner-hero">
-                    <span className="eyebrow">Hubungi kami</span>
-                    <h1>Mari memulai percakapan</h1>
-                    <p>Sampaikan pertanyaan, kebutuhan layanan, atau peluang kolaborasi kepada tim kami.</p>
-                </Reveal>
                 <div className="contact-grid">
                     <div className="contact-info">
                         {contactItems.map(([Icon, label, value]) => (

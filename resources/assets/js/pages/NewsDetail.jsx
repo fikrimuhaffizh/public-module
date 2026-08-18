@@ -14,7 +14,6 @@ export default function NewsDetail() {
         <main className="inner-page">
             <article className="shell shell--article">
                 <div className="article-meta"><span>{announcement.type}</span><span>{announcement.date}</span></div>
-                <h1 className="article-title">{announcement.title}</h1>
                 <img className="article-cover" src={announcement.image} alt={announcement.title} />
                 <div className="prose-content" dangerouslySetInnerHTML={{ __html: announcement.content }} />
             </article>

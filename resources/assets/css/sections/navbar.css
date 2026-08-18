@@ -1,0 +1,110 @@
+/* ============================================================
+   sections/navbar.css — bagian dari landing (dipecah dari landing.css)
+   ============================================================ */
+
+/* ── NAVBAR: logo kiri / tengah / kanan ─────────────────────────── */
+/* Grid 3 kolom membuat logo TERSENTRAL sungguhan & tinggi header tetap
+   76px (sama dgn V1) → tidak bentrok dengan hero di bawahnya.
+   grid-column DIPIN eksplisit agar saat .desktop-nav display:none (mobile)
+   auto-placement tidak menggeser brand ke kiri. */
+.nav-wrap--center { display: grid; grid-template-columns: 1fr auto 1fr; gap: 18px }
+.nav-wrap--center .desktop-nav { grid-column: 1; justify-self: start }
+.nav-wrap--center .brand { grid-column: 2; justify-self: center }
+.nav-wrap--center .nav-actions { grid-column: 3; justify-self: end }
+.nav-wrap--right .desktop-nav { margin-right: auto }
+.nav-right-group { display: flex; align-items: center; gap: 18px; margin-left: auto }
+
+
+/* ===== Navbar Mode 2 — dua baris ===== */
+.site-header--rows .nav-rows-menu {
+    border-top: 1px solid var(--border);
+    padding: 0;
+}
+
+.site-header--rows .nav-rows-menu .desktop-nav {
+    justify-content: center;
+    padding: 11px 0;
+    gap: 6px;
+}
+
+.site-header--rows .nav-rows-menu .desktop-nav a {
+    padding: 6px 14px;
+    border-radius: 999px;
+    transition: background .15s ease, color .15s ease;
+}
+
+.site-header--rows .nav-rows-menu .desktop-nav a:hover {
+    background: color-mix(in srgb, var(--primary) 10%, transparent);
+    color: var(--primary);
+}
+
+@media (max-width: 860px) {
+    .site-header--rows .nav-rows-menu {
+        display: none;
+    }
+}
+
+/* ===== Navbar Mode 3 — tanpa tombol login ===== */
+.site-header--nologin .nav-right-group {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-left: auto;
+}
+
+.site-header--nologin .desktop-nav {
+    margin-right: 0;
+}
+/* ===== Navbar Mode 4 — Dock mengambang (Velora-inspired) ===== */
+/* Dock = pill mengambang tanpa chrome header. !important diperlukan karena
+   rule tema (mis. .theme-enterprise .site-header) menimpa border/background
+   .site-header--dock (specificity lebih tinggi). Override warna section
+   (.sec-colored--bg header) tetap menang — specificity lebih tinggi. */
+.site-header--dock { background: transparent !important; border-bottom: none !important; padding: 20px 0 18px }
+.nav-dock-wrap { display: flex; justify-content: center }
+.nav-dock {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 10px;
+    border-radius: 999px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    box-shadow: 0 14px 44px rgba(15, 23, 42, .12);
+}
+.nav-dock-brand {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--primary) 12%, transparent);
+    color: var(--primary);
+    margin-right: 4px;
+    flex: none;
+}
+.nav-dock-brand .brand-logo { width: 34px; height: 34px; object-fit: contain }
+.nav-dock-brand .brand-mark { display: inline-flex }
+.nav-dock-menu { display: flex; align-items: center; gap: 2px }
+.nav-dock-menu a {
+    display: inline-block;
+    padding: 9px 15px;
+    border-radius: 999px;
+    font-size: 14.5px;
+    font-weight: 500;
+    color: var(--foreground);
+    transition: transform .18s ease, background .18s ease, color .18s ease;
+}
+.nav-dock-menu a:hover {
+    transform: scale(1.12);
+    background: color-mix(in srgb, var(--primary) 10%, transparent);
+    color: var(--primary);
+}
+.nav-dock-cta { margin-left: 6px }
+.site-header--dock .mobile-toggle { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 999px; color: var(--foreground); margin-left: 2px }
+@media (max-width: 900px) {
+    .site-header--dock { padding: 12px 0 10px }
+    .nav-dock { width: 100%; border-radius: 18px; justify-content: space-between }
+    .nav-dock-menu, .nav-dock-cta { display: none }
+}

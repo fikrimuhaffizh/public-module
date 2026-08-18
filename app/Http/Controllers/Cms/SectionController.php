@@ -9,13 +9,14 @@ use Modules\Public\Models\LandingSection;
 use Modules\Public\Models\LandingPageSetting;
 use Modules\Public\Services\LandingPageService;
 use Modules\Account\Services\TenantService;
+use Modules\Public\Http\Requests\SectionBackgroundRequest;
 
 class SectionController extends Controller
 {
     public function __construct(private LandingPageService $landing, private TenantService $tenantService)
     {
         $this->middleware('permission:public.cms.view')->only(['index', 'edit', 'sections']);
-        $this->middleware('permission:public.cms.update')->only(['update', 'updateSection', 'reorderSections', 'editSection', 'toggleSection']);
+        $this->middleware('permission:public.cms.update')->only(['update', 'updateSection', 'reorderSections', 'editSection', 'toggleSection', 'uploadBackground', 'uploadLogo', 'deleteLogo']);
     }
 
     public function index()
@@ -29,7 +30,7 @@ class SectionController extends Controller
             'sections' => $sections,
             'registry' => LandingSection::registry(),
             'template' => $this->landing->template(),
-            'templates' => LandingPageService::TEMPLATES,
+            'templates' => $this->landing->themeKeys(),
             'settings' => LandingPageSetting::forCurrentTenant(),
         ]);
     }
@@ -38,7 +39,7 @@ class SectionController extends Controller
     {
         return view('public::pages.cms.section.settings', [
             'selectedTemplate' => $this->landing->template(),
-            'templates' => LandingPageService::TEMPLATES,
+            'themeGroups' => $this->landing->themeGroups(),
         ]);
     }
 
@@ -61,7 +62,7 @@ class SectionController extends Controller
     public function update(Request $request)
     {
         $data = $request->validate([
-            'landing_template' => ['required', Rule::in(LandingPageService::TEMPLATES)],
+            'landing_template' => ['required', Rule::in($this->landing->themeKeys())],
         ]);
 
         $this->landing->saveTemplate($data['landing_template']);
@@ -200,5 +201,26 @@ class SectionController extends Controller
         }
 
         return response()->json(['success' => true, 'message' => 'Logo berhasil dihapus.']);
+    }
+
+    /**
+     * Upload gambar latar section dari Theme Settings (offcanvas /preview).
+     * Disimpan ke media collection tenant; URL dipakai sebagai --sec-image.
+     */
+    public function uploadBackground(SectionBackgroundRequest $request)
+    {
+        $tenant = $this->tenantService->findById(sys_tenant_id());
+        if (! $tenant) {
+            return response()->json(['message' => 'Tenant tidak ditemukan.'], 404);
+        }
+
+        $media = $tenant->addMedia($request->file('image'))
+            ->toMediaCollection('section_backgrounds');
+
+        return response()->json([
+            'success' => true,
+            'url' => sys_media_url($media),
+            'message' => 'Gambar latar berhasil diupload.',
+        ]);
     }
 }

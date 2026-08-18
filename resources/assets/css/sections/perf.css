@@ -1,0 +1,11 @@
+/* ============================================================
+   sections/perf.css — bagian dari landing (dipecah dari landing.css)
+   ============================================================ */
+
+/* ── Performa: promosi layer untuk animasi transform berjalan ── */
+.client-logos-track,
+.announcement-ticker-track,
+.client-logos-float {
+    will-change: transform;
+}
+

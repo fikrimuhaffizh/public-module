@@ -1,0 +1,20 @@
+/* ============================================================
+   sections/gen-card.css — bagian dari landing (dipecah dari landing.css)
+   ============================================================ */
+
+/* \x{2550}\x{2550} KARTU GENERIK — bahasa visual konsisten untuk Fitur, Produk & Harga.
+   Basis shell (border/radius/latar/hover) dipakai bersama; knob Radius
+   & Elevasi di Theme Settings otomatis bekerja lewat class .gen-card.
+   ════════════════════════════════════════════════════════════════════ */
+.gen-card {
+    border: 1px solid var(--border, #e2e8f0);
+    border-radius: var(--radius, 16px);
+    background: var(--card, var(--background));
+    transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+.gen-card:hover {
+    border-color: color-mix(in srgb, var(--primary) 45%, var(--border, #e2e8f0));
+    transform: translateY(-3px);
+    box-shadow: 0 18px 42px -24px rgba(15, 23, 42, .3);
+}
+/* Kartu Fitur di dalam tilt (Mode 4) — jangan bertabrakan dengan rotasi 3D */

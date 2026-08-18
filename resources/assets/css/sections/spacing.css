@@ -1,0 +1,19 @@
+/* ============================================================
+   sections/spacing.css — bagian dari landing (dipecah dari landing.css)
+   ============================================================ */
+
+/* Normalisasi jarak heading — pretitle tidak mepet dengan section di atas */
+.section-heading {
+    margin-top: 2px;
+    padding-top: 6px;
+}
+
+.client-logos .section-heading,
+.partner-section .section-heading,
+.saas-cta .section-heading,
+.stats-band .section-heading,
+.faq-section .section-heading {
+    margin-bottom: 44px;
+}
+
+

@@ -13,11 +13,6 @@ export default function NewsIndex() {
         </Head>
         <main className="inner-page">
             <div className="shell">
-                <Reveal className="inner-hero">
-                    <span className="eyebrow">Kabar kampus</span>
-                    <h1>Berita dan pengumuman</h1>
-                    <p>Ikuti perkembangan, agenda, dan informasi terbaru dari institusi.</p>
-                </Reveal>
                 <NewsGrid announcements={announcements} editorial={template === 'editorial'} />
             </div>
         </main>

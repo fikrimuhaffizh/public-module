@@ -76,7 +76,7 @@ class SlideshowService
             foreach ($order as $index => $encryptedId) {
                 $id = decryptIdIfEncrypted($encryptedId, false);
                 if ($id) {
-                    Slideshow::where('id', $id)->update(['seq' => $index + 1]);
+                    Slideshow::where((new Slideshow)->getKeyName(), $id)->update(['seq' => $index + 1]);
                 }
             }
 

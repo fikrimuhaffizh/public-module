@@ -1,0 +1,485 @@
+/* ============================================================
+   base.css — bagian dari landing (dipecah dari landing.css)
+   ============================================================ */
+
+/* Generated themes */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --ui-background: 0 0% 100%;
+    --ui-foreground: 215 52% 13%;
+    --ui-card: 0 0% 100%;
+    --ui-card-foreground: 215 52% 13%;
+    --ui-popover: 0 0% 100%;
+    --ui-popover-foreground: 215 52% 13%;
+    --ui-primary: 218 85% 51%;
+    --ui-primary-foreground: 0 0% 100%;
+    --ui-secondary: 214 32% 96%;
+    --ui-secondary-foreground: 215 52% 13%;
+    --ui-muted: 214 32% 96%;
+    --ui-muted-foreground: 215 16% 47%;
+    --ui-accent: 214 32% 96%;
+    --ui-accent-foreground: 215 52% 13%;
+    --ui-destructive: 0 72% 51%;
+    --ui-destructive-foreground: 0 0% 100%;
+    --ui-border: 214 32% 91%;
+    --ui-input: 214 32% 91%;
+    --ui-ring: 218 85% 51%
+}
+
+:root {
+    --background: #fff;
+    --foreground: #102033;
+    --primary: #155eef;
+    --primary-dark: #0b3b91;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --card: #fff;
+    --radius: 1rem
+}
+
+* {
+    box-sizing: border-box
+}
+
+html {
+    scroll-behavior: smooth
+}
+
+body {
+    margin: 0;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-body, 'DM Sans', sans-serif)
+}
+
+a {
+    color: inherit;
+    text-decoration: none
+}
+
+img {
+    display: block;
+    max-width: 100%
+}
+
+.shell {
+    width: min(1180px, calc(100% - 40px));
+    margin: auto
+}
+
+.shell--narrow {
+    max-width: 840px
+}
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 1px solid rgba(226, 232, 240, .8);
+    background: rgba(255, 255, 255, .92);
+    backdrop-filter: blur(18px)
+}
+
+.nav-wrap {
+    height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    font-family: var(--font-heading, Manrope, sans-serif);
+    font-weight: 800
+}
+
+.brand-mark {
+    display: grid;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    border-radius: 13px;
+    background: var(--primary);
+    color: #fff
+}
+
+.brand-logo {
+    max-height: 48px;
+    width: auto;
+    object-fit: contain
+}
+
+.desktop-nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #475569
+}
+
+.desktop-nav a:hover {
+    color: var(--primary)
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px
+}
+
+.mobile-toggle {
+    display: none;
+    border: 0;
+    background: transparent
+}
+
+.mobile-nav {
+    display: none;
+    padding-bottom: 18px
+}
+
+.mobile-nav a {
+    display: block;
+    padding: 10px 0
+}
+
+.ui-button {
+    display: inline-flex;
+    min-height: 42px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 0 18px;
+    background: var(--primary);
+    color: #fff;
+    font: 600 14px var(--font-body, 'DM Sans', sans-serif);
+    cursor: pointer;
+    transition: .2s
+}
+
+.ui-button:hover {
+    transform: translateY(-1px);
+    filter: brightness(.95)
+}
+
+.ui-button--outline {
+    border-color: var(--border);
+    background: var(--card);
+    color: var(--foreground)
+}
+
+.ui-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--card);
+    box-shadow: 0 10px 35px rgba(15, 23, 42, .05)
+}
+
+.ui-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    width: max-content;
+    border-radius: 999px;
+    padding: 6px 11px;
+    background: #e8f0ff;
+    color: #174ea6;
+    font-size: 12px;
+    font-weight: 700
+}
+
+.hero {
+    position: relative;
+    overflow: hidden
+}
+
+.hero--institutional {
+    min-height: 610px;
+    background-position: center;
+    background-size: cover;
+    color: #fff
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    min-height: 610px;
+    max-width: 760px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start
+}
+
+.hero h1,
+.editorial-hero h1 {
+    margin: 18px 0;
+    font: 800 clamp(42px, 6vw, 76px)/1.04 var(--font-heading, Manrope, sans-serif);
+    letter-spacing: -.045em
+}
+
+.hero p {
+    max-width: 680px;
+    margin: 0;
+    color: #dbeafe;
+    font-size: 19px;
+    line-height: 1.7
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 30px
+}
+
+.trust-strip {
+    border-bottom: 1px solid var(--border);
+    background: #fff
+}
+
+.trust-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    padding: 28px 0
+}
+
+.trust-grid>div {
+    display: flex;
+    gap: 14px
+}
+
+.trust-grid svg {
+    flex: none;
+    color: var(--primary)
+}
+
+.trust-grid strong,
+.trust-grid span {
+    display: block
+}
+
+.trust-grid span {
+    margin-top: 3px;
+    color: var(--muted);
+    font-size: 13px
+}
+
+.section {
+    padding: 90px 0
+}
+
+/* Selang-seling latar section (paritas = urutan visual di halaman).
+   Prod: section child langsung; Dev: dibungkus <span display:contents> (guard).
+   Kelas section ber-latar sendiri (.section--dark / .section--tint / .hero /
+   .stats-band) di-exclude agar tetap menang; section custom warna (.sec-colored)
+   tidak tersentuh. Setiap tema mendefinisikan --section-alt. */
+:where([class^="theme-"]) > section:not(.section--dark):not(.section--tint):not(.hero):not(.stats-band):not(.pageheader):nth-of-type(even) { background: var(--section-alt, transparent) }
+:where([class^="theme-"]) > span:nth-of-type(even) > section:not(.section--dark):not(.section--tint):not(.hero):not(.stats-band):not(.pageheader) { background: var(--section-alt, transparent) }
+
+.section--dark {
+    background: #091b31;
+    color: #fff
+}
+
+.section--tint {
+    background: var(--tint, #f5f8ff)
+}
+
+.section-heading {
+    max-width: 720px;
+    margin-bottom: 38px
+}
+
+.section-heading h2,
+.editorial-pages h2 {
+    margin: 8px 0 0;
+    font: 800 clamp(30px, 4vw, 48px)/1.12 var(--font-heading, Manrope, sans-serif);
+    letter-spacing: -.035em
+}
+
+.section-heading p {
+    margin: 14px 0 0;
+    color: var(--muted);
+    font-size: 17px;
+    line-height: 1.7
+}
+
+.eyebrow {
+    text-transform: uppercase;
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .14em
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px
+}
+
+.feature-card {
+    padding: 26px;
+    transition: .2s
+}
+
+.feature-card:hover {
+    transform: translateY(-4px);
+    border-color: #a9c4ff
+}
+
+.feature-icon {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    place-items: center;
+    border-radius: var(--radius, 12px);
+    background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 16%, transparent), color-mix(in srgb, var(--primary) 6%, transparent));
+    color: var(--primary);
+    line-height: 1
+}
+
+.feature-card h3 {
+    margin: 20px 0 8px;
+    font: 700 19px var(--font-heading, Manrope, sans-serif)
+}
+
+.feature-card p,
+.news-card p {
+    color: var(--muted);
+    line-height: 1.65
+}
+
+.text-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--primary);
+    font-size: 14px;
+    font-weight: 700
+}
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px
+}
+
+.news-card {
+    overflow: hidden
+}
+
+.news-image {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover
+}
+
+.news-content {
+    padding: 22px
+}
+
+.news-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    color: var(--muted);
+    font-size: 12px
+}
+
+.news-card h3 {
+    margin: 14px 0 8px;
+    font: 700 20px/1.35 var(--font-heading, Manrope, sans-serif)
+}
+
+.section--dark .news-card {
+    border-color: #203852;
+    background: #102740
+}
+
+.section--dark .news-card p,
+.section--dark .news-meta {
+    color: #aebfd2
+}
+
+.faq-list {
+    border-top: 1px solid var(--border)
+}
+
+.ui-accordion-item {
+    border-bottom: 1px solid var(--border)
+}
+
+.ui-accordion-trigger {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    border: 0;
+    background: transparent;
+    padding: 22px 0;
+    color: inherit;
+    text-align: left;
+    font: 700 16px var(--font-heading, Manrope, sans-serif);
+    cursor: pointer
+}
+
+.ui-accordion-chevron {
+    transition: transform .2s
+}
+
+.ui-accordion-trigger[data-state=open] .ui-accordion-chevron {
+    transform: rotate(180deg)
+}
+
+.ui-accordion-content {
+    overflow: hidden;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7
+}
+
+.ui-accordion-inner {
+    padding: 0 30px 22px 0
+}
+
+.site-footer {
+    background: #061426;
+    color: #c9d5e4;
+    padding: 58px 0
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 50px
+}
+
+.footer-grid>div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px
+}
+
+.brand--footer {
+    color: #fff
+}
+
+.footer-grid p {
+    max-width: 440px;
+    line-height: 1.7
+}
+

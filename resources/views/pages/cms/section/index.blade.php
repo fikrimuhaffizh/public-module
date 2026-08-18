@@ -118,7 +118,7 @@
         <!-- Right: Section Editor Panel -->
         <div class="col-12 col-lg-7">
             <x-ui.card id="section-editor-panel" >
-                <x-ui.card-header title="{!! '<span id=\'section-editor-title\'>Pilih Section</span>' !!}">
+                <x-ui.card-header title="Pilih Section">
                     <x-slot:actions>
                         <div class="d-flex align-items-center gap-2" id="panel-actions">
                             <button id="save-section-btn" class="btn btn-sm btn-primary" style="display: none;">
@@ -288,10 +288,19 @@ document.addEventListener('DOMContentLoaded', function () {
         sectionEl.classList.add('selected');
         selectedSectionEl = sectionEl;
 
+        // Pastikan panel editor terlihat (layout menumpuk di layar sempit)
+        const editorPanel = document.getElementById('section-editor-panel');
+        if (editorPanel) {
+            const panelRect = editorPanel.getBoundingClientRect();
+            if (panelRect.top < 0 || panelRect.bottom > window.innerHeight) {
+                editorPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
         const editUrl = sectionEl.dataset.editUrl;
         const manageUrl = sectionEl.dataset.manageUrl;
         const section = JSON.parse(sectionEl.dataset.section);
-        const editorTitle = document.getElementById('section-editor-title');
+        const editorTitle = document.querySelector('#section-editor-panel .card-title');
         const editorBody = document.getElementById('section-editor-body');
 
         editorTitle.textContent = section.section_name;
@@ -358,7 +367,7 @@ document.addEventListener('DOMContentLoaded', function () {
             selectedSectionEl.classList.remove('selected');
             selectedSectionEl = null;
         }
-        document.getElementById('section-editor-title').textContent = 'Pilih Section';
+        document.querySelector('#section-editor-panel .card-title').textContent = 'Pilih Section';
         document.getElementById('section-editor-body').innerHTML = '<div class="text-center text-muted py-8"><i class="ti ti-layout-2 fs-2 mb-2 d-block"></i><p class="mb-0">Klik salah satu section di daftar sebelah kiri untuk mengeditnya</p></div>';
         this.style.display = 'none';
         saveBtn.style.display = 'none';

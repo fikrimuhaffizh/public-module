@@ -42,6 +42,62 @@ export function sectionText(section, field, fallback = '') {
     return section?.[field] || fallback;
 }
 
+/** Demo paket harga — dipakai bila section price belum punya data di settings. */
+const DEFAULT_PRICE_PACKAGES = [
+    {
+        name: 'Starter',
+        description: 'Untuk memulai kehadiran digital.',
+        price: '99.000',
+        period: 'bulan',
+        features: ['Halaman profil bisnis', 'Kontak & lokasi', 'Hingga 3 produk'],
+        ctaText: 'Pilih Starter',
+        ctaLink: '#kontak',
+    },
+    {
+        name: 'Bisnis',
+        description: 'Paling populer untuk usaha berkembang.',
+        price: '249.000',
+        period: 'bulan',
+        features: ['Semua fitur Starter', 'Daftar harga & paket', 'Foto produk tanpa batas', 'Dukungan prioritas'],
+        ctaText: 'Pilih Bisnis',
+        ctaLink: '#kontak',
+        highlight: true,
+    },
+    {
+        name: 'Premium',
+        description: 'Untuk brand yang ingin tampil penuh.',
+        price: '499.000',
+        period: 'bulan',
+        features: ['Semua fitur Bisnis', 'Navigasi & halaman custom', 'WhatsApp terintegrasi', 'Pendampingan desain'],
+        ctaText: 'Pilih Premium',
+        ctaLink: '#kontak',
+    },
+];
+
+
+
+
+/**
+ * Baca daftar paket harga dari section.settings.packages (array JSON yang
+ * dikelola lewat CMS Section → Harga), fallback ke demo bila kosong.
+ * Normalisasi: harga bisa string ("99.000") atau angka (99000).
+ */
+export function pricePackages(section) {
+    const raw = section?.settings?.packages;
+    if (Array.isArray(raw) && raw.length) {
+        return raw.map(pkg => ({
+            name: pkg.name || 'Paket',
+            description: pkg.description || '',
+            price: pkg.price == null ? '0' : String(pkg.price),
+            period: pkg.period || '',
+            features: Array.isArray(pkg.features) ? pkg.features : [],
+            highlight: Boolean(pkg.highlight),
+            ctaText: pkg.ctaText || 'Pilih paket',
+            ctaLink: pkg.ctaLink || '#kontak',
+        }));
+    }
+    return DEFAULT_PRICE_PACKAGES;
+}
 export function combinedText(section, fallback = '') {
     const subtitle = section?.subtitle?.trim();
     const postTitle = section?.post_title?.trim();
@@ -256,39 +312,18 @@ export function ValueStrip() {
     );
 }
 
-export function PartnerCloud({ partners, section }) {
-    if (!partners?.length) return null;
-    const limit = section?.limit_data;
-    const visiblePartners = limit ? partners.slice(0, limit) : partners;
-    const heading = sectionHeading(section, {
-        eyebrow: 'Dipercaya dan berkolaborasi',
-        title: 'Partner dalam ekosistem kami',
-    });
+
+export function TestimonialRating({ rating, size = 16 }) {
+    const count = Math.min(Math.max(parseInt(rating, 10) || 5, 1), 5);
 
     return (
-        <section className="partner-section">
-            <div className="shell">
-                <Reveal className="partner-heading">
-                    {heading.eyebrow && <span className="eyebrow">{heading.eyebrow}</span>}
-                    {heading.title && <h2>{heading.title}</h2>}
-                    {heading.text && <p>{heading.text}</p>}
-                </Reveal>
-                <div className="partner-cloud">
-                    {visiblePartners.map(partner => {
-                        const content = partner.logo
-                            ? <img src={partner.logo} alt={partner.name} />
-                            : <strong>{partner.name}</strong>;
-
-                        return partner.url
-                            ? <a key={partner.id} href={partner.url} target="_blank" rel="noreferrer" title={partner.name}>{content}</a>
-                            : <div key={partner.id} title={partner.name}>{content}</div>;
-                    })}
-                </div>
-            </div>
-        </section>
+        <div className="testimonial-rating" aria-label={`${count} dari 5 bintang`}>
+            {Array.from({ length: count }).map((_, index) => (
+                <Star key={index} size={size} fill="currentColor" aria-hidden="true" />
+            ))}
+        </div>
     );
 }
-
 export function TestimonialSection({ testimonials, section }) {
     if (!testimonials?.length) return null;
     const limit = section?.limit_data || 6;
@@ -309,11 +344,7 @@ export function TestimonialSection({ testimonials, section }) {
             <Stagger className="testimonial-grid">
                 {testimonials.slice(0, limit).map(testimonial => (
                     <SpotlightCard key={testimonial.id} className="testimonial-card">
-                        <div className="testimonial-rating">
-                            {Array.from({ length: testimonial.rating || 5 }).map((_, index) => (
-                                <Star key={index} size={16} fill="currentColor" />
-                            ))}
-                        </div>
+                        <TestimonialRating rating={testimonial.rating} />
                         <blockquote>“{testimonial.quote}”</blockquote>
                         <div className="testimonial-person">
                             {testimonial.photo

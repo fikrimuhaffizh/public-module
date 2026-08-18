@@ -1,0 +1,31 @@
+/* ============================================================
+   sections/stats.css — bagian dari landing (dipecah dari landing.css)
+   ============================================================ */
+
+/* ── STATISTIK V1 / V2 / V3 ─────────────────────────────────────── */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 26px; text-align: center }
+.stats-cell strong { display: block; font: 800 clamp(54px, 6.5vw, 84px) var(--font-heading, Manrope, sans-serif); color: var(--foreground) }
+.stats-cell span { color: var(--muted); font-size: 16px }
+.stats-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px }
+.stats-card {
+    border: 1px solid var(--border); border-radius: 16px; padding: 24px 20px;
+    background: var(--card); text-align: center; box-shadow: 0 10px 24px rgba(15, 23, 42, .06);
+}
+.stats-card .stats-card-icon { font-size: 26px; color: var(--primary); display: block; margin-bottom: 8px }
+.stats-card strong { display: block; font: 800 clamp(50px, 6vw, 76px) var(--font-heading, Manrope, sans-serif) }
+.stats-card span { color: var(--muted); font-size: 15px }
+.stats-band { background: var(--primary); color: #fff; padding: 56px 0 }
+.stats-band .section-heading h2, .stats-band .section-heading p { color: #fff }
+.stats-band .section-heading .eyebrow { color: rgba(255, 255, 255, .7) }
+.stats-band-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); text-align: center }
+.stats-band-cell { padding: 10px 20px; border-left: 1px solid rgba(255, 255, 255, .25) }
+.stats-band-cell:first-child { border-left: 0 }
+.stats-band-cell strong { display: block; font: 800 clamp(50px, 6vw, 76px) var(--font-heading, Manrope, sans-serif) }
+.stats-band-cell span { color: rgba(255, 255, 255, .85); font-size: 15px }
+
+
+/* ── Mode 4 baru: Statistik count-up, Testimoni rotator, Klien awan logo ── */
+.stats-cell strong,
+.stats-card strong,
+.stats-band-cell strong { font-variant-numeric: tabular-nums }
+

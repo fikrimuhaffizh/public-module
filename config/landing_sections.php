@@ -1,12 +1,50 @@
 <?php
 
+if (!function_exists('autoVariants')) {
+// Auto-discovery: daftar mode dibaca dari file komponen section
+// (resources/assets/js/components/sections/<dir>/Mode{n}.jsx) - sama seperti
+// registry.js frontend. Developer cukup menambah file Mode{n}.jsx, mode
+// otomatis terdaftar dengan nama "Mode {n}".
+function autoVariants(string $dir, string $prefix): array
+{
+    $files = glob(__DIR__ . "/../resources/assets/js/components/sections/{$dir}/Mode[0-9]*.jsx") ?: [];
+    $variants = [];
+    foreach ($files as $file) {
+        if (preg_match('/Mode(\d+)\.jsx$/', $file, $m)) {
+            $n = (int) $m[1];
+            $variants[$prefix . '_' . $n] = "Mode {$n}";
+        }
+    }
+    ksort($variants, SORT_NATURAL);
+    return $variants;
+}
+
+}
+
 // Base sections configuration
 $baseSections = [
+    'topbar' => [
+        'name' => 'Top Bar',
+        'area' => 'top',
+        'component' => 'TopBarSection',
+        'variants' => autoVariants('topbar', 'topbar'),
+        'default_variant' => 'topbar_1',
+        'default_limit' => null,
+        'manage_data_route' => null,
+    ],
+        'pageheader' => [
+        'name' => 'Page Header',
+        'area' => 'top',
+        'component' => 'PageHeaderSection',
+        'variants' => autoVariants('pageheader', 'pageheader'),
+        'default_variant' => 'pageheader_1',
+        'default_limit' => 6,
+    ],
     'navbar' => [
         'name' => 'Navbar',
         'area' => 'top',
         'component' => 'NavbarSection',
-        'variants' => ['navbar_1' => 'Simple Navbar', 'navbar_2' => 'Navbar + CTA'],
+        'variants' => autoVariants('navbar', 'navbar'),
         'default_variant' => 'navbar_1',
         'default_limit' => null,
         'manage_data_route' => null,
@@ -15,7 +53,7 @@ $baseSections = [
         'name' => 'Hero',
         'area' => 'top',
         'component' => 'HeroSection',
-        'variants' => ['hero_1' => 'Teks kiri, gambar kanan', 'hero_2' => 'Centered Hero'],
+        'variants' => autoVariants('hero', 'hero'),
         'default_variant' => 'hero_1',
         'default_limit' => 1,
         'manage_data_route' => null,
@@ -24,7 +62,7 @@ $baseSections = [
         'name' => 'Produk / Modul',
         'area' => 'middle',
         'component' => 'ProductSection',
-        'variants' => ['product_1' => 'Card grid', 'product_2' => 'Horizontal showcase'],
+        'variants' => autoVariants('product', 'product'),
         'default_variant' => 'product_1',
         'default_limit' => 6,
         'manage_data_route' => 'cms.product.index',
@@ -33,8 +71,8 @@ $baseSections = [
         'name' => 'Statistik',
         'area' => 'middle',
         'component' => 'StatsSection',
-        'variants' => ['stats_1' => 'Counter sederhana', 'stats_2' => 'Card statistik'],
-        'default_variant' => 'stats_1',
+        'variants' => autoVariants('statistic', 'statistic'),
+        'default_variant' => 'statistic_1',
         'default_limit' => 4,
         'manage_data_route' => 'cms.statistic.index',
     ],
@@ -42,7 +80,7 @@ $baseSections = [
         'name' => 'Fitur',
         'area' => 'middle',
         'component' => 'FeatureSection',
-        'variants' => ['feature_1' => 'Grid 3 kolom', 'feature_2' => 'Icon card'],
+        'variants' => autoVariants('feature', 'feature'),
         'default_variant' => 'feature_1',
         'default_limit' => 6,
         'manage_data_route' => 'cms.feature.index',
@@ -51,7 +89,7 @@ $baseSections = [
         'name' => 'Testimoni',
         'area' => 'middle',
         'component' => 'TestimonialSection',
-        'variants' => ['testimonial_1' => 'Card grid', 'testimonial_2' => 'Highlighted'],
+        'variants' => autoVariants('testimonial', 'testimonial'),
         'default_variant' => 'testimonial_1',
         'default_limit' => 3,
         'manage_data_route' => 'cms.testimonial.index',
@@ -60,8 +98,8 @@ $baseSections = [
         'name' => 'Client',
         'area' => 'middle',
         'component' => 'ClientSection',
-        'variants' => ['logos_1' => 'Grid logo', 'logos_2' => 'Logo carousel'],
-        'default_variant' => 'logos_1',
+        'variants' => autoVariants('client', 'client'),
+        'default_variant' => 'client_1',
         'default_limit' => 8,
         'manage_data_route' => 'cms.client.index',
     ],
@@ -69,7 +107,7 @@ $baseSections = [
         'name' => 'FAQ',
         'area' => 'middle',
         'component' => 'FaqSection',
-        'variants' => ['faq_1' => 'Accordion', 'faq_2' => 'Dua kolom'],
+        'variants' => autoVariants('faq', 'faq'),
         'default_variant' => 'faq_1',
         'default_limit' => 8,
         'manage_data_route' => 'cms.faq.index',
@@ -78,8 +116,8 @@ $baseSections = [
         'name' => 'Pengumuman',
         'area' => 'middle',
         'component' => 'AnnouncementSection',
-        'variants' => ['announcement_1' => 'News grid', 'announcement_2' => 'List kompak'],
-        'default_variant' => 'announcement_1',
+        'variants' => autoVariants('announcement', 'pengumuman'),
+        'default_variant' => 'pengumuman_1',
         'default_limit' => 6,
         'manage_data_route' => 'cms.pengumuman.index',
     ],
@@ -87,16 +125,25 @@ $baseSections = [
         'name' => 'Call To Action',
         'area' => 'bottom',
         'component' => 'CtaSection',
-        'variants' => ['cta_1' => 'Simple CTA', 'cta_2' => 'CTA background image'],
+        'variants' => autoVariants('cta', 'cta'),
         'default_variant' => 'cta_1',
         'default_limit' => 1,
         'manage_data_route' => 'cms.cta.index',
+    ],
+    'price' => [
+        'name' => 'Harga / Paket',
+        'area' => 'middle',
+        'component' => 'PriceSection',
+        'variants' => autoVariants('price', 'price'),
+        'default_variant' => 'price_1',
+        'default_limit' => 3,
+        'manage_data_route' => null,
     ],
     'footer' => [
         'name' => 'Footer',
         'area' => 'bottom',
         'component' => 'FooterSection',
-        'variants' => ['footer_1' => 'Simple footer', 'footer_2' => 'Footer lengkap'],
+        'variants' => autoVariants('footer', 'footer'),
         'default_variant' => 'footer_2',
         'default_limit' => null,
         'manage_data_route' => null,

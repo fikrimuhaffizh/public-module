@@ -10,12 +10,15 @@ class PublicServiceProvider extends BaseModuleServiceProvider
 
     protected string $nameLower = 'public';
 
-    protected array $commands = [];
+    protected array $commands = [
+        // Daftar command khusus modul Public (bila ada).
+    ];
 
     public function boot(): void
     {
         parent::boot();
         $this->mergeConfigFrom(module_path($this->name, 'config/landing_sections.php'), 'landing_sections');
+        $this->mergeConfigFrom(module_path($this->name, 'config/themes.php'), 'public_themes');
     }
 
     protected function menu(): array
@@ -28,22 +31,6 @@ class PublicServiceProvider extends BaseModuleServiceProvider
                 'active_routes' => ['cms.dashboard'],
                 'icon'          => 'home',
                 'permission'    => null,
-            ],
-            [
-                'priority'      => 1,
-                'title'         => 'Section',
-                'route'         => 'cms.section.index',
-                'active_routes' => ['cms.section.index', 'cms.section.edit', 'cms.section.update', 'cms.section.toggle', 'cms.section.reorder'],
-                'icon'          => 'layout-2',
-                'permission'    => 'public.cms.view',
-            ],
-            [
-                'priority'      => 2,
-                'title'         => 'Template',
-                'route'         => 'cms.section.template',
-                'active_routes' => ['cms.section.template', 'cms.section.template.update'],
-                'icon'          => 'palette',
-                'permission'    => 'public.cms.view',
             ],
             [
                 'priority'      => 3,
@@ -151,19 +138,19 @@ class PublicServiceProvider extends BaseModuleServiceProvider
             ],
             [
                 'priority'      => 50,
-                'title'         => 'Pengaturan',
-                'route'         => 'cms.settings.edit',
-                'active_routes' => ['cms.settings.*'],
-                'icon'          => 'settings',
+                'title'         => 'Media Sosial',
+                'route'         => 'cms.media-social.edit',
+                'active_routes' => ['cms.media-social.*'],
+                'icon'          => 'share',
                 'permission'    => 'public.cms.settings.view',
             ],
             [
-                'priority'      => 99,
-                'title'         => 'Pratinjau',
-                'route'         => 'public.preview',
-                'active_routes' => ['public.preview'],
-                'icon'          => 'eye',
-                'permission'    => null
+                'priority'      => 51,
+                'title'         => 'SEO',
+                'route'         => 'cms.seo.edit',
+                'active_routes' => ['cms.seo.*'],
+                'icon'          => 'search',
+                'permission'    => 'public.cms.settings.view',
             ],
         ];
     }

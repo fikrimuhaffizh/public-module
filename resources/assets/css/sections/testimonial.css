@@ -1,0 +1,125 @@
+/* ============================================================
+   sections/testimonial.css — bagian dari landing (dipecah dari landing.css)
+   ============================================================ */
+
+/* ── TESTIMONI V2 / V3 ──────────────────────────────────────────── */
+.testimonial-spotlight { text-align: center; max-width: 760px; margin: 0 auto }
+.testimonial-spotlight blockquote {
+    font: 500 clamp(20px, 3vw, 28px)/1.5 var(--font-heading, Manrope, sans-serif);
+    color: var(--foreground); margin: 0 0 24px;
+}
+.testimonial-spotlight figcaption { display: flex; flex-direction: column; align-items: center; gap: 4px }
+.testimonial-avatar {
+    display: grid; width: 52px; height: 52px; place-items: center; border-radius: 50%;
+    background: color-mix(in srgb, var(--primary) 14%, var(--card)); color: var(--primary);
+    font: 800 18px var(--font-heading, Manrope, sans-serif);
+}
+.testimonial-spotlight figcaption img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover }
+.testimonial-spotlight figcaption span { color: var(--muted); font-size: 13px }
+.testimonial-spotlight .testimonial-rating {
+    justify-content: center;
+    margin-bottom: 16px
+}
+
+.testimonial-row .testimonial-rating {
+    margin-bottom: 8px
+}
+
+.testimonial-list { display: flex; flex-direction: column }
+.testimonial-row { display: flex; gap: 18px; padding: 22px 0; border-bottom: 1px solid var(--border); align-items: flex-start }
+.testimonial-row:last-child { border-bottom: 0 }
+.testimonial-row p { margin: 0 0 6px; color: var(--foreground) }
+.testimonial-row span { color: var(--muted); font-size: 13px }
+/* ===== Testimoni Mode 5 — Animated list (Velora-inspired) ===== */
+.testimonial-animlist { max-width: 680px; margin: 0 auto }
+.testimonial-animlist__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.testimonial-animlist__item {
+    position: relative;
+    display: flex;
+    gap: 16px;
+    padding: 20px 22px 18px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius, 16px);
+    background: var(--card, var(--background));
+    overflow: hidden;
+    transition: border-color .4s ease, background .4s ease;
+}
+.testimonial-animlist__item.is-active {
+    border-color: color-mix(in srgb, var(--primary) 42%, var(--border));
+    background: color-mix(in srgb, var(--primary) 5%, var(--card, var(--background)));
+}
+.testimonial-animlist__avatar { flex: none }
+.testimonial-animlist__avatar img,
+.testimonial-animlist__avatar .testimonial-avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: grid;
+    place-items: center;
+    font-size: 17px;
+}
+.testimonial-animlist__body { min-width: 0; display: flex; flex-direction: column; gap: 8px }
+.testimonial-animlist__head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap }
+.testimonial-animlist__head strong { font-size: 15px }
+.testimonial-animlist__head > span { color: var(--muted); font-size: 12.5px }
+.testimonial-animlist__head .testimonial-rating { margin-left: auto }
+.testimonial-animlist__body p {
+    margin: 0;
+    color: var(--foreground);
+    font-size: 14.5px;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.testimonial-animlist__progress {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 100%;
+    transform-origin: left;
+    background: var(--primary);
+    animation: animlist-progress 5s linear forwards;
+}
+@keyframes animlist-progress {
+    from { transform: scaleX(0) }
+    to   { transform: scaleX(1) }
+}
+.testimonial-animlist.is-paused .testimonial-animlist__progress { animation-play-state: paused }
+.testimonial-animlist__dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 22px;
+}
+.testimonial-animlist__dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--foreground) 22%, transparent);
+    cursor: pointer;
+    transition: width .3s ease, background .3s ease;
+}
+.testimonial-animlist__dot.is-active {
+    width: 26px;
+    background: var(--primary);
+}
+@media (max-width: 620px) {
+    .testimonial-animlist__item { padding: 16px }
+    .testimonial-animlist__head .testimonial-rating { margin-left: 0 }
+}
+@media (prefers-reduced-motion: reduce) {
+    .testimonial-animlist__progress { animation: none }
+}

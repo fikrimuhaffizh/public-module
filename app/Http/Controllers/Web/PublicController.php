@@ -3,8 +3,11 @@
 namespace Modules\Public\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use App\Http\Middleware\HandleInertiaRequests;
 use Inertia\Inertia;
 use Inertia\Response;
 use Modules\Public\Models\Page;
@@ -13,7 +16,18 @@ use Modules\Public\Services\LandingPageService;
 
 class PublicController extends Controller
 {
-    public function __construct(private LandingPageService $landing) {}
+    public function __construct(private LandingPageService $landing)
+    {
+        // Dipakai juga sebagai root controller (LANDING_CONTROLLER) yang tidak
+        // membawa middleware Inertia di route-nya — lihat routes/web.php.
+        $this->middleware(HandleInertiaRequests::class);
+    }
+
+    /** Entry point untuk route '/' saat modul ini dipakai sebagai LANDING_CONTROLLER. */
+    public function index(): Response
+    {
+        return $this->home();
+    }
 
     public function home(): Response
     {
@@ -33,7 +47,14 @@ class PublicController extends Controller
     {
         $template = $this->landing->template();
 
-        return Inertia::render('Contact', $this->landing->shared($template));
+        return Inertia::render('Contact', [
+            ...$this->landing->shared($template),
+            'header' => [
+                'eyebrow' => 'Hubungi kami',
+                'title' => 'Mari memulai percakapan',
+                'excerpt' => 'Sampaikan pertanyaan, kebutuhan layanan, atau peluang kolaborasi kepada tim kami.',
+            ],
+        ]);
     }
 
     public function sendContact(Request $request): RedirectResponse
@@ -71,5 +92,56 @@ class PublicController extends Controller
         $template = $this->landing->template();
 
         return Inertia::render('NewsIndex', $this->landing->newsIndex($template));
+    }
+
+    /**
+     * Simpan desain dari tombol "Terapkan ke landing" di /preview.
+     * Menerima state customizer (palet, font, radius, dll.) + variant/warna
+     * section, lalu menyimpan tema aktif + desain penuh per-tenant.
+     */
+    public function saveDesign(Request $request): JsonResponse
+    {
+        $data = $request->validate([
+            'template' => ['required', 'string', Rule::in($this->landing->themeKeys())],
+            'paletteKey' => ['nullable', 'string', 'max:60'],
+            'font' => ['nullable', 'string', 'max:60'],
+            'card' => ['nullable', 'string', 'max:30'],
+            'nav' => ['nullable', 'string', 'max:30'],
+            'button' => ['nullable', 'string', 'max:30'],
+            'radius' => ['nullable', 'string', 'max:30'],
+            'density' => ['nullable', 'string', 'max:30'],
+            'elevation' => ['nullable', 'string', 'max:30'],
+            'dark' => ['nullable', 'boolean'],
+            'heroFill' => ['nullable', 'boolean'],
+            'customCss' => ['nullable', 'string', 'max:20000'],
+            'sectionVariants' => ['nullable', 'array'],
+            'sectionColors' => ['nullable', 'array'],
+            'sectionSettings' => ['nullable', 'array'],
+        ]);
+
+        $design = [
+            'paletteKey' => $data['paletteKey'] ?? null,
+            'font' => $data['font'] ?? null,
+            'card' => $data['card'] ?? null,
+            'nav' => $data['nav'] ?? null,
+            'button' => $data['button'] ?? null,
+            'radius' => $data['radius'] ?? null,
+            'density' => $data['density'] ?? null,
+            'elevation' => $data['elevation'] ?? null,
+            'dark' => (bool) ($data['dark'] ?? false),
+            'heroFill' => (bool) ($data['heroFill'] ?? true),
+            'customCss' => $data['customCss'] ?? '',
+            'sectionVariants' => $data['sectionVariants'] ?? [],
+            'sectionColors' => $data['sectionColors'] ?? [],
+        ];
+
+        $this->landing->saveDesign($data['template'], $design);
+
+        // Pengaturan per-section (mis. navbar → show_topbar) ditulis ke settings section DB.
+        if (!empty($data['sectionSettings']) && is_array($data['sectionSettings'])) {
+            $this->landing->saveSectionSettings($data['sectionSettings']);
+        }
+
+        return response()->json(['ok' => true, 'template' => $data['template']]);
     }
 }

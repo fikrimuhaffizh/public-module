@@ -1,0 +1,346 @@
+/* ============================================================
+   sections/client.css — bagian dari landing (dipecah dari landing.css)
+   ============================================================ */
+
+/* ===== Section: Klien/Logo (client) ===== */
+.client-logos {
+    padding: 90px 0;
+}
+
+.client-logos--grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+}
+
+.client-logos--grid>a,
+.client-logos--grid>div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 22px 16px;
+    min-height: 96px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius, 14px);
+    background: var(--card, var(--background));
+    text-decoration: none;
+    transition: border-color .15s ease, transform .15s ease, box-shadow .15s ease;
+}
+
+.client-logos--grid>a:hover {
+    border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(15, 23, 42, .08);
+}
+
+.client-logos--grid img {
+    max-height: 40px;
+    max-width: 120px;
+    width: auto;
+    object-fit: contain;
+    filter: grayscale(1);
+    opacity: .72;
+    transition: filter .2s ease, opacity .2s ease;
+}
+
+.client-logos--grid>a:hover img {
+    filter: none;
+    opacity: 1;
+}
+
+.client-logos-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.3;
+}
+
+.client-logos-initial {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--primary) 12%, transparent);
+    color: var(--primary);
+    font-weight: 800;
+    font-size: 17px;
+}
+
+/* Marquee — strip logo berjalan */
+.client-logos--marquee {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+
+.client-logos-track {
+    display: flex;
+    align-items: center;
+    gap: 56px;
+    width: max-content;
+    padding: 10px 0;
+    animation: client-marquee 30s linear infinite;
+}
+
+.client-logos--marquee:hover .client-logos-track {
+    animation-play-state: paused;
+}
+
+.client-logos-cell {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex: none;
+    padding: 12px 22px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius, 12px);
+    background: var(--card, var(--background));
+}
+
+.client-logos-cell img {
+    max-height: 34px;
+    max-width: 110px;
+    width: auto;
+    object-fit: contain;
+    filter: grayscale(1);
+    opacity: .72;
+}
+
+.client-logos-cell .client-logos-initial {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+}
+
+@keyframes client-marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .client-logos-track {
+        animation: none;
+    }
+}
+
+
+/* Showcase — panggung logo interaktif (Klien/Logo V2) */
+.client-logos--showcase {
+    touch-action: pan-y;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 20px
+}
+
+.client-logos-nav {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    flex: none;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: var(--card, var(--background));
+    color: var(--muted);
+    cursor: pointer;
+    transition: border-color .15s ease, color .15s ease, transform .15s ease, box-shadow .15s ease
+}
+
+.client-logos-nav:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(15, 23, 42, .08)
+}
+
+.client-logos-stage {
+    min-height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.client-logos-stage {
+    transition: transform .28s ease, opacity .28s ease
+}
+
+.client-logos-stage.is-dragging {
+    transition: none;
+    opacity: .85
+}
+
+.client-logos-stage__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    min-width: 280px;
+    padding: 34px 44px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius, 16px);
+    background: var(--card, var(--background));
+    box-shadow: 0 10px 30px rgba(15, 23, 42, .06);
+    animation: client-stage-in .35s ease both
+}
+
+.client-logos-stage__inner img {
+    max-height: 72px;
+    max-width: 190px;
+    width: auto;
+    object-fit: contain
+}
+
+.client-logos-stage__inner strong {
+    color: var(--foreground);
+    font-size: 17px;
+    text-align: center
+}
+
+.client-logos-stage__inner a {
+    color: var(--primary);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none
+}
+
+.client-logos-stage__inner a:hover {
+    text-decoration: underline
+}
+
+.client-logos-strip {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px
+}
+
+.client-logos-thumb {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 48px;
+    padding: 6px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius, 10px);
+    background: var(--card, var(--background));
+    cursor: pointer;
+    opacity: .6;
+    transition: opacity .15s ease, border-color .15s ease, transform .15s ease
+}
+
+.client-logos-thumb img {
+    max-height: 30px;
+    max-width: 52px;
+    object-fit: contain
+}
+
+.client-logos-thumb .client-logos-initial {
+    width: 28px;
+    height: 28px;
+    font-size: 12px
+}
+
+.client-logos-thumb:hover {
+    opacity: 1;
+    transform: translateY(-2px)
+}
+/* ===== Klien/Logo Mode 5 — Orbiting circles (Velora-inspired) ===== */
+.orbit-stage {
+    position: relative;
+    width: 460px;
+    height: 460px;
+    margin: 34px auto 0;
+}
+.orbit-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+    background: var(--card);
+    border: 1px solid var(--border);
+    box-shadow: 0 20px 50px -18px rgba(15, 23, 42, .35);
+    z-index: 2;
+    text-align: center;
+    padding: 12px;
+}
+.orbit-center img { width: 56px; height: 56px; object-fit: contain; border-radius: 14px }
+.orbit-center-mark {
+    display: grid;
+    width: 54px;
+    height: 54px;
+    place-items: center;
+    border-radius: 16px;
+    background: var(--primary);
+    color: #fff;
+}
+.orbit-center-name {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--foreground);
+    max-width: 108px;
+    line-height: 1.25;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.orbit-ring {
+    position: absolute;
+    inset: 0;
+    animation: orbit-spin var(--dur, 45s) linear infinite;
+}
+.orbit-ring--outer { animation-direction: reverse }
+.orbit-ring--inner .orbit-dot { animation-direction: reverse }
+.orbit-ring--outer .orbit-dot { animation-direction: normal }
+.orbit-item {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty)));
+}
+.orbit-dot {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--card);
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 26px -10px rgba(15, 23, 42, .28);
+    overflow: hidden;
+    animation: orbit-spin var(--dur, 45s) linear infinite;
+}
+.orbit-dot img { width: 30px; height: 30px; object-fit: contain; border-radius: 8px }
+.orbit-dot .client-logos-initial { font-size: 17px }
+@keyframes orbit-spin {
+    to { transform: rotate(360deg) }
+}
+@media (max-width: 620px) {
+    .orbit-stage {
+        transform: scale(.68);
+        transform-origin: top center;
+        margin: 26px auto -146px;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .orbit-ring, .orbit-dot { animation: none }
+}

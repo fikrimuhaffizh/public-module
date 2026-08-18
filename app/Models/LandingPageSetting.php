@@ -19,9 +19,9 @@ class LandingPageSetting extends Model implements HasMedia
 
     protected $table = 'cms_landing_page_settings';
 
+    protected $primaryKey = 'setting_id';
+
     protected $fillable = [
-        'site_title',
-        'site_description',
         'meta_title',
         'meta_description',
         'meta_keywords',
@@ -33,6 +33,11 @@ class LandingPageSetting extends Model implements HasMedia
         'instagram_url',
         'linkedin_url',
         'youtube_url',
+        'design',
+    ];
+
+    protected $casts = [
+        'design' => 'array',
     ];
 
     protected $appends = ['logo_url', 'favicon_url'];

@@ -1,0 +1,268 @@
+/* ============================================================
+   themes/more.css — bagian dari themes (dipecah dari landing.css)
+   ============================================================ */
+
+/* =============================================
+   Theme 9 — Campus (University / Academic)
+   ============================================= */
+.theme-campus {
+    --primary: #0d766e;
+    --section-alt: #edf5f3;
+    --primary-dark: #0b5e57;
+    --primary-light: rgba(13,118,110,.10);
+    --section-tint: #f0fdfa;
+    --foreground: #0f172a;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --card: #ffffff;
+    --background: #ffffff;
+    background: var(--background);
+    color: var(--foreground)
+}
+.theme-campus .site-header { background: rgba(255,255,255,.92); border-bottom: 1px solid var(--border); backdrop-filter: blur(18px) }
+.theme-campus .brand-mark { background: var(--primary); color: #fff }
+.theme-campus .ui-button { background: var(--primary); color: #fff; border: none }
+.theme-campus .ui-button:hover { background: var(--primary-dark) }
+.theme-campus .ui-button--outline { background: transparent; color: var(--foreground); border: 1px solid var(--border) }
+.theme-campus .ui-button--outline:hover { border-color: var(--primary); color: var(--primary) }
+.theme-campus .ui-badge { background: var(--primary-light); color: var(--primary); border: 1px solid rgba(13,118,110,.2) }
+.theme-campus .eyebrow { color: var(--primary) }
+.theme-campus .text-link { color: var(--primary) }
+.theme-campus .section--tint { background: var(--section-tint) }
+.theme-campus .section--dark { background: #0b3b36; color: #fff }
+.theme-campus .section--dark .section-heading h2 { color: #fff }
+.theme-campus .section--dark .section-heading p { color: #9ab7b3 }
+.theme-campus .spotlight-card { border: 1px solid var(--border); border-radius: 16px; background: var(--card) }
+.theme-campus .site-footer { background: #0b2a27; color: rgba(255,255,255,.62) }
+.theme-campus .site-footer a { color: rgba(255,255,255,.55) }
+.theme-campus .site-footer a:hover { color: #fff }
+.theme-campus .site-footer strong { color: #fff }
+
+.campus-hero { position: relative; overflow: hidden; padding: 64px 0 72px; background: radial-gradient(120% 120% at 80% -10%, #f0fdfa 0%, #fff 55%) }
+.campus-grid-bg { position: absolute; inset: 0; background-image: radial-gradient(rgba(13,118,110,.10) 1px, transparent 1px); background-size: 26px 26px; -webkit-mask-image: radial-gradient(100% 80% at 70% 0%, #000 30%, transparent 75%); mask-image: radial-gradient(100% 80% at 70% 0%, #000 30%, transparent 75%); opacity: .5 }
+.campus-blob { position: absolute; border-radius: 50%; filter: blur(60px); pointer-events: none }
+.campus-blob--one { width: 420px; height: 420px; background: #14b8a6; top: -120px; right: -80px; opacity: .35 }
+.campus-blob--two { width: 320px; height: 320px; background: #5eead4; bottom: -120px; left: -60px; opacity: .25 }
+.campus-hero-grid { position: relative; display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center }
+.campus-hero-copy h1 { font: 800 clamp(34px,5vw,54px)/1.08 var(--font-heading, Manrope, sans-serif); margin: 18px 0 18px; color: var(--foreground) }
+.campus-hero-copy p { font-size: 18px; color: var(--muted); line-height: 1.7; max-width: 540px }
+.campus-badge { background: var(--primary-light); color: var(--primary); border: 1px solid rgba(13,118,110,.2) }
+.campus-hero-stats { display: flex; gap: 32px; margin-top: 30px; flex-wrap: wrap }
+.campus-hero-stats strong { display: block; font: 800 26px var(--font-heading, Manrope, sans-serif); color: var(--primary) }
+.campus-hero-stats span { font-size: 13px; color: var(--muted) }
+.campus-photo { position: relative; border-radius: 22px; overflow: hidden; box-shadow: 0 30px 70px rgba(2,44,38,.18); aspect-ratio: 4/3; background: linear-gradient(135deg, #0d766e, #0f172a) }
+.campus-photo img { width: 100%; height: 100%; object-fit: cover }
+.campus-photo-fallback { display: grid; place-items: center; height: 100%; color: #fff; opacity: .85 }
+.campus-photo-badge { position: absolute; left: 18px; bottom: 18px; display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.95); color: var(--primary); font-weight: 700; font-size: 13px; padding: 8px 14px; border-radius: 999px; box-shadow: 0 8px 24px rgba(0,0,0,.15) }
+
+.campus-highlight-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px }
+.campus-highlight-card { padding: 26px 22px }
+.campus-highlight-icon { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 13px; background: var(--primary-light); color: var(--primary); margin-bottom: 16px }
+.campus-highlight-card h3 { font: 700 17px var(--font-heading, Manrope, sans-serif); margin: 0 0 8px }
+.campus-highlight-card p { font-size: 14px; color: var(--muted); line-height: 1.6; margin: 0 }
+
+.campus-stat-band { background: linear-gradient(135deg, var(--primary), #0b5e57); color: #fff }
+.campus-stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; padding: 44px 0 }
+.campus-stat strong { display: block; font: 800 40px var(--font-heading, Manrope, sans-serif); line-height: 1 }
+.campus-stat span { font-size: 14px; opacity: .85; margin-top: 8px; display: block }
+
+.campus-cta { padding: 80px 0 }
+.campus-cta-card { background: linear-gradient(135deg, #0b3b36, #0d766e); color: #fff; border-radius: 26px; padding: 56px; text-align: center }
+.campus-cta-card .eyebrow { color: #5eead4 }
+.campus-cta-card h2 { font: 800 clamp(26px,3.5vw,38px) var(--font-heading, Manrope, sans-serif); margin: 12px 0 14px }
+.campus-cta-card p { color: rgba(255,255,255,.85); max-width: 620px; margin: 0 auto 26px }
+.campus-cta-card .ui-button { background: #fff; color: var(--primary) }
+.campus-cta-card .ui-button:hover { background: #f0fdfa }
+
+@media (max-width: 980px) {
+    .campus-hero-grid { grid-template-columns: 1fr; gap: 40px }
+    .campus-highlight-grid { grid-template-columns: repeat(2, 1fr) }
+    .campus-stat-grid { grid-template-columns: repeat(2, 1fr) }
+}
+@media (max-width: 600px) {
+    .campus-highlight-grid { grid-template-columns: 1fr }
+    .campus-stat-grid { grid-template-columns: 1fr 1fr }
+    .campus-cta-card { padding: 40px 24px }
+}
+
+/* =============================================
+   Theme 10 — Admissions (Enrollment / Pendaftaran)
+   ============================================= */
+.theme-admissions {
+    --primary: #9f1239;
+    --section-alt: #fbf1f4;
+    --primary-dark: #881337;
+    --primary-light: rgba(159,18,57,.10);
+    --section-tint: #fff1f5;
+    --foreground: #1a0a10;
+    --muted: #6b5760;
+    --border: #f3dde2;
+    --card: #ffffff;
+    --background: #fffafc;
+    background: var(--background);
+    color: var(--foreground)
+}
+.theme-admissions .site-header { background: rgba(255,250,252,.93); border-bottom: 1px solid var(--border); backdrop-filter: blur(18px) }
+.theme-admissions .brand-mark { background: var(--primary); color: #fff }
+.theme-admissions .ui-button { background: var(--primary); color: #fff; border: none }
+.theme-admissions .ui-button:hover { background: var(--primary-dark) }
+.theme-admissions .ui-button--outline { background: #fff; color: var(--primary); border: 1px solid var(--border) }
+.theme-admissions .ui-button--outline:hover { border-color: var(--primary) }
+.theme-admissions .ui-badge { background: var(--primary-light); color: var(--primary); border: 1px solid rgba(159,18,57,.18) }
+.theme-admissions .eyebrow { color: var(--primary) }
+.theme-admissions .text-link { color: var(--primary) }
+.theme-admissions .section--tint { background: var(--section-tint) }
+.theme-admissions .section--dark { background: #4c0a22; color: #fff }
+.theme-admissions .section--dark .section-heading h2 { color: #fff }
+.theme-admissions .section--dark .section-heading p { color: #e7b9c5 }
+.theme-admissions .spotlight-card { border: 1px solid var(--border); border-radius: 16px; background: var(--card) }
+.theme-admissions .site-footer { background: #3d0819; color: rgba(255,255,255,.6) }
+.theme-admissions .site-footer a { color: rgba(255,255,255,.55) }
+.theme-admissions .site-footer a:hover { color: #fff }
+.theme-admissions .site-footer strong { color: #fff }
+
+.admissions-hero { position: relative; padding: 60px 0 36px; background: radial-gradient(110% 90% at 85% 0%, #fff1f5 0%, #fffafc 60%) }
+.admissions-hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 50px; align-items: center }
+.admissions-hero-copy h1 { font: 800 clamp(32px,4.8vw,52px)/1.1 var(--font-heading, Manrope, sans-serif); margin: 16px 0 18px; color: var(--foreground) }
+.admissions-hero-copy p { font-size: 18px; color: var(--muted); line-height: 1.7; max-width: 520px }
+.admissions-badge { background: var(--primary-light); color: var(--primary); border: 1px solid rgba(159,18,57,.2) }
+.admissions-photo { position: relative; border-radius: 22px; overflow: hidden; box-shadow: 0 30px 70px rgba(77,10,34,.2); aspect-ratio: 4/3; background: linear-gradient(135deg, #9f1239, #1a0a10) }
+.admissions-photo img { width: 100%; height: 100%; object-fit: cover }
+.admissions-photo-fallback { display: grid; place-items: center; height: 100%; color: #fff; opacity: .85 }
+.admissions-photo-card { position: absolute; right: 18px; bottom: 18px; background: #fff; border-radius: 14px; padding: 12px 16px; box-shadow: 0 10px 30px rgba(0,0,0,.18); text-align: center }
+.admissions-photo-card strong { display: block; color: var(--primary); font: 800 16px var(--font-heading, Manrope, sans-serif) }
+.admissions-photo-card span { font-size: 12px; color: var(--muted) }
+
+.admissions-steps { padding: 48px 0 64px }
+.admissions-steps-head { text-align: center; margin-bottom: 34px }
+.admissions-steps-head h2 { font: 800 clamp(24px,3vw,34px) var(--font-heading, Manrope, sans-serif); margin: 8px 0 0 }
+.admissions-steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px }
+.admissions-step { position: relative; padding: 26px 22px }
+.admissions-step-num { position: absolute; top: 18px; right: 20px; font: 800 34px var(--font-heading, Manrope, sans-serif); color: var(--primary); opacity: .15 }
+.admissions-step-icon { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 12px; background: var(--primary-light); color: var(--primary); margin-bottom: 14px }
+.admissions-step h3 { font: 700 16px var(--font-heading, Manrope, sans-serif); margin: 0 0 6px }
+.admissions-step p { font-size: 13px; color: var(--muted); line-height: 1.55; margin: 0 }
+
+.admissions-why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px }
+.admissions-why-card { padding: 26px 22px }
+.admissions-why-icon { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 13px; background: var(--primary-light); color: var(--primary); margin-bottom: 16px }
+.admissions-why-card h3 { font: 700 16px var(--font-heading, Manrope, sans-serif); margin: 0 0 8px }
+.admissions-why-card p { font-size: 14px; color: var(--muted); line-height: 1.6; margin: 0 }
+
+.admissions-stat-band { background: linear-gradient(135deg, var(--primary), #4c0a22); color: #fff }
+.admissions-stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; padding: 44px 0 }
+.admissions-stat strong { display: block; font: 800 38px var(--font-heading, Manrope, sans-serif); line-height: 1 }
+.admissions-stat span { font-size: 14px; opacity: .85; margin-top: 8px; display: block }
+
+.admissions-cta { padding: 80px 0 }
+.admissions-cta-card { background: linear-gradient(135deg, #4c0a22, #9f1239); color: #fff; border-radius: 26px; padding: 56px; text-align: center }
+.admissions-cta-card .eyebrow { color: #fbb6bd }
+.admissions-cta-card h2 { font: 800 clamp(26px,3.5vw,38px) var(--font-heading, Manrope, sans-serif); margin: 12px 0 14px }
+.admissions-cta-card p { color: rgba(255,255,255,.85); max-width: 620px; margin: 0 auto 26px }
+.admissions-cta-card .ui-button { background: #fff; color: var(--primary) }
+.admissions-cta-card .ui-button:hover { background: #fff1f5 }
+
+@media (max-width: 980px) {
+    .admissions-hero-grid { grid-template-columns: 1fr; gap: 40px }
+    .admissions-steps-grid { grid-template-columns: repeat(2, 1fr) }
+    .admissions-why-grid { grid-template-columns: repeat(2, 1fr) }
+    .admissions-stat-grid { grid-template-columns: repeat(2, 1fr) }
+}
+@media (max-width: 600px) {
+    .admissions-steps-grid { grid-template-columns: 1fr }
+    .admissions-why-grid { grid-template-columns: 1fr }
+    .admissions-cta-card { padding: 40px 24px }
+}
+
+/* =============================================
+   Theme 11 — Tracer (Alumni & Tracer Study)
+   ============================================= */
+.theme-tracer {
+    --primary: #1e3a8a;
+    --section-alt: #eef4fb;
+    --primary-dark: #172554;
+    --primary-light: rgba(30,58,138,.10);
+    --accent: #0d9488;
+    --section-tint: #f1f5fb;
+    --foreground: #0f172a;
+    --muted: #5b6678;
+    --border: #e3e8f1;
+    --card: #ffffff;
+    --background: #ffffff;
+    background: var(--background);
+    color: var(--foreground)
+}
+.theme-tracer .site-header { background: rgba(255,255,255,.93); border-bottom: 1px solid var(--border); backdrop-filter: blur(18px) }
+.theme-tracer .brand-mark { background: var(--primary); color: #fff }
+.theme-tracer .ui-button { background: var(--primary); color: #fff; border: none }
+.theme-tracer .ui-button:hover { background: var(--primary-dark) }
+.theme-tracer .ui-button--outline { background: transparent; color: var(--foreground); border: 1px solid var(--border) }
+.theme-tracer .ui-button--outline:hover { border-color: var(--primary); color: var(--primary) }
+.theme-tracer .ui-badge { background: var(--primary-light); color: var(--primary); border: 1px solid rgba(30,58,138,.18) }
+.theme-tracer .eyebrow { color: var(--primary) }
+.theme-tracer .text-link { color: var(--primary) }
+.theme-tracer .section--tint { background: var(--section-tint) }
+.theme-tracer .section--dark { background: #0b1d4d; color: #fff }
+.theme-tracer .section--dark .section-heading h2 { color: #fff }
+.theme-tracer .section--dark .section-heading p { color: #aab6d8 }
+.theme-tracer .spotlight-card { border: 1px solid var(--border); border-radius: 16px; background: var(--card) }
+.theme-tracer .site-footer { background: #0b1530; color: rgba(255,255,255,.62) }
+.theme-tracer .site-footer a { color: rgba(255,255,255,.55) }
+.theme-tracer .site-footer a:hover { color: #fff }
+.theme-tracer .site-footer strong { color: #fff }
+
+.tracer-hero { position: relative; overflow: hidden; padding: 64px 0 72px; background: radial-gradient(120% 120% at 85% -10%, #f1f5fb 0%, #fff 55%) }
+.tracer-grid-bg { position: absolute; inset: 0; background-image: linear-gradient(rgba(30,58,138,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(30,58,138,.06) 1px, transparent 1px); background-size: 38px 38px; -webkit-mask-image: radial-gradient(100% 80% at 75% 0%, #000 25%, transparent 75%); mask-image: radial-gradient(100% 80% at 75% 0%, #000 25%, transparent 75%); opacity: .8 }
+.tracer-hero-grid { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center }
+.tracer-hero-copy h1 { font: 800 clamp(32px,4.8vw,52px)/1.1 var(--font-heading, Manrope, sans-serif); margin: 16px 0 18px; color: var(--foreground) }
+.tracer-hero-copy p { font-size: 18px; color: var(--muted); line-height: 1.7; max-width: 520px }
+.tracer-badge { background: var(--primary-light); color: var(--primary); border: 1px solid rgba(30,58,138,.2) }
+
+.tracer-dashboard { background: #fff; border: 1px solid var(--border); border-radius: 18px; box-shadow: 0 30px 70px rgba(11,29,77,.18); overflow: hidden }
+.tracer-dash-bar { display: flex; align-items: center; gap: 6px; padding: 12px 16px; background: #f8fafc; border-bottom: 1px solid var(--border) }
+.tracer-dash-bar i { width: 10px; height: 10px; border-radius: 50%; background: #cbd5e1 }
+.tracer-dash-bar span { margin-left: auto; font-size: 12px; font-weight: 600; color: var(--muted) }
+.tracer-dash-body { padding: 22px }
+.tracer-metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 22px }
+.tracer-metric { border: 1px solid var(--border); border-radius: 12px; padding: 14px; background: #f8fafc }
+.tracer-metric strong { display: block; font: 800 20px var(--font-heading, Manrope, sans-serif); color: var(--primary) }
+.tracer-metric span { font-size: 11px; color: var(--muted) }
+.tracer-chart { display: flex; align-items: flex-end; gap: 10px; height: 130px; padding: 14px; border: 1px solid var(--border); border-radius: 12px; background: #f8fafc; margin-bottom: 18px }
+.tracer-bar { flex: 1; border-radius: 6px 6px 0 0; background: linear-gradient(180deg, var(--accent), #0f766e) }
+.tracer-response-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 8px }
+.tracer-response-label strong { color: var(--primary) }
+.tracer-response-track { height: 10px; border-radius: 999px; background: #e2e8f0; overflow: hidden }
+.tracer-response-track i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--primary), var(--accent)) }
+
+.tracer-stat-band { padding: 56px 0 }
+.tracer-stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; margin-top: 30px }
+.tracer-stat-card { padding: 28px 24px; text-align: center }
+.tracer-stat-card strong { display: block; font: 800 36px var(--font-heading, Manrope, sans-serif); color: var(--primary); line-height: 1 }
+.tracer-stat-card span { font-size: 14px; color: var(--muted); margin-top: 8px; display: block }
+
+.tracer-reason-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px }
+.tracer-reason-card { padding: 26px 22px }
+.tracer-reason-icon { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 13px; background: var(--primary-light); color: var(--primary); margin-bottom: 16px }
+.tracer-reason-card h3 { font: 700 16px var(--font-heading, Manrope, sans-serif); margin: 0 0 8px }
+.tracer-reason-card p { font-size: 14px; color: var(--muted); line-height: 1.6; margin: 0 }
+
+.tracer-cta { padding: 80px 0 }
+.tracer-cta-card { background: linear-gradient(135deg, #0b1d4d, #1e3a8a); color: #fff; border-radius: 26px; padding: 56px; text-align: center }
+.tracer-cta-card .eyebrow { color: #93c5fd }
+.tracer-cta-card h2 { font: 800 clamp(26px,3.5vw,38px) var(--font-heading, Manrope, sans-serif); margin: 12px 0 14px }
+.tracer-cta-card p { color: rgba(255,255,255,.85); max-width: 620px; margin: 0 auto 26px }
+.tracer-cta-card .ui-button { background: #fff; color: var(--primary) }
+.tracer-cta-card .ui-button:hover { background: #f1f5fb }
+
+@media (max-width: 980px) {
+    .tracer-hero-grid { grid-template-columns: 1fr; gap: 40px }
+    .tracer-reason-grid { grid-template-columns: repeat(2, 1fr) }
+    .tracer-stat-grid { grid-template-columns: repeat(2, 1fr) }
+}
+@media (max-width: 600px) {
+    .tracer-reason-grid { grid-template-columns: 1fr }
+    .tracer-stat-grid { grid-template-columns: 1fr 1fr }
+    .tracer-cta-card { padding: 40px 24px }
+    .tracer-metric-grid { grid-template-columns: 1fr }
+}
+

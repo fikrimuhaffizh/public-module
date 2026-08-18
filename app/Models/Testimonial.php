@@ -39,7 +39,7 @@ class Testimonial extends Model implements HasMedia
 
     public function getPhotoUrlAttribute(): ?string
     {
-        return $this->getFirstMediaUrl('photo', 'thumb') ?: null;
+        return $this->getFirstMedia('photo') ? sys_media_url($this->getFirstMedia('photo'), null, 60, 'thumb') : null;
     }
 
     public function registerMediaCollections(): void

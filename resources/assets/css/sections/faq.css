@@ -1,0 +1,212 @@
+/* ============================================================
+   sections/faq.css — bagian dari landing (dipecah dari landing.css)
+   ============================================================ */
+
+/* ── FAQ V1 — tanya-jawab editorial (garis bersih) ──────────────── */
+.faq-lines { display: flex; flex-direction: column }
+.faq-line { border-bottom: 1px solid var(--border) }
+.faq-line:first-child { border-top: 1px solid var(--border) }
+.faq-line-q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    width: 100%;
+    padding: 20px 2px;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    font: 700 16px/1.45 var(--font-body, 'DM Sans', sans-serif);
+    color: var(--foreground);
+    text-align: left;
+    transition: color .2s ease;
+}
+.faq-line-q:hover { color: var(--primary) }
+.faq-line-icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    color: var(--primary);
+    transition: transform .3s ease, background .2s ease, color .2s ease, border-color .2s ease;
+}
+.faq-line.is-open .faq-line-icon {
+    transform: rotate(45deg);
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #fff;
+}
+.faq-line-a { margin: 0; padding: 0 2px 22px; color: var(--muted); line-height: 1.7; max-width: 720px }
+
+/* ── FAQ V2 — filter kategori + accordion ───────────────────────── */
+.faq-cats { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 34px }
+.faq-cat {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 7px 14px 7px 16px;
+    background: var(--card, var(--background));
+    color: var(--muted);
+    font: 700 13px var(--font-body, 'DM Sans', sans-serif);
+    cursor: pointer;
+    transition: border-color .2s ease, color .2s ease, background .2s ease;
+}
+.faq-cat-count {
+    min-width: 20px;
+    padding: 2px 7px;
+    border-radius: 999px;
+    font-size: 11px;
+    line-height: 1.2;
+    text-align: center;
+    background: color-mix(in srgb, currentColor 14%, transparent);
+}
+.faq-cat:hover { border-color: color-mix(in srgb, var(--primary) 45%, var(--border)); color: var(--primary) }
+.faq-cat.is-active { background: var(--primary); border-color: var(--primary); color: #fff }
+.faq-cats + .faq-list { max-width: 780px; margin: 0 auto }
+
+/* ── FAQ V3 — kartu Q&A (grid dua kolom, multi-buka) ────────────── */
+.faq-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px }
+.faq-card { padding: 22px 24px; display: flex; flex-direction: column }
+.faq-card-q {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+}
+.faq-card-cat {
+    flex: none;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: var(--primary);
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--primary) 10%, transparent);
+}
+.faq-card-text { flex: 1; font-weight: 700; font-size: 15.5px; line-height: 1.45; color: var(--foreground) }
+.faq-card-icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    transition: transform .3s ease, background .2s ease, color .2s ease, border-color .2s ease;
+}
+.faq-card.is-open .faq-card-icon {
+    transform: rotate(180deg);
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #fff;
+}
+.faq-card-a {
+    margin: 16px 0 0;
+    padding-top: 16px;
+    border-top: 1px dashed var(--border);
+    color: var(--muted);
+    line-height: 1.7;
+    font-size: 14.5px;
+}
+@media (max-width: 720px) {
+    .faq-cards { grid-template-columns: 1fr }
+}
+
+
+/* ── FAQ V4 — accordion animasi ─────────────────────────────── */
+.faq-anim-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 780px;
+    margin: 0 auto;
+}
+.faq-anim-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius, 12px);
+    background: var(--card, var(--background));
+    overflow: hidden;
+    transition: border-color .25s ease, box-shadow .25s ease;
+}
+.faq-anim-card:hover {
+    border-color: color-mix(in srgb, var(--primary) 40%, var(--border));
+}
+.faq-anim-card.is-open {
+    border-color: color-mix(in srgb, var(--primary) 60%, var(--border));
+    box-shadow: 0 12px 32px -14px color-mix(in srgb, var(--primary) 30%, transparent);
+}
+.faq-anim-trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 20px;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+}
+.faq-anim-num {
+    font: 800 13px var(--font-heading, Manrope, sans-serif);
+    color: var(--primary);
+    letter-spacing: .06em;
+    flex: none;
+    width: 30px;
+}
+.faq-anim-q {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.45;
+}
+.faq-anim-cat {
+    font-style: normal;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+.faq-anim-icon {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--primary) 12%, transparent);
+    color: var(--primary);
+    transition: transform .32s cubic-bezier(.22, 1, .36, 1), background .25s ease, color .25s ease;
+}
+.faq-anim-card.is-open .faq-anim-icon {
+    transform: rotate(45deg);
+    background: var(--primary);
+    color: #fff;
+}
+.faq-anim-panel p {
+    margin: 0;
+    padding: 0 20px 20px 66px;
+    color: var(--muted);
+    line-height: 1.7;
+}
+

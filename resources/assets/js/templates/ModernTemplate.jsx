@@ -1,151 +1,22 @@
+import { SectionVariantRenderer } from '@public/components/sections/renderer';
 import React from 'react';
-import { ArrowRight, Sparkles } from 'lucide-react';
-import { Badge } from '@public/components/ui/badge';
-import { Button } from '@public/components/ui/button';
-import { BackgroundBeams, Marquee, Reveal, SpotlightCard, Stagger } from '@public/components/motion/effects';
-import {
-    CtaSection,
-    FaqSection,
-    NewsGrid,
-    PartnerCloud,
-    PagesGrid,
-    PlatformOverview,
-    Section,
-    SectionHeader,
-    TestimonialSection,
-    ValueStrip,
-    combinedText,
-    heroCopy,
-    sectionKey,
-} from '@public/components/sections/LandingSections';
 
+/**
+ * Modern Template — template ringan.
+ *
+ * Semua section dirender lewat SectionVariantRenderer (registry.js):
+ * tiap section memakai komponen variant-nya sendiri, dan variant bisa
+ * diganti live dari Theme Settings (offcanvas /preview).
+ * Menambah variant section = tambah file komponen + 1 entri di registry.
+ */
 export default function ModernTemplate({ data }) {
     const sections = data.sections || [];
-    const { landing } = data;
-    const hero = landing?.hero;
 
-    const renderSection = (section) => {
+        const renderSection = (section) => {
         if (!section.is_active) return null;
-        const key = section.landing_section_id;
-        const copy = heroCopy(section, hero, data.site);
-
-        switch (sectionKey(section)) {
-            case 'hero':
-                return (
-                    <React.Fragment key={key}>
-                        <section className="hero hero--modern">
-                            <BackgroundBeams />
-                            <div className="hero-orb hero-orb--one" />
-                            <div className="hero-orb hero-orb--two" />
-                            <div className="shell modern-hero-grid">
-                                <Reveal className="hero-content">
-                                    <Badge><Sparkles size={14} /> {section.pre_title || 'Digital campus platform'}</Badge>
-                                    <h1>{copy.title}</h1>
-                                    <p>{copy.subtitle}</p>
-                                    <div className="hero-actions">
-                                        <Button asChild size="lg">
-                                            <a href={hero?.buttonPrimary?.link || '#informasi'}>
-                                                {hero?.buttonPrimary?.text || 'Mulai menjelajah'} <ArrowRight size={18} />
-                                            </a>
-                                        </Button>
-                                        <Button variant="outline" asChild size="lg">
-                                            <a href={hero?.buttonSecondary?.link || '#berita'}>{hero?.buttonSecondary?.text || 'Kabar terbaru'}</a>
-                                        </Button>
-                                    </div>
-                                </Reveal>
-                                <Reveal className="modern-visual" delay={0.15}>
-                                    <div className="modern-browser">
-                                        <div className="modern-browser-bar"><i /><i /><i /></div>
-                                        {hero?.image && <img src={hero.image} alt={copy.imageAlt} />}
-                                    </div>
-                                    <div className="floating-stat">
-                                        <strong>{data.pages.length}+</strong>
-                                        <span>Layanan informasi</span>
-                                    </div>
-                                    <div className="floating-status">
-                                        <span className="status-dot" />
-                                        Sistem informasi aktif
-                                    </div>
-                                </Reveal>
-                            </div>
-                        </section>
-                        <ValueStrip />
-                        <Marquee items={[
-                            'Kampus digital',
-                            'Akses inklusif',
-                            'Informasi real-time',
-                            'Pengalaman modern',
-                            'Ekosistem terhubung',
-                        ]} />
-                    </React.Fragment>
-                );
-
-            case 'feature':
-                return (
-                    <PlatformOverview key={key}
-                        site={data.site}
-                        image={hero?.image}
-                        pageCount={data.pages.length}
-                        section={section}
-                    />
-                );
-
-            case 'statistic':
-                return landing?.statistics?.length > 0 ? (
-                    <section key={key} className="section section--tint">
-                        <div className="shell">
-                            <SectionHeader section={section}  />
-                            <Stagger className="launch-stats-grid">
-                                {landing.statistics.slice(0, section.limit_data || 4).map((stat) => (
-                                    <SpotlightCard key={stat.id} className="launch-stat-card">
-                                        <strong>{stat.value}</strong>
-                                        <span>{stat.label}</span>
-                                    </SpotlightCard>
-                                ))}
-                            </Stagger>
-                        </div>
-                    </section>
-                ) : null;
-
-            case 'client':
-                return <PartnerCloud key={key} partners={data.partners} section={section} />;
-
-            case 'product':
-                return (
-                    <Section key={key} section={section}
-                        id="informasi"
-                        eyebrow={section.pre_title || 'Satu ekosistem'}
-                        title={section.title || 'Semua yang dibutuhkan sivitas akademika'}
-                        text={combinedText(section, 'Pengalaman digital yang sederhana di depan, dengan pengelolaan konten yang terstruktur di belakang.')}
-                    >
-                        <PagesGrid pages={data.pages} section={section} />
-                    </Section>
-                );
-
-            case 'testimonial':
-                return <TestimonialSection key={key} testimonials={data.testimonials} section={section} />;
-
-            case 'pengumuman':
-                return (
-                    <Section key={key} section={section} id="berita" tint eyebrow={section.pre_title || 'Tetap terhubung'} title={section.title || 'Kabar terbaru kampus'} text={combinedText(section)}>
-                        <NewsGrid announcements={data.announcements} section={section} />
-                    </Section>
-                );
-
-            case 'faq':
-                return (
-                    <Section key={key} section={section} eyebrow={section.pre_title || 'Butuh jawaban?'} title={section.title || 'Temukan informasi dengan lebih cepat'} text={combinedText(section)} narrow>
-                        <FaqSection faqs={data.faqs} />
-                    </Section>
-                );
-
-            case 'cta':
-                return <CtaSection key={key} site={data.site} section={section} />;
-
-            default:
-                return null;
-        }
+        return <SectionVariantRenderer key={section.landing_section_id} section={section} data={data} />;
     };
 
     return <>{sections.map(renderSection)}</>;
+
 }

@@ -1,0 +1,137 @@
+/* ============================================================
+   sections/price.css — bagian dari landing (dipecah dari landing.css)
+   ============================================================ */
+
+/* ════════════════════════════════════════════════════════════════════
+   SECTION HARGA / PAKET (PriceV1 / V2 / V3)
+   ════════════════════════════════════════════════════════════════════ */
+
+/* ── V1: kartu 3 kolom ──────────────────────────────────────────── */
+.price-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 22px;
+    align-items: stretch;
+}
+.price-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 28px 26px;
+    border: 1px solid var(--border, #e2e8f0);
+    border-radius: 18px;
+    background: var(--card, #fff);
+    transition: transform .2s, box-shadow .2s;
+}
+.price-card:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(15, 23, 42, .09) }
+.price-card--featured {
+    border: 1.5px solid var(--primary);
+    box-shadow: 0 16px 40px color-mix(in srgb, var(--primary) 22%, transparent);
+}
+.price-card-badge {
+    position: absolute;
+    top: -11px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: var(--primary);
+    color: #fff;
+    font: 700 11px var(--font-heading, Manrope, sans-serif);
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+.price-card-name { margin: 0; font: 700 20px var(--font-heading, Manrope, sans-serif); color: var(--foreground) }
+.price-card-desc { margin: 0; color: var(--muted, #64748b); font-size: 14px; line-height: 1.55; min-height: 42px }
+.price-card-amount { display: flex; align-items: baseline; gap: 4px; margin: 4px 0 2px }
+.price-card-amount--lg { justify-content: center }
+.price-card-currency { font: 700 16px var(--font-heading, Manrope, sans-serif); color: var(--muted, #64748b) }
+.price-card-value { font: 800 clamp(28px, 4vw, 38px)/1 var(--font-heading, Manrope, sans-serif); color: var(--foreground); letter-spacing: -.03em }
+.price-card-period { font: 500 13px var(--font-body, 'DM Sans', sans-serif); color: var(--muted, #64748b) }
+.price-card-features { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 9px; flex: 1 }
+.price-card-features li { display: flex; align-items: flex-start; gap: 8px; color: var(--foreground); font-size: 14px; line-height: 1.5 }
+.price-card-features svg { color: var(--primary); flex: none; margin-top: 2px }
+.price-card-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 8px;
+    padding: 11px 16px;
+    border-radius: 12px;
+    border: 1.5px solid var(--primary);
+    background: transparent;
+    color: var(--primary);
+    font: 700 13.5px var(--font-body, 'DM Sans', sans-serif);
+    text-decoration: none;
+    transition: .15s;
+}
+.price-card-cta:hover { background: var(--primary); color: #fff }
+.price-card--featured .price-card-cta { background: var(--primary); color: #fff }
+.price-card--featured .price-card-cta:hover { opacity: .92 }
+.price-card-cta--lg { padding: 13px 22px; font-size: 15px }
+
+/* ── V2: baris daftar ───────────────────────────────────────────── */
+.price-rows { display: flex; flex-direction: column; gap: 14px }
+.price-row-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding: 22px 26px;
+    border: 1px solid var(--border, #e2e8f0);
+    border-radius: 16px;
+    background: var(--card, #fff);
+    transition: .2s;
+}
+.price-row-card:hover { border-color: var(--primary); transform: translateY(-2px) }
+.price-row-card--featured { border: 1.5px solid var(--primary); background: color-mix(in srgb, var(--primary) 5%, var(--card, #fff)) }
+.price-row-info { flex: 1; min-width: 220px }
+.price-row-info h3 { margin: 0 0 4px; font: 700 18px var(--font-heading, Manrope, sans-serif); color: var(--foreground) }
+.price-row-info p { margin: 0; color: var(--muted, #64748b); font-size: 14px }
+.price-row-tags { list-style: none; display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 10px 0 0; padding: 0 }
+.price-row-tags li { display: inline-flex; align-items: center; gap: 5px; font-size: 12.5px; color: var(--muted, #64748b) }
+.price-row-tags svg { color: var(--primary) }
+.price-row-side { display: flex; align-items: center; gap: 18px; flex-wrap: wrap }
+.price-row-amount { display: flex; align-items: baseline; gap: 4px }
+
+/* ── V3: unggulan tengah + mini ─────────────────────────────────── */
+.price-showcase { display: grid; grid-template-columns: 1fr; gap: 22px }
+.price-showcase-main {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+    padding: 44px 30px 34px;
+    border: 1.5px solid var(--primary);
+    border-radius: 24px;
+    background: linear-gradient(170deg, color-mix(in srgb, var(--primary) 10%, var(--card, #fff)), var(--card, #fff));
+    box-shadow: 0 18px 48px color-mix(in srgb, var(--primary) 18%, transparent);
+}
+.price-card-badge--crown { position: static; transform: none; margin-bottom: 2px }
+.price-showcase-main .price-card-features { align-items: center }
+.price-showcase-rest { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px }
+.price-mini {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 22px;
+    border: 1px solid var(--border, #e2e8f0);
+    border-radius: 16px;
+    background: var(--card, #fff);
+}
+.price-mini h4 { margin: 0; font: 700 16px var(--font-heading, Manrope, sans-serif); color: var(--foreground) }
+.price-mini p { margin: 4px 0 0; color: var(--muted, #64748b); font-size: 13px; line-height: 1.5 }
+.price-mini-amount { display: flex; align-items: baseline; gap: 4px; margin-top: auto }
+
+@media (min-width: 860px) {
+    .price-showcase { grid-template-columns: 1.2fr 1fr }
+}
+

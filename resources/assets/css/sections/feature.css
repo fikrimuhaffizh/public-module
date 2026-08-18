@@ -1,0 +1,151 @@
+/* ============================================================
+   sections/feature.css — bagian dari landing (dipecah dari landing.css)
+   ============================================================ */
+
+/* ── FITUR V2 / V3 ──────────────────────────────────────────────── */
+.feature-icon-card {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    background: var(--card);
+    height: 100%;
+    transition: .2s;
+}
+
+.feature-icon-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-3px)
+}
+
+.feature-icon-card h3 {
+    margin: 12px 0 6px;
+    font-size: 17px
+}
+
+.feature-icon-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px
+}
+
+.feature-check-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 22px
+}
+
+.feature-check {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start
+}
+
+.feature-check-icon {
+    display: grid;
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+    place-items: center;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--primary) 14%, var(--card));
+    color: var(--primary);
+    margin-top: 2px;
+}
+
+.feature-check strong {
+    display: block;
+    margin-bottom: 4px
+}
+
+.feature-check p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px
+}
+
+
+
+/* ── Mode 4: Fitur tilt 3D & Produk carousel geser ── */
+.feature-grid--tilt {
+    perspective: 1200px
+}
+
+.feature-tilt {
+    position: relative;
+    border-radius: var(--radius, 16px);
+    will-change: transform
+}
+
+.feature-tilt .feature-icon-card {
+    height: 100%
+}
+
+.feature-tilt__glare {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .25s ease
+}
+
+.feature-tilt:hover .feature-tilt__glare {
+    opacity: 1
+}
+/* ===== Fitur Mode 5 — Bento grid (Velora-inspired) =====
+   Specificity 2 kelas supaya menang atas .gen-card (diimpor belakangan). */
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: minmax(164px, auto);
+    gap: 20px;
+}
+.bento-grid .bento-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 26px;
+    overflow: hidden;
+    min-height: 164px;
+    animation: bento-rise .6s cubic-bezier(.22, 1, .36, 1) both;
+}
+@keyframes bento-rise {
+    from { opacity: 0; transform: translateY(18px) }
+    to   { opacity: 1; transform: translateY(0) }
+}
+.bento-grid .bento-card:hover { transform: translateY(-4px) }
+.bento-grid .bento-card--featured {
+    grid-column: span 2;
+    grid-row: span 2;
+    min-height: 348px;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 18%, var(--card)), var(--card) 62%);
+    border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
+}
+.bento-grid .bento-card-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0 }
+.bento-grid .bento-card--featured::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(180deg, rgba(8, 15, 30, .08), rgba(8, 15, 30, .62) 78%);
+}
+.bento-card-body { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; max-width: 520px }
+.bento-card-body h3 { font-size: 17px; margin: 0 }
+.bento-card-body p { color: var(--muted); font-size: 14px; line-height: 1.6; margin: 0 }
+.bento-grid .bento-card--featured .feature-icon { width: 54px; height: 54px; font-size: 26px }
+.bento-grid .bento-card--featured h3 { font-size: clamp(20px, 2.2vw, 27px) }
+.bento-grid .bento-card--featured p { font-size: 15px }
+.bento-grid .bento-card--featured .bento-card-img ~ .bento-card-body h3,
+.bento-grid .bento-card--featured .bento-card-img ~ .bento-card-body .feature-icon { color: #fff }
+.bento-grid .bento-card--featured .bento-card-img ~ .bento-card-body p { color: rgba(255, 255, 255, .82) }
+@media (max-width: 860px) {
+    .bento-grid { grid-template-columns: 1fr; grid-auto-rows: auto }
+    .bento-grid .bento-card--featured { grid-column: span 1; grid-row: span 1; min-height: 250px }
+}
+@media (max-width: 620px) {
+    .bento-grid .bento-card { padding: 20px }
+}
+@media (prefers-reduced-motion: reduce) {
+    .bento-grid .bento-card { animation: none }
+}

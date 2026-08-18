@@ -1,11 +1,24 @@
 import React from 'react';
-import { Head, Link, usePage } from '@inertiajs/react';
-import { GraduationCap, Menu, X } from 'lucide-react';
-import { Button } from '@public/components/ui/button';
+import { Head, usePage } from '@inertiajs/react';
+import {
+    ThemeCustomizerProvider,
+    ThemeSettingsDrawer,
+    useThemeCustomizer,
+} from '@public/components/theme/ThemeCustomizer';
+import { sectionColorStyle, useSectionVariant } from '@public/components/sections/renderer';
+import FloatingWhatsApp from '@public/components/FloatingWhatsApp';
+import { usePauseOffscreenAnimations } from '@public/lib/pauseOffscreen';
+import { resolveVariant } from '@public/components/sections/registry';
+
 
 function isSectionActive(sections, key) {
     const section = sections?.find(s => s.section_key === key);
     return section ? section.is_active : true; // default to true if section not found
+}
+
+function sectionVariantOf(sections, key, fallback) {
+    const section = sections?.find(s => s.section_key === key);
+    return section?.variant || fallback;
 }
 
 /**
@@ -13,15 +26,78 @@ function isSectionActive(sections, key) {
  * Pages only need to attach: Page.layout = PublicPageLayout
  */
 export function PublicPageLayout({ children }) {
-    const { site, menus, footerMenus, template, seo = {}, sections = [] } = usePage().props;
+    usePauseOffscreenAnimations();
+    return (
+        <ThemeCustomizerProvider>
+            <ThemedRoot>{children}</ThemedRoot>
+        </ThemeCustomizerProvider>
+    );
+}
+
+/**
+ * Root bertema — konsumsi state customizer (CSS vars warna/font + kelas
+ * struktur navbar/kartu/tombol) lalu render header, konten, dan footer.
+ * Navbar & footer dirender dari komponen variant section (registry.js) —
+ * ganti variant-nya live dari Theme Settings di /preview.
+ */
+function ThemedRoot({ children }) {
+    const { site, menus, footerMenus, template, seo = {}, sections = [], page = null, announcement = null, header = null } = usePage().props;
+    const customizer = useThemeCustomizer();
     const [open, setOpen] = React.useState(false);
     const siteName = site?.name || '';
-    const pageDesc = seo?.description || site?.tagline || '';
-    const showHeader = isSectionActive(sections, 'navbar');
-    const showFooter = isSectionActive(sections, 'footer');
+    const showHeader = customizer?.sectionSettings?.navbar?.active ?? isSectionActive(sections, 'navbar');
+    const showFooter = customizer?.sectionSettings?.footer?.active ?? isSectionActive(sections, 'footer');
 
-    return <div className={`theme-${template}`}>
+    const customClass = customizer?.appliedClasses || '';
+    const customVars = { ...(customizer?.appliedVars || {}), ...(customizer?.darkVars || {}) };
+
+    // Kelas wrapper override warna/pola/gambar per-section (layout-level).
+    const secWrapClasses = (colors) => {
+        const hasBg = Boolean(colors?.bg || colors?.pattern || colors?.image);
+        return `sec-colored${hasBg ? ' sec-colored--bg' : ''}${colors?.pattern ? ` sec-colored--p-${colors.pattern}` : ''}${colors?.image ? ' sec-colored--img' : ''}`;
+    };
+
+    // Footer pakai variant section (bisa diganti live); navbar tetap satu gaya klasik.
+    const navbarKey = useSectionVariant('navbar', sectionVariantOf(sections, 'navbar', 'navbar_1'));
+    const NavbarComponent = resolveVariant('navbar', navbarKey)?.component;
+    const navbarStyle = sectionColorStyle(customizer?.sectionColors?.['navbar']);
+
+    const footerKey = useSectionVariant('footer', sectionVariantOf(sections, 'footer', 'footer_1'));
+    const FooterComponent = resolveVariant('footer', footerKey)?.component;
+    const footerStyle = sectionColorStyle(customizer?.sectionColors?.['footer']);
+
+    // Top Bar — section layout-level (variant + warna dari offcanvas).
+    const topbarKey = useSectionVariant('topbar', sectionVariantOf(sections, 'topbar', 'topbar_1'));
+    const TopBarComponent = resolveVariant('topbar', topbarKey)?.component;
+    const topbarSection = sections?.find(s => s.section_key === 'topbar');
+    const topbarActive = topbarSection
+        ? (customizer?.sectionSettings?.topbar?.active ?? topbarSection.is_active)
+        : false;
+    const topbarStyle = sectionColorStyle(customizer?.sectionColors?.['topbar']);
+    const topbarSettings = { ...(topbarSection?.settings || {}), ...(customizer?.sectionSettings?.topbar || {}) };
+
+    // Page Header — section layout-level untuk halaman dalam (berita detail,
+    // halaman statis, berita, kontak). Konten diturunkan dari props halaman;
+    // home tidak punya konteks → tidak dirender. Mode/warna/toggle dari
+    // Theme Settings (offcanvas), sama seperti navbar/topbar/footer.
+    const pageHeaderContext = page
+        ? { eyebrow: 'Informasi institusi', title: page.title, excerpt: page.excerpt, crumb: page.title }
+        : announcement
+            ? { eyebrow: announcement.type || 'Pengumuman', title: announcement.title, excerpt: announcement.excerpt, crumb: announcement.type || 'Pengumuman' }
+            : header || null;
+    const pageheaderKey = useSectionVariant('pageheader', sectionVariantOf(sections, 'pageheader', 'pageheader_1'));
+    const PageHeaderComponent = resolveVariant('pageheader', pageheaderKey)?.component;
+    const pageheaderSection = sections?.find(s => s.section_key === 'pageheader');
+    const pageheaderActive = pageheaderSection
+        ? (customizer?.sectionSettings?.pageheader?.active ?? pageheaderSection.is_active)
+        : true;
+    const pageheaderStyle = sectionColorStyle(customizer?.sectionColors?.['pageheader']);
+
+    return <div className={`theme-${template} ${customClass}`} style={{ ...customVars, fontFamily: "var(--font-body)", color: "var(--foreground)", background: "var(--background)" }}>
         <Head>
+            <title>{site?.title || siteName}</title>
+            {seo?.description && <meta head-key="description" name="description" content={seo.description} />}
+            {site?.description && <meta head-key="og:description" property="og:description" content={site.description} />}
             {seo?.keywords && <meta head-key="keywords" name="keywords" content={seo.keywords} />}
             {site?.favicon && <link rel="icon" href={site.favicon} />}
             <meta head-key="og:type" property="og:type" content="website" />
@@ -29,96 +105,33 @@ export function PublicPageLayout({ children }) {
             {site?.logo && <meta head-key="og:image" property="og:image" content={site.logo} />}
             <meta head-key="twitter:card" name="twitter:card" content="summary_large_image" />
         </Head>
-        {showHeader && (
-            <header className="site-header">
-                <div className="shell nav-wrap">
-                    <Link href={site.homeUrl} className="brand">
-                        {site.logo
-                            ? <img src={site.logo} alt={siteName} className="brand-logo" />
-                            : <span className="brand-mark"><GraduationCap size={24} /></span>}
-                    </Link>
-                    <nav className="desktop-nav">
-                        {(menus || []).map(menu => menu.target === '_blank'
-                            ? <a key={menu.id} href={menu.url} target="_blank" rel="noreferrer">{menu.title}</a>
-                            : <Link key={menu.id} href={menu.url}>{menu.title}</Link>)}
-                    </nav>
-                    <div className="nav-actions">
-                        <Button asChild><a href={site.loginUrl}>Masuk</a></Button>
-                        <button className="mobile-toggle" onClick={() => setOpen(!open)} aria-label="Buka navigasi">{open ? <X /> : <Menu />}</button>
-                    </div>
-                </div>
-                {open && <nav className="mobile-nav shell">{(menus || []).map(menu => <Link key={menu.id} href={menu.url} onClick={() => setOpen(false)}>{menu.title}</Link>)}</nav>}
-            </header>
+        {topbarActive && TopBarComponent && (
+            topbarStyle
+                ? <div className={secWrapClasses(customizer?.sectionColors?.topbar)} style={topbarStyle}><TopBarComponent site={site} settings={topbarSettings} /></div>
+                : <TopBarComponent site={site} settings={topbarSettings} />
+        )}
+        {showHeader && NavbarComponent && (
+            navbarStyle
+                ? <div className={secWrapClasses(customizer?.sectionColors?.navbar)} style={navbarStyle}><NavbarComponent site={site} menus={menus} open={open} onToggle={() => setOpen(!open)} /></div>
+                : <NavbarComponent site={site} menus={menus} open={open} onToggle={() => setOpen(!open)} />
+        )}
+        {pageheaderActive && PageHeaderComponent && pageHeaderContext && (
+            pageheaderStyle
+                ? <div className={secWrapClasses(customizer?.sectionColors?.pageheader)} style={pageheaderStyle}><PageHeaderComponent context={pageHeaderContext} site={site} /></div>
+                : <PageHeaderComponent context={pageHeaderContext} site={site} />
         )}
         {children}
-        {showFooter && (
-            <footer className="site-footer">
-                <div className="shell footer-grid">
-                    <div>
-                        <div className="brand brand--footer">
-                            {site.logoFooter
-                                ? <img src={site.logoFooter} alt={siteName} className="brand-logo" />
-                                : <span className="brand-mark"><GraduationCap size={24} /></span>}
-                            <span>{siteName}</span>
-                        </div>
-                        <p>{site?.tagline}</p>
-                        {/* Social Media */}
-                        {(site?.social?.facebook || site?.social?.instagram || site?.social?.linkedin || site?.social?.youtube) && (
-                            <div className="footer-socials">
-                                {site.social.facebook && <a href={site.social.facebook} target="_blank" rel="noreferrer" aria-label="Facebook">&#xf09a;</a>}
-                                {site.social.instagram && <a href={site.social.instagram} target="_blank" rel="noreferrer" aria-label="Instagram">&#xf16d;</a>}
-                                {site.social.linkedin && <a href={site.social.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">&#xf08c;</a>}
-                                {site.social.youtube && <a href={site.social.youtube} target="_blank" rel="noreferrer" aria-label="YouTube">&#xf167;</a>}
-                            </div>
-                        )}
-                    </div>
-                    <div>
-                        <strong>Navigasi</strong>
-                        <Link href={site.homeUrl}>Beranda</Link>
-                        {(footerMenus || []).map(m =>
-                            m.target === '_blank'
-                                ? <a key={m.id} href={m.url} target="_blank" rel="noreferrer">{m.title}</a>
-                                : <Link key={m.id} href={m.url}>{m.title}</Link>
-                        )}
-                        <Link href={site.contactUrl}>Hubungi Kami</Link>
-                    </div>
-                    <div>
-                        <strong>Kontak</strong>
-                        {site?.address && <span>{site.address}</span>}
-                        {site?.email && <a href={`mailto:${site.email}`}>{site.email}</a>}
-                        {site?.phone && <a href={`tel:${site.phone}`}>{site.phone}</a>}
-                        {site?.whatsapp && (
-                            <a href={`https://wa.me/${site.whatsapp}`} target="_blank" rel="noreferrer">
-                                WhatsApp
-                            </a>
-                        )}
-                        <span>&copy; {new Date().getFullYear()} {siteName}</span>
-                    </div>
-                </div>
-            </footer>
+        {showFooter && FooterComponent && (
+            footerStyle
+                ? <div className={secWrapClasses(customizer?.sectionColors?.footer)} style={footerStyle}><FooterComponent site={site} footerMenus={footerMenus} /></div>
+                : <FooterComponent site={site} footerMenus={footerMenus} />
         )}
+        <FloatingWhatsApp />
+        <ThemeSettingsDrawer />
     </div>;
 }
 
 // Backwards-compatible named export (delegates to PublicPageLayout)
 export function SiteLayout({ children }) {
     return <PublicPageLayout>{children}</PublicPageLayout>;
-}
-
-export function TemplatePicker({ template }) {
-    const labels = {
-        modern: 'Modern',
-        editorial: 'Editorial',
-        corporate: 'Corporate',
-        launch: 'Launch UI',
-        aurora: 'Aurora',
-        enterprise: 'Enterprise',
-        registration: 'Registration',
-        profile: 'Profile',
-        campus: 'Campus',
-        admissions: 'Admissions',
-        tracer: 'Tracer',
-    };
-    return <div className="template-picker"><span>Pratinjau:</span>{Object.entries(labels).map(([key, label]) =>
-        <a key={key} className={template === key ? 'active' : ''} href={`?template=${key}`}>{label}</a>)}</div>;
 }

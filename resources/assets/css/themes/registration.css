@@ -1,0 +1,132 @@
+/* ============================================================
+   themes/registration.css — bagian dari themes (dipecah dari landing.css)
+   ============================================================ */
+
+/* =============================================
+   Theme 7 — Registration (warm emerald, form-centric)
+   ============================================= */
+.theme-registration {
+    --primary: #059669;
+    --section-alt: #f0f7f4;
+    --primary-dark: #047857;
+    --foreground: #0f172a;
+    --background: #ffffff;
+    --card: #ffffff;
+    --border: #e2e8f0;
+    --muted: #64748b;
+    --section-tint: #f0fdf4;
+}
+
+.theme-registration .site-header { background: rgba(255,255,255,.94); border-bottom: 1px solid var(--border) }
+.theme-registration .brand-mark { color: var(--primary) }
+.theme-registration .ui-button { background: var(--primary); color: #fff; border: none }
+.theme-registration .ui-button:hover { background: var(--primary-dark) }
+.theme-registration .ui-button--outline { background: transparent; color: var(--foreground); border: 1px solid var(--border) }
+.theme-registration .ui-button--outline:hover { border-color: var(--foreground); background: transparent }
+.theme-registration .ui-badge { background: #ecfdf5; color: var(--primary); border: none }
+.theme-registration .ui-badge--outline { background: transparent; border: 1px solid var(--border); color: var(--muted) }
+.theme-registration .section-heading h2 { color: var(--foreground) }
+.theme-registration .section--tint { background: var(--section-tint) }
+.theme-registration .section--dark { background: #064e3b; color: #fff }
+.theme-registration .section--dark .section-heading h2 { color: #fff }
+.theme-registration .section--dark .section-heading p { color: #94a3b8 }
+.theme-registration .spotlight-card { border: 1px solid var(--border); border-radius: 16px; background: var(--card) }
+
+/* hero */
+.registration-hero { padding: 60px 0 40px; background: linear-gradient(180deg, #f0fdf4 0%, #fff 100%) }
+.registration-hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; align-items: start; gap: 50px }
+.registration-hero-copy h1 { font: 700 clamp(30px,4.5vw,48px)/1.1 var(--font-heading, Manrope, sans-serif),sans-serif; margin: 16px 0 20px; color: var(--foreground) }
+.registration-hero-copy p { font-size: 18px; color: var(--muted); line-height: 1.7; max-width: 520px }
+.registration-badge { margin-bottom: 4px }
+.registration-benefits { display: flex; flex-direction: column; gap: 10px; margin-top: 28px }
+.registration-benefits span { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--muted) }
+.registration-benefits span svg { color: var(--primary); flex-shrink: 0 }
+
+/* quick registration card */
+.registration-quick-card { border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,.06) }
+.registration-quick-card .card-header { text-align: center; padding-bottom: 0; border: none }
+.registration-quick-card .card-header svg { width: 36px; height: 36px; color: var(--primary); margin-bottom: 8px }
+.registration-quick-card .card-title { font-size: 18px }
+.registration-quick-card .card-description { font-size: 13px; color: var(--muted) }
+.registration-quick-card .card-content { padding: 16px 20px }
+.registration-quick-card .card-footer { border: none; padding-top: 0 }
+.registration-step-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--border) }
+.registration-step-item:last-child { border: none }
+.registration-step-num { width: 28px; height: 28px; border-radius: 8px; background: var(--section-tint); color: var(--primary); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; flex-shrink: 0 }
+.registration-step-item strong { font-size: 14px; display: block; margin-bottom: 2px }
+.registration-step-item p { font-size: 12px; color: var(--muted); margin: 0 }
+
+/* trust strip */
+.registration-trust-strip { background: var(--primary); color: #fff }
+.registration-trust-inner { display: flex; justify-content: center; gap: 40px; padding: 14px 0; font-size: 13px }
+.registration-trust-inner span { display: flex; align-items: center; gap: 6px }
+
+/* steps section */
+.registration-steps-section { padding: 80px 0 }
+.registration-section-heading { max-width: 600px; margin-bottom: 50px }
+.registration-section-heading h2 { font: 700 clamp(26px,3.4vw,38px)/1.15 var(--font-heading, Manrope, sans-serif),sans-serif; color: var(--foreground); margin: 12px 0 16px }
+.registration-section-heading p { color: var(--muted); font-size: 17px; line-height: 1.7 }
+.registration-steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px }
+.registration-step-card { position: relative; overflow: hidden }
+.registration-step-header { display: flex; align-items: center; gap: 12px; padding: 20px 20px 0 }
+.registration-step-icon { width: 42px; height: 42px; border-radius: 12px; background: var(--section-tint); color: var(--primary); display: flex; align-items: center; justify-content: center }
+.registration-step-label { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); font-weight: 700 }
+.registration-step-card .card-header { padding: 12px 20px 16px; border: none }
+.registration-step-card .card-title { font-size: 16px }
+.registration-step-card .card-description { font-size: 13px; color: var(--muted); line-height: 1.6 }
+
+/* programs */
+.registration-program-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px }
+.registration-program-card { overflow: hidden; border: 1px solid var(--border); border-radius: 16px }
+.registration-program-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover }
+.registration-program-card .card-header { border: none; padding-bottom: 0 }
+.registration-program-card .card-footer { border: none; padding-top: 0 }
+
+/* stats */
+.registration-stats { padding: 60px 0; background: var(--section-tint) }
+.registration-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px }
+.registration-stat-card { text-align: center; padding: 28px 16px; border: 1px solid var(--border); border-radius: 16px; background: var(--card) }
+.registration-stat-card strong { font: 700 clamp(26px,2.8vw,34px)/1 var(--font-heading, Manrope, sans-serif),sans-serif; color: var(--primary); display: block; margin-bottom: 8px }
+.registration-stat-card span { font-size: 13px; color: var(--muted) }
+
+/* testimonials */
+.registration-testimonials { padding: 70px 0 }
+.registration-testimonial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px }
+.registration-testimonial-card { padding: 24px; border: 1px solid var(--border); border-radius: 16px }
+.registration-testimonial-quote { color: var(--primary); opacity: .3; width: 28px; height: 28px; margin-bottom: 12px }
+.registration-testimonial-card blockquote { font-size: 14px; line-height: 1.7; color: var(--foreground); margin-bottom: 16px }
+.registration-testimonial-person { display: flex; align-items: center; gap: 10px; padding-top: 12px; border-top: 1px solid var(--border) }
+.registration-testimonial-person img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover }
+.registration-testimonial-person strong { font-size: 13px; display: block }
+.registration-testimonial-person small { font-size: 11px; color: var(--muted) }
+.avatar-fallback, .profile-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--section-tint); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0 }
+
+/* cta */
+.registration-cta { padding: 80px 0 }
+.registration-cta-card {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border-radius: 20px; padding: 56px 48px; text-align: center; color: #fff;
+}
+.registration-cta-card .eyebrow { color: rgba(255,255,255,.7); font-size: 13px; text-transform: uppercase; letter-spacing: .05em; font-weight: 700 }
+.registration-cta-card h2 { font: 700 clamp(26px,3.4vw,38px)/1.15 var(--font-heading, Manrope, sans-serif),sans-serif; margin: 12px auto 16px; max-width: 520px }
+.registration-cta-card p { font-size: 16px; opacity: .85; max-width: 440px; margin: 0 auto 28px }
+.registration-cta-card .ui-button { background: #fff; color: var(--primary) }
+.registration-cta-card .ui-button:hover { background: rgba(255,255,255,.9) }
+
+/* Responsive Registration */
+@media(max-width:900px) {
+    .registration-hero-grid { grid-template-columns: 1fr; gap: 40px }
+    .registration-hero { padding: 50px 0 30px }
+    .registration-steps-grid { grid-template-columns: 1fr 1fr }
+    .registration-program-grid { grid-template-columns: 1fr 1fr }
+    .registration-testimonial-grid { grid-template-columns: 1fr 1fr }
+    .registration-trust-inner { flex-wrap: wrap; gap: 12px; justify-content: flex-start }
+}
+@media(max-width:600px) {
+    .registration-steps-grid { grid-template-columns: 1fr }
+    .registration-program-grid { grid-template-columns: 1fr }
+    .registration-testimonial-grid { grid-template-columns: 1fr }
+    .registration-stats-grid { grid-template-columns: repeat(2, 1fr) }
+    .registration-cta-card { padding: 40px 24px }
+}
+

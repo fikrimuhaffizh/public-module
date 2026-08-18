@@ -1,0 +1,147 @@
+/* ── Page Header — section layout-level (breadcrumb + judul halaman dalam) ──
+   Dirender PublicLayout di semua halaman dalam; konten dari halaman yang
+   dibuka. Tiga mode: classic (kiri, tint) / center (tengah, bersih) / bold
+   (gelap gradien + ornamen). Root .pageheader di-exclude dari selang-seling
+   --section-alt (lihat base.css) — tiap mode mengontrol latarnya sendiri. */
+
+.pageheader {
+    position: relative;
+    overflow: hidden;
+    padding: 56px 0 64px;
+}
+
+.pageheader-title {
+    margin: 12px 0 0;
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    max-width: 760px;
+}
+
+.pageheader-excerpt {
+    margin: 14px 0 0;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--muted);
+    max-width: 620px;
+}
+
+.pageheader-crumb {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13.5px;
+    color: var(--muted);
+}
+
+.pageheader-crumb a {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.pageheader-crumb a:hover {
+    opacity: 0.75;
+}
+
+.pageheader-crumb svg {
+    opacity: 0.55;
+}
+
+/* ── Mode 1: classic — tint, rata kiri ── */
+.pageheader--classic {
+    border-bottom: 1px solid var(--border);
+}
+
+/* ── Mode 2: center — bersih, tengah ── */
+.pageheader--center {
+    background: var(--background);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+}
+
+.pageheader--center .shell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pageheader--center .pageheader-crumb {
+    justify-content: center;
+    margin-bottom: 6px;
+}
+
+.pageheader--center .pageheader-title,
+.pageheader--center .pageheader-excerpt {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.pageheader--center .eyebrow {
+    margin-top: 8px;
+}
+
+/* ── Mode 3: bold — gradien primary→gelap, ornamen ── */
+.pageheader--bold {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 55%, #0b1120 130%);
+    color: #fff;
+    padding: 72px 0 88px;
+}
+
+.pageheader--bold .pageheader-title {
+    color: #fff;
+}
+
+.pageheader--bold .pageheader-excerpt {
+    color: rgba(255, 255, 255, 0.78);
+}
+
+.pageheader--bold .pageheader-crumb {
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.pageheader--bold .pageheader-crumb a {
+    color: #fff;
+}
+
+.pageheader-badge {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 20px;
+    padding: 5px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #fff;
+    backdrop-filter: blur(4px);
+}
+
+.pageheader-ornament {
+    position: absolute;
+    right: -40px;
+    bottom: -60px;
+    width: 220px;
+    height: 220px;
+    opacity: 0.12;
+    transform: rotate(-12deg);
+    color: #fff;
+    pointer-events: none;
+}
+
+/* Responsif */
+@media (max-width: 640px) {
+    .pageheader {
+        padding: 40px 0 48px;
+    }
+    .pageheader--bold {
+        padding: 52px 0 64px;
+    }
+    .pageheader-excerpt {
+        font-size: 15.5px;
+    }
+}

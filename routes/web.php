@@ -36,7 +36,9 @@ Route::middleware(['auth', 'check.expired', 'module:public'])->prefix('cms')->na
     Route::put('section/{section}', [SectionController::class, 'updateSection'])->name('section.update');
     Route::post('section/{section}/toggle', [SectionController::class, 'toggleSection'])->name('section.toggle');
     Route::post('section/reorder', [SectionController::class, 'reorderSections'])->name('section.reorder');
+    Route::post('section/reorder-all', [SectionController::class, 'reorderAllSections'])->name('section.reorder-all');
     Route::post('section/upload-logo', [SectionController::class, 'uploadLogo'])->name('section.upload-logo');
+    Route::post('section/upload-background', [SectionController::class, 'uploadBackground'])->name('section.upload-background');
     Route::delete('section/delete-logo/{collection}', [SectionController::class, 'deleteLogo'])->name('section.delete-logo');
 
     // Legacy redirects (backward compatibility)
@@ -44,8 +46,10 @@ Route::middleware(['auth', 'check.expired', 'module:public'])->prefix('cms')->na
     Route::redirect('landing-template', '/cms/section/template')->name('landing.edit');
     Route::redirect('landing-sections', '/cms/section')->name('landing.sections');
 
-    Route::get('landing-settings', [LandingPageSettingController::class, 'edit'])->name('settings.edit');
-    Route::put('landing-settings', [LandingPageSettingController::class, 'update'])->name('settings.update');
+    Route::get('media-social', [LandingPageSettingController::class, 'editSocial'])->name('media-social.edit');
+    Route::put('media-social', [LandingPageSettingController::class, 'updateSocial'])->name('media-social.update');
+    Route::get('seo', [LandingPageSettingController::class, 'editSeo'])->name('seo.edit');
+    Route::put('seo', [LandingPageSettingController::class, 'updateSeo'])->name('seo.update');
 
     Route::post('feature/reorder', [FeatureController::class, 'reorder'])->name('feature.reorder');
     Route::resource('feature', FeatureController::class)->except('show');
@@ -59,7 +63,6 @@ Route::middleware(['auth', 'check.expired', 'module:public'])->prefix('cms')->na
 
     // FAQ
     Route::post('faq/reorder', [FAQController::class, 'reorder'])->name('faq.reorder');
-    Route::get('faq/data', [FAQController::class, 'data'])->name('faq.data');
     Route::resource('faq', FAQController::class);
 
     // Pengumuman
@@ -108,6 +111,7 @@ Route::middleware(['auth', 'check.expired', 'module:public'])->prefix('cms')->na
 Route::middleware(HandleInertiaRequests::class)->controller(PublicController::class)->name('public.')->group(function () {
     Route::get('/', 'home')->name('index');
     Route::get('/preview', 'preview')->name('preview');
+    Route::post('/preview/design', 'saveDesign')->middleware('auth')->name('design.save');
     Route::get('/contact-us', 'contact')->name('contact');
     Route::post('/contact-us', 'sendContact')->middleware('throttle:5,1')->name('contact.send');
     Route::get('/page/{page:slug}', 'showPage')->name('page.show');
