@@ -19,6 +19,9 @@ class PublicServiceProvider extends BaseModuleServiceProvider
         parent::boot();
         $this->mergeConfigFrom(module_path($this->name, 'config/landing_sections.php'), 'landing_sections');
         $this->mergeConfigFrom(module_path($this->name, 'config/themes.php'), 'public_themes');
+        $this->mergeConfigFrom(module_path($this->name, 'config/builder_sections.php'), 'builder_sections');
+        $this->mergeConfigFrom(module_path($this->name, 'config/builder_templates.php'), 'builder_templates');
+        $this->mergeConfigFrom(module_path($this->name, 'config/builder_theme.php'), 'builder_theme');
     }
 
     protected function menu(): array
@@ -47,6 +50,22 @@ class PublicServiceProvider extends BaseModuleServiceProvider
                 'active_routes' => ['cms.menu.*'],
                 'icon'          => 'list',
                 'permission'    => 'public.cms.view',
+            ],
+            [
+                'type'     => 'dropdown',
+                'title'    => 'Website Builder',
+                'id'       => 'public-builder-group',
+                'icon'     => 'palette',
+                'children' => [
+                    [
+                        'priority'      => 1,
+                        'title'         => 'Pages',
+                        'route'         => 'cms.builder.pages.index',
+                        'active_routes' => ['cms.builder.*'],
+                        'icon'          => 'files',
+                        'permission'    => 'public.builder.view',
+                    ],
+                ],
             ],
             [
                 'type'     => 'dropdown',

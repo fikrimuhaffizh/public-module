@@ -67,6 +67,11 @@ class RolePermissionSeeder extends Seeder
             ['name' => 'public.cms.cta.create', 'category' => 'CMS / Landing Page', 'sub_category' => 'Call To Action', 'description' => 'Menambah CTA'],
             ['name' => 'public.cms.cta.update', 'category' => 'CMS / Landing Page', 'sub_category' => 'Call To Action', 'description' => 'Mengubah CTA'],
             ['name' => 'public.cms.cta.delete', 'category' => 'CMS / Landing Page', 'sub_category' => 'Call To Action', 'description' => 'Menghapus CTA'],
+            ['name' => 'public.builder.view', 'category' => 'Website Builder', 'sub_category' => 'Builder', 'description' => 'Melihat halaman & section builder'],
+            ['name' => 'public.builder.create', 'category' => 'Website Builder', 'sub_category' => 'Builder', 'description' => 'Membuat halaman builder atau section baru'],
+            ['name' => 'public.builder.update', 'category' => 'Website Builder', 'sub_category' => 'Builder', 'description' => 'Mengubah halaman, section, dan isi builder'],
+            ['name' => 'public.builder.delete', 'category' => 'Website Builder', 'sub_category' => 'Builder', 'description' => 'Menghapus halaman atau section builder'],
+            ['name' => 'public.builder.publish', 'category' => 'Website Builder', 'sub_category' => 'Builder', 'description' => 'Mempublikasikan / menghentikan publikasi halaman builder'],
         ];
     }
 

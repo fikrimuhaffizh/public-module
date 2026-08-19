@@ -15,6 +15,7 @@ use Modules\Public\Http\Controllers\Cms\PartnerController;
 use Modules\Public\Http\Controllers\Cms\ProductController;
 use Modules\Public\Http\Controllers\Cms\StatisticController;
 use Modules\Public\Http\Controllers\Cms\TestimonialController;
+use Modules\Public\Http\Controllers\Web\BuilderPublicController;
 use Modules\Public\Http\Controllers\Web\PublicController;
 use App\Http\Middleware\HandleInertiaRequests;
 
@@ -105,6 +106,24 @@ Route::middleware(['auth', 'check.expired', 'module:public'])->prefix('cms')->na
     Route::resource('public-menu', PublicMenuController::class)
         ->names('menu')
         ->parameters(['public-menu' => 'menu']);
+
+    // Website Builder (render_mode='custom' — GrapesJS freeform)
+    Route::prefix('builder')->name('builder.')->controller(Modules\Public\Http\Controllers\Cms\BuilderPageController::class)->group(function () {
+        Route::get('pages/data', 'data')->name('pages.data');
+        Route::get('pages', 'index')->name('pages.index');
+        Route::get('pages/create', 'create')->name('pages.create');
+        Route::post('pages', 'store')->name('pages.store');
+        Route::get('pages/{page}/edit', 'edit')->name('pages.edit');
+        Route::put('pages/{page}', 'update')->name('pages.update');
+        Route::delete('pages/{page}', 'destroy')->name('pages.destroy');
+        Route::post('pages/{page}/publish', 'publish')->name('pages.publish');
+        Route::post('pages/{page}/unpublish', 'unpublish')->name('pages.unpublish');
+        Route::get('pages/{page}/preview', 'preview')->name('pages.preview');
+        Route::get('pages/{page}/project', 'project')->name('pages.project');
+        Route::post('pages/{page}/save-project', 'saveProject')->name('pages.save-project');
+        Route::post('pages/{page}/upload', 'upload')->name('pages.upload');
+        Route::get('pages/{page}/editor', 'editor')->name('pages.editor');
+    });
 });
 
 // Web Area (Landing Page) — no prefix, routes register at / level (e.g. /, /contact-us, /page/{slug})
@@ -117,4 +136,13 @@ Route::middleware(HandleInertiaRequests::class)->controller(PublicController::cl
     Route::get('/page/{page:slug}', 'showPage')->name('page.show');
     Route::get('/announcements', 'showAllNews')->name('announcements.index');
     Route::get('/news/{pengumuman}', 'showNews')->name('news.show');
+});
+
+// Website Builder — halaman public (/{slug}), dirender via Laravel Blade + HTML.
+// Existing route di atas diregistrasi lebih dulu sehingga memiliki prioritas.
+// Slug hanya mengambil satu segmen lowercase (a-z, angka, strip).
+Route::middleware('web')->controller(BuilderPublicController::class)->name('public.')->group(function () {
+    Route::get('/{slug}', 'show')
+        ->where('slug', '[a-z0-9]+(?:-[a-z0-9]+)*')
+        ->name('builder.show');
 });

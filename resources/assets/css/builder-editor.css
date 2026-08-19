@@ -1,0 +1,189 @@
+/* =========================================================
+   Website Builder — Editor Chrome (GrapesJS)
+   Berjalan di dalam layout Tabler (public-layout); pembungkus
+   `.page-wrapper/.page-body/.container-xl` dinetralkan agar
+   kanvas memenuhi area konten.
+   ========================================================= */
+
+body.builder-editor .page-wrapper {
+    min-height: calc(100vh - var(--tblr-navbar-height, 56px));
+}
+
+body.builder-editor .page-body {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+body.builder-editor .page-body > .container-xl,
+body.builder-editor .container-xl {
+    max-width: none !important;
+    width: 100% !important;
+    padding: 0 !important;
+}
+
+body.builder-editor .footer {
+    display: none !important;
+}
+
+#builder-editor-root {
+    height: calc(100vh - var(--tblr-navbar-height, 56px));
+    min-height: 480px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Toolbar halaman */
+.be-toolbar {
+    height: 52px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0 0.75rem;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    z-index: 5;
+}
+
+.be-tb-left,
+.be-tb-right {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-width: 0;
+}
+
+.be-tb-title {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+    padding-right: 0.5rem;
+}
+
+.be-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 320px;
+}
+
+.be-subtitle {
+    font-size: 0.72rem;
+    color: #64748b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 320px;
+}
+
+.be-divider {
+    width: 1px;
+    height: 22px;
+    background: #e5e7eb;
+    margin: 0 0.25rem;
+}
+
+.be-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    height: 34px;
+    padding: 0 0.8rem;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    color: #1e293b;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    white-space: nowrap;
+}
+
+.be-btn:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+}
+
+.be-btn-icon {
+    width: 34px;
+    padding: 0;
+    justify-content: center;
+}
+
+.be-btn-primary { background: #2563eb; border-color: #2563eb; color: #ffffff; }
+.be-btn-primary:hover { background: #1d4ed8; border-color: #1d4ed8; color: #ffffff; }
+
+.be-btn-outline { background: #ffffff; border-color: #c7d2fe; color: #3730a3; }
+.be-btn-outline:hover { background: #eef2ff; border-color: #a5b4fc; color: #312e81; }
+
+.d-none { display: none !important; }
+
+.be-btn-success { background: #16a34a; border-color: #16a34a; color: #ffffff; }
+.be-btn-success:hover { background: #15803d; border-color: #15803d; color: #ffffff; }
+
+.be-btn-warning { background: #d97706; border-color: #d97706; color: #ffffff; }
+.be-btn-warning:hover { background: #b45309; border-color: #b45309; color: #ffffff; }
+
+/* Indikator status */
+.be-status {
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+.be-status-idle { color: #64748b; background: #f1f5f9; }
+.be-status-dirty { color: #b45309; background: #fef3c7; }
+.be-status-busy { color: #1e40af; background: #dbeafe; }
+.be-status-ok { color: #166534; background: #dcfce7; }
+.be-status-error { color: #b91c1c; background: #fee2e2; }
+
+/* Kanvas GrapesJS mengisi sisa ruang */
+#gjs {
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+#gjs .gjs-editor-cont,
+#gjs .gjs-cv-canvas {
+    width: 100%;
+    height: 100%;
+}
+
+/* Latar kanvas abu-abu lembut agar konten halaman menonjol */
+.gjs-cv-canvas {
+    background-color: #edf0f3 !important;
+}
+
+/* Blok di Block Manager: kartu rapi dengan hover */
+.gjs-blocks-c .gjs-block {
+    width: calc(50% - 8px);
+    margin: 4px;
+    padding: 10px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.gjs-blocks-c .gjs-block:hover {
+    border-color: var(--gjs-primary-color, #2563eb);
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.18);
+}
+
+/* Kontur hover/selected lebih tegas */
+:root {
+    --gjs-color-hl: #2563eb;
+    --gjs-font-highlight-color: #2563eb;
+}
+
+.gjs-cv-canvas {
+    font-size: 14px;
+}

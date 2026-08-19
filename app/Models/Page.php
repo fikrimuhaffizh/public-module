@@ -7,6 +7,7 @@ use App\Traits\Blameable;
 use App\Traits\HashidBinding;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -21,20 +22,65 @@ class Page extends Model implements HasMedia
 
     protected $appends = ['main_image_url'];
 
+    public const MODE_TEMPLATE = 'template';
+    public const MODE_CUSTOM = 'custom';
+
+    protected $fillable = [
+        'title',
+        'slug',
+        'content',
+        'render_mode',
+        'template_key',
+        'meta_desc',
+        'meta_keywords',
+        'seo_title',
+        'is_published',
+        'created_by',
+        'updated_by',
+        'deleted_by',
+    ];
+
+    protected $casts = [
+        'is_published' => 'boolean',
+    ];
+
+    public function builderData(): HasOne
+    {
+        return $this->hasOne(BuilderPageData::class, 'page_id', 'page_id');
+    }
+
+    public function isCustom(): bool
+    {
+        return $this->render_mode === self::MODE_CUSTOM;
+    }
+
+    public function isTemplate(): bool
+    {
+        return $this->render_mode !== self::MODE_CUSTOM;
+    }
+
     public function getMainImageUrlAttribute(): ?string
     {
         $media = $this->getFirstMedia('main_image');
         return $media ? sys_media_url($media) : null;
     }
 
-    protected $fillable = [
-        'meta_desc',
-        'meta_keywords',
-        'is_published',
-        'created_by',
-        'updated_by',
-        'deleted_by',
-    ];
+    /**
+     * URL publik: mode custom diekspos di /{slug} (HTML-first),
+     * mode template tetap di /page/{slug} (React/Inertia).
+     */
+    public function publicUrl(): string
+    {
+        if ($this->isCustom()) {
+            return \Illuminate\Support\Facades\Route::has('public.builder.show')
+                ? route('public.builder.show', ['slug' => $this->slug])
+                : url('/'.$this->slug);
+        }
+
+        return \Illuminate\Support\Facades\Route::has('public.page.show')
+            ? route('public.page.show', ['page' => $this->slug])
+            : url('/page/'.$this->slug);
+    }
 
     public function resolveRouteBinding($value, $field = null)
     {
@@ -58,5 +104,7 @@ class Page extends Model implements HasMedia
             ->singleFile();
 
         $this->addMediaCollection('attachments');
+
+        $this->addMediaCollection('builder_assets');
     }
 }

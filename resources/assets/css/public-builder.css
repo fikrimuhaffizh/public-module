@@ -1,0 +1,544 @@
+/* =========================================================
+   Website Builder — Public CSS (scoped .wbp-*)
+   Tema di-inject via var(--wbp-*) pada <html>.
+   Responsive: desktop → tablet (≤1024px) → mobile (≤640px)
+   ========================================================= */
+
+.wbp-body {
+    margin: 0;
+    font-family: var(--wbp-font);
+    color: var(--wbp-secondary, #0f172a);
+    background: #ffffff;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+.wbp-skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 100;
+    background: var(--wbp-primary, #2563eb);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: var(--wbp-radius);
+}
+.wbp-skip-link:focus {
+    left: 0.5rem;
+    top: 0.5rem;
+}
+
+.wbp-container {
+    width: 100%;
+    max-width: var(--wbp-container, 1140px);
+    margin: 0 auto;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+}
+.wbp-container-narrow { max-width: 760px; }
+
+.wbp-section {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+}
+
+/* ── Latar belakang section ─────────────────────────────── */
+.wbp-bg-white  { background: #ffffff; }
+.wbp-bg-gray   { background: #f6f7f9; }
+.wbp-bg-dark   { background: var(--wbp-secondary, #0f172a); color: #e2e8f0; }
+.wbp-bg-dark h1, .wbp-bg-dark h2, .wbp-bg-dark h3,
+.wbp-bg-dark .wbp-title, .wbp-bg-dark .wbp-subtitle { color: #ffffff; }
+.wbp-bg-dark .wbp-gray-text { color: #cbd5e1; }
+.wbp-bg-brand { background: var(--wbp-primary, #2563eb); color: #ffffff; }
+.wbp-bg-brand .wbp-title, .wbp-bg-brand .wbp-subtitle,
+.wbp-bg-brand h1, .wbp-bg-brand h2, .wbp-bg-brand h3 { color: #ffffff; }
+.wbp-bg-image {
+    background-size: cover;
+    background-position: center;
+    background-color: var(--wbp-secondary, #0f172a);
+    color: #f1f5f9;
+}
+
+/* ── Spasi vertikal ─────────────────────────────────────── */
+.wbp-py-none { padding-top: 0;    padding-bottom: 0; }
+.wbp-py-sm   { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+.wbp-py-md   { padding-top: 2.5rem; padding-bottom: 2.5rem; }
+.wbp-py-lg   { padding-top: 3.5rem; padding-bottom: 3.5rem; }
+.wbp-py-xl   { padding-top: 5rem;   padding-bottom: 5rem; }
+
+/* ── Perataan ───────────────────────────────────────────── */
+.wbp-text-left   { text-align: left; }
+.wbp-text-center { text-align: center; }
+.wbp-text-right  { text-align: right; }
+
+/* ── Tipografi ──────────────────────────────────────────── */
+.wbp-eyebrow {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--wbp-primary, #2563eb);
+    margin: 0 0 0.75rem;
+}
+.wbp-bg-brand .wbp-eyebrow, .wbp-bg-image .wbp-eyebrow,
+.wbp-bg-dark .wbp-eyebrow { color: inherit; opacity: 0.85; }
+
+.wbp-title {
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 0 0 1rem;
+    color: var(--wbp-secondary, #0f172a);
+}
+.wbp-bg-brand .wbp-title, .wbp-bg-dark .wbp-title { color: #fff; }
+
+.wbp-subtitle {
+    margin: 0 0 2.5rem;
+    font-size: 1.125rem;
+    color: #64748b;
+    max-width: 48rem;
+}
+.wbp-text-center .wbp-subtitle { margin-left: auto; margin-right: auto; }
+.wbp-bg-brand .wbp-subtitle, .wbp-bg-dark .wbp-subtitle { color: #cbd5e1; }
+
+.wbp-lead { font-size: 1.125rem; color: #475569; }
+.wbp-bg-brand .wbp-lead, .wbp-bg-dark .wbp-lead { color: #e2e8f0; }
+
+/* ── Section heading (shared partial) ───────────────────── */
+.wbp-section-heading { margin-bottom: 2.5rem; }
+.wbp-section-heading:not(.wbp-has-subtitle) { margin-bottom: 1.75rem; }
+.wbp-section-heading .wbp-title { margin-bottom: 0; }
+.wbp-section-heading .wbp-title + .wbp-subtitle { margin-top: 0.75rem; }
+.wbp-section-heading .wbp-subtitle { margin-bottom: 0; }
+
+.wbp-title-sm { font-size: 1.5rem; }
+.wbp-title-base { font-size: 2rem; }
+.wbp-title-lg { font-size: 3.5rem; }
+.wbp-title-xl { font-size: 4rem; }
+.wbp-title-2xl { font-size: 4.5rem; }
+
+.wbp-gray-text { color: #64748b; }
+.wbp-color-brand { color: var(--wbp-primary, #2563eb) !important; }
+
+/* ── Tombol ─────────────────────────────────────────────── */
+.wbp-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--wbp-radius, 12px);
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.2;
+    border: 2px solid transparent;
+    text-decoration: none;
+    cursor: pointer;
+    transition: filter 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+.wbp-btn:hover { filter: brightness(0.94); }
+.wbp-btn:active { transform: translateY(1px); }
+.wbp-btn i, .wbp-btn .wbp-icon { font-style: normal; }
+
+.wbp-btn-primary   { background: var(--wbp-primary, #2563eb); color: #fff; }
+.wbp-btn-secondary { background: var(--wbp-secondary, #0f172a); color: #fff; }
+.wbp-btn-outline   { border-color: currentColor; color: inherit; background: transparent; }
+.wbp-bg-brand .wbp-btn-outline, .wbp-bg-image .wbp-btn-outline,
+.wbp-bg-dark .wbp-btn-outline { border-color: #fff; color: #fff; }
+.wbp-btn-ghost     { background: transparent; color: inherit; }
+.wbp-btn-white     { background: #fff; color: var(--wbp-secondary, #0f172a); }
+.wbp-btn-lg        { padding: 1rem 2rem; font-size: 1.125rem; }
+.wbp-btn-sm        { padding: 0.5rem 1rem; font-size: 0.9rem; }
+.wbp-btn-block     { display: flex; width: 100%; }
+
+/* ── Kartu (untuk fitur/testimoni/harga) ────────────────── */
+.wbp-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--wbp-radius, 12px);
+    padding: 1.75rem;
+    height: 100%;
+}
+.wbp-bg-dark .wbp-card, .wbp-bg-brand .wbp-card { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); }
+
+/* ── Grid ───────────────────────────────────────────────── */
+.wbp-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+.wbp-grid-2 { grid-template-columns: repeat(2, 1fr); }
+.wbp-grid-3 { grid-template-columns: repeat(3, 1fr); }
+.wbp-grid-4 { grid-template-columns: repeat(4, 1fr); }
+.wbp-grid-auto { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+
+/* ── Hero ───────────────────────────────────────────────── */
+.wbp-hero {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    align-items: center;
+}
+.wbp-hero.has-image { grid-template-columns: 1.1fr 0.9fr; }
+.wbp-hero.has-image.wbp-order-reverse > .wbp-hero-media { order: -1; }
+.wbp-hero-media img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--wbp-radius, 12px);
+    box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.35);
+}
+.wbp-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+    justify-content: inherit;
+}
+.wbp-text-center .wbp-hero-actions { justify-content: center; }
+
+/* ── Features ───────────────────────────────────────────── */
+.wbp-feature-icon {
+    display: inline-flex;
+    width: 3rem;
+    height: 3rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--wbp-radius, 12px);
+    background: rgba(var(--wbp-primary-rgb, 37 99 235), 0.1);
+    color: var(--wbp-primary, #2563eb);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+.wbp-bg-brand .wbp-feature-icon, .wbp-bg-dark .wbp-feature-icon { background: rgba(255,255,255,0.15); color: #fff; }
+.wbp-card-title { margin: 0 0 0.5rem; font-size: 1.125rem; font-weight: 700; }
+.wbp-card-text { margin: 0; color: #64748b; }
+.wbp-bg-brand .wbp-card-text, .wbp-bg-dark .wbp-card-text { color: #cbd5e1; }
+
+/* ── Statistics ─────────────────────────────────────────── */
+.wbp-stat-value {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--wbp-primary, #2563eb);
+}
+.wbp-bg-brand .wbp-stat-value, .wbp-bg-dark .wbp-stat-value { color: #ffffff; }
+.wbp-stat-label { margin-top: 0.5rem; color: #64748b; font-weight: 500; }
+.wbp-bg-brand .wbp-stat-label, .wbp-bg-dark .wbp-stat-label { color: #cbd5e1; }
+
+/* ── Testimonials ───────────────────────────────────────── */
+.wbp-quote { margin: 0 0 1rem; font-size: 1.05rem; color: #334155; }
+.wbp-bg-dark .wbp-quote, .wbp-bg-brand .wbp-quote { color: #f1f5f9; }
+.wbp-person {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+}
+.wbp-avatar {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 9999px;
+    object-fit: cover;
+    background: #e2e8f0;
+}
+.wbp-avatar-placeholder {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #475569;
+    text-transform: uppercase;
+}
+.wbp-person-name { font-weight: 700; }
+.wbp-person-role { font-size: 0.85rem; color: #64748b; }
+.wbp-bg-brand .wbp-person-role, .wbp-bg-dark .wbp-person-role { color: #cbd5e1; }
+
+/* ── Pricing ────────────────────────────────────────────── */
+.wbp-price-card { position: relative; display: flex; flex-direction: column; }
+.wbp-price-card.featured {
+    border: 2px solid var(--wbp-primary, #2563eb);
+    box-shadow: 0 15px 35px -15px rgba(37, 99, 235, 0.35);
+}
+.wbp-price-name { font-weight: 700; font-size: 1.125rem; }
+.wbp-price-amount {
+    font-size: 2.75rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--wbp-secondary, #0f172a);
+    margin: 0.75rem 0 0.25rem;
+}
+.wbp-price-period { color: #64748b; font-size: 0.9rem; }
+.wbp-price-desc { color: #64748b; margin: 0.5rem 0 1rem; }
+.wbp-price-features { list-style: none; margin: 0 0 1.5rem; padding: 0; flex-grow: 1; }
+.wbp-price-features li { padding: 0.35rem 0; display: flex; gap: 0.5rem; align-items: baseline; }
+.wbp-price-features li::before { content: "✓"; color: var(--wbp-primary, #2563eb); font-weight: 700; }
+.wbp-bg-brand .wbp-price-features li::before, .wbp-bg-dark .wbp-price-features li::before { color: #fff; }
+.wbp-price-features .wbp-disabled::before { content: "✕"; color: #cbd5e1; }
+.wbp-featured-ribbon {
+    position: absolute;
+    top: -0.85rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--wbp-primary, #2563eb);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.9rem;
+    border-radius: 9999px;
+}
+
+/* ── FAQ (accordion native) ──────────────────────────────── */
+.wbp-faq details {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--wbp-radius, 12px);
+    padding: 0 1.25rem;
+    margin-bottom: 0.75rem;
+}
+.wbp-bg-dark .wbp-faq details, .wbp-bg-brand .wbp-faq details {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.15);
+}
+.wbp-faq summary {
+    cursor: pointer;
+    font-weight: 600;
+    padding: 1rem 0;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+.wbp-faq summary::-webkit-details-marker { display: none; }
+.wbp-faq summary::after { content: "+"; font-size: 1.25rem; color: var(--wbp-primary, #2563eb); }
+.wbp-faq details[open] summary::after { content: "−"; }
+.wbp-faq-body { padding: 0 0 1rem; color: #475569; }
+.wbp-bg-brand .wbp-faq-body, .wbp-bg-dark .wbp-faq-body { color: #cbd5e1; }
+
+/* ── CTA ────────────────────────────────────────────────── */
+.wbp-cta-box {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    text-align: center;
+    padding: 3rem 2rem;
+    border-radius: var(--wbp-radius, 12px);
+}
+.wbp-cta-title { font-size: 2rem; font-weight: 800; margin: 0; }
+.wbp-cta-desc { max-width: 40rem; margin: 0 0 1rem; }
+.wbp-cta-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; }
+
+/* ── Image + Text ───────────────────────────────────────── */
+.wbp-media-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+.wbp-media-row.flip > .wbp-media-figure { order: 2; }
+.wbp-media-figure img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--wbp-radius, 12px);
+}
+.wbp-media-content .wbp-lead { margin: 0 0 1.5rem; }
+
+/* ── Gallery ────────────────────────────────────────────── */
+.wbp-gallery img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--wbp-radius, 12px);
+    display: block;
+}
+.wbp-gallery-item { margin: 0; }
+.wbp-gallery-item figcaption {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: #64748b;
+}
+.wbp-bg-dark .wbp-gallery-item figcaption,
+.wbp-bg-brand .wbp-gallery-item figcaption { color: #cbd5e1; }
+
+/* ── Logo / Partner ─────────────────────────────────────── */
+.wbp-logo-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    align-items: center;
+}
+.wbp-logo-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem;
+    filter: grayscale(1);
+    opacity: 0.7;
+    transition: filter 0.2s ease, opacity 0.2s ease;
+}
+.wbp-logo-item:hover { filter: none; opacity: 1; }
+.wbp-logo-item img { max-height: 2.75rem; max-width: 100%; }
+
+/* ── Contact ────────────────────────────────────────────── */
+.wbp-contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+}
+.wbp-contact-item {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    padding: 1.25rem;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--wbp-radius, 12px);
+}
+.wbp-bg-dark .wbp-contact-item, .wbp-bg-brand .wbp-contact-item {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.15);
+}
+.wbp-contact-icon { color: var(--wbp-primary, #2563eb); font-size: 1.25rem; margin-top: 0.15rem; }
+.wbp-contact-label { font-weight: 700; margin-bottom: 0.15rem; }
+.wbp-contact-value { color: #64748b; word-break: break-word; }
+.wbp-bg-brand .wbp-contact-value, .wbp-bg-dark .wbp-contact-value { color: #cbd5e1; }
+
+/* ── Columns (untuk semua layout) ───────────────────────── */
+.wbp-col { min-width: 0; }
+.wbp-col img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--wbp-radius, 12px);
+    margin-bottom: 1rem;
+}
+.wbp-col h3 { margin: 0 0 0.5rem; }
+.wbp-col p { margin: 0 0 1rem; color: #64748b; }
+.wbp-bg-brand .wbp-col p, .wbp-bg-dark .wbp-col p { color: #cbd5e1; }
+
+/* ── Divider ────────────────────────────────────────────── */
+.wbp-divider {
+    border: none;
+    border-top: 1px solid #e2e8f0;
+    margin: 0 auto;
+}
+.wbp-bg-dark .wbp-divider, .wbp-bg-brand .wbp-divider { border-color: rgba(255,255,255,0.2); }
+.wbp-divider-dashed { border-top-style: dashed; }
+.wbp-divider-dotted { border-top-style: dotted; }
+.wbp-divider-sm { width: 30%; }
+.wbp-divider-md { width: 50%; }
+.wbp-divider-lg { width: 100%; }
+.wbp-text-center .wbp-divider { margin-left: auto; margin-right: auto; }
+
+/* ── Image / Button / Heading / Text (basic) ────────────── */
+.wbp-image-figure { margin: 0; }
+.wbp-image-figure img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--wbp-radius, 12px);
+}
+.wbp-image-figure.wbp-rounded img { border-radius: var(--wbp-radius, 12px); }
+.wbp-image-max-sm { max-width: 320px; }
+.wbp-image-max-md { max-width: 560px; }
+.wbp-image-max-lg { max-width: 840px; }
+.wbp-caption {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: #64748b;
+    text-align: center;
+}
+.wbp-bg-dark .wbp-caption, .wbp-bg-brand .wbp-caption { color: #cbd5e1; }
+.wbp-height-sm { min-height: 80px; }
+.wbp-height-md { min-height: 160px; }
+.wbp-height-lg { min-height: 260px; }
+
+/* ── Footer ─────────────────────────────────────────────── */
+.wbp-footer {
+    background: var(--wbp-secondary, #0f172a);
+    color: #94a3b8;
+    padding: 2rem 0;
+}
+.wbp-footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-size: 0.875rem;
+}
+.wbp-footer-sep {
+    width: 1px;
+    height: 1rem;
+    background: rgba(255,255,255,0.2);
+}
+@media (max-width: 640px) {
+    .wbp-footer-inner { justify-content: center; text-align: center; }
+    .wbp-footer-sep { display: none; }
+}
+
+/* ── Preview bar (admin hanya saat preview) ─────────────── */
+.wbp-preview-bar {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--wbp-secondary, #0f172a);
+    color: #fff;
+    padding: 0.6rem 0.9rem;
+    border-radius: var(--wbp-radius, 12px);
+    box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+    font-size: 0.9rem;
+    z-index: 50;
+}
+.wbp-preview-badge {
+    background: var(--wbp-primary, #2563eb);
+    padding: 0.2rem 0.7rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+.wbp-preview-link { color: #93c5fd; text-decoration: none; font-weight: 600; }
+.wbp-preview-link:hover { text-decoration: underline; }
+
+/* =========================================================
+   Responsive: Tablet (≤1024) & Mobile (≤640)
+   ========================================================= */
+@media (max-width: 1024px) {
+    .wbp-title-lg { font-size: 2.5rem; }
+    .wbp-title-xl { font-size: 3rem; }
+    .wbp-title-2xl { font-size: 3.25rem; }
+    .wbp-stat-value { font-size: 2.5rem; }
+    .wbp-hero.has-image { grid-template-columns: 1fr; }
+    .wbp-media-row { gap: 2rem; }
+    .wbp-grid-4 { grid-template-columns: repeat(2, 1fr); }
+    .wbp-grid-auto { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+}
+
+@media (max-width: 640px) {
+    .wbp-section { padding-top: 2.5rem; padding-bottom: 2.5rem; }
+    .wbp-py-xl { padding-top: 3rem; padding-bottom: 3rem; }
+    .wbp-container { padding-left: 1rem; padding-right: 1rem; }
+
+    .wbp-title-lg { font-size: 2rem; }
+    .wbp-title-xl, .wbp-title-2xl { font-size: 2.25rem; }
+    .wbp-subtitle { font-size: 1rem; }
+    .wbp-lead { font-size: 1rem; }
+
+    .wbp-grid-2, .wbp-grid-3, .wbp-grid-4 { grid-template-columns: 1fr; }
+    .wbp-media-row { grid-template-columns: 1fr; }
+    .wbp-media-row.flip > .wbp-media-figure { order: 0; }
+    .wbp-hero-actions { flex-direction: column; }
+    .wbp-hero-actions .wbp-btn { width: 100%; }
+    .wbp-stat-value { font-size: 2rem; }
+    .wbp-cta-box { padding: 2.25rem 1.25rem; }
+    .wbp-cta-title { font-size: 1.5rem; }
+    .wbp-price-amount { font-size: 2.25rem; }
+}
