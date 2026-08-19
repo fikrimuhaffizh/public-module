@@ -5,7 +5,16 @@
    kanvas memenuhi area konten.
    ========================================================= */
 
+/* ── Sembunyikan sidebar sistem Tabler ─────────────────────── */
+body.builder-editor .page > .navbar-vertical {
+    display: none !important;
+}
+
 body.builder-editor .page-wrapper {
+    margin-left: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 1 1 auto !important;
     min-height: calc(100vh - var(--tblr-navbar-height, 56px));
 }
 
@@ -22,6 +31,11 @@ body.builder-editor .container-xl {
 }
 
 body.builder-editor .footer {
+    display: none !important;
+}
+
+body.builder-editor .demo-banner,
+body.builder-editor .page-header {
     display: none !important;
 }
 
@@ -146,7 +160,7 @@ body.builder-editor .footer {
 .be-status-ok { color: #166534; background: #dcfce7; }
 .be-status-error { color: #b91c1c; background: #fee2e2; }
 
-/* Kanvas GrapesJS mengisi sisa ruang */
+/* ── Kanvas GrapesJS ──────────────────────────────────────── */
 #gjs {
     flex: 1 1 auto;
     min-height: 0;
@@ -158,18 +172,22 @@ body.builder-editor .footer {
     height: 100%;
 }
 
-/* Latar kanvas abu-abu lembut agar konten halaman menonjol */
 .gjs-cv-canvas {
     background-color: #edf0f3 !important;
+    font-size: 14px;
 }
 
-/* Blok di Block Manager: kartu rapi dengan hover */
+/* ── Blocks: 3 kolom compact ──────────────────────────────── */
+.gjs-blocks-c {
+    padding: 6px !important;
+}
+
 .gjs-blocks-c .gjs-block {
-    width: calc(50% - 8px);
-    margin: 4px;
-    padding: 10px;
+    width: calc(33.333% - 6px) !important;
+    margin: 3px !important;
+    padding: 6px !important;
     border: 1px solid transparent;
-    border-radius: 8px;
+    border-radius: 6px;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
@@ -178,12 +196,56 @@ body.builder-editor .footer {
     box-shadow: 0 2px 8px rgba(37, 99, 235, 0.18);
 }
 
-/* Kontur hover/selected lebih tegas */
+.gjs-blocks-c .gjs-block svg,
+.gjs-blocks-c .gjs-block i {
+    max-width: 24px;
+    max-height: 24px;
+}
+
+/* ── Highlight color ──────────────────────────────────────── */
 :root {
     --gjs-color-hl: #2563eb;
     --gjs-font-highlight-color: #2563eb;
 }
 
-.gjs-cv-canvas {
-    font-size: 14px;
+/* Hide GrapesJS default device buttons (sudah punya toggle sendiri) */
+.gjs-pn-btn.gjs-pn-btn-device,
+.gjs-pn-views .gjs-pn-btn[title*="Mobile"],
+.gjs-pn-views .gjs-pn-btn[title*="Tablet"],
+.gjs-pn-views .gjs-pn-btn[title*="Desktop"] {
+    display: none !important;
+}
+
+/* ── Device Toggle ────────────────────────────────────── */
+.be-device-toggle {
+    display: inline-flex;
+    background: #f1f5f9;
+    border-radius: 8px;
+    padding: 2px;
+    gap: 2px;
+}
+
+.be-device-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 30px;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.be-device-btn:hover {
+    background: #e2e8f0;
+    color: #1e293b;
+}
+
+.be-device-btn.active {
+    background: #ffffff;
+    color: #2563eb;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }

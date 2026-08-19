@@ -81,6 +81,7 @@ class BuilderPageController extends Controller
         $editorConfig['blocks'] = $this->builder->sectionBlocks();
         $editorConfig['themeCss'] = $this->builder->themeCss();
         $editorConfig['canvasStyles'] = $this->builderCanvasStyles();
+        $editorConfig['sections'] = config('builder_sections.sections', []);
 
         return response()->view('public::pages.cms.builder.pages.editor', [
             'page' => $page,

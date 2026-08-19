@@ -44,6 +44,20 @@
 
                 <span class="be-divider"></span>
 
+                <div class="be-device-toggle" role="group" aria-label="Device preview">
+                    <button type="button" id="be-device-desktop" class="be-device-btn active" title="Desktop (Full width)" data-device="Desktop">
+                        <i class="ti ti-device-desktop"></i>
+                    </button>
+                    <button type="button" id="be-device-tablet" class="be-device-btn" title="Tablet (768px)" data-device="Tablet">
+                        <i class="ti ti-device-tablet"></i>
+                    </button>
+                    <button type="button" id="be-device-mobile" class="be-device-btn" title="Mobile (375px)" data-device="Mobile portrait">
+                        <i class="ti ti-device-mobile"></i>
+                    </button>
+                </div>
+
+                <span class="be-divider"></span>
+
                 <a href="{{ route('cms.builder.pages.preview', $page) }}" target="_blank" class="be-btn" title="Buka preview di tab baru">
                     <i class="ti ti-eye"></i><span>Preview</span>
                 </a>
