@@ -260,13 +260,24 @@ class BuilderPageController extends Controller
     /** CSP untuk rute publik halaman custom (pertahanan lapis kedua pasca-sanitasi). */
     public static function cspPolicy(): string
     {
+        $styleSrc = "'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com https://fonts.gstatic.com";
+        $fontSrc  = "'self' data: https://cdn.jsdelivr.net https://fonts.gstatic.com";
+
+        // In development, Vite serves assets from a dev server (e.g. http://127.0.0.1:5175).
+        // We must whitelist it so <link> tags pointing to Vite URLs aren't blocked by CSP.
+        if (app()->environment('local', 'development')) {
+            $viteHost = config('vite.host') ?? '127.0.0.1';
+            $vitePort = config('vite.port') ?? '5175';
+            $styleSrc .= " http://{$viteHost}:{$vitePort}";
+        }
+
         return implode('; ', [
             "default-src 'self'",
             "script-src 'self'",
-            "style-src 'self' 'unsafe-inline'",
+            "style-src {$styleSrc}",
             "img-src 'self' data: blob:",
             "media-src 'self' data: blob:",
-            "font-src 'self' data:",
+            "font-src {$fontSrc}",
             "frame-src https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com",
             "connect-src 'self'",
             "object-src 'none'",
