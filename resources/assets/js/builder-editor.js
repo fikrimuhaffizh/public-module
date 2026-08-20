@@ -10,6 +10,8 @@
  */
 import grapesjs from 'grapesjs';
 import 'grapesjs/dist/css/grapes.min.css';
+// FontAwesome: GrapesJS core UI (RTE, asset manager, modal, canvas badges) memakai class fa-*.
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
@@ -307,7 +309,13 @@ const editor = grapesjs.init({
 
     deviceManager: {
         devices: [
-            { id: 'Desktop', name: 'Desktop', width: '', widthMedia: '992px' },
+            // Desktop harus widthMedia kosong ('') → style dibuat sebagai aturan
+            // dasar (tanpa @media). Jika diberi widthMedia (mis. '992px'), semua
+            // ubahan Desktop malah dibungkus `@media (max-width: 992px)` dan
+            // tidak tampil di layar lebih lebar dari 992px.
+            // Tablet pakai 768px (bukan 992) agar nilai 992px tetap identik
+            // dengan "Desktop legacy" → aman utk migrasi @media 992 ke dasar.
+            { id: 'Desktop', name: 'Desktop', width: '' },
             { id: 'Tablet', name: 'Tablet', width: '768px', widthMedia: '768px' },
             { id: 'Mobile portrait', name: 'Mobile', width: '375px', height: '667px', widthMedia: '480px' },
         ],
@@ -315,6 +323,84 @@ const editor = grapesjs.init({
 
     selectorManager: {
         componentFirst: true,
+    },
+
+    // Override panel utama GrapesJS agar memakai ikon Tabler (ti-*) — konsisten dengan
+    // lingkungan Tabler app. FontAwesome tetap dimuat utk ikon internal GrapesJS lain.
+    panels: {
+        defaults: [
+            {
+                id: 'commands',
+                buttons: [{}],
+            },
+            {
+                id: 'options',
+                buttons: [
+                    {
+                        id: 'sw-visibility',
+                        active: true,
+                        className: 'ti ti-view-360',
+                        command: 'core:component-outline',
+                        context: 'sw-visibility',
+                        attributes: { title: 'Lihat komponen' },
+                    },
+                    {
+                        id: 'preview',
+                        className: 'ti ti-eye',
+                        command: 'preview',
+                        context: 'preview',
+                        attributes: { title: 'Preview' },
+                    },
+                    {
+                        id: 'fullscreen',
+                        className: 'ti ti-maximize',
+                        command: 'fullscreen',
+                        context: 'fullscreen',
+                        attributes: { title: 'Fullscreen' },
+                    },
+                    {
+                        id: 'export-template',
+                        className: 'ti ti-code',
+                        command: 'export-template',
+                        attributes: { title: 'Lihat kode' },
+                    },
+                ],
+            },
+            {
+                id: 'views',
+                buttons: [
+                    {
+                        id: 'open-sm',
+                        className: 'ti ti-palette',
+                        command: 'open-sm',
+                        active: true,
+                        togglable: false,
+                        attributes: { title: 'Style Manager' },
+                    },
+                    {
+                        id: 'open-tm',
+                        className: 'ti ti-settings',
+                        command: 'open-tm',
+                        togglable: false,
+                        attributes: { title: 'Settings' },
+                    },
+                    {
+                        id: 'open-layers',
+                        className: 'ti ti-layers',
+                        command: 'open-layers',
+                        togglable: false,
+                        attributes: { title: 'Layer Manager' },
+                    },
+                    {
+                        id: 'open-blocks',
+                        className: 'ti ti-layout-grid',
+                        command: 'open-blocks',
+                        togglable: false,
+                        attributes: { title: 'Blocks' },
+                    },
+                ],
+            },
+        ],
     },
 
     canvas: {
@@ -341,15 +427,49 @@ function starterMarkup() {
 function loadInitial() {
     const project = cfg.gjsProject;
     if (project && Array.isArray(project.components) && project.components.length) {
+        migrateLegacyDesktopMedia(project);
         editor.loadProjectData(project);
         return;
     }
     if (cfg.html) {
         editor.setComponents(cfg.html);
-        if (cfg.css) editor.setStyle(cfg.css);
+        const css = cfg.css ? unwrapLegacyDesktopMediaCss(cfg.css) : '';
+        if (css) editor.setStyle(css);
         return;
     }
     editor.setComponents(starterMarkup());
+}
+
+/**
+ * Migrasi data lama: sebelum perbaikan device config, style "Desktop" tertulis
+ * sebagai `@media (max-width: 992px)` (akibat widthMedia '992px' pada device
+ * Desktop). Pindahkan kembali aturan itu ke level dasar (tanpa media query)
+ * agar perubahan desktop benar-benar terlihat. Hanya aturan `max-width: 992px`
+ * yang ditarget (device lama: Desktop→992, Tablet→768, Mobile→480).
+ */
+function migrateLegacyDesktopMedia(project) {
+    if (!project || !Array.isArray(project.styles)) return;
+    let migrated = 0;
+    project.styles.forEach((rule) => {
+        if (rule && typeof rule === 'object' && Array.isArray(rule.selectors) &&
+            typeof rule.mediaText === 'string' && rule.mediaText.includes('max-width: 992px')) {
+            rule.mediaText = '';
+            migrated++;
+        }
+    });
+    if (migrated) console.info(`[builder] Memigrasi ${migrated} aturan @media max-width:992px ke level dasar.`);
+}
+
+function unwrapLegacyDesktopMediaCss(css) {
+    let out = String(css || '');
+    let iterations = 0;
+    while (iterations++ < 50) {
+        const re = /@media\s*\(\s*max-width\s*:\s*992px\s*\)\s*\{([\s\S]*?)\n?\}/;
+        const m = out.match(re);
+        if (!m) break;
+        out = out.replace(re, '') + '\n' + m[1];
+    }
+    return out;
 }
 
 /* ── Blok kustom dari section builder ───────────────────────── */
@@ -464,23 +584,82 @@ editor.on('load', () => {
 });
 
 /* ── Aksi toolbar ────────────────────────────────────────────── */
+
+/* Satu snapshot BERSAING (latest-wins): autosave yang sedang berjalan
+   (dengan data LAMA) harus tuntas dulu sebelum save manual mengirim data
+   TERBARU, sehingga tidak ada tulisan balik dengan snapshot basi yang
+   membuat perubahan terakhir tampak "balik ke semula". */
+let saveInFlight = false;
+
+/**
+ * Line GrapesJS menyimpan override teks/trait sebagai rule CSS ber-selector id
+ * (mis. `#ir2vk { font-style:normal }`) tetapi TIDAK menulis `id` ke atribut
+ * komponen di project/HTML. Akibatnya rule hanya berfungsi di dalam kanvas
+ * (GrapesJS menyuntik id saat render) dan menjadi "yatim" di halaman publik/
+ * preview → perubahan tampak balik lagi. Fungsi ini menstempel `id` selector
+ * ke atribut komponen sebelum snapshot diambil, sehingga `getHtml()` &
+ * `getProjectData()` turut membawa id tersebut.
+ */
+function stampSelectorIds() {
+    const wrapper = editor.getWrapper();
+    if (!wrapper) return;
+    editor.CssComposer.getAll().forEach((rule) => {
+        rule.getSelectors().forEach((sel) => {
+            if (!sel.isId()) return;
+            const name = sel.get('name');
+            if (!name) return;
+            const found = wrapper.find(`#${name}`);
+            if (!found.length) return;
+            const comp = found[0];
+            const attrs = comp.get('attributes') || {};
+            if (attrs.id !== name) {
+                comp.set('attributes', { ...attrs, id: name });
+            }
+        });
+    });
+}
+
+function currentSnapshot() {
+    stampSelectorIds();
+    return {
+        gjs_project: editor.getProjectData(),
+        html: editor.getHtml(),
+        css: editor.getCss(),
+    };
+}
+
+/** Tunggu hingga autosave yang sedang berjalan selesai. */
+async function flushAuto() {
+    while (saveInFlight) {
+        await new Promise((r) => setTimeout(r, 50));
+    }
+}
+
+async function postSnapshot(payload) {
+    const { data } = await axios.post(cfg.saveUrl, payload, {
+        headers: { 'X-CSRF-TOKEN': cfg.csrf },
+    });
+    dirty = false;
+    return data;
+}
+
 async function save(showToast = true) {
+    clearTimeout(autosaveTimer);
     setStatus('Menyimpan…', 'busy');
     try {
-        const payload = {
-            gjs_project: editor.getProjectData(),
-            html: editor.getHtml(),
-            css: editor.getCss(),
-        };
-        const { data } = await axios.post(cfg.saveUrl, payload, {
-            headers: { 'X-CSRF-TOKEN': cfg.csrf },
-        });
+        // Tunggu autosave lama selesai DULU, baru kirim snapshot terbaru —
+        // urutan POST = manual diposting PERTAMA (latest-wins).
+        await flushAuto();
+        saveInFlight = true;
+        const data = await postSnapshot(currentSnapshot());
         dirty = false;
         setStatus(data.message || 'Tersimpan', 'ok');
         if (showToast) toast('success', data.message || 'Project tersimpan.');
     } catch (err) {
         setStatus('Gagal menyimpan', 'error');
-        toast('error', err.response?.data?.message || 'Terjadi kesalahan saat menyimpan.');
+        if (showToast) toast('error', err.response?.data?.message || 'Terjadi kesalahan saat menyimpan.');
+    } finally {
+        saveInFlight = false;
     }
 }
 
@@ -626,30 +805,21 @@ function wireDeviceToggle() {
 
 /* ── Autosave (debounce) ─────────────────────────────────────── */
 let autosaveTimer = null;
-let autosaveBusy = false;
 let autosaveEnabledAt = Date.now();
 
 async function autosave() {
-    if (autosaveBusy) {
+    if (saveInFlight) {
         autosaveTimer = setTimeout(autosave, 800);
         return;
     }
-    autosaveBusy = true;
+    saveInFlight = true;
     try {
-        const payload = {
-            gjs_project: editor.getProjectData(),
-            html: editor.getHtml(),
-            css: editor.getCss(),
-        };
-        await axios.post(cfg.saveUrl, payload, {
-            headers: { 'X-CSRF-TOKEN': cfg.csrf },
-        });
-        dirty = false;
+        await postSnapshot(currentSnapshot());
         setStatus('Disimpan otomatis ' + new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }), 'ok');
     } catch (err) {
         setStatus('Autosave gagal — cek koneksi', 'error');
     } finally {
-        autosaveBusy = false;
+        saveInFlight = false;
     }
 }
 
@@ -678,6 +848,20 @@ document.addEventListener('keydown', (e) => {
 
 window.addEventListener('beforeunload', (e) => {
     if (!dirty) return undefined;
+    // Kirim snapshot TERBARU via keepalive agar perubahan menit terakhir
+    // (belum sempat autosave) tidak hilang saat tab ditutup/direload.
+    try {
+        fetch(cfg.saveUrl, {
+            method: 'POST',
+            keepalive: true,
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': cfg.csrf,
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+            body: JSON.stringify(currentSnapshot()),
+        });
+    } catch (_) { /* abaikan — browser mungkin menolak keepalive di unload */ }
     e.preventDefault();
     e.returnValue = '';
     return '';

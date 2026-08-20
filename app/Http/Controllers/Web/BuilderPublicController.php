@@ -50,7 +50,8 @@ class BuilderPublicController extends Controller
         ]);
 
         return $response
-            ->header('X-Content-Type-Options', 'nosniff')
-            ->header('Content-Security-Policy', \Modules\Public\Http\Controllers\Cms\BuilderPageController::cspPolicy());
+            ->header('X-Content-Type-Options', 'nosniff');
+            // Hold sementara — CSP dimatikan utk debugging connect-src jsdelivr (tabler-icons .css.map)
+            // ->header('Content-Security-Policy', \Modules\Public\Http\Controllers\Cms\BuilderPageController::cspPolicy());
     }
 }

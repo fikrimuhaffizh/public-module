@@ -91,9 +91,18 @@ class BuilderPageService
      */
     public function saveProject(Page $page, array $project, string $html, string $css): BuilderPageData
     {
-        $project = $this->sanitizer->sanitizeProject($project);
-        $html = $this->sanitizer->sanitizeHtml($html);
-        $css = $this->sanitizer->sanitizeCss($css);
+        // NOTE (permintaan user): sanitasi & rekonstruksi SERVER SIDE dinonaktifkan
+        // sementara — simpan persis apa yang dikirim editor GrapesJS, agar
+        // perubahan (font/italic/center/style) tersimpan apa adanya untuk
+        // debugging konsistensi data. Aktifkan kembali setelah root cause jelas.
+        //
+        // $project = $this->sanitizer->sanitizeProject($project);
+        // $html = $this->sanitizer->sanitizeHtml($html);
+        // $css = $this->sanitizer->sanitizeCss($css);
+        // $projectHtml = $this->htmlFromProject($project);
+        // if ($projectHtml !== '') $html = $this->sanitizer->sanitizeHtml($projectHtml);
+        // $projectCss = $this->cssFromProject($project);
+        // if ($projectCss !== '') $css = $this->sanitizer->sanitizeCss($projectCss);
 
         return DB::transaction(function () use ($page, $project, $html, $css) {
             $data = $this->dataFor($page);
@@ -125,6 +134,180 @@ class BuilderPageService
         }
 
         return BuilderPageData::query()->where('page_id', $page->getKey())->first();
+    }
+
+    /**
+     * Rekonstruksi CSS dari aturan `styles` di project GrapysJS (level atas
+     * maupun di pages[*].frames[*]). Menghasilkan CSS setara getCss() editor.
+     */
+    public function cssFromProject(array $project): string
+    {
+        $rules = [];
+
+        foreach (($project['styles'] ?? []) as $rule) {
+            if (is_array($rule)) {
+                $rules[] = $rule;
+            }
+        }
+        foreach (($project['pages'] ?? []) as $page) {
+            if (! is_array($page)) {
+                continue;
+            }
+            foreach (($page['frames'] ?? []) as $frame) {
+                if (! is_array($frame)) {
+                    continue;
+                }
+                foreach (($frame['styles'] ?? []) as $rule) {
+                    if (is_array($rule)) {
+                        $rules[] = $rule;
+                    }
+                }
+            }
+        }
+
+        $groups = [];
+        $order = [];
+        foreach ($rules as $rule) {
+            $media = trim((string) ($rule['mediaText'] ?? ''));
+            $selectors = is_array($rule['selectors'] ?? null) ? $rule['selectors'] : [];
+            $selText = implode(',', array_map(fn ($s) => (string) $s, $selectors));
+            $style = is_array($rule['style'] ?? null) ? $rule['style'] : [];
+            $decls = [];
+            foreach ($style as $k => $v) {
+                if ($k === '' || $v === null || $v === '') {
+                    continue;
+                }
+                $decls[] = trim((string) $k).':'.trim((string) $v);
+            }
+            if ($selText === '' || ! $decls) {
+                continue;
+            }
+            if (! isset($groups[$media])) {
+                $groups[$media] = [];
+                $order[] = $media;
+            }
+            $groups[$media][] = $selText.' { '.implode('; ', $decls).'; }';
+        }
+
+        if (! $groups) {
+            return '';
+        }
+
+        // Media default ('' — aturan dasar) didahulukan, sisanya urutan kemunculan.
+        usort($order, fn ($a, $b) => $a === '' ? -1 : ($b === '' ? 1 : 0));
+
+        $css = '';
+        foreach ($order as $media) {
+            if ($media === '') {
+                $css .= implode("\n", $groups[$media])."\n";
+            } else {
+                $css .= '@media '.$media." {\n".implode("\n", $groups[$media])."\n}\n";
+            }
+        }
+
+        return $css;
+    }
+
+    /**
+     * Rekonstruksi HTML dari pohon komponen project GrapesJS (pages → frames →
+     * component). Render deterministik agar html_compiled selalu sinkron dengan
+     * project — termasuk atribut `id` penanda rule selector-id sehingga override
+     * font-style/align dari Style Manager tetap mengikat di halaman publik.
+     */
+    public function htmlFromProject(array $project): string
+    {
+        foreach (($project['pages'] ?? []) as $page) {
+            if (! is_array($page)) {
+                continue;
+            }
+            foreach (($page['frames'] ?? []) as $frame) {
+                if (is_array($frame) && isset($frame['component']) && is_array($frame['component'])) {
+                    return $this->renderNode($frame['component']);
+                }
+            }
+        }
+
+        return '';
+    }
+
+    protected function renderNode(array $node): string
+    {
+        $type = (string) ($node['type'] ?? '');
+        $tag = strtolower((string) ($node['tagName'] ?? ''));
+
+        if ($type === 'textnode') {
+            return (string) ($node['content'] ?? '');
+        }
+
+        if ($type === 'video') {
+            $attrs = $node['attributes'] ?? [];
+            $provider = (string) ($node['provider'] ?? 'yt');
+            $videoId = (string) ($node['videoId'] ?? '');
+            if ($provider === 'yt' && $videoId !== '') {
+                $attrs['src'] = 'https://www.youtube.com/embed/'.$videoId.'?';
+            }
+
+            return '<iframe'.$this->renderAttrs($attrs).'></iframe>';
+        }
+
+        // Barang bungkus tingkat atas (wrapper/head/html) → cukup anak-anaknya.
+        if ($tag === '' || $tag === 'wrapper' || $tag === 'head' || $tag === 'html') {
+            return $this->renderChildren($node['components'] ?? []);
+        }
+
+        $attrs = $node['attributes'] ?? [];
+        $classes = $node['classes'] ?? [];
+        if (is_array($classes) && $classes) {
+            $attrs['class'] = implode(' ', array_map('strval', $classes));
+        }
+        $style = $node['style'] ?? null;
+        if (is_array($style) && $style) {
+            $decls = [];
+            foreach ($style as $k => $v) {
+                if ($k === '' || $v === null || $v === '') {
+                    continue;
+                }
+                $decls[] = trim((string) $k).':'.trim((string) $v);
+            }
+            if ($decls) {
+                $attrs['style'] = implode(';', $decls);
+            }
+        }
+
+        $content = (string) ($node['content'] ?? '');
+        $inner = $content !== '' ? $content : $this->renderChildren($node['components'] ?? []);
+
+        if (in_array($tag, ['br', 'hr', 'img', 'input', 'meta', 'link', 'source'], true)) {
+            return '<'.$tag.$this->renderAttrs($attrs).'>';
+        }
+
+        return '<'.$tag.$this->renderAttrs($attrs).'>'.$inner.'</'.$tag.'>';
+    }
+
+    protected function renderChildren(array $components): string
+    {
+        $out = '';
+        foreach ($components as $component) {
+            if (is_array($component)) {
+                $out .= $this->renderNode($component);
+            }
+        }
+
+        return $out;
+    }
+
+    protected function renderAttrs(array $attrs): string
+    {
+        $out = '';
+        foreach ($attrs as $name => $value) {
+            if ($value === null || $value === false) {
+                $out .= ' '.$name;
+                continue;
+            }
+            $out .= ' '.$name.'="'.htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8').'"';
+        }
+
+        return $out;
     }
 
     /** Payload lengkap untuk editor (project + html/css). */

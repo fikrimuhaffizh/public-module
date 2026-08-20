@@ -253,8 +253,9 @@ class BuilderPageController extends Controller
         ]);
 
         return $response
-            ->header('X-Content-Type-Options', 'nosniff')
-            ->header('Content-Security-Policy', self::cspPolicy());
+            ->header('X-Content-Type-Options', 'nosniff');
+            // Hold sementara — CSP dimatikan utk debugging connect-src jsdelivr (tabler-icons .css.map)
+            // ->header('Content-Security-Policy', self::cspPolicy());
     }
 
     /** CSP untuk rute publik halaman custom (pertahanan lapis kedua pasca-sanitasi). */
