@@ -8,11 +8,12 @@ use Illuminate\Http\Request;
 use Modules\Public\Http\Requests\BuilderPageRequest;
 use Modules\Public\Models\Page;
 use Modules\Public\Services\BuilderPageService;
+use Modules\Public\Services\DynamicBlockService;
 use Yajra\DataTables\Facades\DataTables;
 
 class BuilderPageController extends Controller
 {
-    public function __construct(protected BuilderPageService $builder)
+    public function __construct(protected BuilderPageService $builder, protected DynamicBlockService $dynamicBlocks)
     {
         $this->middleware('permission:public.builder.view')->only(['index', 'data', 'show', 'editor']);
         $this->middleware('permission:public.builder.create')->only(['create', 'store']);
@@ -236,6 +237,7 @@ class BuilderPageController extends Controller
         $data = $this->builder->dataFor($page->load('builderData'));
 
         $html = $data?->html_compiled ?? '';
+        $html = $this->dynamicBlocks->resolve($html);
         $css = $data?->css_compiled ?? '';
         $theme = config('builder_theme', []);
 
@@ -261,15 +263,17 @@ class BuilderPageController extends Controller
     /** CSP untuk rute publik halaman custom (pertahanan lapis kedua pasca-sanitasi). */
     public static function cspPolicy(): string
     {
-        $styleSrc = "'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com https://fonts.gstatic.com";
-        $fontSrc  = "'self' data: https://cdn.jsdelivr.net https://fonts.gstatic.com";
+        $styleSrc  = "'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com https://fonts.gstatic.com";
+        $fontSrc   = "'self' data: https://cdn.jsdelivr.net https://fonts.gstatic.com";
+        $connectSrc = "'self' https://cdn.jsdelivr.net https://fonts.googleapis.com https://fonts.gstatic.com";
 
         // In development, Vite serves assets from a dev server (e.g. http://127.0.0.1:5175).
-        // We must whitelist it so <link> tags pointing to Vite URLs aren't blocked by CSP.
+        // We must whitelist it so <link> tags / HMR aren't blocked by CSP.
         if (app()->environment('local', 'development')) {
             $viteHost = config('vite.host') ?? '127.0.0.1';
             $vitePort = config('vite.port') ?? '5175';
             $styleSrc .= " http://{$viteHost}:{$vitePort}";
+            $connectSrc .= " ws://{$viteHost}:{$vitePort} http://{$viteHost}:{$vitePort}";
         }
 
         return implode('; ', [
@@ -280,7 +284,7 @@ class BuilderPageController extends Controller
             "media-src 'self' data: blob:",
             "font-src {$fontSrc}",
             "frame-src https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com",
-            "connect-src 'self'",
+            "connect-src {$connectSrc}",
             "object-src 'none'",
             "base-uri 'self'",
             "form-action 'self'",

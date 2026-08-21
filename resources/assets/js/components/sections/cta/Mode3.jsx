@@ -11,9 +11,9 @@ export default function CtaMode3({ section, data }) {
         <section className="cta-split">
             <div className="shell cta-split-inner">
                 <div>
-                    {section?.pre_title && <span className="eyebrow">{section.pre_title}</span>}
-                    <h2>{title}</h2>
-                    <p>{text}</p>
+                    {section?.pre_title && <span className="eyebrow" style={{ color: 'var(--sec-pretext, inherit)' }}>{section.pre_title}</span>}
+                    <h2 style={{ color: 'var(--sec-title, inherit)' }}>{title}</h2>
+                    <p style={{ color: 'var(--sec-posttext, inherit)' }}>{text}</p>
                 </div>
                 <Button asChild size="lg">
                     <a href={cta?.buttonLink || data.site.contactUrl}>

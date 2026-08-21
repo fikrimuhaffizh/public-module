@@ -118,6 +118,16 @@ class SectionController extends Controller
 
         $this->landing->updateSection($section, $data);
 
+        // Handle Section Image Upload (for hero, etc.)
+        if ($request->hasFile('section_image')) {
+            $request->validate([
+                'section_image' => 'file|mimes:png,jpg,jpeg,webp|max:4096'
+            ]);
+            $section->clearMediaCollection('section_image');
+            $section->addMedia($request->file('section_image'))
+                ->toMediaCollection('section_image');
+        }
+
         // Handle Logo Uploads (if any)
         $tenant = $this->tenantService->findById(sys_tenant_id());
         if ($tenant) {

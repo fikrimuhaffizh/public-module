@@ -53,6 +53,11 @@ export default function FeatureMode4({ section, data }) {
                 {features.slice(0, limit).map(feature => (
                     <TiltCard key={feature.id}>
                         <div className="feature-icon-card">
+                            {feature.image && (
+                                <div className="feature-card-img">
+                                    <img src={feature.image} alt={feature.title} loading="lazy" />
+                                </div>
+                            )}
                             {feature.icon && <span className={`feature-icon ${feature.icon}`} aria-hidden="true" />}
                             <h3>{feature.title}</h3>
                             <p>{feature.description}</p>

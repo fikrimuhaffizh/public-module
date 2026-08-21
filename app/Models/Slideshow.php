@@ -8,6 +8,7 @@ use App\Traits\HashidBinding;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Public\Traits\ClearsDynamicBlockCache;
 use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -15,7 +16,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Slideshow extends Model implements HasMedia
 {
-    use BelongsToTenant, Blameable, HasFactory, HashidBinding, InteractsWithMedia, SoftDeletes;
+    use BelongsToTenant, Blameable, ClearsDynamicBlockCache, HasFactory, HashidBinding, InteractsWithMedia, SoftDeletes;
 
     protected $table = 'cms_slideshow';
 
@@ -101,5 +102,10 @@ class Slideshow extends Model implements HasMedia
         $media = $this->getFirstMedia('slideshow_image');
 
         return $media ? sys_media_url($media, null, 60, 'large') : null;
+    }
+
+    protected static function dynamicBlockType(): string
+    {
+        return 'slideshow';
     }
 }

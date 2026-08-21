@@ -46,9 +46,9 @@ export default function HeroMode3({ section, data }) {
         <section className="hero hero--gallery">
             <div className="shell hero-gallery-grid">
                 <Reveal className="hero-gallery-copy">
-                    <Badge><Sparkles size={14} /> {section.pre_title || 'Usaha lokal, kualitas utama'}</Badge>
-                    <h1>{copy.title}</h1>
-                    <p>{copy.subtitle}</p>
+                    <Badge style={{ color: 'var(--sec-pretext, inherit)' }}><Sparkles size={14} /> {section.pre_title || 'Usaha lokal, kualitas utama'}</Badge>
+                    <h1 style={{ color: 'var(--sec-title, inherit)' }}>{copy.title}</h1>
+                    <p style={{ color: 'var(--sec-posttext, inherit)' }}>{copy.subtitle}</p>
                     <HeroActions hero={hero} site={data.site} align="left" />
                 </Reveal>
                 <Reveal className="hero-gallery" delay={0.15}>

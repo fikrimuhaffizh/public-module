@@ -41,9 +41,9 @@ export default function ClientMode5({ section, data }) {
         <section className="client-logos">
             <div className="shell">
                 <Reveal className={`section-heading section-heading--${heading.align}`}>
-                    {heading.eyebrow && <span className="eyebrow">{heading.eyebrow}</span>}
-                    {heading.title && <h2>{heading.title}</h2>}
-                    {heading.text && <p>{heading.text}</p>}
+                    {heading.eyebrow && <span className="eyebrow" style={{ color: 'var(--sec-pretext, inherit)' }}>{heading.eyebrow}</span>}
+                    {heading.title && <h2 style={{ color: 'var(--sec-title, inherit)' }}>{heading.title}</h2>}
+                    {heading.text && <p style={{ color: 'var(--sec-posttext, inherit)' }}>{heading.text}</p>}
                 </Reveal>
 
                 <div className="orbit-stage" role="img" aria-label={`Logo ${site.name} dikelilingi logo mitra`}>

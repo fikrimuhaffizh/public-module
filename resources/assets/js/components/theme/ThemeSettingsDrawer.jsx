@@ -5,6 +5,7 @@ import {
     AlignLeft,
     AlignRight,
     Check,
+    Dice5,
     Palette,
     Pencil,
     RotateCcw,
@@ -18,6 +19,7 @@ import {
     DENSITY_OPTIONS,
     ELEVATION_OPTIONS,
     RADIUS_OPTIONS,
+    randomizeTheme,
     SECTION_COLOR_PRESETS,
     SECTION_PATTERNS,
 } from './presets';
@@ -41,10 +43,10 @@ function canonicalOf(section) {
 }
 
 /** Field warna (color picker + hex) untuk popover latar section. */
-function ColorField({ label, value, onChange }) {
+function ColorField({ label, value, onChange, hint }) {
     return (
         <label className="theme-sec-color-field">
-            <span>{label}</span>
+            <span>{label}{hint && <small className="theme-sec-color-hint">{hint}</small>}</span>
             <input
                 type="color"
                 value={value || '#ffffff'}
@@ -174,211 +176,7 @@ function ThemeSelect() {
     );
 }
 
-/**
- * ColorPopover — latar section: tab Warna / Pola / Gambar.
- * Tab Warna: mode PRESET (Default + swatch) ATAU mode kustom (Latar/Teks/
- * Aksen) — toggle "Warna kustom sendiri" MENGGANTIKAN daftar preset, tidak
- * tampil bersamaan. Perubahan diterapkan live.
- */
-function ColorPopover({ sectionKey, current = {}, palette, onApply, onClear }) {
-    const [tab, setTab] = useState('color');
-    const [customOpen, setCustomOpen] = useState(Boolean(current?.bg || current?.text || current?.accent));
-    const [uploading, setUploading] = useState(false);
-    const [msg, setMsg] = useState(null);
-    const [form, setForm] = useState({
-        bg: current?.bg || '',
-        text: current?.text || '',
-        accent: current?.accent || '',
-        pattern: current?.pattern || '',
-        image: current?.image || '',
-    });
 
-    useEffect(() => {
-        setForm({
-            bg: current?.bg || '',
-            text: current?.text || '',
-            accent: current?.accent || '',
-            pattern: current?.pattern || '',
-            image: current?.image || '',
-        });
-    }, [sectionKey, current?.bg, current?.text, current?.accent, current?.pattern, current?.image]);
-
-    const applyPreset = (x) => {
-        const patch = {};
-        if (x.key === 'accent') {
-            patch.bg = palette?.primary || '#155eef';
-            patch.accent = palette?.accent || patch.bg;
-        } else {
-            if (x.bg) patch.bg = x.bg;
-            if (x.accent) patch.accent = x.accent;
-        }
-        if (x.text) patch.text = x.text;
-        setForm((prev) => ({ ...prev, bg: patch.bg || '', text: patch.text || '', accent: patch.accent || '' }));
-        onApply(patch);
-    };
-
-    const changeField = (field, value) => {
-        const next = { ...form, [field]: value };
-        setForm(next);
-        const patch = {};
-        Object.entries(next).forEach(([k, v]) => { if (v) patch[k] = v; });
-        Object.keys(patch).length ? onApply(patch) : onClear();
-    };
-
-    const setPattern = (key) => {
-        setForm((prev) => ({ ...prev, pattern: key }));
-        onApply({ pattern: key || null });
-    };
-
-    const setImage = (url) => {
-        setForm((prev) => ({ ...prev, image: url }));
-        onApply({ image: url || null });
-    };
-
-    const uploadImage = async (file) => {
-        if (!file) return;
-        setUploading(true);
-        setMsg(null);
-        try {
-            const fd = new FormData();
-            fd.append('image', file);
-            const res = await fetch('/cms/section/upload-background', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '',
-                },
-                body: fd,
-            });
-            const data = await res.json().catch(() => ({}));
-            if (!res.ok || !data.url) throw new Error(data.message || 'Gagal mengunggah gambar.');
-            setImage(data.url);
-            setMsg('Tersimpan.');
-        } catch (e) {
-            setMsg(e.message || 'Gagal mengunggah gambar.');
-        } finally {
-            setUploading(false);
-        }
-    };
-
-    const tabClass = (x) => `theme-sec-bg-tab${tab === x ? ' active' : ''}`;
-
-    return (
-        <div className="theme-sec-color-pop">
-            <div className="theme-sec-color-title">Latar section</div>
-            <div className="theme-sec-bg-tabs" role="tablist" aria-label="Jenis latar section">
-                <button type="button" className={tabClass('color')} onClick={() => setTab('color')}>Warna</button>
-                <button type="button" className={tabClass('pattern')} onClick={() => setTab('pattern')}>Pola</button>
-                <button type="button" className={tabClass('image')} onClick={() => setTab('image')}>Gambar</button>
-            </div>
-
-            {tab === 'color' && (
-                <>
-                    {!customOpen ? (
-                        <div className="theme-sec-color-presets">
-                            <button
-                                type="button"
-                                className="theme-sec-color-preset theme-sec-color-preset--clear"
-                                onClick={onClear}
-                                title="Kembalikan ke default tema"
-                            >
-                                <RotateCcw size={12} /> Default
-                            </button>
-                            {SECTION_COLOR_PRESETS.map((x) => {
-                                const j = x.key === 'accent' ? (palette?.primary || '#155eef') : (x.bg || '#ffffff');
-                                const active = form.bg === j && form.text === (x.text || '') && form.accent === (x.accent || (x.key === 'accent' ? (palette?.accent || j) : ''));
-                                return (
-                                    <button
-                                        key={x.key}
-                                        type="button"
-                                        className={`theme-sec-color-preset${active ? ' active' : ''}`}
-                                        style={{ background: j }}
-                                        title={x.name}
-                                        onClick={() => applyPreset(x)}
-                                        aria-label={`Preset ${x.name}`}
-                                    >
-                                        {active && <Check size={12} />}
-                                    </button>
-                                );
-                            })}
-                        </div>
-                    ) : (
-                        <div className="theme-sec-color-fields">
-                            <ColorField label="Latar" value={form.bg} onChange={(v) => changeField('bg', v)} />
-                            <ColorField label="Teks" value={form.text} onChange={(v) => changeField('text', v)} />
-                            <ColorField label="Aksen" value={form.accent} onChange={(v) => changeField('accent', v)} />
-                        </div>
-                    )}
-                    <button
-                        type="button"
-                        className={`theme-sec-custom-toggle${customOpen ? ' active' : ''}`}
-                        onClick={() => setCustomOpen((v) => !v)}
-                        aria-pressed={customOpen}
-                    >
-                        <Palette size={13} />
-                        {customOpen ? 'Kembali ke preset' : 'Warna kustom sendiri'}
-                    </button>
-                </>
-            )}
-
-            {tab === 'pattern' && (
-                <div className="theme-sec-pattern-grid">
-                    <button
-                        type="button"
-                        className={`theme-sec-pattern-swatch theme-sec-pattern-swatch--none${form.pattern ? '' : ' active'}`}
-                        onClick={() => setPattern('')}
-                        title="Tanpa pola"
-                        aria-label="Tanpa pola"
-                    >
-                        <span />Tanpa
-                    </button>
-                    {SECTION_PATTERNS.map((x) => (
-                        <button
-                            key={x.key}
-                            type="button"
-                            className={`theme-sec-pattern-swatch${form.pattern === x.key ? ' active' : ''}`}
-                            style={patternStyle(x.key)}
-                            onClick={() => setPattern(x.key)}
-                            title={x.name}
-                            aria-label={`Pola ${x.name}`}
-                        >
-                            {form.pattern === x.key && <Check size={12} />}
-                        </button>
-                    ))}
-                </div>
-            )}
-
-            {tab === 'image' && (
-                <div className="theme-sec-img-row">
-                    <label className="theme-sec-img-upload">
-                        <Upload size={14} />
-                        {uploading ? 'Mengunggah…' : 'Upload gambar'}
-                        <input
-                            type="file"
-                            accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml"
-                            disabled={uploading}
-                            onChange={(e) => uploadImage(e.target.files?.[0])}
-                        />
-                    </label>
-                    <input
-                        type="text"
-                        className="theme-sec-img-url"
-                        value={form.image}
-                        placeholder="…atau tempel URL gambar"
-                        onChange={(e) => setImage(e.target.value)}
-                        aria-label="URL gambar latar"
-                    />
-                    {form.image && (
-                        <button type="button" className="theme-sec-img-remove" onClick={() => setImage('')} title="Hapus gambar latar">
-                            <X size={13} /> Hapus gambar
-                        </button>
-                    )}
-                    {msg && <span className={`theme-sec-img-msg${msg === 'Tersimpan.' ? ' ok' : ''}`}>{msg}</span>}
-                </div>
-            )}
-        </div>
-    );
-}
 
 /**
  * LogoUploader — upload logo Navbar/Footer langsung dari Theme Settings.
@@ -467,40 +265,159 @@ function LogoUploader({ collection, label }) {
     );
 }
 /**
- * TextEditPopover — teks section: toggle aktif, pretitle/title/subtitle,
- * perataan teks (3 tombol), jam operasional khusus Top Bar.
+ * SectionEditPopover — gabungan Teks + Warna + Latar dalam satu dropdown bertab.
+ * Menggantikan TextEditPopover dan ColorPopover yang terpisah.
  */
-function TextEditPopover({ item, current = {}, active, onApply, onApplyLive, onToggleActive }) {
-    const [form, setForm] = useState({
-        pre_title: current.pre_title ?? item.preTitle ?? '',
-        title: current.title ?? item.title ?? '',
-        subtitle: current.subtitle ?? item.subtitle ?? '',
-        text_align: current.text_align ?? item.textAlign ?? 'left',
-        topbar_hours: current.topbar_hours ?? item.topbarHours ?? '',
-        limit_data: current.limit_data ?? item.limitData ?? '',
+function SectionEditPopover({ item, sectionKey, currentText = {}, currentColors = {}, palette, active, onApplyText, onApplyTextLive, onToggleActive, onApplyColor, onClearColor, heroFill, onToggleHeroFill, dark, onToggleDark, showLogin, onToggleLogin }) {
+    const [tab, setTab] = useState('text');
+    const [customColors, setCustomColors] = useState(Boolean(currentColors?.bg || currentColors?.pretext_color || currentColors?.text_color || currentColors?.posttext_color || currentColors?.accent));
+    const [uploading, setUploading] = useState(false);
+    const [msg, setMsg] = useState(null);
+
+    /* ── Text form state ── */
+    const [textForm, setTextForm] = useState({
+        pre_title: currentText.pre_title ?? item.preTitle ?? '',
+        title: currentText.title ?? item.title ?? '',
+        subtitle: currentText.subtitle ?? item.subtitle ?? '',
+        text_align: currentText.text_align ?? item.textAlign ?? 'left',
+        topbar_hours: currentText.topbar_hours ?? item.topbarHours ?? '',
+        limit_data: currentText.limit_data ?? item.limitData ?? '',
     });
+
+    /* ── Color form state ── */
+    const [colorForm, setColorForm] = useState({
+        bg: currentColors?.bg || '',
+        pretext_color: currentColors?.pretext_color || '',
+        text_color: currentColors?.text_color || '',
+        posttext_color: currentColors?.posttext_color || '',
+        accent: currentColors?.accent || '',
+        pattern: currentColors?.pattern || '',
+        image: currentColors?.image || '',
+    });
+
+    useEffect(() => {
+        setTextForm({
+            pre_title: currentText.pre_title ?? item.preTitle ?? '',
+            title: currentText.title ?? item.title ?? '',
+            subtitle: currentText.subtitle ?? item.subtitle ?? '',
+            text_align: currentText.text_align ?? item.textAlign ?? 'left',
+            topbar_hours: currentText.topbar_hours ?? item.topbarHours ?? '',
+            limit_data: currentText.limit_data ?? item.limitData ?? '',
+        });
+    }, [sectionKey]);
+
+    useEffect(() => {
+        setColorForm({
+            bg: currentColors?.bg || '',
+            pretext_color: currentColors?.pretext_color || '',
+            text_color: currentColors?.text_color || '',
+            posttext_color: currentColors?.posttext_color || '',
+            accent: currentColors?.accent || '',
+            pattern: currentColors?.pattern || '',
+            image: currentColors?.image || '',
+        });
+    }, [sectionKey]);
 
     const alignOptions = [
         { key: 'left', icon: AlignLeft, title: 'Rata kiri' },
         { key: 'center', icon: AlignCenter, title: 'Rata tengah' },
         { key: 'right', icon: AlignRight, title: 'Rata kanan' },
     ];
-    const setField = (field) => (e) => setForm((prev) => ({ ...prev, [field]: e.target.value }));
 
-    const dirty =
-        form.pre_title !== (current.pre_title ?? item.preTitle ?? '') ||
-        form.title !== (current.title ?? item.title ?? '') ||
-        form.subtitle !== (current.subtitle ?? item.subtitle ?? '') ||
-        form.text_align !== (current.text_align ?? item.textAlign ?? 'left') ||
-        form.topbar_hours !== (current.topbar_hours ?? item.topbarHours ?? '') ||
-        String(form.limit_data) !== String(current.limit_data ?? item.limitData ?? '');
+    const setTextField = (field) => (e) => setTextForm((prev) => ({ ...prev, [field]: e.target.value }));
+
     const isTopbar = item.key === 'topbar';
-    // Upload logo hanya untuk user login CMS (endpoint butuh public.cms.update).
     const canUploadLogo = (item.key === 'navbar' || item.key === 'footer') && !!usePage().props?.auth?.user;
 
+    const textDirty =
+        textForm.pre_title !== (currentText.pre_title ?? item.preTitle ?? '') ||
+        textForm.title !== (currentText.title ?? item.title ?? '') ||
+        textForm.subtitle !== (currentText.subtitle ?? item.subtitle ?? '') ||
+        textForm.text_align !== (currentText.text_align ?? item.textAlign ?? 'left') ||
+        textForm.topbar_hours !== (currentText.topbar_hours ?? item.topbarHours ?? '') ||
+        String(textForm.limit_data) !== String(currentText.limit_data ?? item.limitData ?? '');
+
+    /* ── Color handlers ── */
+    const applyColorPreset = (x) => {
+        const patch = {};
+        if (x.key === 'accent') {
+            patch.bg = palette?.primary || '#155eef';
+            patch.accent = palette?.accent || patch.bg;
+        } else {
+            if (x.bg) patch.bg = x.bg;
+            if (x.accent) patch.accent = x.accent;
+        }
+        setColorForm((prev) => ({ ...prev, bg: patch.bg || '', accent: patch.accent || '' }));
+        onApplyColor(patch);
+    };
+
+    const changeColorField = (field, value) => {
+        const next = { ...colorForm, [field]: value };
+        setColorForm(next);
+        const patch = {};
+        Object.entries(next).forEach(([k, v]) => { if (v) patch[k] = v; });
+        Object.keys(patch).length ? onApplyColor(patch) : onClearColor();
+    };
+
+    const setPattern = (key) => {
+        setColorForm((prev) => ({ ...prev, pattern: key }));
+        onApplyColor({ pattern: key || null });
+    };
+
+    const setImage = (url) => {
+        setColorForm((prev) => ({ ...prev, image: url }));
+        onApplyColor({ image: url || null });
+    };
+
+    const uploadImage = async (file) => {
+        if (!file) return;
+        setUploading(true);
+        setMsg(null);
+        try {
+            const fd = new FormData();
+            fd.append('image', file);
+            const res = await fetch('/cms/section/upload-background', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '',
+                },
+                body: fd,
+            });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok || !data.url) throw new Error(data.message || 'Gagal mengunggah gambar.');
+            setImage(data.url);
+            setMsg('Tersimpan.');
+        } catch (e) {
+            setMsg(e.message || 'Gagal mengunggah gambar.');
+        } finally {
+            setUploading(false);
+        }
+    };
+
+    const saveText = () => {
+        onApplyText({
+            pre_title: textForm.pre_title,
+            title: textForm.title,
+            subtitle: textForm.subtitle,
+            text_align: textForm.text_align,
+            topbar_hours: textForm.topbar_hours,
+            limit_data: textForm.limit_data === '' ? null : Number(textForm.limit_data),
+        });
+    };
+
+    const tabClass = (x) => `theme-sec-bg-tab${tab === x ? ' active' : ''}`;
+
     return (
-        <div className="theme-sec-text-pop">
-            <div className="theme-sec-text-title">Teks section</div>
+        <div className="theme-sec-edit-pop">
+            {/* ── Tab bar ── */}
+            <div className="theme-sec-bg-tabs" role="tablist" aria-label="Edit section">
+                <button type="button" className={tabClass('text')} onClick={() => setTab('text')}>Teks</button>
+                <button type="button" className={tabClass('color')} onClick={() => setTab('color')}>Warna</button>
+                <button type="button" className={tabClass('image')} onClick={() => setTab('image')}>Latar</button>
+            </div>
+
+            {/* ── Active toggle (selalu tampil) ── */}
             <label className="theme-topbar-toggle" title={active ? 'Nonaktifkan section ini' : 'Aktifkan section ini'}>
                 <span>{active ? 'Section aktif' : 'Section nonaktif'}</span>
                 <input
@@ -511,87 +428,233 @@ function TextEditPopover({ item, current = {}, active, onApply, onApplyLive, onT
                 <i />
             </label>
 
-            {item.hasHeading && (
+            {/* ── Navbar-specific toggles ── */}
+            {item.key === 'navbar' && (
                 <>
-                    {item.align && (
-                        <div className="theme-sec-align-row" role="group" aria-label="Perataan teks">
-                            {alignOptions.map((opt) => (
-                                <button
-                                    key={opt.key}
-                                    type="button"
-                                    className={`theme-sec-align-btn${form.text_align === opt.key ? ' active' : ''}`}
-                                    title={opt.title}
-                                    aria-label={`${opt.title} section`}
-                                    aria-pressed={form.text_align === opt.key}
-                                    onClick={() => {
-                                        setForm((prev) => ({ ...prev, text_align: opt.key }));
-                                        onApplyLive({ text_align: opt.key });
-                                    }}
-                                >
-                                    <opt.icon size={14} />
-                                </button>
-                            ))}
-                        </div>
-                    )}
-                    <label className="theme-sec-text-field">
-                        <span>Pretitle</span>
-                        <input value={form.pre_title} onChange={setField('pre_title')} placeholder="mis. Dipercaya Oleh" />
+                    <label className="theme-topbar-toggle" title="Tampilkan tombol Masuk di navbar">
+                        <span>Tombol Masuk</span>
+                        <input
+                            type="checkbox"
+                            checked={showLogin !== false}
+                            onChange={(e) => onToggleLogin(e.target.checked)}
+                        />
+                        <i />
                     </label>
-                    <label className="theme-sec-text-field">
-                        <span>Judul</span>
-                        <input value={form.title} onChange={setField('title')} placeholder="mis. Institusi Mitra" />
-                    </label>
-                    <label className="theme-sec-text-field">
-                        <span>Subjudul</span>
-                        <textarea rows={2} value={form.subtitle} onChange={setField('subtitle')} placeholder="Deskripsi singkat section" />
+                    <label className="theme-topbar-toggle" title="Mode gelap untuk seluruh halaman">
+                        <span>Mode Gelap</span>
+                        <input
+                            type="checkbox"
+                            checked={!!dark}
+                            onChange={(e) => onToggleDark(e.target.checked)}
+                        />
+                        <i />
                     </label>
                 </>
             )}
 
-            {isTopbar && (
-                <label className="theme-sec-text-field">
-                    <span>Jam operasional</span>
-                    <input value={form.topbar_hours} onChange={setField('topbar_hours')} placeholder="mis. Senin–Jumat 08.00–17.00, Sabtu 09.00–14.00" />
-                </label>
+            {/* ── Tab: Teks ── */}
+            {tab === 'text' && (
+                <div className="theme-sec-edit-fields">
+                    {item.hasHeading && (
+                        <>
+                            {item.align && (
+                                <div className="theme-sec-align-row" role="group" aria-label="Perataan teks">
+                                    {alignOptions.map((opt) => (
+                                        <button
+                                            key={opt.key}
+                                            type="button"
+                                            className={`theme-sec-align-btn${textForm.text_align === opt.key ? ' active' : ''}`}
+                                            title={opt.title}
+                                            aria-label={`${opt.title} section`}
+                                            aria-pressed={textForm.text_align === opt.key}
+                                            onClick={() => {
+                                                setTextForm((prev) => ({ ...prev, text_align: opt.key }));
+                                                onApplyTextLive({ text_align: opt.key });
+                                            }}
+                                        >
+                                            <opt.icon size={14} />
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+                            <label className="theme-sec-text-field">
+                                <span>Pretitle</span>
+                                <input value={textForm.pre_title} onChange={setTextField('pre_title')} placeholder="mis. Dipercaya Oleh" />
+                            </label>
+                            <label className="theme-sec-text-field">
+                                <span>Judul</span>
+                                <input value={textForm.title} onChange={setTextField('title')} placeholder="mis. Institusi Mitra" />
+                            </label>
+                            <label className="theme-sec-text-field">
+                                <span>Subjudul</span>
+                                <textarea rows={2} value={textForm.subtitle} onChange={setTextField('subtitle')} placeholder="Deskripsi singkat section" />
+                            </label>
+                        </>
+                    )}
+
+                    {isTopbar && (
+                        <label className="theme-sec-text-field">
+                            <span>Jam operasional</span>
+                            <input value={textForm.topbar_hours} onChange={setTextField('topbar_hours')} placeholder="mis. Senin–Jumat 08.00–17.00, Sabtu 09.00–14.00" />
+                        </label>
+                    )}
+
+                    {canUploadLogo && (
+                        <LogoUploader collection={item.key === 'navbar' ? 'logo_navbar' : 'logo_footer'} label={item.key === 'navbar' ? 'Logo Navbar' : 'Logo Footer'} />
+                    )}
+
+                    {item.hasLimit && (
+                        <label className="theme-sec-text-field">
+                            <span>Jumlah data tampil{item.dataTotal > 0 ? ` (dari ${item.dataTotal})` : ''}</span>
+                            <input
+                                type="number"
+                                min={1}
+                                max={item.dataTotal > 0 ? item.dataTotal : undefined}
+                                value={textForm.limit_data}
+                                onChange={(e) => {
+                                    const v = e.target.value;
+                                    setTextForm((prev) => ({ ...prev, limit_data: v }));
+                                    onApplyTextLive({ limit_data: v === '' ? null : Number(v) });
+                                }}
+                                placeholder={item.limitData ? String(item.limitData) : 'Semua'}
+                            />
+                        </label>
+                    )}
+
+                    <button
+                        type="button"
+                        className="theme-sec-text-apply"
+                        disabled={!textDirty}
+                        onClick={saveText}
+                    >
+                        Simpan teks & tutup
+                    </button>
+                </div>
             )}
 
-            {canUploadLogo && (
-                <LogoUploader collection={item.key === 'navbar' ? 'logo_navbar' : 'logo_footer'} label={item.key === 'navbar' ? 'Logo Navbar' : 'Logo Footer'} />
+            {/* ── Tab: Warna ── */}
+            {tab === 'color' && (
+                <div className="theme-sec-edit-fields">
+                    {!customColors ? (
+                        <div className="theme-sec-color-presets">
+                            <button
+                                type="button"
+                                className="theme-sec-color-preset theme-sec-color-preset--clear"
+                                onClick={onClearColor}
+                                title="Kembalikan ke default tema"
+                            >
+                                <RotateCcw size={12} /> Default
+                            </button>
+                            {SECTION_COLOR_PRESETS.map((x) => {
+                                const j = x.key === 'accent' ? (palette?.primary || '#155eef') : (x.bg || '#ffffff');
+                                const active = colorForm.bg === j && colorForm.accent === (x.accent || (x.key === 'accent' ? (palette?.accent || j) : ''));
+                                return (
+                                    <button
+                                        key={x.key}
+                                        type="button"
+                                        className={`theme-sec-color-preset${active ? ' active' : ''}`}
+                                        style={{ background: j }}
+                                        title={x.name}
+                                        onClick={() => applyColorPreset(x)}
+                                        aria-label={`Preset ${x.name}`}
+                                    >
+                                        {active && <Check size={12} />}
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    ) : (
+                        <div className="theme-sec-color-fields">
+                            <ColorField label="Latar" value={colorForm.bg} onChange={(v) => changeColorField('bg', v)} />
+                            <div className="theme-sec-color-divider"><span>Warna Teks</span></div>
+                            <ColorField label="Pretitle" value={colorForm.pretext_color} onChange={(v) => changeColorField('pretext_color', v)} />
+                            <ColorField label="Judul" value={colorForm.text_color} onChange={(v) => changeColorField('text_color', v)} />
+                            <ColorField label="Subjudul" value={colorForm.posttext_color} onChange={(v) => changeColorField('posttext_color', v)} />
+                            <div className="theme-sec-color-divider"><span>Aksen</span></div>
+                            <ColorField label="Aksen" value={colorForm.accent} onChange={(v) => changeColorField('accent', v)} />
+                        </div>
+                    )}
+                    <button
+                        type="button"
+                        className={`theme-sec-custom-toggle${customColors ? ' active' : ''}`}
+                        onClick={() => setCustomColors((v) => !v)}
+                        aria-pressed={customColors}
+                    >
+                        <Palette size={13} />
+                        {customColors ? 'Kembali ke preset' : 'Warna kustom sendiri'}
+                    </button>
+                </div>
             )}
 
-            {item.hasLimit && (
-                <label className="theme-sec-text-field">
-                    <span>Jumlah data tampil{item.dataTotal > 0 ? ` (dari ${item.dataTotal})` : ''}</span>
-                    <input
-                        type="number"
-                        min={1}
-                        max={item.dataTotal > 0 ? item.dataTotal : undefined}
-                        value={form.limit_data}
-                        onChange={(e) => {
-                            const v = e.target.value;
-                            setForm((prev) => ({ ...prev, limit_data: v }));
-                            onApplyLive({ limit_data: v === '' ? null : Number(v) });
-                        }}
-                        placeholder={item.limitData ? String(item.limitData) : 'Semua'}
-                    />
-                </label>
-            )}
+            {/* ── Tab: Latar (Isi Satu Layar + Gambar + Pola) ── */}
+            {tab === 'image' && (
+                <div className="theme-sec-edit-fields">
+                    {item.key === 'hero' && (
+                        <label className="theme-topbar-toggle" title="Hero mengisi satu layar penuh">
+                            <span>Isi Satu Layar</span>
+                            <input
+                                type="checkbox"
+                                checked={!!heroFill}
+                                onChange={(e) => onToggleHeroFill(e.target.checked)}
+                            />
+                            <i />
+                        </label>
+                    )}
 
-            <button
-                type="button"
-                className="theme-sec-text-apply"
-                disabled={!dirty}
-                onClick={() => onApply({
-                    pre_title: form.pre_title,
-                    title: form.title,
-                    subtitle: form.subtitle,
-                    text_align: form.text_align,
-                    topbar_hours: form.topbar_hours,
-                    limit_data: form.limit_data === '' ? null : Number(form.limit_data),
-                })}
-            >
-                Simpan teks & tutup
-            </button>
+                    <div className="theme-sec-img-row">
+                        <label className="theme-sec-img-upload">
+                            <Upload size={14} />
+                            {uploading ? 'Mengunggah…' : 'Upload gambar latar'}
+                            <input
+                                type="file"
+                                accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml"
+                                disabled={uploading}
+                                onChange={(e) => uploadImage(e.target.files?.[0])}
+                            />
+                        </label>
+                        <input
+                            type="text"
+                            className="theme-sec-img-url"
+                            value={colorForm.image}
+                            placeholder="…atau tempel URL gambar"
+                            onChange={(e) => setImage(e.target.value)}
+                            aria-label="URL gambar latar"
+                        />
+                        {colorForm.image && (
+                            <button type="button" className="theme-sec-img-remove" onClick={() => setImage('')} title="Hapus gambar latar">
+                                <X size={13} /> Hapus gambar
+                            </button>
+                        )}
+                        {msg && <span className={`theme-sec-img-msg${msg === 'Tersimpan.' ? ' ok' : ''}`}>{msg}</span>}
+                    </div>
+
+                    <div className="theme-sec-color-divider"><span>Pola abstrak</span></div>
+                    <div className="theme-sec-pattern-grid">
+                        <button
+                            type="button"
+                            className={`theme-sec-pattern-swatch theme-sec-pattern-swatch--none${colorForm.pattern ? '' : ' active'}`}
+                            onClick={() => setPattern('')}
+                            title="Tanpa pola"
+                            aria-label="Tanpa pola"
+                        >
+                            <span />Tanpa
+                        </button>
+                        {SECTION_PATTERNS.map((x) => (
+                            <button
+                                key={x.key}
+                                type="button"
+                                className={`theme-sec-pattern-swatch${colorForm.pattern === x.key ? ' active' : ''}`}
+                                style={patternStyle(x.key)}
+                                onClick={() => setPattern(x.key)}
+                                title={x.name}
+                                aria-label={`Pola ${x.name}`}
+                            >
+                                {colorForm.pattern === x.key && <Check size={12} />}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
@@ -614,8 +677,7 @@ export function ThemeSettingsDrawer() {
         paletteOptions, fontOptions,
     } = customizer;
 
-    const [openColorKey, setOpenColorKey] = useState(null);
-    const [openTextKey, setOpenTextKey] = useState(null);
+    const [openEditKey, setOpenEditKey] = useState(null);
     const [dragIndex, setDragIndex] = useState(null);
     const [overIndex, setOverIndex] = useState(null);
     const [overAfter, setOverAfter] = useState(false);
@@ -673,15 +735,15 @@ export function ThemeSettingsDrawer() {
         saveReorder(fullOrder);
     };
 
-    // Tutup popover teks saat klik di luar area popover.
+    // Tutup popover saat klik di luar area popover.
     useEffect(() => {
-        if (!openTextKey) return;
+        if (!openEditKey) return;
         const handler = (e) => {
-            if (!e.target.closest('[data-sec-color-pop]')) setOpenTextKey(null);
+            if (!e.target.closest('[data-sec-color-pop]')) setOpenEditKey(null);
         };
         document.addEventListener('mousedown', handler);
         return () => document.removeEventListener('mousedown', handler);
-    }, [openTextKey]);
+    }, [openEditKey]);
 
     const { template, sections: rawSections = [], landing = {}, testimonials = [], announcements = [], faqs = [], page = null, announcement = null, header = null } = usePage().props;
     const dataCounts = {
@@ -796,14 +858,47 @@ export function ThemeSettingsDrawer() {
                             </div>
 
                             <div className="theme-apply">
-                                <button
-                                    type="button"
-                                    className="theme-apply-btn"
-                                    onClick={applyToLanding}
-                                    disabled={saving}
-                                >
-                                    {saving ? 'Menyimpan…' : (<><Check size={15} /> Terapkan ke landing</>)}
-                                </button>
+                                <div className="theme-apply-row">
+                                    <button
+                                        type="button"
+                                        className="theme-apply-btn"
+                                        onClick={applyToLanding}
+                                        disabled={saving}
+                                    >
+                                        {saving ? 'Menyimpan…' : (<><Check size={15} /> Terapkan ke landing</>)}
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="theme-dice-btn"
+                                        title="Randomize semua pengaturan"
+                                        onClick={() => {
+                                            const sectionMeta = Object.entries(SECTION_VARIANTS).map(([k, v]) => ({
+                                                key: k,
+                                                numModes: v.variants?.length || 3,
+                                            }));
+                                            const random = randomizeTheme(paletteOptions, fontOptions, sectionMeta);
+                                            // Apply all random settings
+                                            customizer.update({
+                                                paletteKey: random.paletteKey,
+                                                font: random.font,
+                                                radius: random.radius,
+                                                density: random.density,
+                                                elevation: random.elevation,
+                                                dark: random.dark,
+                                                heroFill: random.heroFill,
+                                            });
+                                            Object.entries(random.sectionVariants || {}).forEach(([k, v]) => {
+                                                customizer.setSectionVariant(k, v);
+                                            });
+                                            Object.entries(random.sectionColors || {}).forEach(([k, v]) => {
+                                                customizer.setSectionColor(k, v);
+                                            });
+                                        }}
+                                        aria-label="Randomize theme"
+                                    >
+                                        <Dice5 size={16} />
+                                    </button>
+                                </div>
                                 {saveMsg && (
                                     <span className={`theme-apply-msg ${saveMsg.startsWith('Tersimpan') ? 'ok' : 'err'}`}>
                                         {saveMsg}
@@ -862,21 +957,12 @@ export function ThemeSettingsDrawer() {
                                                         </select>
                                                         <button
                                                             type="button"
-                                                            className={`theme-section-color-btn${openTextKey === item.key ? ' active' : ''}`}
-                                                            onClick={() => setOpenTextKey((prev) => (prev === item.key ? null : item.key))}
-                                                            title={`Edit teks ${item.name}`}
-                                                            aria-label={`Edit teks ${item.name}`}
+                                                            className={`theme-section-color-btn${openEditKey === item.key ? ' active' : ''}`}
+                                                            onClick={() => setOpenEditKey((prev) => (prev === item.key ? null : item.key))}
+                                                            title={`Edit ${item.name}`}
+                                                            aria-label={`Edit ${item.name}`}
                                                         >
                                                             <Pencil size={13} />
-                                                        </button>
-                                                        <button
-                                                            type="button"
-                                                            className={`theme-section-color-btn${hasColor ? ' active' : ''}`}
-                                                            onClick={() => setOpenColorKey((prev) => (prev === item.key ? null : item.key))}
-                                                            title={`Warna ${item.name}`}
-                                                            aria-label={`Warna ${item.name}`}
-                                                        >
-                                                            <Palette size={14} />
                                                             {hasColor && (
                                                                 <i
                                                                     className="theme-section-color-dot"
@@ -887,23 +973,25 @@ export function ThemeSettingsDrawer() {
                                                     </div>
                                                 </div>
 
-                                                {openColorKey === item.key && (
-                                                    <ColorPopover
-                                                        sectionKey={item.key}
-                                                        current={customizer.sectionColors?.[item.key]}
-                                                        palette={customizer.palette}
-                                                        onApply={(patch) => customizer.setSectionColor(item.key, patch)}
-                                                        onClear={() => { customizer.resetSectionColor(item.key); setOpenColorKey(null); }}
-                                                    />
-                                                )}
-                                                {openTextKey === item.key && (
-                                                    <TextEditPopover
+                                                {openEditKey === item.key && (
+                                                    <SectionEditPopover
                                                         item={item}
-                                                        current={customizer.sectionSettings?.[item.key]}
+                                                        sectionKey={item.key}
+                                                        currentText={customizer.sectionSettings?.[item.key]}
+                                                        currentColors={customizer.sectionColors?.[item.key]}
+                                                        palette={customizer.palette}
                                                         active={active}
-                                                        onApply={(patch) => { customizer.setSectionSetting(item.key, patch); setOpenTextKey(null); }}
-                                                        onApplyLive={(patch) => customizer.setSectionSetting(item.key, patch)}
+                                                        onApplyText={(patch) => { customizer.setSectionSetting(item.key, patch); setOpenEditKey(null); }}
+                                                        onApplyTextLive={(patch) => customizer.setSectionSetting(item.key, patch)}
                                                         onToggleActive={(v) => customizer.setSectionSetting(item.key, { active: v })}
+                                                        onApplyColor={(patch) => customizer.setSectionColor(item.key, patch)}
+                                                        onClearColor={() => { customizer.resetSectionColor(item.key); }}
+                                                        heroFill={custom.heroFill}
+                                                        onToggleHeroFill={(v) => update({ heroFill: v })}
+                                                        dark={custom.dark}
+                                                        onToggleDark={(v) => update({ dark: v })}
+                                                        showLogin={customizer.sectionSettings?.[item.key]?.show_login ?? true}
+                                                        onToggleLogin={(v) => customizer.setSectionSetting(item.key, { show_login: v })}
                                                     />
                                                 )}
                                             </div>
@@ -965,40 +1053,6 @@ export function ThemeSettingsDrawer() {
                                 onSelect={(key) => update({ elevation: key })}
                                 hint="Bayangan kartu — Flat datar, Tajam sangat terangkat."
                             />
-
-                            <div className="theme-opt theme-dark-row">
-                                <div className="theme-dark-info">
-                                    <h4><span className="theme-opt-icon">◐</span>Mode Gelap</h4>
-                                    <span className="theme-select-hint">Ubah permukaan halaman menjadi gelap.</span>
-                                </div>
-                                <label className="theme-switch">
-                                    <input
-                                        type="checkbox"
-                                        checked={!!custom.dark}
-                                        onChange={(e) => update({ dark: e.target.checked })}
-                                        aria-label="Mode gelap"
-                                    />
-                                    <span className="theme-switch-track" />
-                                </label>
-                            </div>
-
-                            <div className="theme-opt theme-dark-row">
-                                <div className="theme-dark-info">
-                                    <h4><span className="theme-opt-icon">▭</span>Isi Satu Layar</h4>
-                                    <span className="theme-select-hint">
-                                        Hero mengisi satu layar penuh. Matikan agar tinggi hero mengikuti konten.
-                                    </span>
-                                </div>
-                                <label className="theme-switch">
-                                    <input
-                                        type="checkbox"
-                                        checked={!!custom.heroFill}
-                                        onChange={(e) => update({ heroFill: e.target.checked })}
-                                        aria-label="Isi satu layar"
-                                    />
-                                    <span className="theme-switch-track" />
-                                </label>
-                            </div>
 
                             <button type="button" className="theme-reset-btn" onClick={reset}>
                                 <RotateCcw size={15} /> Reset ke default tema

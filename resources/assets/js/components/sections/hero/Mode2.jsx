@@ -54,10 +54,10 @@ export default function HeroMode2({ section, data }) {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, ease }}
                     >
-                        <Badge><Sparkles size={14} /> {section.pre_title || 'Digital campus platform'}</Badge>
+                        <Badge style={{ color: 'var(--sec-pretext, inherit)' }}><Sparkles size={14} /> {section.pre_title || 'Digital campus platform'}</Badge>
                     </motion.div>
 
-                    <h1 className="hero-aurora-title">
+                    <h1 className="hero-aurora-title" style={{ color: 'var(--sec-title, inherit)' }}>
                         {reduceMotion
                             ? copy.title
                             : words.map((word, i) => (
@@ -77,6 +77,7 @@ export default function HeroMode2({ section, data }) {
                         initial={{ opacity: 0, y: 16 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: revealDelay, duration: 0.5, ease }}
+                        style={{ color: 'var(--sec-posttext, inherit)' }}
                     >
                         {copy.subtitle}
                     </motion.p>

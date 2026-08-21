@@ -9,6 +9,7 @@ use App\Traits\HashidBinding;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Public\Traits\ClearsDynamicBlockCache;
 use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -16,7 +17,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Pengumuman extends Model implements HasMedia
 {
-    use BelongsToTenant, Blameable, HasFactory, HashidBinding, InteractsWithMedia, SoftDeletes;
+    use BelongsToTenant, Blameable, ClearsDynamicBlockCache, HasFactory, HashidBinding, InteractsWithMedia, SoftDeletes;
 
     protected $table = 'cms_pengumuman';
 
@@ -30,6 +31,9 @@ class Pengumuman extends Model implements HasMedia
         'is_published',
         'image_url',
         'published_at',
+        'pretitle_color',
+        'title_color',
+        'subtitle_color',
         'created_by',
         'updated_by',
         'deleted_by',
@@ -39,6 +43,7 @@ class Pengumuman extends Model implements HasMedia
         'is_published' => 'boolean',
         'jenis' => 'string',
         'pengumuman_id' => 'string',
+        'published_at' => 'datetime',
     ];
 
     /**
@@ -135,4 +140,8 @@ class Pengumuman extends Model implements HasMedia
         return $media ? sys_media_url($media) : null;
     }
 
+    protected static function dynamicBlockType(): string
+    {
+        return 'pengumuman';
+    }
 }

@@ -42,7 +42,18 @@
                 <x-ui.form-input name="subtitle" label="Subjudul Section" value="{{ old('subtitle', $section->subtitle ?? '') }}" />
             </div>
         </div>
-        
+
+        <div class="mb-3 mt-2">
+            <label class="form-label">Gambar Section</label>
+            @if($section->image_url)
+                <div class="mb-2 border rounded p-2 text-center bg-light">
+                    <img src="{{ $section->image_url }}" alt="Preview" style="max-height: 100px; max-width: 100%;">
+                </div>
+            @endif
+            <x-ui.form-input type="file" name="section_image" accept="image/png,image/jpeg,image/webp"
+                help="Gambar untuk section ini (hero, produk unggulan, dll). Maks 4MB." />
+        </div>
+
         <div class="row g-2 mt-1">
             <div class="col-md-6">
                 <label class="form-label">Rata Teks</label>

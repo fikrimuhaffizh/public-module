@@ -154,13 +154,15 @@ export function Section({
         tint ? 'section--tint' : '',
     ].filter(Boolean).join(' ');
 
+    // Per-element color: --sec-pretext, --sec-title, --sec-posttext
+    // (di-set oleh sectionColorStyle di renderer.jsx)
     return (
         <section id={id} className={classes}>
             <div className={`shell ${narrow ? 'shell--narrow' : ''}`}>
                 <Reveal className={`section-heading section-heading--${heading.align}`}>
-                    {heading.eyebrow && <span className="eyebrow">{heading.eyebrow}</span>}
-                    {heading.title && <h2>{heading.title}</h2>}
-                    {heading.text && <p>{heading.text}</p>}
+                    {heading.eyebrow && <span className="eyebrow" style={{ color: 'var(--sec-pretext, inherit)' }}>{heading.eyebrow}</span>}
+                    {heading.title && <h2 style={{ color: 'var(--sec-title, inherit)' }}>{heading.title}</h2>}
+                    {heading.text && <p style={{ color: 'var(--sec-posttext, inherit)' }}>{heading.text}</p>}
                 </Reveal>
                 {children}
             </div>
@@ -174,9 +176,9 @@ export function SectionHeader({ section, className = '' }) {
 
     return (
         <Reveal className={`section-heading section-heading--${heading.align} ${className}`}>
-            {heading.eyebrow && <span className="eyebrow">{heading.eyebrow}</span>}
-            {heading.title && <h2>{heading.title}</h2>}
-            {heading.text && <p>{heading.text}</p>}
+            {heading.eyebrow && <span className="eyebrow" style={{ color: 'var(--sec-pretext, inherit)' }}>{heading.eyebrow}</span>}
+            {heading.title && <h2 style={{ color: 'var(--sec-title, inherit)' }}>{heading.title}</h2>}
+            {heading.text && <p style={{ color: 'var(--sec-posttext, inherit)' }}>{heading.text}</p>}
         </Reveal>
     );
 }
@@ -252,9 +254,9 @@ export function PlatformOverview({ site, image, pageCount = 0, section }) {
         <section className="saas-overview">
             <div className="shell saas-overview-grid">
                 <Reveal className="saas-copy">
-                    <Badge variant="secondary"><Sparkles size={14} /> {heading.eyebrow}</Badge>
-                    <h2>{heading.title}</h2>
-                    <p>{heading.text}</p>
+                    <Badge variant="secondary" style={{ color: 'var(--sec-pretext, inherit)' }}><Sparkles size={14} /> {heading.eyebrow}</Badge>
+                    <h2 style={{ color: 'var(--sec-title, inherit)' }}>{heading.title}</h2>
+                    <p style={{ color: 'var(--sec-posttext, inherit)' }}>{heading.text}</p>
                     <div className="capability-list">
                         {capabilities.map(([Icon, title, description]) => (
                             <div className="capability-item" key={title}>
@@ -373,9 +375,9 @@ export function CtaSection({ site, section }) {
             <div className="shell">
                 <Reveal className="saas-cta-card">
                     <div>
-                        {heading.eyebrow && <span className="eyebrow">{heading.eyebrow}</span>}
-                        <h2>{heading.title}</h2>
-                        {heading.text && <p>{heading.text}</p>}
+                        {heading.eyebrow && <span className="eyebrow" style={{ color: 'var(--sec-pretext, inherit)' }}>{heading.eyebrow}</span>}
+                        <h2 style={{ color: 'var(--sec-title, inherit)' }}>{heading.title}</h2>
+                        {heading.text && <p style={{ color: 'var(--sec-posttext, inherit)' }}>{heading.text}</p>}
                     </div>
                     <Button asChild size="lg">
                         <Link href={site.contactUrl}>

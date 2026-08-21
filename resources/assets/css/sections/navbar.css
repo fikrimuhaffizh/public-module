@@ -2,6 +2,42 @@
    sections/navbar.css — bagian dari landing (dipecah dari landing.css)
    ============================================================ */
 
+/* ── Scroll Shadow — navbar mendapat shadow saat user scroll ── */
+.site-header--scrolled {
+    box-shadow: 0 4px 24px rgba(15, 23, 42, .08)
+}
+.site-header--scrolled.site-header--dock {
+    box-shadow: 0 8px 32px rgba(15, 23, 42, .14)
+}
+
+/* ── Active Page Indicator — highlight menu item halaman aktif ── */
+.desktop-nav a.nav-active,
+.nav-dock-menu a.nav-active {
+    color: var(--primary)
+}
+.desktop-nav a.nav-active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 3px;
+    border-radius: 999px;
+    background: var(--primary)
+}
+.nav-dock-menu a.nav-active {
+    background: color-mix(in srgb, var(--primary) 12%, transparent)
+}
+/* Desktop nav links need relative for the underline */
+.desktop-nav a {
+    position: relative
+}
+.mobile-nav a.nav-active {
+    color: var(--primary);
+    font-weight: 700
+}
+
 /* ── NAVBAR: logo kiri / tengah / kanan ─────────────────────────── */
 /* Grid 3 kolom membuat logo TERSENTRAL sungguhan & tinggi header tetap
    76px (sama dgn V1) → tidak bentrok dengan hero di bawahnya.
@@ -76,15 +112,11 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--primary) 12%, transparent);
-    color: var(--primary);
     margin-right: 4px;
     flex: none;
+    color: var(--primary);
 }
-.nav-dock-brand .brand-logo { width: 34px; height: 34px; object-fit: contain }
+.nav-dock-brand .brand-logo { height: 32px; width: auto; object-fit: contain }
 .nav-dock-brand .brand-mark { display: inline-flex }
 .nav-dock-menu { display: flex; align-items: center; gap: 2px }
 .nav-dock-menu a {
@@ -102,11 +134,12 @@
     color: var(--primary);
 }
 .nav-dock-cta { margin-left: 6px }
-.site-header--dock .mobile-toggle { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 999px; color: var(--foreground); margin-left: 2px }
+.site-header--dock .mobile-toggle { display: none; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 999px; color: var(--foreground); margin-left: 2px }
 @media (max-width: 900px) {
     .site-header--dock { padding: 12px 0 10px }
     .nav-dock { width: 100%; border-radius: 18px; justify-content: space-between }
     .nav-dock-menu, .nav-dock-cta { display: none }
+    .site-header--dock .mobile-toggle { display: inline-flex }
 }
 
 /* ── Rows mode: tablet/mobile ──────────────────────────────────── */

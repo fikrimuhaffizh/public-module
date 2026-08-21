@@ -319,6 +319,12 @@ class LandingPageService
         return Menu::with('page')->whereNull('parent_id')
             ->where('position', 'header')->where('is_active', true)->orderBy('sequence')->get()
             ->map(fn (Menu $menu) => $this->mapMenuItem($menu))
+            ->prepend([
+                'id' => 'home',
+                'title' => 'Beranda',
+                'url' => route('home'),
+                'target' => '_self',
+            ])
             ->push([
                 'id' => 'contact',
                 'title' => 'Hubungi Kami',
@@ -649,7 +655,7 @@ class LandingPageService
             'title' => $section?->title ?: $siteName,
             'subtitle' => $section?->subtitle,
             'description' => $section?->post_title ?: $tagline,
-            'image' => null,
+            'image' => $section?->image_url,
             'buttonPrimary' => ['text' => 'Masuk', 'link' => route('auth.login')],
             'buttonSecondary' => ['text' => 'Hubungi Kami', 'link' => route('public.contact')],
             // CTA utama di hero: WhatsApp bila nomor tersedia (frontend memakainya

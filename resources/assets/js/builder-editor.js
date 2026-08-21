@@ -523,6 +523,367 @@ function addBaseBlocks() {
     });
 }
 
+/* ── CMS-backed Blocks ────────────────────────────────────── */
+/* Section blocks (FAQ, Testimonials, Statistics) otomatis mengambil data
+   dari database saat publish. Admin tetap edit wrapper/title/styling.
+   data-cms-source di Blade component menandai bagian yang dari DB.
+   Lihat: Modules/Public/resources/views/components/builder/*.blade.php */
+
+/* OLD dynamic blocks code removed — CMS-backed blocks handled server-side */
+const STATIC_TEMPLATES_REMOVE_ME = {
+    faq: [
+        '<section class="wbp-section wbp-bg-white wbp-py-lg">',
+        '  <div class="wbp-container wbp-container-narrow">',
+        '    <h2 class="wbp-title wbp-title-lg wbp-text-center" style="margin-bottom:2rem">Frequently Asked Questions</h2>',
+        '    <div class="wbp-faq">',
+        '      <details>',
+        '        <summary>Bagaimana cara mendaftar sebagai mahasiswa baru?</summary>',
+        '        <div class="wbp-faq-body">Pendaftaran dapat dilakukan secara online melalui portal PMB.</div>',
+        '      </details>',
+        '      <details>',
+        '        <summary>Program studi apa saja yang tersedia?</summary>',
+        '        <div class="wbp-faq-body">Kami memiliki berbagai program studi di bidang Teknologi, Bisnis, dan Ilmu Sosial.</div>',
+        '      </details>',
+        '      <details>',
+        '        <summary>Apakah tersedia beasiswa?</summary>',
+        '        <div class="wbp-faq-body">Ya, tersedia berbagai jenis beasiswa untuk mahasiswa berprestasi.</div>',
+        '      </details>',
+        '    </div>',
+        '  </div>',
+        '</section>',
+    ].join('\n'),
+
+    pengumuman: [
+        '<section class="wbp-section wbp-bg-gray wbp-py-lg">',
+        '  <div class="wbp-container">',
+        '    <h2 class="wbp-title wbp-title-lg wbp-text-center" style="margin-bottom:2rem">Berita & Pengumuman</h2>',
+        '    <div class="wbp-grid wbp-grid-3">',
+        '      <div class="wbp-card">',
+        '        <div class="wbp-card-body">',
+        '          <span class="wbp-card-date">20 Agustus 2026</span>',
+        '          <h3 class="wbp-card-title">Pengumuman Kampus</h3>',
+        '          <p class="wbp-card-text">Isi pengumuman dapat diedit sesuai kebutuhan.</p>',
+        '        </div>',
+        '      </div>',
+        '      <div class="wbp-card">',
+        '        <div class="wbp-card-body">',
+        '          <span class="wbp-card-date">19 Agustus 2026</span>',
+        '          <h3 class="wbp-card-title">Berita Terbaru</h3>',
+        '          <p class="wbp-card-text">Tambahkan berita dan informasi terkini di sini.</p>',
+        '        </div>',
+        '      </div>',
+        '      <div class="wbp-card">',
+        '        <div class="wbp-card-body">',
+        '          <span class="wbp-card-date">18 Agustus 2026</span>',
+        '          <h3 class="wbp-card-title">Acara Mendatang</h3>',
+        '          <p class="wbp-card-text">Jadwalkan acara dan kegiatan kampus di sini.</p>',
+        '        </div>',
+        '      </div>',
+        '    </div>',
+        '  </div>',
+        '</section>',
+    ].join('\n'),
+
+    testimonial: [
+        '<section class="wbp-section wbp-bg-white wbp-py-lg">',
+        '  <div class="wbp-container">',
+        '    <h2 class="wbp-title wbp-title-lg wbp-text-center" style="margin-bottom:2rem">Apa Kata Mereka</h2>',
+        '    <div class="wbp-grid wbp-grid-3">',
+        '      <div class="wbp-card wbp-card-testimonial">',
+        '        <div class="wbp-card-body">',
+        '          <div class="wbp-testimonial-stars">⭐⭐⭐⭐⭐</div>',
+        '          <p class="wbp-testimonial-quote">"Platform kampus membantu saya menemukan layanan dan informasi akademik dengan cepat."</p>',
+        '          <div class="wbp-testimonial-author">',
+        '            <img src="https://ui-avatars.com/api/?name=Ahmad" alt="Ahmad" class="wbp-testimonial-avatar">',
+        '            <div><strong>Ahmad Fauzi</strong><span>Mahasiswa Teknik Informatika</span></div>',
+        '          </div>',
+        '        </div>',
+        '      </div>',
+        '      <div class="wbp-card wbp-card-testimonial">',
+        '        <div class="wbp-card-body">',
+        '          <div class="wbp-testimonial-stars">⭐⭐⭐⭐⭐</div>',
+        '          <p class="wbp-testimonial-quote">"Sangat membantu untuk pencarian informasi perkuliahan sehari-hari."</p>',
+        '          <div class="wbp-testimonial-author">',
+        '            <img src="https://ui-avatars.com/api/?name=Siti" alt="Siti" class="wbp-testimonial-avatar">',
+        '            <div><strong>Siti Nurhaliza</strong><span>Mahasiswa Manajemen</span></div>',
+        '          </div>',
+        '        </div>',
+        '      </div>',
+        '      <div class="wbp-card wbp-card-testimonial">',
+        '        <div class="wbp-card-body">',
+        '          <div class="wbp-testimonial-stars">⭐⭐⭐⭐⭐</div>',
+        '          <p class="wbp-testimonial-quote">"Fitur akademiknya lengkap dan mudah digunakan."</p>',
+        '          <div class="wbp-testimonial-author">',
+        '            <img src="https://ui-avatars.com/api/?name=Budi" alt="Budi" class="wbp-testimonial-avatar">',
+        '            <div><strong>Budi Santoso</strong><span>Mahasiswa Akuntansi</span></div>',
+        '          </div>',
+        '        </div>',
+        '      </div>',
+        '    </div>',
+        '  </div>',
+        '</section>',
+    ].join('\n'),
+
+    statistik: [
+        '<section class="wbp-section wbp-bg-brand wbp-py-lg">',
+        '  <div class="wbp-container">',
+        '    <div class="wbp-statistics">',
+        '      <div class="wbp-statistic"><div class="wbp-statistic-value">10,000+</div><div class="wbp-statistic-label">Mahasiswa Aktif</div></div>',
+        '      <div class="wbp-statistic"><div class="wbp-statistic-value">50+</div><div class="wbp-statistic-label">Program Studi</div></div>',
+        '      <div class="wbp-statistic"><div class="wbp-statistic-value">200+</div><div class="wbp-statistic-label">Dosen</div></div>',
+        '      <div class="wbp-statistic"><div class="wbp-statistic-value">95%</div><div class="wbp-statistic-label">Tingkat Kelulusan</div></div>',
+        '    </div>',
+        '  </div>',
+        '</section>',
+    ].join('\n'),
+};
+
+/**
+ * Build placeholder string from trait values.
+ */
+function buildPlaceholder(type, traits) {
+    const params = [];
+    Object.entries(traits).forEach(([key, value]) => {
+        if (value !== undefined && value !== '' && value !== null) {
+            params.push(`${key}=${value}`);
+        }
+    });
+    return `{{${type}:${params.join('&')}}}`;
+}
+
+/**
+ * Build dynamic indicator badge HTML.
+ */
+function dynamicBadge(type) {
+    return `<div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;padding:6px 12px;background:linear-gradient(135deg,#3b82f6,#2563eb);color:#fff;border-radius:8px;font-size:12px;font-weight:600;">` +
+        `<i class="ti ti-database" style="font-size:14px"></i> ` +
+        `<span>🔗 Data CMS: ${type.toUpperCase()}</span>` +
+        `<span style="margin-left:auto;font-size:10px;opacity:0.8">auto-update</span>` +
+        `</div>`;
+}
+
+function addDynamicBlocks() {
+    const dynamicBlocks = [
+        {
+            id: 'dynamic-faq',
+            label: 'FAQ',
+            category: 'Konten Dinamis',
+            icon: 'help-circle',
+            dynamicType: 'faq',
+            traitDefaults: { category: '', limit: 5, is_active: 'true' },
+            traitDefs: [
+                {
+                    type: 'checkbox',
+                    name: 'use_dynamic',
+                    label: '🗄️ Gunakan Data CMS',
+                    value: false,
+                },
+                {
+                    type: 'select',
+                    name: 'category',
+                    label: 'Kategori',
+                    options: [
+                        { value: '', name: 'Semua' },
+                        { value: 'akademik', name: 'Akademik' },
+                        { value: 'administrasi', name: 'Administrasi' },
+                        { value: 'umum', name: 'Umum' },
+                    ],
+                },
+                {
+                    type: 'number',
+                    name: 'limit',
+                    label: 'Jumlah Item',
+                    min: 1,
+                    max: 20,
+                    value: 5,
+                },
+            ],
+        },
+        {
+            id: 'dynamic-pengumuman',
+            label: 'Pengumuman',
+            category: 'Konten Dinamis',
+            icon: 'megaphone',
+            dynamicType: 'pengumuman',
+            traitDefaults: { type: '', limit: 3, is_published: 'true' },
+            traitDefs: [
+                {
+                    type: 'checkbox',
+                    name: 'use_dynamic',
+                    label: '🗄️ Gunakan Data CMS',
+                    value: false,
+                },
+                {
+                    type: 'select',
+                    name: 'type',
+                    label: 'Jenis',
+                    options: [
+                        { value: '', name: 'Semua' },
+                        { value: 'berita', name: 'Berita' },
+                        { value: 'pengumuman', name: 'Pengumuman' },
+                        { value: 'agenda', name: 'Agenda' },
+                    ],
+                },
+                {
+                    type: 'number',
+                    name: 'limit',
+                    label: 'Jumlah Item',
+                    min: 1,
+                    max: 12,
+                    value: 3,
+                },
+            ],
+        },
+        {
+            id: 'dynamic-testimonial',
+            label: 'Testimonial',
+            category: 'Konten Dinamis',
+            icon: 'quote',
+            dynamicType: 'testimonial',
+            traitDefaults: { limit: 3, is_active: 'true' },
+            traitDefs: [
+                {
+                    type: 'checkbox',
+                    name: 'use_dynamic',
+                    label: '🗄️ Gunakan Data CMS',
+                    value: false,
+                },
+                {
+                    type: 'number',
+                    name: 'limit',
+                    label: 'Jumlah Item',
+                    min: 1,
+                    max: 12,
+                    value: 3,
+                },
+            ],
+        },
+        {
+            id: 'dynamic-statistik',
+            label: 'Statistik',
+            category: 'Konten Dinamis',
+            icon: 'chart-bar',
+            dynamicType: 'statistik',
+            traitDefaults: { limit: 4, is_active: 'true' },
+            traitDefs: [
+                {
+                    type: 'checkbox',
+                    name: 'use_dynamic',
+                    label: '🗄️ Gunakan Data CMS',
+                    value: false,
+                },
+                {
+                    type: 'number',
+                    name: 'limit',
+                    label: 'Jumlah Item',
+                    min: 1,
+                    max: 8,
+                    value: 4,
+                },
+            ],
+        },
+    ];
+
+    dynamicBlocks.forEach((block) => {
+        // --- Block definition ---
+        editor.BlockManager.add(block.id, {
+            label: block.label,
+            category: block.category,
+            media: blockMedia(block.icon),
+            // Default: static mode — admin bisa langsung edit
+            content: {
+                type: 'text',
+                content: STATIC_TEMPLATES[block.dynamicType],
+                attributes: {
+                    'data-dynamic-type': block.dynamicType,
+                    'data-dynamic-enabled': 'false',
+                },
+                classes: ['wbp-dynamic-block', 'wbp-dynamic-static'],
+            },
+            activate: true,
+            select: true,
+        });
+
+        // --- Component type with traits ---
+        editor.DomComponents.addType(block.id, {
+            model: {
+                defaults: {
+                    traits: [
+                        // Use CMS Data toggle
+                        {
+                            type: 'checkbox',
+                            name: 'use_dynamic',
+                            label: '🗄️ Gunakan Data CMS',
+                            value: false,
+                        },
+                        // Dynamic config traits (shown only when toggle ON)
+                        ...block.traitDefs.filter(t => t.name !== 'use_dynamic'),
+                    ],
+                    // Store static content so we can restore it when toggling OFF
+                    'data-static-content': STATIC_TEMPLATES[block.dynamicType],
+                    'data-dynamic-enabled': 'false',
+                },
+            },
+
+            view: {
+                events: {
+                    change: 'onTraitChange',
+                },
+
+                init() {
+                    // Listen for trait changes (the toggle)
+                    this.model.get('traits').on('change', this.onTraitChange.bind(this));
+                },
+
+                onTraitChange() {
+                    const model = this.model;
+                    const useDynamic = model.getTrait('use_dynamic')?.getValue();
+                    const dynType = model.get('data-dynamic-type') || block.dynamicType;
+
+                    if (useDynamic) {
+                        // ── Toggle ON: Switch to dynamic placeholder ──
+                        // Save current content as static before switching
+                        const currentContent = model.get('content') || '';
+                        if (currentContent && !currentContent.startsWith('{{')) {
+                            model.set('data-static-content', currentContent);
+                        }
+
+                        // Build trait values for placeholder
+                        const traitValues = {};
+                        block.traitDefs.filter(t => t.name !== 'use_dynamic').forEach((t) => {
+                            const val = model.getTrait(t.name)?.getValue() ?? t.value;
+                            if (val !== '' && val !== undefined && val !== null) {
+                                traitValues[t.name] = val;
+                            }
+                        });
+
+                        // Set placeholder content with dynamic badge
+                        const placeholder = buildPlaceholder(dynType, traitValues);
+                        model.set('content', dynamicBadge(dynType) + `<div style="display:block;padding:2rem;background:linear-gradient(135deg,#eff6ff,#dbeafe);border:2px dashed #3b82f6;border-radius:12px;text-align:center;color:#1e40af;font-size:14px;">${placeholder}</div>`);
+                        model.set('data-dynamic-enabled', 'true');
+
+                        // Update CSS class
+                        const classes = model.get('classes');
+                        classes.remove('wbp-dynamic-static');
+                        classes.add('wbp-dynamic-active');
+
+                    } else {
+                        // ── Toggle OFF: Restore static content ──
+                        const staticContent = model.get('data-static-content') || STATIC_TEMPLATES[block.dynamicType];
+                        model.set('content', staticContent);
+                        model.set('data-dynamic-enabled', 'false');
+
+                        // Update CSS class
+                        const classes = model.get('classes');
+                        classes.remove('wbp-dynamic-active');
+                        classes.add('wbp-dynamic-static');
+                    }
+                },
+            },
+        });
+    });
+}
+
 function idToIcon(id) {
     const map = {
         'wbp-row': 'columns-2',
@@ -873,6 +1234,7 @@ document.body.classList.add('builder-editor');
 loadInitial();
 addSectionBlocks();
 addBaseBlocks();
+/* CMS-backed blocks handled server-side — no client-side init needed */
 wireToolbar();
 setStatus(dirty ? 'Belum disimpan' : 'Siap', dirty ? 'dirty' : 'idle');
 

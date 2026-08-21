@@ -6,6 +6,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Route;
 use Modules\Public\Models\Page;
 use Modules\Public\Services\BuilderPageService;
+use Modules\Public\Services\DynamicBlockService;
 
 /**
  * Resolver halaman builder di /{slug}.
@@ -17,7 +18,10 @@ use Modules\Public\Services\BuilderPageService;
  */
 class BuilderPublicController extends Controller
 {
-    public function __construct(protected BuilderPageService $builder) {}
+    public function __construct(
+        protected BuilderPageService $builder,
+        protected DynamicBlockService $dynamicBlocks,
+    ) {}
 
     public function show(string $slug)
     {
@@ -36,6 +40,10 @@ class BuilderPublicController extends Controller
 
         $data = $page->builderData;
 
+        // Resolve dynamic placeholders ({{faq:...}}, {{pengumuman:...}}, etc.)
+        $html = $data?->html_compiled ?? '';
+        $html = $this->dynamicBlocks->resolve($html);
+
         $response = response()->view('public::layouts.public-custom-page', [
             'page' => $page,
             'siteName' => sys_tenant_name(),
@@ -43,7 +51,7 @@ class BuilderPublicController extends Controller
             'metaDescription' => $page->meta_desc,
             'theme' => config('builder_theme', []),
             'themeCss' => $this->builder->themeCss(),
-            'html' => $data?->html_compiled ?? '',
+            'html' => $html,
             'css' => $data?->css_compiled ?? '',
             'compiledAt' => $data?->compiled_at?->toIso8601String(),
             'preview' => false,

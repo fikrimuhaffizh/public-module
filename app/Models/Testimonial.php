@@ -7,6 +7,7 @@ use App\Traits\Blameable;
 use App\Traits\HashidBinding;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Public\Traits\ClearsDynamicBlockCache;
 use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -14,7 +15,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Testimonial extends Model implements HasMedia
 {
-    use BelongsToTenant, Blameable, HashidBinding, InteractsWithMedia, SoftDeletes;
+    use BelongsToTenant, Blameable, ClearsDynamicBlockCache, HashidBinding, InteractsWithMedia, SoftDeletes;
 
     protected $table = 'cms_testimonial';
 
@@ -52,5 +53,10 @@ class Testimonial extends Model implements HasMedia
         $this->addMediaConversion('thumb')
             ->fit(Fit::Crop, 240, 240)
             ->nonQueued();
+    }
+
+    protected static function dynamicBlockType(): string
+    {
+        return 'testimonial';
     }
 }

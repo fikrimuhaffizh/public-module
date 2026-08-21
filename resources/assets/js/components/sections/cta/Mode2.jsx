@@ -12,9 +12,9 @@ export default function CtaMode2({ section, data }) {
             {cta?.backgroundImage && <img src={cta.backgroundImage} alt="" aria-hidden="true" />}
             <div className="cta-banner-scrim" />
             <div className="shell cta-banner-inner">
-                {section?.pre_title && <span className="eyebrow eyebrow--light">{section.pre_title}</span>}
-                <h2>{title}</h2>
-                <p>{text}</p>
+                {section?.pre_title && <span className="eyebrow eyebrow--light" style={{ color: 'var(--sec-pretext, inherit)' }}>{section.pre_title}</span>}
+                <h2 style={{ color: 'var(--sec-title, inherit)' }}>{title}</h2>
+                <p style={{ color: 'var(--sec-posttext, inherit)' }}>{text}</p>
                 <Button asChild size="lg">
                     <a href={cta?.buttonLink || data.site.contactUrl}>
                         {cta?.buttonText || 'Hubungi kami'} <ArrowRight size={18} />

@@ -146,21 +146,34 @@
     .hero-gallery-thumb { aspect-ratio: 1 }
     .hero-gallery-chip { display: none }
 }
-.theme-custom-density--compact .hero--gallery { padding: 56px 0 44px }
-.theme-custom-density--spacious .hero--gallery { padding: 112px 0 96px }
+/* Density overrides for all hero modes moved to customizer.css */
 
-/* Hero "Isi satu layar" — toggle di Theme Settings (default ON).
-   Tanpa class ini hero dinamis mengikuti kontennya. */
-.theme-custom-hero-fill .hero--modern { min-height: min(680px, calc(100svh - 160px)) }
+/* Hero "Isi satu layar" — toggle di Theme Settings.
+   Hero mengisi 100svh (viewport penuh), ditarik ke atas menutupi navbar
+   agar background-nya full dari atas ke bawah. Content di-push ke bawah
+   dengan padding-top = tinggi navbar supaya tidak tertutup. */
+.theme-custom-hero-fill .hero--modern,
 .theme-custom-hero-fill .hero--centered,
-.theme-custom-hero-fill .hero--gallery { min-height: calc(100svh - 160px) }
-@media (max-width: 620px) {
-    .theme-custom-hero-fill .hero--institutional,
-    .theme-custom-hero-fill .hero-content,
-    .theme-custom-hero-fill .modern-hero-grid { min-height: min(570px, calc(100svh - 180px)) }
+.theme-custom-hero-fill .hero--overlay,
+.theme-custom-hero-fill .hero--gallery,
+.theme-custom-hero-fill .hero--aurora {
+    min-height: 100svh;
+    margin-top: -76px;
+    padding: 76px 0;
+    display: flex;
+    align-items: center;
 }
-@media (max-width: 600px) {
-    .theme-custom-hero-fill .hero--gallery { min-height: calc(100svh - 180px) }
+/* Navbar sticky sudah z-index:50, hero di belakangnya tapi visible karena
+   navbar punya backdrop-filter:blur + background semi-transparent. */
+@media (max-width: 900px) {
+    .theme-custom-hero-fill .hero--modern,
+    .theme-custom-hero-fill .hero--centered,
+    .theme-custom-hero-fill .hero--overlay,
+    .theme-custom-hero-fill .hero--gallery,
+    .theme-custom-hero-fill .hero--aurora {
+        margin-top: -60px;
+        padding-top: 60px;
+    }
 }
 /* ===== Hero Mode 4 — Aurora animasi (Velora-inspired) ===== */
 .hero--aurora {

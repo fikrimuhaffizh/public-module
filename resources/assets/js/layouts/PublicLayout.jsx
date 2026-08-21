@@ -61,6 +61,8 @@ function ThemedRoot({ children }) {
     const navbarKey = useSectionVariant('navbar', sectionVariantOf(sections, 'navbar', 'navbar_1'));
     const NavbarComponent = resolveVariant('navbar', navbarKey)?.component;
     const navbarStyle = sectionColorStyle(customizer?.sectionColors?.['navbar']);
+    const navbarSection = sections?.find(s => s.section_key === 'navbar');
+    const navbarSettings = { ...(navbarSection?.settings || {}), ...(customizer?.sectionSettings?.navbar || {}) };
 
     const footerKey = useSectionVariant('footer', sectionVariantOf(sections, 'footer', 'footer_1'));
     const FooterComponent = resolveVariant('footer', footerKey)?.component;
@@ -80,10 +82,11 @@ function ThemedRoot({ children }) {
     // halaman statis, berita, kontak). Konten diturunkan dari props halaman;
     // home tidak punya konteks → tidak dirender. Mode/warna/toggle dari
     // Theme Settings (offcanvas), sama seperti navbar/topbar/footer.
+    // Color props: pretitleColor, titleColor, subtitleColor bisa diatur per-halaman.
     const pageHeaderContext = page
-        ? { eyebrow: 'Informasi institusi', title: page.title, excerpt: page.excerpt, crumb: page.title }
+        ? { eyebrow: page.eyebrow || 'Informasi institusi', title: page.title, excerpt: page.excerpt, crumb: page.title, pretitleColor: page.pretitle_color || null, titleColor: page.title_color || null, subtitleColor: page.subtitle_color || null }
         : announcement
-            ? { eyebrow: announcement.type || 'Pengumuman', title: announcement.title, excerpt: announcement.excerpt, crumb: announcement.type || 'Pengumuman' }
+            ? { eyebrow: announcement.type || 'Pengumuman', title: announcement.title, excerpt: announcement.excerpt, crumb: announcement.type || 'Pengumuman', pretitleColor: announcement.pretitle_color || null, titleColor: announcement.title_color || null, subtitleColor: announcement.subtitle_color || null }
             : header || null;
     const pageheaderKey = useSectionVariant('pageheader', sectionVariantOf(sections, 'pageheader', 'pageheader_1'));
     const PageHeaderComponent = resolveVariant('pageheader', pageheaderKey)?.component;
@@ -112,8 +115,8 @@ function ThemedRoot({ children }) {
         )}
         {showHeader && NavbarComponent && (
             navbarStyle
-                ? <div className={secWrapClasses(customizer?.sectionColors?.navbar)} style={navbarStyle}><NavbarComponent site={site} menus={menus} open={open} onToggle={() => setOpen(!open)} /></div>
-                : <NavbarComponent site={site} menus={menus} open={open} onToggle={() => setOpen(!open)} />
+                ? <div className={secWrapClasses(customizer?.sectionColors?.navbar)} style={navbarStyle}><NavbarComponent site={site} menus={menus} open={open} onToggle={() => setOpen(!open)} settings={navbarSettings} /></div>
+                : <NavbarComponent site={site} menus={menus} open={open} onToggle={() => setOpen(!open)} settings={navbarSettings} />
         )}
         {pageheaderActive && PageHeaderComponent && pageHeaderContext && (
             pageheaderStyle

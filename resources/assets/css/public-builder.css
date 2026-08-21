@@ -509,6 +509,380 @@
 .wbp-preview-link:hover { text-decoration: underline; }
 
 /* =========================================================
+   Dynamic Blocks (Database-driven content)
+   Toggle: Static (edit manual) vs Dynamic (auto from CMS)
+   ========================================================= */
+
+/* ── Dynamic Block Container ─────────────────────────────── */
+.wbp-dynamic-block {
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+/* ── Static Mode (default) — no placeholder styling ────── */
+.wbp-dynamic-static {
+    /* Normal content, no special styling */
+}
+
+.wbp-dynamic-static::before {
+    content: '';
+    display: none;
+}
+
+/* ── Dynamic Mode (toggle ON) — placeholder styling ────── */
+.wbp-dynamic-active {
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.wbp-dynamic-active:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.wbp-dynamic-active::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.5;
+    animation: wbp-pulse 2s infinite;
+}
+
+@keyframes wbp-pulse {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* ── Dynamic Block Types (placeholder colors) ────────────── */
+[data-dynamic-type="faq"][data-dynamic-enabled="true"] {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border: 2px dashed #3b82f6;
+    color: #1e40af;
+}
+
+[data-dynamic-type="pengumuman"][data-dynamic-enabled="true"] {
+    background: linear-gradient(135deg, #fefce8 0%, #fef3c7 100%);
+    border: 2px dashed #f59e0b;
+    color: #92400e;
+}
+
+[data-dynamic-type="testimonial"][data-dynamic-enabled="true"] {
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    border: 2px dashed #22c55e;
+    color: #166534;
+}
+
+[data-dynamic-type="statistik"][data-dynamic-enabled="true"] {
+    background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+    border: 2px dashed #a855f7;
+    color: #6b21a8;
+}
+
+[data-dynamic-type="slideshow"][data-dynamic-enabled="true"] {
+    background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+    border: 2px dashed #f97316;
+    color: #9a3412;
+}
+
+[data-dynamic-type="client"][data-dynamic-enabled="true"] {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border: 2px dashed #64748b;
+    color: #334155;
+}
+
+[data-dynamic-type="partner"][data-dynamic-enabled="true"] {
+    background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+    border: 2px dashed #ef4444;
+    color: #991b1b;
+}
+
+/* ── Dynamic Block Label (icon + text) ───────────────────── */
+.wbp-dynamic-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.wbp-dynamic-label i {
+    font-size: 24px;
+    opacity: 0.8;
+}
+
+.wbp-dynamic-label small {
+    font-weight: 400;
+    opacity: 0.7;
+    font-size: 12px;
+}
+
+/* ── Dynamic Content (rendered from database) ────────────── */
+
+/* FAQ Dynamic */
+.wbp-dynamic-faq .wbp-faq details {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--wbp-radius, 12px);
+    padding: 0 1.25rem;
+    margin-bottom: 0.75rem;
+    transition: box-shadow 0.2s ease;
+}
+
+.wbp-dynamic-faq .wbp-faq details:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.wbp-dynamic-faq .wbp-faq summary {
+    cursor: pointer;
+    font-weight: 600;
+    padding: 1rem 0;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.wbp-dynamic-faq .wbp-faq summary::-webkit-details-marker {
+    display: none;
+}
+
+.wbp-dynamic-faq .wbp-faq summary::after {
+    content: "+";
+    font-size: 1.25rem;
+    color: var(--wbp-primary, #2563eb);
+    transition: transform 0.2s ease;
+}
+
+.wbp-dynamic-faq .wbp-faq details[open] summary::after {
+    content: "−";
+    transform: rotate(180deg);
+}
+
+.wbp-dynamic-faq .wbp-faq-body {
+    padding: 0 0 1rem;
+    color: #475569;
+    line-height: 1.7;
+}
+
+/* Pengumuman Dynamic */
+.wbp-dynamic-pengumuman .wbp-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--wbp-radius, 12px);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.wbp-dynamic-pengumuman .wbp-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+.wbp-dynamic-pengumuman .wbp-card-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.wbp-dynamic-pengumuman .wbp-card-body {
+    padding: 1.25rem;
+}
+
+.wbp-dynamic-pengumuman .wbp-card-date {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--wbp-primary, #2563eb);
+    margin-bottom: 0.5rem;
+}
+
+.wbp-dynamic-pengumuman .wbp-card-title {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--wbp-secondary, #0f172a);
+    line-height: 1.4;
+}
+
+.wbp-dynamic-pengumuman .wbp-card-text {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #64748b;
+    line-height: 1.6;
+}
+
+/* Testimonial Dynamic */
+.wbp-dynamic-testimonial .wbp-card-testimonial {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--wbp-radius, 12px);
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.wbp-dynamic-testimonial .wbp-card-testimonial:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+.wbp-dynamic-testimonial .wbp-testimonial-stars {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+}
+
+.wbp-dynamic-testimonial .wbp-testimonial-quote {
+    font-size: 1rem;
+    font-style: italic;
+    color: #475569;
+    line-height: 1.7;
+    margin: 0 0 1.25rem;
+}
+
+.wbp-dynamic-testimonial .wbp-testimonial-author {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.wbp-dynamic-testimonial .wbp-testimonial-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e2e8f0;
+}
+
+.wbp-dynamic-testimonial .wbp-testimonial-author strong {
+    display: block;
+    font-size: 0.95rem;
+    color: var(--wbp-secondary, #0f172a);
+}
+
+.wbp-dynamic-testimonial .wbp-testimonial-author span {
+    display: block;
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+/* Statistik Dynamic */
+.wbp-dynamic-statistik .wbp-statistics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 2rem;
+    text-align: center;
+}
+
+.wbp-dynamic-statistik .wbp-statistic {
+    padding: 1.5rem;
+}
+
+.wbp-dynamic-statistik .wbp-statistic-value {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+}
+
+.wbp-dynamic-statistik .wbp-statistic-label {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+/* Client/Partner Dynamic */
+.wbp-dynamic-client .wbp-clients,
+.wbp-dynamic-partner .wbp-partners {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.wbp-dynamic-client .wbp-client-logo,
+.wbp-dynamic-partner .wbp-partner-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    filter: grayscale(1);
+    opacity: 0.7;
+    transition: filter 0.2s ease, opacity 0.2s ease;
+}
+
+.wbp-dynamic-client .wbp-client-logo:hover,
+.wbp-dynamic-partner .wbp-partner-logo:hover {
+    filter: none;
+    opacity: 1;
+}
+
+.wbp-dynamic-client .wbp-client-logo img,
+.wbp-dynamic-partner .wbp-partner-logo img {
+    max-height: 3rem;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+/* ── Slideshow Dynamic ───────────────────────────────────── */
+.wbp-slideshow {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: var(--wbp-radius, 12px);
+}
+
+.wbp-slide {
+    display: none;
+    position: relative;
+}
+
+.wbp-slide.active {
+    display: block;
+}
+
+.wbp-slide img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.wbp-slide-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    color: #fff;
+    padding: 2rem 1.5rem 1.5rem;
+}
+
+.wbp-slide-caption h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.wbp-slide-caption p {
+    margin: 0 0 1rem;
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+/* =========================================================
    Responsive: Tablet (≤1024) & Mobile (≤640)
    ========================================================= */
 @media (max-width: 1024px) {
@@ -541,4 +915,13 @@
     .wbp-cta-box { padding: 2.25rem 1.25rem; }
     .wbp-cta-title { font-size: 1.5rem; }
     .wbp-price-amount { font-size: 2.25rem; }
+
+    /* Dynamic Blocks Responsive */
+    .wbp-dynamic-active { min-height: 100px; padding: 1.5rem; }
+    .wbp-dynamic-statistik .wbp-statistics { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .wbp-dynamic-statistik .wbp-statistic-value { font-size: 2rem; }
+    .wbp-dynamic-client .wbp-clients,
+    .wbp-dynamic-partner .wbp-partners { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .wbp-dynamic-testimonial .wbp-card-testimonial { padding: 1.25rem; }
+    .wbp-dynamic-testimonial .wbp-testimonial-quote { font-size: 0.95rem; }
 }

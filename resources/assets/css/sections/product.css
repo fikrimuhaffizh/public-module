@@ -199,3 +199,22 @@
     .client-logos-stage__inner { min-width: 0; width: 100%; padding: 26px 18px }
 }
 
+/* ── Produk Mode 1 — card dengan gambar cover ────────────────── */
+.product-card-cover { overflow: hidden }
+.product-card-cover-img {
+    width: 100%;
+    height: 180px;
+    margin: -1.5rem -1.5rem 1rem;
+    overflow: hidden;
+    border-radius: var(--radius, 16px) var(--radius, 16px) 0 0;
+}
+.product-card-cover-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .3s ease;
+}
+.product-card-cover:hover .product-card-cover-img img {
+    transform: scale(1.05);
+}
+

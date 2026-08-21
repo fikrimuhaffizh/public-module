@@ -228,7 +228,9 @@
 .sec-colored .section-heading h2,
 .sec-colored .brand--footer strong { color: var(--sec-heading, var(--sec-text, inherit)) }
 .sec-colored .eyebrow,
-.sec-colored .section-kicker { color: var(--sec-accent, var(--primary)) }
+.sec-colored .section-kicker { color: var(--sec-pretext, var(--sec-accent, var(--primary))) }
+.sec-colored h1, .sec-colored h2, .sec-colored h3 { color: var(--sec-title, var(--sec-heading, var(--sec-text, inherit))) }
+.sec-colored p, .sec-colored .pageheader-excerpt { color: var(--sec-posttext, var(--sec-text, inherit)) }
 .sec-colored .ui-button--default,
 .sec-colored .btn-primary,
 .sec-colored .theme-btn-primary { background: var(--sec-accent, var(--primary)) !important; border-color: var(--sec-accent, var(--primary)) !important }
@@ -262,12 +264,7 @@
     width: 8px; height: 8px; border-radius: 50%;
     border: 1px solid rgba(0, 0, 0, .15); display: inline-block; flex: none;
 }
-.theme-sec-color-pop {
-    position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 12;
-    background: var(--card, #fff); border: 1px solid var(--border, #e2e8f0);
-    border-radius: 12px; box-shadow: 0 18px 44px rgba(15, 23, 42, .18);
-    padding: 12px; animation: theme-fade .15s ease;
-}
+/* .theme-sec-color-pop replaced by .theme-sec-edit-pop (combined Teks|Warna|Latar) */
 .theme-sec-color-title {
     font: 700 11px var(--font-heading, Manrope, sans-serif); text-transform: uppercase;
     letter-spacing: .05em; color: var(--muted, #64748b); margin-bottom: 8px;
@@ -286,7 +283,26 @@
     border: 1px dashed var(--border, #e2e8f0); color: var(--muted, #64748b);
     font: 600 11.5px var(--font-body, 'DM Sans', sans-serif); border-radius: 999px;
 }
-.theme-sec-color-fields { display: flex; flex-direction: column; gap: 7px }
+.theme-sec-color-fields { display: flex; flex-direction: column; gap: 10px }
+.theme-sec-color-divider {
+    display: flex; align-items: center; gap: 8px;
+    margin: 6px 0 4px;
+}
+.theme-sec-color-divider::before,
+.theme-sec-color-divider::after {
+    content: ''; flex: 1; height: 1px;
+    background: var(--border, #e2e8f0);
+}
+.theme-sec-color-divider span {
+    font: 600 10px var(--font-body, 'DM Sans', sans-serif);
+    text-transform: uppercase; letter-spacing: .08em;
+    color: var(--muted, #94a3b8); white-space: nowrap;
+}
+.theme-sec-color-hint {
+    font: 400 10px var(--font-body, 'DM Sans', sans-serif);
+    color: var(--muted, #94a3b8); margin-left: 4px;
+    text-transform: none; letter-spacing: normal;
+}
 .theme-sec-custom-toggle {
     display: inline-flex; align-items: center; gap: 6px;
     margin-top: 10px; padding: 7px 12px;
@@ -304,8 +320,9 @@
 .theme-sec-color-field {
     display: flex; align-items: center; gap: 8px;
     font: 600 12px var(--font-body, 'DM Sans', sans-serif); color: var(--muted, #64748b);
+    padding: 1px 0;
 }
-.theme-sec-color-field > span { width: 44px; flex: none }
+.theme-sec-color-field > span { width: 52px; flex: none }
 .theme-sec-color-field input[type="color"] {
     width: 34px; height: 26px; padding: 1px; border: 1px solid var(--border, #e2e8f0);
     border-radius: 7px; background: var(--background, #fff); cursor: pointer; flex: none;
@@ -442,6 +459,16 @@
 .theme-custom-css:focus { outline: none; border-color: var(--primary, #155eef) }
 /* ── Terapkan ke landing ───────────────────────────────────────── */
 .theme-apply { padding: 14px 0 4px }
+.theme-apply-row { display: flex; gap: 8px; align-items: stretch }
+.theme-dice-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 44px; flex: none;
+    border: 1px solid var(--border, #e2e8f0); border-radius: 12px;
+    background: var(--background, #fff); color: var(--primary, #155eef);
+    cursor: pointer; transition: background .15s, border-color .15s, transform .15s;
+}
+.theme-dice-btn:hover { background: color-mix(in srgb, var(--primary, #155eef) 10%, var(--card, #fff)); border-color: var(--primary); transform: rotate(15deg) scale(1.05) }
+.theme-dice-btn:active { transform: rotate(-10deg) scale(0.95) }
 .theme-apply-btn {
     display: inline-flex;
     align-items: center;
@@ -482,8 +509,11 @@
 .theme-custom-density--compact .stats-band { padding: 38px 0 }
 .theme-custom-density--compact .cta-banner { padding: 56px 0 }
 .theme-custom-density--compact .cta-split { padding: 36px 0 }
+.theme-custom-density--compact .hero--modern { padding: 60px 0 48px }
 .theme-custom-density--compact .hero--centered { padding: 64px 0 48px }
 .theme-custom-density--compact .hero--overlay { padding: 64px 0 }
+.theme-custom-density--compact .hero--gallery { padding: 56px 0 44px }
+.theme-custom-density--compact .hero--aurora { padding: 64px 0 48px }
 
 .theme-custom-density--spacious .section { padding: 124px 0 }
 .theme-custom-density--spacious .section-heading { margin-bottom: 52px }
@@ -493,8 +523,11 @@
 .theme-custom-density--spacious .stats-band { padding: 78px 0 }
 .theme-custom-density--spacious .cta-banner { padding: 124px 0 }
 .theme-custom-density--spacious .cta-split { padding: 80px 0 }
+.theme-custom-density--spacious .hero--modern { padding: 140px 0 120px }
 .theme-custom-density--spacious .hero--centered { padding: 128px 0 100px }
-.theme-custom-density--spacious .hero--overlay { padding: 128px 0 }
+.theme-custom-density--spacious .hero--overlay { padding: 140px 0 }
+.theme-custom-density--spacious .hero--gallery { padding: 112px 0 96px }
+.theme-custom-density--spacious .hero--aurora { padding: 150px 0 120px }
 
 /* Kepadatan Lega: padding lebih besar, tapi tinggi section tetap dinamis
    mengikuti kontennya - tanpa min-height paksaan agar section pendek
@@ -586,21 +619,50 @@
 
 
 
-/* ===== Theme drawer: popover edit teks (overlay seperti warna) ===== */
-.theme-sec-text-pop {
+/* ===== Theme drawer: combined edit popover (Teks | Warna | Latar) ===== */
+.theme-sec-edit-pop {
     position: absolute;
     top: calc(100% + 6px);
     left: 0;
     right: 0;
     z-index: 12;
     display: grid;
-    gap: 10px;
-    padding: 12px;
+    gap: 12px;
+    padding: 14px;
     background: var(--card, #fff);
     border: 1px solid var(--border, #e2e8f0);
-    border-radius: 12px;
+    border-radius: 14px;
     box-shadow: 0 18px 44px rgba(15, 23, 42, .18);
     animation: theme-fade .15s ease;
+}
+
+.theme-sec-edit-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.theme-sec-edit-fields .theme-topbar-toggle {
+    margin-bottom: 2px;
+}
+
+/* Tab bar spasi lebih lega */
+.theme-sec-edit-pop .theme-sec-bg-tabs {
+    margin: 0 0 4px;
+}
+
+/* Color field spacing lebih lega */
+.theme-sec-edit-pop .theme-sec-color-fields {
+    gap: 10px;
+}
+
+.theme-sec-edit-pop .theme-sec-color-field {
+    padding: 2px 0;
+}
+
+/* Pattern grid spacing */
+.theme-sec-edit-pop .theme-sec-pattern-grid {
+    gap: 8px;
 }
 
 .theme-sec-text-title {
@@ -613,8 +675,8 @@
 
 .theme-sec-text-field {
     display: grid;
-    gap: 4px;
-    font-size: 11px;
+    gap: 5px;
+    font-size: 11.5px;
     font-weight: 700;
     color: var(--muted, #64748b);
 }
@@ -624,7 +686,7 @@
     width: 100%;
     border: 1px solid var(--border, #e2e8f0);
     border-radius: 8px;
-    padding: 7px 9px;
+    padding: 8px 10px;
     background: var(--background, #fff);
     color: var(--foreground, #102033);
     font: 500 13px inherit;
@@ -640,7 +702,7 @@
 .theme-sec-text-apply {
     border: 0;
     border-radius: 8px;
-    padding: 8px 12px;
+    padding: 9px 14px;
     background: var(--primary, #155eef);
     color: #fff;
     font-weight: 700;

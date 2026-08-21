@@ -12,7 +12,8 @@
 .hero--modern {
     background: linear-gradient(135deg, #f4f1ff, #eef8ff);
     display: flex;
-    align-items: center
+    align-items: center;
+    padding: 100px 0 88px
 }
 
 .modern-hero-grid {

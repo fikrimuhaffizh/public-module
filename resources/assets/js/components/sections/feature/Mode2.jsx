@@ -17,6 +17,11 @@ export default function FeatureMode2({ section, data }) {
             <div className="feature-grid">
                 {features.slice(0, limit).map(feature => (
                     <div key={feature.id} className="feature-icon-card gen-card">
+                        {feature.image && (
+                            <div className="feature-card-img">
+                                <img src={feature.image} alt={feature.title} loading="lazy" />
+                            </div>
+                        )}
                         {feature.icon && <span className={`feature-icon ${feature.icon}`} aria-hidden="true" />}
                         <h3>{feature.title}</h3>
                         <p>{feature.description}</p>

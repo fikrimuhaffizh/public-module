@@ -18,7 +18,10 @@ export default function FeatureMode3({ section, data }) {
             <div className="feature-check-grid">
                 {features.slice(0, limit).map(feature => (
                     <div key={feature.id} className="feature-check">
-                        <span className="feature-check-icon"><Check size={16} /></span>
+                        {feature.image
+                            ? <span className="feature-check-thumb"><img src={feature.image} alt={feature.title} loading="lazy" /></span>
+                            : <span className="feature-check-icon"><Check size={16} /></span>
+                        }
                         <div>
                             <strong>{feature.title}</strong>
                             <p>{feature.description}</p>

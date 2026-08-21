@@ -9,10 +9,14 @@ use App\Traits\BelongsToTenant;
 use App\Traits\Blameable;
 use App\Traits\HashidBinding;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Image\Enums\Fit;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class LandingSection extends Model
+class LandingSection extends Model implements HasMedia
 {
-    use BelongsToTenant, Blameable, HashidBinding, SoftDeletes;
+    use BelongsToTenant, Blameable, HashidBinding, InteractsWithMedia, SoftDeletes;
 
 
     protected $table = 'cms_landing_sections';
@@ -45,6 +49,26 @@ class LandingSection extends Model
         'settings' => 'array',
         'limit_data' => 'integer',
     ];
+
+    protected $appends = ['image_url'];
+
+    public function getImageUrlAttribute(): ?string
+    {
+        $media = $this->getFirstMedia('section_image');
+        return $media ? sys_media_url($media, null, 60, 'card') : null;
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('section_image')->singleFile();
+    }
+
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this->addMediaConversion('card')
+            ->fit(Fit::Crop, 800, 500)
+            ->nonQueued();
+    }
 
     public static function registry(): array
     {

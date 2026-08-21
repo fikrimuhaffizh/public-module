@@ -92,6 +92,41 @@
 .feature-tilt:hover .feature-tilt__glare {
     opacity: 1
 }
+
+/* ── Feature card image (Mode 2/4) ─────────────────────────── */
+.feature-card-img {
+    width: calc(100% + 48px);
+    margin: -24px -24px 16px;
+    height: 160px;
+    overflow: hidden;
+    border-radius: 16px 16px 0 0;
+}
+.feature-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .3s ease;
+}
+.feature-icon-card:hover .feature-card-img img {
+    transform: scale(1.05);
+}
+
+/* ── Feature check thumbnail (Mode 3) ──────────────────────── */
+.feature-check-thumb {
+    display: grid;
+    width: 40px;
+    height: 40px;
+    flex: none;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, .12);
+}
+.feature-check-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 /* ===== Fitur Mode 5 — Bento grid (Velora-inspired) =====
    Specificity 2 kelas supaya menang atas .gen-card (diimpor belakangan). */
 .bento-grid {
