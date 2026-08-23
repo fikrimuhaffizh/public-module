@@ -25,6 +25,7 @@ class ProductRequest extends BaseRequest
             'short_description' => ['nullable', 'string', 'max:255'],
             'description' => ['nullable', 'string', 'max:10000'],
             'demo_url' => ['nullable', 'url', 'max:255'],
+            'icon' => ['nullable', 'string', 'max:100'],
             'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png,webp', 'max:2048'],
             'is_active' => ['nullable', 'boolean'],
         ];

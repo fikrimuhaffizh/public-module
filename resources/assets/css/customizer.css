@@ -422,6 +422,11 @@
 .theme-sec-img-row { display: flex; flex-direction: column; gap: 8px }
 .theme-sec-img-upload { display: inline-flex; align-items: center; justify-content: center; gap: 6px; border: 1.5px dashed var(--border, #cbd5e1); border-radius: 10px; padding: 10px; font-size: 13px; color: #155eef; cursor: pointer; background: #f8fafc }
 .theme-sec-img-upload input { display: none }
+.theme-sec-url-group { display: flex; flex-direction: column; gap: 4px }
+.theme-sec-url-label { font-size: 11px; font-weight: 600; color: var(--muted, #64748b); text-transform: uppercase; letter-spacing: .04em }
+.theme-sec-url-hint { font-size: 11px; color: var(--muted, #94a3b8) }
+.theme-sec-img-preview { display: flex; align-items: center; gap: 8px; margin-top: 4px }
+.theme-sec-img-preview img { width: 64px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border) }
 .theme-sec-img-url { border: 1px solid var(--border, #e2e8f0); border-radius: 8px; padding: 8px 10px; font-size: 13px; width: 100% }
 .theme-sec-img-remove { align-self: flex-start; border: 1px solid #fda4af; color: #dc2626; background: #fff; border-radius: 8px; padding: 5px 10px; font-size: 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px }
 .theme-sec-img-msg { font-size: 11.5px; color: #dc2626 }
@@ -514,6 +519,11 @@
 .theme-custom-density--compact .hero--overlay { padding: 64px 0 }
 .theme-custom-density--compact .hero--gallery { padding: 56px 0 44px }
 .theme-custom-density--compact .hero--aurora { padding: 64px 0 48px }
+.theme-custom-density--compact .hero--cinematic { min-height: 400px; padding: 48px 0 }
+.theme-custom-density--compact .hero--split-reverse { padding: 60px 0 48px }
+.theme-custom-density--compact .hero--minimal { padding: 60px 0 48px }
+.theme-custom-density--compact .hero--bento { padding: 60px 0 48px }
+.theme-custom-density--compact .hero--gradient { padding: 60px 0 48px }
 
 .theme-custom-density--spacious .section { padding: 124px 0 }
 .theme-custom-density--spacious .section-heading { margin-bottom: 52px }
@@ -528,6 +538,11 @@
 .theme-custom-density--spacious .hero--overlay { padding: 140px 0 }
 .theme-custom-density--spacious .hero--gallery { padding: 112px 0 96px }
 .theme-custom-density--spacious .hero--aurora { padding: 150px 0 120px }
+.theme-custom-density--spacious .hero--cinematic { min-height: 700px; padding: 120px 0 }
+.theme-custom-density--spacious .hero--split-reverse { padding: 140px 0 120px }
+.theme-custom-density--spacious .hero--minimal { padding: 140px 0 120px }
+.theme-custom-density--spacious .hero--bento { padding: 140px 0 120px }
+.theme-custom-density--spacious .hero--gradient { padding: 140px 0 120px }
 
 /* Kepadatan Lega: padding lebih besar, tapi tinggi section tetap dinamis
    mengikuti kontennya - tanpa min-height paksaan agar section pendek

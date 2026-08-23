@@ -77,11 +77,13 @@ class Pengumuman extends Model implements HasMedia
         if ($media?->collection_name == 'cover') {
             $this->addMediaConversion('small')
                 ->fit(Fit::Crop, 150, 150)
+                ->keepOriginalImageFormat()
                 ->optimize()
                 ->nonQueued();
 
             $this->addMediaConversion('medium')
                 ->fit(Fit::Crop, 400, 400)
+                ->keepOriginalImageFormat()
                 ->optimize()
                 ->nonQueued();
         }

@@ -12,6 +12,7 @@ use Modules\Public\Http\Controllers\Cms\FeatureController;
 use Modules\Public\Http\Controllers\Cms\LandingPageSettingController;
 use Modules\Public\Http\Controllers\Cms\SectionController;
 use Modules\Public\Http\Controllers\Cms\PartnerController;
+use Modules\Public\Http\Controllers\Cms\PricingController;
 use Modules\Public\Http\Controllers\Cms\ProductController;
 use Modules\Public\Http\Controllers\Cms\StatisticController;
 use Modules\Public\Http\Controllers\Cms\TestimonialController;
@@ -30,37 +31,56 @@ Route::middleware(['auth', 'check.expired', 'module:public'])->prefix('cms')->na
     Route::get('/dashboard', [Modules\Public\Http\Controllers\Cms\DashboardController::class, 'index'])->name('dashboard');
 
     // Section Management (was landing)
-    Route::get('section', [SectionController::class, 'index'])->name('section.index');
-    Route::get('section/template', [SectionController::class, 'edit'])->name('section.template');
-    Route::put('section/template', [SectionController::class, 'update'])->name('section.template.update');
-    Route::get('section/{section}/edit', [SectionController::class, 'editSection'])->name('section.edit');
-    Route::put('section/{section}', [SectionController::class, 'updateSection'])->name('section.update');
-    Route::post('section/{section}/toggle', [SectionController::class, 'toggleSection'])->name('section.toggle');
-    Route::post('section/reorder', [SectionController::class, 'reorderSections'])->name('section.reorder');
-    Route::post('section/reorder-all', [SectionController::class, 'reorderAllSections'])->name('section.reorder-all');
-    Route::post('section/upload-logo', [SectionController::class, 'uploadLogo'])->name('section.upload-logo');
-    Route::post('section/upload-background', [SectionController::class, 'uploadBackground'])->name('section.upload-background');
-    Route::delete('section/delete-logo/{collection}', [SectionController::class, 'deleteLogo'])->name('section.delete-logo');
+    Route::get('section', [SectionController::class, 'index'])->name('landing.index');
+    Route::get('section/template', [SectionController::class, 'edit'])->name('landing.template');
+    Route::put('section/template', [SectionController::class, 'update'])->name('landing.template.update');
+    Route::get('section/{section}/edit', [SectionController::class, 'editSection'])->name('landing.edit-section');
+    Route::put('section/{section}', [SectionController::class, 'updateSection'])->name('landing.update-section');
+    Route::post('section/{section}/toggle', [SectionController::class, 'toggleSection'])->name('landing.toggle-section');
+    Route::post('section/reorder', [SectionController::class, 'reorderSections'])->name('landing.reorder-sections');
+    Route::post('section/reorder-all', [SectionController::class, 'reorderAllSections'])->name('landing.reorder-all-sections');
+    Route::post('section/upload-logo', [SectionController::class, 'uploadLogo'])->name('landing.upload-logo');
+    Route::post('section/upload-background', [SectionController::class, 'uploadBackground'])->name('landing.upload-background');
+    Route::delete('section/delete-logo/{collection}', [SectionController::class, 'deleteLogo'])->name('landing.delete-logo');
 
     // Legacy redirects (backward compatibility)
-    Route::redirect('landing', '/cms/section')->name('landing.index');
-    Route::redirect('landing-template', '/cms/section/template')->name('landing.edit');
-    Route::redirect('landing-sections', '/cms/section')->name('landing.sections');
+    Route::redirect('landing', '/cms/section')->name('landing.redirect');
+    Route::redirect('landing-template', '/cms/section/template')->name('landing.redirect-template');
+    Route::redirect('landing-sections', '/cms/section')->name('landing.redirect-sections');
 
-    Route::get('media-social', [LandingPageSettingController::class, 'editSocial'])->name('media-social.edit');
-    Route::put('media-social', [LandingPageSettingController::class, 'updateSocial'])->name('media-social.update');
-    Route::get('seo', [LandingPageSettingController::class, 'editSeo'])->name('seo.edit');
-    Route::put('seo', [LandingPageSettingController::class, 'updateSeo'])->name('seo.update');
+    // Combined Settings (Media Sosial + SEO)
+    Route::get('settings', [LandingPageSettingController::class, 'editSettings'])->name('settings.edit');
+    Route::put('settings', [LandingPageSettingController::class, 'updateSettings'])->name('settings.update');
+
+    // Legacy redirects (backward compatibility)
+    Route::redirect('media-social', '/cms/settings')->name('media-social.edit');
+    Route::redirect('seo', '/cms/settings')->name('seo.edit');
 
     Route::post('feature/reorder', [FeatureController::class, 'reorder'])->name('feature.reorder');
+    Route::post('feature/{feature}/toggle', [FeatureController::class, 'toggle'])->name('feature.toggle');
     Route::resource('feature', FeatureController::class)->except('show');
     Route::post('product/reorder', [ProductController::class, 'reorder'])->name('product.reorder');
+    Route::post('product/{product}/toggle', [ProductController::class, 'toggle'])->name('product.toggle');
     Route::resource('product', ProductController::class)->except('show');
     Route::post('statistic/reorder', [StatisticController::class, 'reorder'])->name('statistic.reorder');
     Route::resource('statistic', StatisticController::class)->except('show');
     Route::post('client/reorder', [ClientController::class, 'reorder'])->name('client.reorder');
     Route::resource('client', ClientController::class)->except('show');
     Route::resource('cta', CtaController::class)->except('show');
+
+    // ── Unified Section routes ──────────────────────────────────────
+    Route::get("section/unified", [Modules\Public\Http\Controllers\Cms\SectionControllerUnified::class, "index"])->name("section.index");
+    Route::get("section/unified/create", [Modules\Public\Http\Controllers\Cms\SectionControllerUnified::class, "create"])->name("section.create");
+    Route::post("section/unified", [Modules\Public\Http\Controllers\Cms\SectionControllerUnified::class, "store"])->name("section.store");
+    Route::get("section/unified/{section}/edit", [Modules\Public\Http\Controllers\Cms\SectionControllerUnified::class, "edit"])->name("section.edit");
+    Route::put("section/unified/{section}", [Modules\Public\Http\Controllers\Cms\SectionControllerUnified::class, "update"])->name("section.update");
+    Route::delete("section/unified/{section}", [Modules\Public\Http\Controllers\Cms\SectionControllerUnified::class, "destroy"])->name("section.destroy");
+    Route::post("section/unified/{section}/toggle", [Modules\Public\Http\Controllers\Cms\SectionControllerUnified::class, "toggle"])->name("section.toggle");
+    Route::post("section/unified/reorder", [Modules\Public\Http\Controllers\Cms\SectionControllerUnified::class, "reorder"])->name("section.reorder");
+
+    // Pricing
+    Route::post('pricing/reorder', [PricingController::class, 'reorder'])->name('pricing.reorder');
+    Route::resource('pricing', PricingController::class)->except('show');
 
     // FAQ
     Route::post('faq/reorder', [FAQController::class, 'reorder'])->name('faq.reorder');

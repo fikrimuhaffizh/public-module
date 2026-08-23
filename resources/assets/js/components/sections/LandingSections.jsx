@@ -82,7 +82,21 @@ const DEFAULT_PRICE_PACKAGES = [
  * dikelola lewat CMS Section → Harga), fallback ke demo bila kosong.
  * Normalisasi: harga bisa string ("99.000") atau angka (99000).
  */
-export function pricePackages(section) {
+export function pricePackages(section, pricingData) {
+    //优先使用 Pricing model data dari CMS CRUD
+    if (Array.isArray(pricingData) && pricingData.length) {
+        return pricingData.map(pkg => ({
+            name: pkg.name || 'Paket',
+            description: pkg.description || '',
+            price: pkg.price == null ? '0' : String(pkg.price),
+            period: pkg.period || '',
+            features: Array.isArray(pkg.features) ? pkg.features : [],
+            highlight: Boolean(pkg.highlight),
+            ctaText: 'Pilih paket',
+            ctaLink: '#kontak',
+        }));
+    }
+    // Fallback ke JSON settings
     const raw = section?.settings?.packages;
     if (Array.isArray(raw) && raw.length) {
         return raw.map(pkg => ({

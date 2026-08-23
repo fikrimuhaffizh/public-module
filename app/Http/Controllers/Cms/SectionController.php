@@ -46,7 +46,7 @@ class SectionController extends Controller
     public function sections()
     {
         // Redirect ke halaman utama landing yang sudah include section management
-        return redirect()->route('cms.section.index');
+        return redirect()->route('cms.landing.index');
     }
 
     public function editSection(LandingSection $section)
@@ -74,7 +74,7 @@ class SectionController extends Controller
             ]);
         }
 
-        return redirect()->route('cms.section.index')
+        return redirect()->route('cms.landing.index')
             ->with('success', 'Template landing page berhasil diperbarui.');
     }
 
@@ -126,6 +126,22 @@ class SectionController extends Controller
             $section->clearMediaCollection('section_image');
             $section->addMedia($request->file('section_image'))
                 ->toMediaCollection('section_image');
+        } elseif ($request->filled('section_image_url')) {
+            // Handle URL input — download image from URL
+            $url = $request->input('section_image_url');
+            $request->validate([
+                'section_image_url' => 'url|max:2048'
+            ]);
+            try {
+                $section->clearMediaCollection('section_image');
+                $section->addMediaFromUrl($url)
+                    ->toMediaCollection('section_image');
+            } catch (\Exception $e) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Gagal mengunduh gambar dari URL. Pastikan URL valid dan bisa diakses.'
+                ], 422);
+            }
         }
 
         // Handle Logo Uploads (if any)
@@ -134,7 +150,7 @@ class SectionController extends Controller
             foreach (['logo_navbar', 'logo_footer'] as $logoCollection) {
                 if ($request->hasFile($logoCollection)) {
                     $request->validate([
-                        $logoCollection => 'file|mimes:png,svg,webp,jpg,jpeg|max:2048'
+                        $logoCollection => 'file|mimes:png,webp,jpg,jpeg|max:2048'
                     ]);
                     $file = $request->file($logoCollection);
                     $tenant->clearMediaCollection($logoCollection);
@@ -181,7 +197,7 @@ class SectionController extends Controller
     public function uploadLogo(Request $request)
     {
         $request->validate([
-            'logo' => 'required|file|mimes:png,svg,webp,jpg,jpeg|max:2048',
+            'logo' => 'required|file|mimes:png,webp,jpg,jpeg|max:2048',
             'collection' => 'required|in:logo_navbar,logo_footer',
         ]);
 

@@ -119,7 +119,6 @@ function ChipGroup({ title, options, value, onSelect, icon, hint }) {
                         onClick={() => onSelect(opt.key)}
                     >
                         {opt.label}
-                        {value === opt.key && <Check size={13} />}
                     </button>
                 ))}
             </div>
@@ -169,9 +168,6 @@ function ThemeSelect() {
                     <option key={key} value={key}>{meta.name || key}</option>
                 ))}
             </select>
-            <span className="theme-select-hint">
-                Tema = preset lengkap (section, warna, font, radius) — ubah di bawah untuk menyesuaikan.
-            </span>
         </div>
     );
 }
@@ -604,7 +600,7 @@ function SectionEditPopover({ item, sectionKey, currentText = {}, currentColors 
                     <div className="theme-sec-img-row">
                         <label className="theme-sec-img-upload">
                             <Upload size={14} />
-                            {uploading ? 'Mengunggah…' : 'Upload gambar latar'}
+                            {uploading ? 'Mengunggah…' : 'Upload gambar dari komputer'}
                             <input
                                 type="file"
                                 accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml"
@@ -612,18 +608,25 @@ function SectionEditPopover({ item, sectionKey, currentText = {}, currentColors 
                                 onChange={(e) => uploadImage(e.target.files?.[0])}
                             />
                         </label>
-                        <input
-                            type="text"
-                            className="theme-sec-img-url"
-                            value={colorForm.image}
-                            placeholder="…atau tempel URL gambar"
-                            onChange={(e) => setImage(e.target.value)}
-                            aria-label="URL gambar latar"
-                        />
+                        <div className="theme-sec-url-group">
+                            <span className="theme-sec-url-label">atau tempel URL gambar</span>
+                            <input
+                                type="url"
+                                className="theme-sec-img-url"
+                                value={colorForm.image}
+                                placeholder="https://images.unsplash.com/photo-..."
+                                onChange={(e) => setImage(e.target.value)}
+                                aria-label="URL gambar latar"
+                            />
+                            <span className="theme-sec-url-hint">Cari gambar gratis di Unsplash, Pexels, atau Google Images</span>
+                        </div>
                         {colorForm.image && (
-                            <button type="button" className="theme-sec-img-remove" onClick={() => setImage('')} title="Hapus gambar latar">
-                                <X size={13} /> Hapus gambar
-                            </button>
+                            <div className="theme-sec-img-preview">
+                                <img src={colorForm.image} alt="Preview" onError={(e) => e.target.style.display = 'none'} />
+                                <button type="button" className="theme-sec-img-remove" onClick={() => setImage('')} title="Hapus gambar">
+                                    <X size={13} /> Hapus
+                                </button>
+                            </div>
                         )}
                         {msg && <span className={`theme-sec-img-msg${msg === 'Tersimpan.' ? ' ok' : ''}`}>{msg}</span>}
                     </div>
@@ -844,7 +847,6 @@ export function ThemeSettingsDrawer() {
                         <header className="theme-offcanvas-header">
                             <div>
                                 <h3>Theme Settings — {isDetail ? 'Detail Page' : 'Landing Page'}</h3>
-                                <p>{isDetail ? 'Section yang relevan untuk halaman dalam (topbar, navbar, breadcrumb/page header, footer).' : 'Customize tampilan halaman depan — hanya untuk pratinjau.'}</p>
                             </div>
                             <button type="button" className="theme-offcanvas-close" onClick={() => setOpen(false)} aria-label="Tutup">
                                 <X size={20} />
@@ -1025,7 +1027,6 @@ export function ThemeSettingsDrawer() {
                                 options={fontOptions}
                                 value={custom.font}
                                 onSelect={(key) => update({ font: key })}
-                                hint="Pasangan font heading & body — ikut berubah di seluruh halaman."
                             />
 
                             <ChipGroup
@@ -1042,7 +1043,6 @@ export function ThemeSettingsDrawer() {
                                 options={DENSITY_OPTIONS}
                                 value={custom.density}
                                 onSelect={(key) => update({ density: key })}
-                                hint="Jarak antar section — Padat hemat ruang, Lega lebih bernapas."
                             />
 
                             <ChipGroup
@@ -1051,7 +1051,6 @@ export function ThemeSettingsDrawer() {
                                 options={ELEVATION_OPTIONS}
                                 value={custom.elevation}
                                 onSelect={(key) => update({ elevation: key })}
-                                hint="Bayangan kartu — Flat datar, Tajam sangat terangkat."
                             />
 
                             <button type="button" className="theme-reset-btn" onClick={reset}>

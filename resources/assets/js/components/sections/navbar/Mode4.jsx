@@ -2,17 +2,17 @@ import React from 'react';
 import { Link, usePage } from '@inertiajs/react';
 import { GraduationCap, Menu, X } from 'lucide-react';
 import { Button } from '@public/components/ui/button';
-import { useScrollShadow, isMenuActive } from './useNavbarEffects';
+import { useScrollShadow } from './useNavbarEffects';
+import NavbarMenuItem from './NavbarMenuItem';
 
 /**
  * Navbar Mode 4 — dock mengambang: logo + menu + CTA dalam satu pill terpusat,
  * item membesar saat hover (efek magnification ala macOS dock).
- * Fitur: scroll shadow, active page indicator.
- * Prop: { site, menus, open, onToggle }
+ * Fitur: scroll shadow, active page indicator, dropdown submenus.
+ * Prop: { site, menus, open, onToggle, settings }
  */
 export default function NavbarMode4({ site, menus, open, onToggle, settings = {} }) {
     const siteName = site?.name || '';
-    const { url } = usePage();
     const scrolled = useScrollShadow();
 
     return (
@@ -21,18 +21,14 @@ export default function NavbarMode4({ site, menus, open, onToggle, settings = {}
                 <div className="nav-dock">
                     <Link href={site.homeUrl} className="nav-dock-brand" title={siteName} aria-label={siteName}>
                         {site.logo
-                            ? <img src={site.logo} alt={siteName} className="brand-logo" />
+                            ? <img src={site.logo} alt={siteName} className="brand-logo" width="32" height="32" loading="eager" decoding="async" />
                             : <span className="brand-mark"><GraduationCap size={20} /></span>}
                     </Link>
 
                     <nav className="nav-dock-menu" aria-label="Navigasi utama">
-                        {(menus || []).map(menu => {
-                            const active = isMenuActive(menu.url, url);
-                            const cls = active ? ' nav-active' : '';
-                            return menu.target === '_blank'
-                                ? <a key={menu.id} href={menu.url} target="_blank" rel="noreferrer" className={cls}>{menu.title}</a>
-                                : <Link key={menu.id} href={menu.url} className={cls}>{menu.title}</Link>;
-                        })}
+                        {(menus || []).map(menu => (
+                            <NavbarMenuItem key={menu.id} item={menu} />
+                        ))}
                     </nav>
 
                     {settings.show_login !== false && (
@@ -47,7 +43,13 @@ export default function NavbarMode4({ site, menus, open, onToggle, settings = {}
                 </div>
             </div>
 
-            {open && <nav className="mobile-nav shell">{(menus || []).map(menu => <Link key={menu.id} href={menu.url} onClick={onToggle}>{menu.title}</Link>)}</nav>}
+            {open && (
+                <nav className="mobile-nav shell">
+                    {(menus || []).map(menu => (
+                        <NavbarMenuItem key={menu.id} item={menu} onToggle={onToggle} isMobile />
+                    ))}
+                </nav>
+            )}
         </header>
     );
 }

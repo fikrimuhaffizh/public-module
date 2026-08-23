@@ -7,8 +7,8 @@ import { Section, pricePackages, combinedText } from '../index';
  * ditandai dan lebih menonjol. Prop: { section, data }
  * Data dari section.settings.packages (array JSON), fallback demo.
  */
-export default function PriceMode1({ section }) {
-    const packages = pricePackages(section);
+export default function PriceMode1({ section, data }) {
+    const packages = pricePackages(section, data?.landing?.pricing);
     if (!packages.length) return null;
 
     return (

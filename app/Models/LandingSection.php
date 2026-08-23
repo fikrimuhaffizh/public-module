@@ -67,6 +67,7 @@ class LandingSection extends Model implements HasMedia
     {
         $this->addMediaConversion('card')
             ->fit(Fit::Crop, 800, 500)
+            ->keepOriginalImageFormat()
             ->nonQueued();
     }
 

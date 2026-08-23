@@ -64,10 +64,12 @@ class Slideshow extends Model implements HasMedia
     {
         $this->addMediaConversion('thumb')
             ->fit(Fit::Crop, 400, 400)
+            ->keepOriginalImageFormat()
             ->nonQueued();
 
         $this->addMediaConversion('large')
             ->fit(Fit::Crop, 1200, 600)
+            ->keepOriginalImageFormat()
             ->nonQueued();
     }
 

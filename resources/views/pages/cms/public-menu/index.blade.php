@@ -66,7 +66,7 @@
                 <div class="tab-pane" id="tabs-header" role="tabpanel">
                     <div class="alert alert-info d-flex align-items-center mb-3">
                         <i class="ti ti-info-circle me-2"></i>
-                        <span>Seret item untuk mengubah urutan di header navigasi.</span>
+                        <span>Seret item untuk mengubah urutan di header navigasi. Seret ke dalam item lain untuk membuat sub-menu.</span>
                     </div>
                     @if($headerMenus->isEmpty())
                         <x-ui.empty-state
@@ -87,7 +87,7 @@
                 <div class="tab-pane" id="tabs-footer" role="tabpanel">
                     <div class="alert alert-info d-flex align-items-center mb-3">
                         <i class="ti ti-info-circle me-2"></i>
-                        <span>Seret item untuk mengubah urutan di footer navigasi.</span>
+                        <span>Seret item untuk mengubah urutan di footer navigasi. Seret ke dalam item lain untuk membuat sub-menu.</span>
                     </div>
                     @if($footerMenus->isEmpty())
                         <x-ui.empty-state
@@ -132,52 +132,48 @@
     .cursor-move {
         cursor: move;
     }
+    .sortable-ghost {
+        opacity: 0.4;
+        background: var(--tblr-primary-lt, #e8f0fe);
+    }
+    .sortable-chosen {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
 </style>
 @endpush
 
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // --- SORTABLE LOGIC FOR HEADER & FOOTER ---
-    function initSortable(listId, positionValue) {
-        const el = document.getElementById(listId);
-        if (!el) return;
-
-        new Sortable(el, {
-            group: 'nested',
-            animation: 150,
-            fallbackOnBody: true,
-            swapThreshold: 0.65,
-            handle: '.drag-handle',
-            onEnd: function () {
-                savePositionOrder(listId, positionValue);
+    /**
+     * Build nested hierarchy from DOM tree.
+     * Reads direct <li data-id> children of a <ul>, recursing into nested .sortable-list.
+     * Returns: [ { id: "...", children: [...] }, ... ]
+     */
+    function buildHierarchy(ul) {
+        var items = [];
+        ul.querySelectorAll(':scope > li[data-id]').forEach(function (li) {
+            var item = { id: li.dataset.id };
+            var childUl = li.querySelector(':scope > .sortable-list');
+            if (childUl && childUl.children.length > 0) {
+                item.children = buildHierarchy(childUl);
             }
+            items.push(item);
         });
-
-        // Also init nested children
-        el.querySelectorAll('.sortable-list').forEach(function (childUl) {
-            new Sortable(childUl, {
-                group: 'nested',
-                animation: 150,
-                fallbackOnBody: true,
-                swapThreshold: 0.65,
-                handle: '.drag-handle',
-            });
-        });
+        return items;
     }
 
-    function savePositionOrder(listId, positionValue) {
-        const ul = document.getElementById(listId);
+    /**
+     * Collect hierarchy from the given root list and POST to reorder endpoint.
+     */
+    function saveHierarchy(listId) {
+        var ul = document.getElementById(listId);
         if (!ul) return;
 
-        const ids = [];
-        ul.querySelectorAll(':scope > li[data-id]').forEach(function (li) {
-            ids.push(li.dataset.id);
-        });
+        var hierarchy = buildHierarchy(ul);
 
-        axios.post('{{ route("cms.menu.reorder-position") }}', {
-            ids: ids,
-            position: positionValue
+        axios.post('{{ route("cms.menu.reorder") }}', {
+            hierarchy: hierarchy
         })
         .then(function () {
             showSuccessMessage('Urutan berhasil diperbarui');
@@ -187,8 +183,43 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    initSortable('header-tree', 'header');
-    initSortable('footer-tree', 'footer_col_1');
+    /**
+     * Initialize Sortable on a root list and all its nested children.
+     * Every drop triggers a full hierarchy save.
+     */
+    function initSortable(listId) {
+        var el = document.getElementById(listId);
+        if (!el) return;
+
+        function onSortEnd() {
+            saveHierarchy(listId);
+        }
+
+        // Top-level sortable
+        new Sortable(el, {
+            group: 'nested',
+            animation: 150,
+            fallbackOnBody: true,
+            swapThreshold: 0.65,
+            handle: '.drag-handle',
+            onEnd: onSortEnd
+        });
+
+        // Nested child sortables — each also triggers hierarchy save
+        el.querySelectorAll('.sortable-list').forEach(function (childUl) {
+            new Sortable(childUl, {
+                group: 'nested',
+                animation: 150,
+                fallbackOnBody: true,
+                swapThreshold: 0.65,
+                handle: '.drag-handle',
+                onEnd: onSortEnd
+            });
+        });
+    }
+
+    initSortable('header-tree');
+    initSortable('footer-tree');
 });
 </script>
 @endpush

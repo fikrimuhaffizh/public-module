@@ -28,6 +28,7 @@ class Product extends Model implements HasMedia
         'short_description',
         'description',
         'demo_url',
+        'icon',
         'sort_order',
         'is_active',
     ];
@@ -49,6 +50,7 @@ class Product extends Model implements HasMedia
     {
         $this->addMediaConversion('card')
             ->fit(Fit::Crop, 640, 400)
+            ->keepOriginalImageFormat()
             ->nonQueued();
     }
 }

@@ -47,7 +47,8 @@ class Partner extends Model implements HasMedia
     public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('logo')
-            ->fit(Fit::Contain, 360, 160)
+            ->fit(Fit::Max, 360, 160)
+            ->keepOriginalImageFormat()
             ->nonQueued();
     }
 

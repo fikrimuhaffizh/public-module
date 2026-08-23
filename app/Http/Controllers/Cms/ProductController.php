@@ -70,6 +70,13 @@ class ProductController extends Controller
         return jsonSuccess('Produk berhasil dihapus.');
     }
 
+    public function toggle(Product $product)
+    {
+        $product->update(["is_active" => !$product->is_active]);
+        return jsonSuccess("Status produk berhasil diubah.");
+    }
+
+
     public function reorder(ReorderRequest $request)
     {
         foreach ($request->validated()['order'] ?? [] as $index => $encryptedId) {

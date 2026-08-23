@@ -66,6 +66,13 @@ class FeatureController extends Controller
         return jsonSuccess('Fitur berhasil dihapus.');
     }
 
+    public function toggle(Feature $feature)
+    {
+        $feature->update(["is_active" => !$feature->is_active]);
+        return jsonSuccess("Status fitur berhasil diubah.");
+    }
+
+
     public function reorder(ReorderRequest $request)
     {
         foreach ($request->validated()['order'] ?? [] as $index => $encryptedId) {

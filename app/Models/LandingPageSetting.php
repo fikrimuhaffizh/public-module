@@ -66,12 +66,14 @@ class LandingPageSetting extends Model implements HasMedia
             // Use Fit::Max to resize without adding background color
             $this->addMediaConversion('logo')
                 ->fit(Fit::Max, 320, 120)
+                ->keepOriginalImageFormat()
                 ->nonQueued();
         }
 
         if ($media?->collection_name === 'favicon') {
             $this->addMediaConversion('favicon')
                 ->fit(Fit::Crop, 64, 64)
+                ->keepOriginalImageFormat()
                 ->nonQueued();
         }
     }

@@ -1,0 +1,107 @@
+/* ==========================================================================
+   Public — CMS Section Index (Sortable List)
+   ========================================================================== */
+
+.section-list {
+    min-height: 100px;
+    background: var(--tblr-bg-surface-tertiary, #f8f9fa);
+    border: 2px dashed var(--tblr-border-color, #dee2e6);
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.section-item {
+    cursor: pointer;
+    user-select: none;
+    margin-bottom: 6px;
+    background: var(--tblr-bg-surface, #fff);
+    border: 1px dashed var(--tblr-border-color, #dee2e6);
+    padding: 6px 10px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    width: 100%;
+    transition: all 0.2s;
+    color: var(--tblr-body-color, inherit);
+}
+
+.section-item.selected {
+    border-style: solid;
+    border-color: var(--tblr-primary, #206bc4);
+    background: var(--tblr-primary-lt, #f1f7ff);
+}
+
+.section-item .drag-handle {
+    color: var(--tblr-secondary, #adb5bd);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    cursor: grab;
+}
+
+.section-item i.ti {
+    flex-shrink: 0;
+}
+
+.section-item .flex-fill {
+    min-width: 0;
+}
+
+.section-item:hover {
+    border-style: solid;
+    border-color: var(--tblr-primary, #206bc4);
+    background: var(--tblr-primary-lt, #f1f7ff);
+}
+
+.section-item.active {
+    border-color: #2fb344;
+    border-style: solid;
+}
+
+.ghost {
+    opacity: 0.4;
+    background: var(--tblr-primary-lt, #c8ebfb) !important;
+}
+
+.section-visibility-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    color: var(--tblr-success, #2fb344);
+    transition: all 0.15s;
+    flex-shrink: 0;
+}
+
+.section-visibility-toggle:hover {
+    background: var(--tblr-bg-surface-tertiary, #f0f0f0);
+}
+
+.section-item--hidden {
+    opacity: 0.45;
+    border-style: dashed;
+    background: color-mix(in srgb, var(--tblr-secondary) 6%, var(--tblr-bg-surface));
+}
+
+.sortable-drag {
+    background: var(--tblr-bg-surface, #fff) !important;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+/* Dark mode overrides for section list text colors */
+[data-bs-theme="dark"] .section-item .text-truncate {
+    color: var(--tblr-secondary, #9aa4b4) !important;
+}
+
+[data-bs-theme="dark"] .section-item .text-muted {
+    color: var(--tblr-secondary, #6e7891) !important;
+}
+
+[data-bs-theme="dark"] h5.text-muted {
+    color: var(--tblr-secondary, #9aa4b4) !important;
+}

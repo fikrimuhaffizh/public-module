@@ -47,6 +47,7 @@ class Cta extends Model implements HasMedia
     {
         $this->addMediaConversion('bg')
             ->fit(Fit::Crop, 1920, 800)
+            ->keepOriginalImageFormat()
             ->nonQueued();
     }
 }

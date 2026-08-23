@@ -8,7 +8,7 @@
 
 @section('content')
 
-<form id="landing-template-form" method="POST" action="{{ route('cms.section.template.update') }}">
+<form id="landing-template-form" method="POST" action="{{ route('cms.landing.template.update') }}">
     @csrf
     @method('PUT')
 
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
 
                 // Send auto-save request
-                axios.put('{{ route('cms.section.template.update') }}', {
+                axios.put('{{ route('cms.landing.template.update') }}', {
                     _token: '{{ csrf_token() }}',
                     landing_template: selectedTemplate
                 })

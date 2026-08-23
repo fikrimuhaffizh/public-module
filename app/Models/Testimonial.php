@@ -52,6 +52,7 @@ class Testimonial extends Model implements HasMedia
     {
         $this->addMediaConversion('thumb')
             ->fit(Fit::Crop, 240, 240)
+            ->keepOriginalImageFormat()
             ->nonQueued();
     }
 

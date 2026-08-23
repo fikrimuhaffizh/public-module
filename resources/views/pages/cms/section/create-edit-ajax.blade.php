@@ -3,7 +3,7 @@
 @endphp
 
 <div class="section-edit-form">
-    <form id="section-edit-form" action="{{ route('cms.section.update', $section) }}" method="POST" enctype="multipart/form-data">
+    <form id="section-edit-form" action="{{ route('cms.landing.update-section', $section) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         
@@ -44,14 +44,29 @@
         </div>
 
         <div class="mb-3 mt-2">
-            <label class="form-label">Gambar Section</label>
+            @php
+                $heroKeys = ['hero'];
+                $isHero = in_array($section->section_key, $heroKeys);
+                $imgLabel = $isHero ? 'Gambar Hero (sisi visual)' : 'Gambar Section';
+                $imgHelp = $isHero
+                    ? 'Gambar yang tampil di samping teks (Mode 1: kanan, Mode 5: kiri). Untuk mode center/aurora/gradient, gambar tampil di bawah teks.'
+                    : 'Gambar untuk section ini. Maks 4MB.';
+            @endphp
+            <label class="form-label fw-bold">{{ $imgLabel }}</label>
             @if($section->image_url)
                 <div class="mb-2 border rounded p-2 text-center bg-light">
-                    <img src="{{ $section->image_url }}" alt="Preview" style="max-height: 100px; max-width: 100%;">
+                    <img src="{{ $section->image_url }}" alt="Preview" style="max-height: 120px; max-width: 100%; border-radius: 8px;">
                 </div>
             @endif
             <x-ui.form-input type="file" name="section_image" accept="image/png,image/jpeg,image/webp"
-                help="Gambar untuk section ini (hero, produk unggulan, dll). Maks 4MB." />
+                help="{{ $imgHelp }}" />
+            <div class="mt-2">
+                <label class="form-label" style="font-size: 12px; color: #64748b;">atau tempel URL gambar (Unsplash, dll)</label>
+                <input type="url" name="section_image_url" class="form-control" value="{{ old('section_image_url') }}"
+                    placeholder="https://images.unsplash.com/photo-..."
+                    style="font-size: 13px;">
+                <small class="text-muted">Cari gambar gratis: Unsplash, Pexels, Google Images</small>
+            </div>
         </div>
 
         <div class="row g-2 mt-1">
@@ -160,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('click', function(e) {
         const btn = e.target.closest('.logo-delete-btn');
         if (!btn) return;
-        const url = '{{ route("cms.section.delete-logo", "__COL__") }}'.replace('__COL__', btn.dataset.collection);
+        const url = '{{ route("cms.landing.delete-logo", "__COL__") }}'.replace('__COL__', btn.dataset.collection);
         axios.delete(url, { headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' } })
             .then(() => { window.showSuccessMessage('Logo berhasil dihapus.'); setTimeout(() => window.location.reload(), 800); })
             .catch(() => window.showErrorMessage('Gagal menghapus logo.'));

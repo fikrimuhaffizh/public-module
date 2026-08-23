@@ -119,7 +119,7 @@ class BuilderPageController extends Controller
     {
         $request->validate([
             'files' => ['required', 'array', 'max:10'],
-            'files.*' => ['image', 'mimes:jpg,jpeg,png,webp,gif,avif,svg', 'max:5120'],
+            'files.*' => ['image', 'mimes:jpg,jpeg,png,webp,gif,avif', 'max:5120'],
         ]);
 
         $assets = [];

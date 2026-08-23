@@ -47,6 +47,7 @@ class Feature extends Model implements HasMedia
     {
         $this->addMediaConversion('thumb')
             ->fit(Fit::Crop, 480, 320)
+            ->keepOriginalImageFormat()
             ->nonQueued();
     }
 }

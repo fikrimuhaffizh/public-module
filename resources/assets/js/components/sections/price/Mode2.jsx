@@ -6,8 +6,8 @@ import { Section, pricePackages, combinedText } from '../index';
  * Harga Mode 2 — daftar baris horizontal: tiap paket satu baris penuh (nama,
  * fitur ringkas, harga di kanan). Cocok untuk layanan/jasa. Prop: { section, data }
  */
-export default function PriceMode2({ section }) {
-    const packages = pricePackages(section);
+export default function PriceMode2({ section, data }) {
+    const packages = pricePackages(section, data.landing?.pricing);
     if (!packages.length) return null;
 
     return (
