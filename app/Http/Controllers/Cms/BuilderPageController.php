@@ -44,8 +44,8 @@ class BuilderPageController extends Controller
             })
             ->editColumn('is_published', function (Page $row) {
                 return $row->is_published
-                    ? '<span class="badge bg-success-lt">Published</span>'
-                    : '<span class="badge bg-orange-lt">Draft</span>';
+                    ? status_badge('Diterbitkan')
+                    : status_badge('Draft');
             })
             ->editColumn('slug', function (Page $row) {
                 return '<code>/'.$row->slug.'</code>';

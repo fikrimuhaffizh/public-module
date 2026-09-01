@@ -8,8 +8,8 @@
  *
  * Konfigurasi diterima lewat `window.__BUILDER_CONFIG` (diisi dari Blade).
  */
-import grapesjs from 'grapesjs';
-import 'grapesjs/dist/css/grapes.min.css';
+import grapesjs from '../vendor/grapesjs/js/grapes.mjs';
+import '../vendor/grapesjs/css/grapes.min.css';
 // FontAwesome: GrapesJS core UI (RTE, asset manager, modal, canvas badges) memakai class fa-*.
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import axios from 'axios';

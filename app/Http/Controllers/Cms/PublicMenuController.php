@@ -50,8 +50,8 @@ class PublicMenuController extends Controller
             })
             ->editColumn('is_active', function ($row) {
                 return $row->is_active
-                    ? '<span class="badge bg-success-lt">Aktif</span>'
-                    : '<span class="badge bg-orange-lt">Nonaktif</span>';
+                    ? status_badge('Aktif')
+                    : status_badge('Nonaktif');
             })
             ->addColumn('page_slug', function ($row) {
                 return $row->page ? $row->page->slug : ($row->url ?: '-');

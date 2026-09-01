@@ -28,8 +28,8 @@ class PublicPageController extends Controller
             ->addIndexColumn()
             ->editColumn('is_published', function ($row) {
                 return $row->is_published
-                    ? '<span class="badge bg-success-lt">Published</span>'
-                    : '<span class="badge bg-orange-lt">Draft</span>';
+                    ? status_badge('Diterbitkan')
+                    : status_badge('Draft');
             })
             ->editColumn('updated_at', function ($row) {
                 return formatTanggalIndo($row->updated_at);

@@ -60,8 +60,8 @@ class SlideshowController extends Controller
             })
             ->editColumn('is_active', function ($row) {
                 return $row->is_active
-                    ? '<span class="badge bg-success text-white">Aktif</span>'
-                    : '<span class="badge bg-secondary text-white">Draft</span>';
+                    ? status_badge('Aktif')
+                    : status_badge('Draft');
             })
             ->addColumn('action', function ($row) {
                 return view('components.ui.datatables-actions', [
