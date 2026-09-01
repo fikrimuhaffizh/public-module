@@ -6,7 +6,7 @@
         @can('public.cms.section.create')
             <x-ui.button type="create" class="ajax-modal-btn"
                 data-url="{{ route('cms.section.create', ['type' => $type]) }}"
-                data-modal-title="Tambah {{ \Modules\Public\Models\Section::typeLabel($type) }}"
+                data-modal-title="Tambah {{ Models\Section::typeLabel($type) }}"
                 text="Tambah" />
         @endcan
     </x-slot:actions>
@@ -30,7 +30,7 @@
     <x-ui.card-body>
         @if($sections->isEmpty())
             <x-ui.empty-state
-                title="Belum ada {{ strtolower(\Modules\Public\Models\Section::typeLabel($type)) }}"
+                title="Belum ada {{ strtolower(Models\Section::typeLabel($type)) }}"
                 text="Tambahkan item untuk ditampilkan di landing page."
                 icon="ti ti-layout-list"
             />
@@ -91,7 +91,7 @@
                             @can('public.cms.section.update')
                                 <x-ui.dropdown-item type="edit" href="javascript:void(0)"
                                     :url="route('cms.section.edit', $section)"
-                                    data-modal-title="Edit {{ \Modules\Public\Models\Section::typeLabel($type) }}" />
+                                    data-modal-title="Edit {{ Models\Section::typeLabel($type) }}" />
                             @endcan
                             @can('public.cms.section.delete')
                                 <x-ui.dropdown-item type="delete" href="javascript:void(0)"

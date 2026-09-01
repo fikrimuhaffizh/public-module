@@ -21,7 +21,7 @@ class LandingPageSettingController extends Controller
     public function editSettings()
     {
         return view('public::pages.cms.settings', [
-            'settings' => LandingPageSetting::forCurrentTenant(),
+            'settings' => $this->cmsService->getSettings(),
         ]);
     }
 
@@ -33,7 +33,7 @@ class LandingPageSettingController extends Controller
             'meta_title', 'meta_description', 'meta_keywords',
         ];
 
-        LandingPageSetting::forCurrentTenant()->update(
+        $this->cmsService->updateSettings(
             Arr::only($request->validated(), $fields)
         );
 

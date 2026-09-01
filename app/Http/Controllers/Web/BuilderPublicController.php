@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Modules\Public\Models\Page;
 use Modules\Public\Services\BuilderPageService;
 use Modules\Public\Services\DynamicBlockService;
+use Modules\Public\Services\CmsService;
 
 /**
  * Resolver halaman builder di /{slug}.
@@ -25,7 +26,7 @@ class BuilderPublicController extends Controller
 
     public function show(string $slug)
     {
-        $page = Page::query()
+        $page = $this->cmsService->queryPages()
             ->with('builderData')
             ->where('slug', strtolower($slug))
             ->first();

@@ -3,7 +3,7 @@
 namespace Modules\Public\Services;
 
 use Modules\Account\Models\Tenant;
-use Modules\Account\Services\TenantConfigService;
+use Modules\Tenant\Services\TenantConfigService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;

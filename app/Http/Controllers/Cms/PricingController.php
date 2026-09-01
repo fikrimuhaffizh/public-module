@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Modules\Public\Http\Requests\PricingRequest;
 use Modules\Public\Http\Requests\ReorderRequest;
 use Modules\Public\Models\Pricing;
+use Modules\Public\Services\CmsService;
 
 class PricingController extends Controller
 {
@@ -22,7 +23,7 @@ class PricingController extends Controller
     public function index()
     {
         return view('public::pages.cms.section.pricing.index', [
-            'packages' => Pricing::orderBy('sort_order')->get(),
+            'packages' => $this->cmsService->getOrdered(Pricing::class),
         ]);
     }
 
@@ -35,10 +36,10 @@ class PricingController extends Controller
     {
         $data = $request->validated();
         $data['slug'] = $this->resolveSlug($data['slug'] ?? null, $data['name']);
-        $data['sort_order'] = (int) Pricing::max('sort_order') + 1;
+        $data['sort_order'] = $this->cmsService->nextSortOrder(Pricing::class);
         $data['features'] = $data['features'] ?? [];
 
-        Pricing::create($data);
+        $this->cmsService->create(Pricing::class, $data);
 
         return jsonSuccess('Paket harga berhasil ditambahkan.', route('cms.pricing.index'));
     }
@@ -70,7 +71,7 @@ class PricingController extends Controller
     {
         foreach ($request->validated()['order'] ?? [] as $index => $encryptedId) {
             $id = decryptIdIfEncrypted($encryptedId, false);
-            Pricing::whereKey($id)->update(['sort_order' => $index + 1]);
+            $this->cmsService->updateSortOrder(Pricing::class, $id, $index + 1);
         }
 
         return jsonSuccess('Urutan paket harga berhasil diperbarui.');
@@ -78,18 +79,6 @@ class PricingController extends Controller
 
     private function resolveSlug(?string $slug, string $name, int|string|null $ignoreId = null): string
     {
-        $base = Str::slug($slug ?: $name) ?: Str::slug($name);
-        $candidate = $base;
-        $counter = 1;
-
-        while (
-            Pricing::where('slug', $candidate)
-                ->when($ignoreId, fn ($q) => $q->whereKeyNot($ignoreId))
-                ->exists()
-        ) {
-            $candidate = $base.'-'.$counter++;
-        }
-
-        return $candidate;
+        return $this->cmsService->uniquePricingSlug($slug ?: $name, $ignoreId);
     }
 }

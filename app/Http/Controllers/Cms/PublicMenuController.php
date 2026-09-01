@@ -7,38 +7,26 @@ use Illuminate\Http\Request;
 use Modules\Public\Http\Requests\PublicMenuRequest;
 use Modules\Public\Http\Requests\ReorderRequest;
 use Modules\Public\Models\Menu;
-use Modules\Public\Models\Page;
 use Modules\Public\Services\PublicMenuService;
 use Yajra\DataTables\Facades\DataTables;
+use Modules\Public\Services\CmsService;
 
 class PublicMenuController extends Controller
 {
-    public function __construct(protected PublicMenuService $menuService) {}
+    public function __construct(protected PublicMenuService $menuService, protected CmsService $cmsService) {}
 
     public function index()
     {
-        $headerMenus = Menu::whereNull('parent_id')
-            ->where('position', 'header')
-            ->orderBy('sequence')
-            ->with(['children', 'page'])
-            ->get();
+        $headerMenus = $this->cmsService->getMenuHeaders();
 
-        $footerMenus = Menu::whereNull('parent_id')
-            ->where('position', 'like', 'footer%')
-            ->orderBy('position')
-            ->orderBy('sequence')
-            ->with(['children', 'page'])
-            ->get();
+        $footerMenus = $this->cmsService->getMenuFooters();
 
         return view('public::pages.cms.public-menu.index', compact('headerMenus', 'footerMenus'));
     }
 
     public function data(Request $request)
     {
-        $query = Menu::whereNull('parent_id')
-            ->with('page')
-            ->orderBy('position')
-            ->orderBy('sequence');
+        $query = $this->cmsService->getMenuDataQuery();
 
         return DataTables::of($query)
             ->addIndexColumn()
@@ -89,8 +77,8 @@ class PublicMenuController extends Controller
 
     public function create()
     {
-        $pages = Page::where('is_published', true)->orderBy('title')->get();
-        $parents = Menu::orderBy('title')->get();
+        $pages = $this->cmsService->queryPages()->where('is_published', true)->orderBy('title')->get();
+        $parents = $this->cmsService->getMenusOrdered();
 
         return view('public::pages.cms.public-menu.create-edit-ajax', [
             'menu' => new Menu,
@@ -108,8 +96,9 @@ class PublicMenuController extends Controller
 
     public function edit(Menu $menu)
     {
-        $pages = Page::where('is_published', true)->orderBy('title')->get();
-        $parents = Menu::where('menu_id', '!=', $menu->menu_id)->orderBy('title')->get();
+        $data = $this->cmsService->getMenusForEditWithExclude($menu->getKey());
+        $pages = $data['pages'];
+        $parents = $data['parents'];
 
         return view('public::pages.cms.public-menu.create-edit-ajax', [
             'menu' => $menu,

@@ -10,6 +10,7 @@ use Modules\Public\Models\Page;
 use Modules\Public\Services\BuilderPageService;
 use Modules\Public\Services\DynamicBlockService;
 use Yajra\DataTables\Facades\DataTables;
+use Modules\Public\Services\CmsService;
 
 class BuilderPageController extends Controller
 {
@@ -29,7 +30,7 @@ class BuilderPageController extends Controller
 
     public function data(Request $request)
     {
-        $query = Page::query()
+        $query = $this->cmsService->queryPages()
             ->with('builderData')
             ->select('cms_page.*');
 

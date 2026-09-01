@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Modules\Public\Http\Requests\ProductRequest;
 use Modules\Public\Http\Requests\ReorderRequest;
 use Modules\Public\Models\Product;
+use Modules\Public\Services\CmsService;
 
 class ProductController extends Controller
 {
@@ -22,7 +23,7 @@ class ProductController extends Controller
     public function index()
     {
         return view('public::pages.cms.section.product.index', [
-            'products' => Product::orderBy('sort_order')->get(),
+            'products' => $this->cmsService->getOrdered(Product::class),
         ]);
     }
 
@@ -35,8 +36,8 @@ class ProductController extends Controller
     {
         $data = Arr::except($request->validated(), ['image']);
         $data['slug'] = $this->resolveSlug($data['slug'] ?? null, $data['name']);
-        $data['sort_order'] = (int) Product::max('sort_order') + 1;
-        $product = Product::create($data);
+        $data['sort_order'] = $this->cmsService->nextSortOrder(Product::class);
+        $product = $this->cmsService->create(Product::class, $data);
 
         if ($request->hasFile('image')) {
             $product->addMediaFromRequest('image')->toMediaCollection('image');
@@ -81,7 +82,7 @@ class ProductController extends Controller
     {
         foreach ($request->validated()['order'] ?? [] as $index => $encryptedId) {
             $id = decryptIdIfEncrypted($encryptedId, false);
-            Product::whereKey($id)->update(['sort_order' => $index + 1]);
+            $this->cmsService->updateSortOrder(Product::class, $id, $index + 1);
         }
 
         return jsonSuccess('Urutan produk berhasil diperbarui.');
@@ -89,18 +90,6 @@ class ProductController extends Controller
 
     private function resolveSlug(?string $slug, string $name, int|string|null $ignoreId = null): string
     {
-        $base = Str::slug($slug ?: $name) ?: Str::slug($name);
-        $candidate = $base;
-        $counter = 1;
-
-        while (
-            Product::where('slug', $candidate)
-                ->when($ignoreId, fn ($q) => $q->whereKeyNot($ignoreId))
-                ->exists()
-        ) {
-            $candidate = $base.'-'.$counter++;
-        }
-
-        return $candidate;
+        return $this->cmsService->uniqueProductSlug($slug ?: $name, $ignoreId);
     }
 }

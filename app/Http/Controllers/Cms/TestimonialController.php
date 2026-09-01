@@ -7,6 +7,7 @@ use Illuminate\Support\Arr;
 use Modules\Public\Http\Requests\ReorderRequest;
 use Modules\Public\Http\Requests\TestimonialRequest;
 use Modules\Public\Models\Testimonial;
+use Modules\Public\Services\CmsService;
 
 class TestimonialController extends Controller
 {
@@ -21,7 +22,7 @@ class TestimonialController extends Controller
     public function index()
     {
         return view('public::pages.cms.section.testimonial.index', [
-            'testimonials' => Testimonial::orderBy('seq')->get(),
+            'testimonials' => $this->cmsService->getOrdered(Testimonial::class, 'seq'),
         ]);
     }
 
@@ -36,8 +37,8 @@ class TestimonialController extends Controller
     {
         $data = $request->validated();
         $data = Arr::except($data, ['photo']);
-        $data['seq'] = (int) Testimonial::max('seq') + 1;
-        $testimonial = Testimonial::create($data);
+        $data['seq'] = $this->cmsService->nextSortOrder(Testimonial::class, 'seq');
+        $testimonial = $this->cmsService->create(Testimonial::class, $data);
 
         if ($request->hasFile('photo')) {
             $testimonial->addMediaFromRequest('photo')->toMediaCollection('photo');
@@ -73,7 +74,7 @@ class TestimonialController extends Controller
     {
         foreach ($request->validated()['order'] ?? [] as $index => $encryptedId) {
             $id = decryptIdIfEncrypted($encryptedId, false);
-            Testimonial::whereKey($id)->update(['seq' => $index + 1]);
+            $this->cmsService->updateSortOrder(Testimonial::class, $id, $index + 1, 'seq');
         }
 
         return jsonSuccess('Urutan testimoni berhasil diperbarui.');

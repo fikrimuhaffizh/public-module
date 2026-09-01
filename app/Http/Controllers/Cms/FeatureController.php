@@ -7,6 +7,7 @@ use Illuminate\Support\Arr;
 use Modules\Public\Http\Requests\FeatureRequest;
 use Modules\Public\Http\Requests\ReorderRequest;
 use Modules\Public\Models\Feature;
+use Modules\Public\Services\CmsService;
 
 class FeatureController extends Controller
 {
@@ -21,7 +22,7 @@ class FeatureController extends Controller
     public function index()
     {
         return view('public::pages.cms.section.feature.index', [
-            'features' => Feature::orderBy('sort_order')->get(),
+            'features' => $this->cmsService->getOrdered(Feature::class),
         ]);
     }
 
@@ -33,8 +34,8 @@ class FeatureController extends Controller
     public function store(FeatureRequest $request)
     {
         $data = Arr::except($request->validated(), ['image']);
-        $data['sort_order'] = (int) Feature::max('sort_order') + 1;
-        $feature = Feature::create($data);
+        $data['sort_order'] = $this->cmsService->nextSortOrder(Feature::class);
+        $feature = $this->cmsService->create(Feature::class, $data);
 
         if ($request->hasFile('image')) {
             $feature->addMediaFromRequest('image')->toMediaCollection('image');
@@ -77,7 +78,7 @@ class FeatureController extends Controller
     {
         foreach ($request->validated()['order'] ?? [] as $index => $encryptedId) {
             $id = decryptIdIfEncrypted($encryptedId, false);
-            Feature::whereKey($id)->update(['sort_order' => $index + 1]);
+            $this->cmsService->updateSortOrder(Feature::class, $id, $index + 1);
         }
 
         return jsonSuccess('Urutan fitur berhasil diperbarui.');

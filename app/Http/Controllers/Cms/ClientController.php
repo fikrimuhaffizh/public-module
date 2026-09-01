@@ -7,6 +7,7 @@ use Illuminate\Support\Arr;
 use Modules\Public\Http\Requests\ClientRequest;
 use Modules\Public\Http\Requests\ReorderRequest;
 use Modules\Public\Models\Client;
+use Modules\Public\Services\CmsService;
 
 class ClientController extends Controller
 {
@@ -21,7 +22,7 @@ class ClientController extends Controller
     public function index()
     {
         return view('public::pages.cms.section.client.index', [
-            'clients' => Client::orderBy('sort_order')->get(),
+            'clients' => $this->cmsService->getOrdered(Client::class),
         ]);
     }
 
@@ -33,8 +34,8 @@ class ClientController extends Controller
     public function store(ClientRequest $request)
     {
         $data = Arr::except($request->validated(), ['logo']);
-        $data['sort_order'] = (int) Client::max('sort_order') + 1;
-        $client = Client::create($data);
+        $data['sort_order'] = $this->cmsService->nextSortOrder(Client::class);
+        $client = $this->cmsService->create(Client::class, $data);
 
         if ($request->hasFile('logo')) {
             $client->addMediaFromRequest('logo')->toMediaCollection('logo');
@@ -70,7 +71,7 @@ class ClientController extends Controller
     {
         foreach ($request->validated()['order'] ?? [] as $index => $encryptedId) {
             $id = decryptIdIfEncrypted($encryptedId, false);
-            Client::whereKey($id)->update(['sort_order' => $index + 1]);
+            $this->cmsService->updateSortOrder(Client::class, $id, $index + 1);
         }
 
         return jsonSuccess('Urutan klien berhasil diperbarui.');

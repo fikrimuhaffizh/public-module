@@ -9,6 +9,7 @@ use Modules\Public\Models\Slideshow;
 use Modules\Public\Services\SlideshowService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Modules\Public\Services\CmsService;
 
 class SlideshowController extends Controller
 {
@@ -22,7 +23,7 @@ class SlideshowController extends Controller
 
     public function index()
     {
-        $slideshows = Slideshow::orderBy('seq')->get();
+        $slideshows = $this->cmsService->getOrdered(Slideshow::class, 'seq');
 
         return view('public::pages.cms.slideshow.index', compact('slideshows'));
     }

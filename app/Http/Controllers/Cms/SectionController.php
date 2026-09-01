@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Modules\Public\Models\LandingSection;
-use Modules\Public\Models\LandingPageSetting;
 use Modules\Public\Services\LandingPageService;
-use Modules\Account\Services\TenantService;
+use Modules\Tenant\Services\TenantService;
 use Modules\Public\Http\Requests\SectionBackgroundRequest;
+use Modules\Public\Services\CmsService;
 
 class SectionController extends Controller
 {
@@ -21,17 +21,14 @@ class SectionController extends Controller
 
     public function index()
     {
-        $sections = LandingSection::where('tenant_id', sys_tenant_id())
-            ->ordered()
-            ->get()
-            ->groupBy('area');
+        $sections = $this->cmsService->getLandingSectionsByArea();
 
         return view('public::pages.cms.section.index', [
             'sections' => $sections,
-            'registry' => LandingSection::registry(),
+            'registry' => $this->cmsService->getLandingSectionRegistry(),
             'template' => $this->landing->template(),
             'templates' => $this->landing->themeKeys(),
-            'settings' => LandingPageSetting::forCurrentTenant(),
+            'settings' => $this->cmsService->getSettings(),
         ]);
     }
 
@@ -51,11 +48,15 @@ class SectionController extends Controller
 
     public function editSection(LandingSection $section)
     {
-        $registry = LandingSection::registry();
+        $registry = $this->cmsService->getLandingSectionRegistry();
         $sectionMeta = $registry[$section->section_key] ?? [];
+
+        $tenant = sys_tenant();
+
         return view('public::pages.cms.section.create-edit-ajax', [
             'section' => $section,
             'sectionMeta' => $sectionMeta,
+            'logoUrl' => $tenant ? ($section->section_key === 'navbar' ? $tenant->logoNavbarUrl() : $tenant->logoFooterUrl()) : null,
         ]);
     }
 
@@ -80,7 +81,7 @@ class SectionController extends Controller
 
     public function updateSection(Request $request, LandingSection $section)
     {
-        $registry = LandingSection::registry();
+        $registry = $this->cmsService->getLandingSectionRegistry();
         $sectionMeta = $registry[$section->section_key] ?? [];
         $allowedVariants = array_keys($sectionMeta['variants'] ?? []);
 

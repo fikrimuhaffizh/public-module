@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Modules\Public\Http\Requests\ReorderRequest;
 use Modules\Public\Http\Requests\SectionRequest;
 use Modules\Public\Models\Section;
+use Modules\Public\Services\CmsService;
 
 class SectionControllerUnified extends Controller
 {
@@ -23,13 +24,13 @@ class SectionControllerUnified extends Controller
     public function index(Request $request)
     {
         $type = $request->query('type', 'feature');
-        $sections = Section::ofType($type)->ordered()->get();
+        $sections = $this->cmsService->getSectionsByType($type);
 
         return view('public::pages.cms.section.unified.index', [
             'sections' => $sections,
             'type'     => $type,
-            'types'    => Section::TYPES,
-            'icons'    => Section::TYPE_ICONS,
+            'types'    => $this->cmsService->getSectionTypes(),
+            'icons'    => $this->cmsService->getSectionTypeIcons(),
         ]);
     }
 
@@ -39,7 +40,7 @@ class SectionControllerUnified extends Controller
         return view('public::pages.cms.section.unified.create-edit', [
             'section' => new Section(['type' => $type]),
             'type'    => $type,
-            'types'   => Section::TYPES,
+            'types'   => $this->cmsService->getSectionTypes(),
         ]);
     }
 
@@ -58,15 +59,15 @@ class SectionControllerUnified extends Controller
             $data['slug'] = $this->resolveSlug($data['slug'] ?? null, $data['title'], null, $type);
         }
 
-        $data['sort_order'] = (int) Section::ofType($type)->max('sort_order') + 1;
-        $section = Section::create($data);
+        $data['sort_order'] = $this->cmsService->nextSectionSortOrder($type);
+        $section = $this->cmsService->create(Section::class, $data);
 
         if ($mediaFile) {
             $filename = $this->resolveMediaFilename($section->title, $mediaFile->getClientOriginalExtension(), $type);
             $section->addMedia($mediaFile)->usingName($filename)->toMediaCollection($mediaField);
         }
 
-        return jsonSuccess(Section::typeLabel($type) . ' berhasil ditambahkan.', route('cms.section.index', ['type' => $type]));
+        return jsonSuccess($this->cmsService->sectionTypeLabel($type) . ' berhasil ditambahkan.', route('cms.section.index', ['type' => $type]));
     }
 
     public function edit(Section $section)
@@ -74,7 +75,7 @@ class SectionControllerUnified extends Controller
         return view('public::pages.cms.section.unified.create-edit', [
             'section' => $section,
             'type'    => $section->type,
-            'types'   => Section::TYPES,
+            'types'   => $this->cmsService->getSectionTypes(),
         ]);
     }
 
@@ -101,14 +102,14 @@ class SectionControllerUnified extends Controller
             $section->addMedia($mediaFile)->usingName($filename)->toMediaCollection($mediaField);
         }
 
-        return jsonSuccess(Section::typeLabel($type) . ' berhasil diperbarui.', route('cms.section.index', ['type' => $type]));
+        return jsonSuccess($this->cmsService->sectionTypeLabel($type) . ' berhasil diperbarui.', route('cms.section.index', ['type' => $type]));
     }
 
     public function destroy(Section $section)
     {
         $type = $section->type;
         $section->delete();
-        return jsonSuccess(Section::typeLabel($type) . ' berhasil dihapus.', route('cms.section.index', ['type' => $type]));
+        return jsonSuccess($this->cmsService->sectionTypeLabel($type) . ' berhasil dihapus.', route('cms.section.index', ['type' => $type]));
     }
 
     public function toggle(Section $section)
@@ -122,7 +123,7 @@ class SectionControllerUnified extends Controller
         $order = $request->validated()['order'] ?? [];
         foreach ($order as $index => $encryptedId) {
             $id = decryptIdIfEncrypted($encryptedId, false);
-            Section::whereKey($id)->update(['sort_order' => $index + 1]);
+            $this->cmsService->updateSortOrder(Section::class, $id, $index + 1);
         }
         return jsonSuccess('Urutan berhasil diperbarui.');
     }
@@ -165,13 +166,7 @@ class SectionControllerUnified extends Controller
 
     private function resolveSlug(?string $slug, string $title, int|string|null $ignoreId = null, string $type = 'product'): string
     {
-        $base = Str::slug($slug ?: $title) ?: Str::slug($title);
-        $candidate = $base;
-        $counter = 1;
-        while (Section::where('slug', $candidate)->where('type', $type)->when($ignoreId, fn ($q) => $q->whereKeyNot($ignoreId))->exists()) {
-            $candidate = $base . '-' . $counter++;
-        }
-        return $candidate;
+        return $this->cmsService->uniqueSlug($type, $slug ?: $title, $ignoreId);
     }
 
     private function resolveMediaFilename(string $title, string $extension, string $type): string

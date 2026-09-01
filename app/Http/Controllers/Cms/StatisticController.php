@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Modules\Public\Http\Requests\ReorderRequest;
 use Modules\Public\Http\Requests\StatisticRequest;
 use Modules\Public\Models\Statistic;
+use Modules\Public\Services\CmsService;
 
 class StatisticController extends Controller
 {
@@ -20,7 +21,7 @@ class StatisticController extends Controller
     public function index()
     {
         return view('public::pages.cms.section.statistic.index', [
-            'statistics' => Statistic::orderBy('sort_order')->get(),
+            'statistics' => $this->cmsService->getOrdered(Statistic::class),
         ]);
     }
 
@@ -32,8 +33,8 @@ class StatisticController extends Controller
     public function store(StatisticRequest $request)
     {
         $data = $request->validated();
-        $data['sort_order'] = (int) Statistic::max('sort_order') + 1;
-        Statistic::create($data);
+        $data['sort_order'] = $this->cmsService->nextSortOrder(Statistic::class);
+        $this->cmsService->create(Statistic::class, $data);
 
         return jsonSuccess('Statistik berhasil ditambahkan.', route('cms.statistic.index'));
     }
@@ -61,7 +62,7 @@ class StatisticController extends Controller
     {
         foreach ($request->validated()['order'] ?? [] as $index => $encryptedId) {
             $id = decryptIdIfEncrypted($encryptedId, false);
-            Statistic::whereKey($id)->update(['sort_order' => $index + 1]);
+            $this->cmsService->updateSortOrder(Statistic::class, $id, $index + 1);
         }
 
         return jsonSuccess('Urutan statistik berhasil diperbarui.');

@@ -33,7 +33,7 @@ class PublicServiceProvider extends BaseModuleServiceProvider
                 'route'         => 'cms.dashboard',
                 'active_routes' => ['cms.dashboard'],
                 'icon'          => 'home',
-                'permission'    => null,
+                'permission'    => 'cms.dashboard.view',
             ],
             [
                 'priority'      => 3,

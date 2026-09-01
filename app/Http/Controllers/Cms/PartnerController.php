@@ -7,6 +7,7 @@ use Illuminate\Support\Arr;
 use Modules\Public\Http\Requests\PartnerRequest;
 use Modules\Public\Http\Requests\ReorderRequest;
 use Modules\Public\Models\Partner;
+use Modules\Public\Services\CmsService;
 
 class PartnerController extends Controller
 {
@@ -21,7 +22,7 @@ class PartnerController extends Controller
     public function index()
     {
         return view('public::pages.cms.section.partner.index', [
-            'partners' => Partner::orderBy('seq')->get(),
+            'partners' => $this->cmsService->getOrdered(Partner::class, 'seq'),
         ]);
     }
 
@@ -34,8 +35,8 @@ class PartnerController extends Controller
     {
         $data = $request->validated();
         $data = Arr::except($data, ['logo']);
-        $data['seq'] = (int) Partner::max('seq') + 1;
-        $partner = Partner::create($data);
+        $data['seq'] = $this->cmsService->nextSortOrder(Partner::class, 'seq');
+        $partner = $this->cmsService->create(Partner::class, $data);
 
         if ($request->hasFile('logo')) {
             $partner->addMediaFromRequest('logo')->toMediaCollection('logo');
@@ -71,7 +72,7 @@ class PartnerController extends Controller
     {
         foreach ($request->validated()['order'] ?? [] as $index => $encryptedId) {
             $id = decryptIdIfEncrypted($encryptedId, false);
-            Partner::whereKey($id)->update(['seq' => $index + 1]);
+            $this->cmsService->updateSortOrder(Partner::class, $id, $index + 1, 'seq');
         }
 
         return jsonSuccess('Urutan partner berhasil diperbarui.');

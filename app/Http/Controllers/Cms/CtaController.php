@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Arr;
 use Modules\Public\Http\Requests\CtaRequest;
 use Modules\Public\Models\Cta;
+use Modules\Public\Services\CmsService;
 
 class CtaController extends Controller
 {
@@ -20,7 +21,7 @@ class CtaController extends Controller
     public function index()
     {
         return view('public::pages.cms.section.cta.index', [
-            'ctas' => Cta::orderByDesc('is_active')->orderByDesc('updated_at')->get(),
+            'ctas' => $this->cmsService->getCtaOrdered(),
         ]);
     }
 
@@ -32,7 +33,7 @@ class CtaController extends Controller
     public function store(CtaRequest $request)
     {
         $data = Arr::except($request->validated(), ['background_image']);
-        $cta = Cta::create($data);
+        $cta = $this->cmsService->create(Cta::class, $data);
 
         if ($request->hasFile('background_image')) {
             $cta->addMediaFromRequest('background_image')->toMediaCollection('background');
@@ -74,6 +75,6 @@ class CtaController extends Controller
 
     private function deactivateOthers(Cta $active): void
     {
-        Cta::whereKeyNot($active->getKey())->update(['is_active' => false]);
+        $this->cmsService->deactivateOtherCtas($active->getKey());
     }
 }

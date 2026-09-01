@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Modules\Public\Models\Page;
 use Yajra\DataTables\Facades\DataTables;
 use Modules\Public\Models\Menu;
+use Modules\Public\Services\CmsService;
 
 class PublicPageController extends Controller
 {
@@ -68,7 +69,7 @@ class PublicPageController extends Controller
 
     public function edit(Page $page)
     {
-        $linkedMenu = Menu::where('page_id', $page->page_id)->first();
+        $linkedMenu = $this->cmsService->getLinkedMenu($page->page_id);
 
         return view('public::pages.cms.public-page.create-edit', [
             'page' => $page,
