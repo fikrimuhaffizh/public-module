@@ -44,7 +44,7 @@ class RefSeeder extends Seeder
         collect([
             ['E-Office', 'e-office', 'Manajemen surat dan dokumen elektronik.'],
             ['SPMI', 'spmi', 'Sistem penjaminan mutu internal terintegrasi.'],
-            ['HR Core', 'hr-core', 'Pengelolaan SDM dan kepegawaian.'],
+            ['HR Core', 'hrc', 'Pengelolaan SDM dan kepegawaian.'],
             ['Inventaris', 'inventaris', 'Pelacakan aset dan inventaris kampus.'],
             ['PMB', 'pmb', 'Penerimaan mahasiswa baru online.'],
         ])->each(fn (array $item, int $index) => Product::create([
