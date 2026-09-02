@@ -1,4 +1,4 @@
-@extends('public::layouts.public-layout')
+@extends('layouts.' . active_theme() . '.app')
 
 @section('title', 'Template Landing Page')
 

@@ -1,4 +1,4 @@
-@extends('layouts.admin-app')
+@extends('layouts.' . active_theme() . '.app')
 
 @section('content')
 <div class="page-header d-print-none">

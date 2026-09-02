@@ -1,4 +1,6 @@
-@extends('public::layouts.public-layout')
+@extends('layouts.' . active_theme() . '.app')
+
+@section('title', 'Manajemen Halaman & Navigasi')
 
 @section('header')
 <x-ui.page-header title="Manajemen Halaman & Navigasi" pretitle="Content Management">

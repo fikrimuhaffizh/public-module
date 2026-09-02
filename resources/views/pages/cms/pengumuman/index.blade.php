@@ -1,4 +1,6 @@
-@extends('public::layouts.public-layout')
+@extends('layouts.' . active_theme() . '.app')
+
+@section('title', ucfirst($type))
 
 @section('header')
 <x-ui.page-header :title="ucfirst($type)" pretitle="Content Management">

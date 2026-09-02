@@ -1,4 +1,6 @@
-@extends('public::layouts.public-layout')
+@extends('layouts.' . active_theme() . '.app')
+
+@section('title', $page->exists ? 'Edit Halaman' : 'Buat Halaman Baru')
 
 @section('header')
 <x-ui.page-header :title="$page->exists ? 'Edit Halaman' : 'Buat Halaman Baru'" pretitle="Content Management">

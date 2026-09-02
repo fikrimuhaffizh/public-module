@@ -1,4 +1,6 @@
-@extends('public::layouts.public-layout')
+@extends('layouts.' . active_theme() . '.app')
+
+@section('title', 'CMS Sections')
 
 @section('header')
 <x-ui.page-header title="CMS Sections" pretitle="Landing Page">

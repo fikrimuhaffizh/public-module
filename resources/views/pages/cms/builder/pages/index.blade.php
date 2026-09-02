@@ -1,4 +1,6 @@
-@extends('public::layouts.public-layout')
+@extends('layouts.' . active_theme() . '.app')
+
+@section('title', 'Halaman Website Builder')
 
 @section('header')
 <x-ui.page-header title="Halaman Website Builder" pretitle="Website Builder">

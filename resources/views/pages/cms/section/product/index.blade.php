@@ -1,4 +1,6 @@
-@extends('public::layouts.public-layout')
+@extends('layouts.' . active_theme() . '.app')
+
+@section('title', 'Produk')
 
 @section('header')
 <x-ui.page-header title="Produk" pretitle="Landing Page">
