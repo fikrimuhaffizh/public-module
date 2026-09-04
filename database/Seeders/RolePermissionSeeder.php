@@ -13,7 +13,6 @@ class RolePermissionSeeder extends Seeder
     {
         return [
             ['name' => 'cms.dashboard.view', 'category' => 'CMS / Landing Page', 'sub_category' => 'Dashboard', 'description' => 'Melihat dashboard CMS'],
-            ['name' => 'public.cms.view', 'category' => 'CMS / Landing Page', 'sub_category' => 'Dashboard', 'description' => 'Melihat menu CMS / Landing Page'],
             ['name' => 'public.cms.update', 'category' => 'CMS / Landing Page', 'sub_category' => 'Template', 'description' => 'Mengubah template landing page'],
             ['name' => 'public.cms.landing.sections.view', 'category' => 'CMS / Landing Page', 'sub_category' => 'Landing Sections', 'description' => 'Melihat daftar landing sections'],
             ['name' => 'public.cms.landing.sections.update', 'category' => 'CMS / Landing Page', 'sub_category' => 'Landing Sections', 'description' => 'Mengubah dan mengurutkan landing sections'],

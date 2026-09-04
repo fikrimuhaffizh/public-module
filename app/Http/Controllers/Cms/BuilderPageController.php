@@ -14,7 +14,7 @@ use Modules\Public\Services\CmsService;
 
 class BuilderPageController extends Controller
 {
-    public function __construct(protected BuilderPageService $builder, protected DynamicBlockService $dynamicBlocks)
+    public function __construct(protected BuilderPageService $builder, protected DynamicBlockService $dynamicBlocks, protected CmsService $cmsService)
     {
         $this->middleware('permission:public.builder.view')->only(['index', 'data', 'show', 'editor']);
         $this->middleware('permission:public.builder.create')->only(['create', 'store']);
@@ -54,7 +54,56 @@ class BuilderPageController extends Controller
                 return formatTanggalIndo($row->updated_at);
             })
             ->addColumn('action', function (Page $row) {
-                return $this->renderActions($row);
+                $extraActions = [];
+
+                // Custom page: Editor & Preview
+                if ($row->isCustom()) {
+                    $extraActions[] = [
+                        'icon' => 'ti ti-palette',
+                        'label' => 'Buka Editor',
+                        'url' => route('cms.builder.pages.editor', $row),
+                    ];
+                    $extraActions[] = [
+                        'icon' => 'ti ti-eye',
+                        'label' => 'Preview',
+                        'url' => route('cms.builder.pages.preview', $row),
+                    ];
+                } else {
+                    // Template page: View on site
+                    if ($row->is_published) {
+                        $extraActions[] = [
+                            'icon' => 'ti ti-external-link',
+                            'label' => 'Lihat di situs',
+                            'url' => route('public.page.show', ['page' => $row->slug]),
+                        ];
+                    }
+                }
+
+                // Publish / Unpublish (uses ajax-confirm class from datatables-actions)
+                if ($row->is_published) {
+                    $extraActions[] = [
+                        'icon' => 'ti ti-player-pause',
+                        'label' => 'Hentikan Publikasi',
+                        'url' => route('cms.builder.pages.unpublish', $row),
+                        'ajax' => true,
+                        'confirm' => 'Hentikan publikasi halaman ini?',
+                    ];
+                } else {
+                    $extraActions[] = [
+                        'icon' => 'ti ti-player-play',
+                        'label' => 'Publikasikan',
+                        'url' => route('cms.builder.pages.publish', $row),
+                        'ajax' => true,
+                        'confirm' => 'Publikasikan halaman ini?',
+                    ];
+                }
+
+                return view('components.ui.datatables-actions', [
+                    'editUrl' => route('cms.builder.pages.edit', $row),
+                    'editModal' => false,
+                    'deleteUrl' => route('cms.builder.pages.destroy', $row),
+                    'extraActions' => $extraActions,
+                ])->render();
             })
             ->rawColumns(['render_mode', 'is_published', 'slug', 'action'])
             ->make(true);
@@ -292,46 +341,4 @@ class BuilderPageController extends Controller
         ]);
     }
 
-    private function renderActions(Page $row): string
-    {
-        $actions = [];
-
-        if ($row->isCustom()) {
-            $actions[] = sprintf(
-                '<a href="%s" class="btn btn-icon btn-sm btn-outline-primary" title="Buka Editor"><i class="ti ti-palette"></i></a>',
-                route('cms.builder.pages.editor', $row)
-            );
-            $actions[] = sprintf(
-                '<a href="%s" class="btn btn-icon btn-sm btn-outline-info" title="Preview"><i class="ti ti-eye"></i></a>',
-                route('cms.builder.pages.preview', $row)
-            );
-        } else {
-            $actions[] = sprintf(
-                '<a href="%s" class="btn btn-icon btn-sm btn-outline-info" title="Lihat di situs"><i class="ti ti-external-link"></i></a>',
-                $row->is_published ? route('public.page.show', ['page' => $row->slug]) : '#'
-            );
-        }
-
-        $actions[] = sprintf(
-            '<a href="%s" class="btn btn-icon btn-sm btn-outline-dark" title="Pengaturan"><i class="ti ti-settings"></i></a>',
-            route('cms.builder.pages.edit', $row)
-        );
-
-        $actions[] = $row->is_published
-            ? sprintf(
-                '<button type="button" class="btn btn-icon btn-sm btn-outline-warning builder-post" data-method="post" data-url="%s" data-confirm="Hentikan publikasi halaman ini?"><i class="ti ti-player-pause"></i></button>',
-                route('cms.builder.pages.unpublish', $row)
-            )
-            : sprintf(
-                '<button type="button" class="btn btn-icon btn-sm btn-outline-success builder-post" data-method="post" data-url="%s" data-confirm="Publikasikan halaman ini?"><i class="ti ti-player-play"></i></button>',
-                route('cms.builder.pages.publish', $row)
-            );
-
-        $actions[] = sprintf(
-            '<button type="button" class="btn btn-icon btn-sm btn-danger builder-post" data-method="delete" data-url="%s" data-confirm="Hapus halaman ini?"><i class="ti ti-trash"></i></button>',
-            route('cms.builder.pages.destroy', $row)
-        );
-
-        return '<div class="btn-list">'.implode('', $actions).'</div>';
-    }
 }
