@@ -13,7 +13,7 @@ use Modules\Public\Services\CmsService;
 
 class SectionControllerUnified extends Controller
 {
-    public function __construct()
+    public function __construct(protected CmsService $cmsService)
     {
         $this->middleware('permission:public.cms.section.view')->only('index');
         $this->middleware('permission:public.cms.section.create')->only(['create', 'store']);

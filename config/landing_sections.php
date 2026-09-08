@@ -137,7 +137,7 @@ $baseSections = [
         'variants' => autoVariants('price', 'price'),
         'default_variant' => 'price_1',
         'default_limit' => 3,
-        'manage_data_route' => null,
+        'manage_data_route' => 'cms.pricing.index',
     ],
     'footer' => [
         'name' => 'Footer',

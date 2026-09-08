@@ -13,6 +13,7 @@ class RolePermissionSeeder extends Seeder
     {
         return [
             ['name' => 'cms.dashboard.view', 'category' => 'CMS / Landing Page', 'sub_category' => 'Dashboard', 'description' => 'Melihat dashboard CMS'],
+            ['name' => 'public.cms.view', 'category' => 'CMS / Landing Page', 'sub_category' => 'Template', 'description' => 'Melihat halaman CMS section'],
             ['name' => 'public.cms.update', 'category' => 'CMS / Landing Page', 'sub_category' => 'Template', 'description' => 'Mengubah template landing page'],
             ['name' => 'public.cms.landing.sections.view', 'category' => 'CMS / Landing Page', 'sub_category' => 'Landing Sections', 'description' => 'Melihat daftar landing sections'],
             ['name' => 'public.cms.landing.sections.update', 'category' => 'CMS / Landing Page', 'sub_category' => 'Landing Sections', 'description' => 'Mengubah dan mengurutkan landing sections'],
@@ -66,11 +67,14 @@ class RolePermissionSeeder extends Seeder
             ['name' => 'public.cms.cta.create', 'category' => 'CMS / Landing Page', 'sub_category' => 'Call To Action', 'description' => 'Menambah CTA'],
             ['name' => 'public.cms.cta.update', 'category' => 'CMS / Landing Page', 'sub_category' => 'Call To Action', 'description' => 'Mengubah CTA'],
             ['name' => 'public.cms.cta.delete', 'category' => 'CMS / Landing Page', 'sub_category' => 'Call To Action', 'description' => 'Menghapus CTA'],
-            ['name' => 'public.builder.view', 'category' => 'Website Builder', 'sub_category' => 'Builder', 'description' => 'Melihat halaman & section builder'],
-            ['name' => 'public.builder.create', 'category' => 'Website Builder', 'sub_category' => 'Builder', 'description' => 'Membuat halaman builder atau section baru'],
-            ['name' => 'public.builder.update', 'category' => 'Website Builder', 'sub_category' => 'Builder', 'description' => 'Mengubah halaman, section, dan isi builder'],
-            ['name' => 'public.builder.delete', 'category' => 'Website Builder', 'sub_category' => 'Builder', 'description' => 'Menghapus halaman atau section builder'],
-            ['name' => 'public.builder.publish', 'category' => 'Website Builder', 'sub_category' => 'Builder', 'description' => 'Mempublikasikan / menghentikan publikasi halaman builder'],
+            ['name' => 'public.cms.pricing.view', 'category' => 'CMS / Landing Page', 'sub_category' => 'Pricing', 'description' => 'Melihat daftar pricing'],
+            ['name' => 'public.cms.pricing.create', 'category' => 'CMS / Landing Page', 'sub_category' => 'Pricing', 'description' => 'Menambah pricing'],
+            ['name' => 'public.cms.pricing.update', 'category' => 'CMS / Landing Page', 'sub_category' => 'Pricing', 'description' => 'Mengubah dan mengurutkan pricing'],
+            ['name' => 'public.cms.pricing.delete', 'category' => 'CMS / Landing Page', 'sub_category' => 'Pricing', 'description' => 'Menghapus pricing'],
+            ['name' => 'public.cms.section.view', 'category' => 'CMS / Landing Page', 'sub_category' => 'Section', 'description' => 'Melihat daftar section'],
+            ['name' => 'public.cms.section.create', 'category' => 'CMS / Landing Page', 'sub_category' => 'Section', 'description' => 'Menambah section baru'],
+            ['name' => 'public.cms.section.update', 'category' => 'CMS / Landing Page', 'sub_category' => 'Section', 'description' => 'Mengubah dan mengurutkan section'],
+            ['name' => 'public.cms.section.delete', 'category' => 'CMS / Landing Page', 'sub_category' => 'Section', 'description' => 'Menghapus section'],
         ];
     }
 

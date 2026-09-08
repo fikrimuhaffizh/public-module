@@ -6,10 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Arr;
 use Modules\Public\Http\Requests\LandingPageSettingRequest;
 use Modules\Public\Models\LandingPageSetting;
+use Modules\Public\Services\CmsService;
 
 class LandingPageSettingController extends Controller
 {
-    public function __construct()
+    public function __construct(protected CmsService $cmsService)
     {
         $this->middleware('permission:public.cms.settings.view')->only(['editSettings']);
         $this->middleware('permission:public.cms.settings.update')->only(['updateSettings']);

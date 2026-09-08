@@ -7,10 +7,8 @@ use Illuminate\Database\Seeder;
 use Modules\Public\Models\FAQ;
 use Modules\Public\Models\Menu;
 use Modules\Public\Models\Page;
-use Modules\Public\Models\Partner;
 use Modules\Public\Models\Pengumuman;
 use Modules\Public\Models\Slideshow;
-use Modules\Public\Models\Testimonial;
 
 class DemoSeeder extends Seeder
 {
@@ -24,8 +22,6 @@ class DemoSeeder extends Seeder
         Page::withoutGlobalScopes()->where('tenant_id', $tenantId)->forceDelete();
         FAQ::withoutGlobalScopes()->where('tenant_id', $tenantId)->forceDelete();
         Slideshow::withoutGlobalScopes()->where('tenant_id', $tenantId)->forceDelete();
-        Testimonial::withoutGlobalScopes()->where('tenant_id', $tenantId)->forceDelete();
-        Partner::withoutGlobalScopes()->where('tenant_id', $tenantId)->forceDelete();
 
         // Pages & Menu
         $pages = collect([
@@ -108,34 +104,5 @@ class DemoSeeder extends Seeder
             'caption' => 'A supportive and diverse community where students can grow.',
             'link' => 'https://example.com/kemahasiswaan', 'seq' => 3, 'is_active' => true, 'created_by' => 1,
         ]);
-
-        // Testimonials
-        collect([
-            ['Nadia Pratama', 'Alumni', 'Program Studi Teknologi Informasi', 'Platform kampus membantu saya menemukan layanan dan informasi akademik dengan jauh lebih cepat.'],
-            ['Rizky Mahendra', 'Mahasiswa', 'Fakultas Teknik', 'Informasi kegiatan, pengumuman, dan layanan kampus terasa lebih terhubung dan mudah dipahami.'],
-            ['Dr. Maya Lestari', 'Dosen', 'Pusat Inovasi', 'Pengelolaan informasi yang konsisten membuat kolaborasi dan komunikasi institusi menjadi lebih efektif.'],
-            ['Andi Saputra', 'Mitra Industri', 'Nusantara Digital', 'Kami melihat komitmen institusi terhadap transformasi digital dan kolaborasi yang berkelanjutan.'],
-        ])->each(function (array $item, int $index) use ($tenantId) {
-            Testimonial::create([
-                'tenant_id' => $tenantId, 'name' => $item[0], 'position' => $item[1],
-                'organization' => $item[2], 'quote' => $item[3], 'rating' => 5,
-                'seq' => $index + 1, 'is_active' => true,
-            ]);
-        });
-
-        // Partners
-        collect([
-            ['Nusantara Digital', 'Industri Teknologi', 'https://example.com'],
-            ['Bank Mitra Indonesia', 'Industri Keuangan', 'https://example.com'],
-            ['Pemerintah Kota', 'Pemerintah', 'https://example.com'],
-            ['Global Education Network', 'Pendidikan', 'https://example.com'],
-            ['Creative Innovation Hub', 'Riset dan Inovasi', 'https://example.com'],
-            ['Future Manufacturing', 'Industri Manufaktur', 'https://example.com'],
-        ])->each(function (array $item, int $index) use ($tenantId) {
-            Partner::create([
-                'tenant_id' => $tenantId, 'name' => $item[0], 'category' => $item[1],
-                'website_url' => $item[2], 'seq' => $index + 1, 'is_active' => true,
-            ]);
-        });
     }
 }

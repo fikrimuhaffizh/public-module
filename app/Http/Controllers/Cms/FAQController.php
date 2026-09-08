@@ -10,7 +10,13 @@ use Modules\Public\Services\FAQService;
 
 class FAQController extends Controller
 {
-    public function __construct(protected FAQService $faqService) {}
+    public function __construct(protected FAQService $faqService)
+    {
+        $this->middleware('permission:public.cms.faq.view')->only('index');
+        $this->middleware('permission:public.cms.faq.create')->only(['create', 'store']);
+        $this->middleware('permission:public.cms.faq.update')->only(['edit', 'update', 'reorder']);
+        $this->middleware('permission:public.cms.faq.delete')->only('destroy');
+    }
 
     public function index()
     {

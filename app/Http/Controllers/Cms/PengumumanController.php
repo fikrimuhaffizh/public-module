@@ -12,7 +12,13 @@ use Yajra\DataTables\DataTables;
 
 class PengumumanController extends Controller
 {
-    public function __construct(protected PengumumanService $pengumumanService, protected UserService $userService) {}
+    public function __construct(protected PengumumanService $pengumumanService, protected UserService $userService)
+    {
+        $this->middleware('permission:public.cms.pengumuman.view')->only(['index', 'beritaIndex', 'show', 'data']);
+        $this->middleware('permission:public.cms.pengumuman.create')->only(['create', 'store']);
+        $this->middleware('permission:public.cms.pengumuman.update')->only(['edit', 'update']);
+        $this->middleware('permission:public.cms.pengumuman.delete')->only('destroy');
+    }
 
     public function index(Request $request)
     {

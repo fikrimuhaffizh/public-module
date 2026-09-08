@@ -10,15 +10,15 @@ import NavbarMenuItem from './NavbarMenuItem';
  * Fitur: scroll shadow, active page indicator, dropdown submenus.
  * Prop: { site, menus, open, onToggle, settings }
  */
-export default function NavbarMode1({ site, menus, open, onToggle, settings = {} }) {
+export default function NavbarMode1({ site = {}, menus, open, onToggle, settings = {} }) {
     const siteName = site?.name || '';
     const scrolled = useScrollShadow();
 
     return (
         <header className={`site-header${scrolled ? ' site-header--scrolled' : ''}`}>
             <div className="shell nav-wrap">
-                <Link href={site.homeUrl} className="brand">
-                    {site.logo
+                <Link href={site?.homeUrl || '/'} className="brand">
+                    {site?.logo
                         ? <img src={site.logo} alt={siteName} className="brand-logo" width="32" height="32" loading="eager" decoding="async" />
                         : <span className="brand-mark"><GraduationCap size={24} /></span>}
                 </Link>
@@ -28,7 +28,7 @@ export default function NavbarMode1({ site, menus, open, onToggle, settings = {}
                     ))}
                 </nav>
                 <div className="nav-actions">
-                    {settings.show_login !== false && <Button asChild><a href={site.loginUrl}>Masuk</a></Button>}
+                    {settings.show_login !== false && <Button asChild><a href={site?.loginUrl || '/login'}>Masuk</a></Button>}
                     <button className="mobile-toggle" onClick={onToggle} aria-label="Buka navigasi">{open ? <X /> : <Menu />}</button>
                 </div>
             </div>

@@ -7,11 +7,10 @@ use App\Traits\Blameable;
 use App\Traits\HashidBinding;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Modules\Public\Traits\ClearsDynamicBlockCache;
 
 class Statistic extends Model
 {
-    use BelongsToTenant, Blameable, ClearsDynamicBlockCache, HashidBinding, SoftDeletes;
+    use BelongsToTenant, Blameable, HashidBinding, SoftDeletes;
 
     protected $table = 'cms_statistics';
 
@@ -26,9 +25,4 @@ class Statistic extends Model
     ];
 
     protected $casts = ['is_active' => 'boolean'];
-
-    protected static function dynamicBlockType(): string
-    {
-        return 'statistik';
-    }
 }

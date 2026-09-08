@@ -13,7 +13,13 @@ use Modules\Public\Services\CmsService;
 
 class PublicPageController extends Controller
 {
-    public function __construct(protected PageService $pageService) {}
+    public function __construct(protected PageService $pageService)
+    {
+        $this->middleware('permission:public.cms.page.view')->only(['index', 'data', 'show']);
+        $this->middleware('permission:public.cms.page.create')->only(['create', 'store']);
+        $this->middleware('permission:public.cms.page.update')->only(['edit', 'update']);
+        $this->middleware('permission:public.cms.page.delete')->only('destroy');
+    }
 
     public function index(Request $request)
     {

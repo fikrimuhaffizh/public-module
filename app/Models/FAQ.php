@@ -8,11 +8,10 @@ use App\Traits\HashidBinding;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Modules\Public\Traits\ClearsDynamicBlockCache;
 
 class FAQ extends Model
 {
-    use BelongsToTenant, Blameable, ClearsDynamicBlockCache, HasFactory, HashidBinding, SoftDeletes;
+    use BelongsToTenant, Blameable, HasFactory, HashidBinding, SoftDeletes;
 
     protected $table = 'cms_faq';
 
@@ -32,9 +31,4 @@ class FAQ extends Model
     protected $casts = [
         'is_active' => 'boolean',
     ];
-
-    protected static function dynamicBlockType(): string
-    {
-        return 'faq';
-    }
 }

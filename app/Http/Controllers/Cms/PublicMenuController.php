@@ -13,7 +13,13 @@ use Modules\Public\Services\CmsService;
 
 class PublicMenuController extends Controller
 {
-    public function __construct(protected PublicMenuService $menuService, protected CmsService $cmsService) {}
+    public function __construct(protected PublicMenuService $menuService, protected CmsService $cmsService)
+    {
+        $this->middleware('permission:public.cms.menu.view')->only(['index', 'data']);
+        $this->middleware('permission:public.cms.menu.create')->only(['create', 'store']);
+        $this->middleware('permission:public.cms.menu.update')->only(['edit', 'update', 'reorder', 'reorderPosition']);
+        $this->middleware('permission:public.cms.menu.delete')->only('destroy');
+    }
 
     public function index()
     {

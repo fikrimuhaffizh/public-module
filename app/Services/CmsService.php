@@ -206,7 +206,7 @@ class CmsService
 
     // ─── Settings ────────────────────────────────────────────────
 
-    public function getSettings(): \Illuminate\Support\Collection
+    public function getSettings(): \Modules\Public\Models\LandingPageSetting
     {
         return \Modules\Public\Models\LandingPageSetting::forCurrentTenant();
     }
