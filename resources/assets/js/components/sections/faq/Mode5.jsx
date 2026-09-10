@@ -23,6 +23,7 @@ export default function FaqMode5({ section, data }) {
                 >
                     {section.pre_title && <span className="eyebrow">{section.pre_title}</span>}
                     <h2 style={{ color: 'var(--sec-title, inherit)' }}>{section.title || 'FAQ'}</h2>
+                    {(section.subtitle || section.post_title) && <p className="section-mode-description" style={{ color: 'var(--sec-posttext, inherit)' }}>{section.subtitle || section.post_title}</p>}
                     {faqs.slice(0, limit).map((faq, i) => (
                         <details key={faq.id || i} className="faq-two-col-item">
                             <summary>{faq.question || faq.title}</summary>

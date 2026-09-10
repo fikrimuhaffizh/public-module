@@ -9,9 +9,10 @@ import { Section, pricePackages, combinedText } from '../index';
  */
 export default function PriceMode5({ section, data }) {
     const packages = pricePackages(section, data?.landing?.pricing);
-    if (!packages.length) return null;
     const [annual, setAnnual] = useState(false);
     const ease = [0.22, 1, 0.36, 1];
+
+    if (!packages.length) return null;
 
     return (
         <Section section={section} id="harga"

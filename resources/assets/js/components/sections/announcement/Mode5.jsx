@@ -25,6 +25,7 @@ export default function AnnouncementMode5({ section, data }) {
                 >
                     {section.pre_title && <span className="eyebrow">{section.pre_title}</span>}
                     <h2 style={{ color: 'var(--sec-title, inherit)' }}>{section.title || 'Berita & Pengumuman'}</h2>
+                    {(section.subtitle || section.post_title) && <p className="section-mode-description" style={{ color: 'var(--sec-posttext, inherit)' }}>{section.subtitle || section.post_title}</p>}
                     {featured && (
                         <Link href={featured.url} className="news-featured-card">
                             {featured.image && <img src={featured.image} alt={featured.title} />}

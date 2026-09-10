@@ -15,7 +15,6 @@ const pos = (r, i, n) => {
  */
 export default function ClientMode5({ section, data }) {
     const clients = data.landing?.clients || [];
-    if (!clients.length) return null;
     const limit = section?.limit_data;
     const items = limit ? clients.slice(0, limit) : clients;
     const site = data.site || {};
@@ -36,6 +35,8 @@ export default function ClientMode5({ section, data }) {
             { dur: '52s', reverse: true, items: ringItems(items.slice(3, 9), 190) },
         ];
     }, [items]);
+
+    if (!clients.length) return null;
 
     return (
         <section className="client-logos">

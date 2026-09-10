@@ -14,10 +14,11 @@ export default function FeatureMode6({ section, data }) {
     return (
         <section className="feature feature--zigzag" id="keunggulan">
             <div className="shell">
-                {section.pre_title && <span className="eyebrow" style={{ display: 'block', textAlign: 'center', marginBottom: 8 }}>{section.pre_title}</span>}
-                <h2 className="section-heading" style={{ textAlign: 'center', color: 'var(--sec-title, inherit)' }}>
+                {section.pre_title && <span className="eyebrow" style={{ display: 'block', textAlign: section.settings?.text_align || 'center', marginBottom: 8 }}>{section.pre_title}</span>}
+                <h2 className="section-heading" style={{ textAlign: section.settings?.text_align || 'center', color: 'var(--sec-title, inherit)' }}>
                     {section.title || 'Fitur Unggulan'}
                 </h2>
+                    {(section.subtitle || section.post_title) && <p className="section-mode-description" style={{ color: 'var(--sec-posttext, inherit)' }}>{section.subtitle || section.post_title}</p>}
                 <div className="feature-zigzag-list">
                     {features.slice(0, limit).map((feature, i) => (
                         <motion.div

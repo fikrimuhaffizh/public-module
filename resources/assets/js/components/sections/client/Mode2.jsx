@@ -6,7 +6,6 @@ import { sectionHeading } from '../index';
 /** Klien/Logo Mode 2 — showcase: panggung logo aktif (besar) + panah + strip thumbnail, auto-putar, swipe untuk mobile. Prop: { section, data } */
 export default function ClientMode2({ section, data }) {
     const clients = data.landing?.clients || [];
-    if (!clients.length) return null;
 
     const limit = section?.limit_data;
     const items = limit ? clients.slice(0, limit) : clients;
@@ -65,6 +64,8 @@ export default function ClientMode2({ section, data }) {
 
     const safe = active % items.length;
     const current = items[safe];
+
+    if (!clients.length) return null;
 
     return (
         <section className="client-logos">

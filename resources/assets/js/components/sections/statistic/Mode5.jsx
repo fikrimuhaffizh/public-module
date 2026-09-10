@@ -14,10 +14,11 @@ export default function StatisticMode5({ section, data }) {
     return (
         <section className="stats stats--scroll" id="statistik">
             <div className="shell">
-                {section.pre_title && <span className="eyebrow" style={{ display: 'block', textAlign: 'center', marginBottom: 8 }}>{section.pre_title}</span>}
-                <h2 className="section-heading" style={{ textAlign: 'center', color: 'var(--sec-title, inherit)' }}>
+                {section.pre_title && <span className="eyebrow" style={{ display: 'block', textAlign: section.settings?.text_align || 'center', marginBottom: 8 }}>{section.pre_title}</span>}
+                <h2 className="section-heading" style={{ textAlign: section.settings?.text_align || 'center', color: 'var(--sec-title, inherit)' }}>
                     {section.title || 'Angka yang Berbicara'}
                 </h2>
+                    {(section.subtitle || section.post_title) && <p className="section-mode-description" style={{ color: 'var(--sec-posttext, inherit)' }}>{section.subtitle || section.post_title}</p>}
                 <motion.div
                     className="stats-scroll-track"
                     initial="hidden"

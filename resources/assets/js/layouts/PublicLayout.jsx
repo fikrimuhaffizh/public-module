@@ -2,9 +2,9 @@ import React from 'react';
 import { Head, usePage } from '@inertiajs/react';
 import {
     ThemeCustomizerProvider,
-    ThemeSettingsDrawer,
     useThemeCustomizer,
-} from '@public/components/theme/ThemeCustomizer';
+} from '@public/components/theme/ThemeCustomizerContext';
+import ThemeEditor from '@public/components/theme/ThemeEditor';
 import { sectionColorStyle, useSectionVariant } from '@public/components/sections/renderer';
 import FloatingWhatsApp from '@public/components/FloatingWhatsApp';
 import { usePauseOffscreenAnimations } from '@public/lib/pauseOffscreen';
@@ -26,9 +26,10 @@ function sectionVariantOf(sections, key, fallback) {
  * Pages only need to attach: Page.layout = PublicPageLayout
  */
 export function PublicPageLayout({ children }) {
+    const { designScope, template, preview } = usePage().props;
     usePauseOffscreenAnimations();
     return (
-        <ThemeCustomizerProvider>
+        <ThemeCustomizerProvider key={`${designScope}|${template}|${preview}`}>
             <ThemedRoot>{children}</ThemedRoot>
         </ThemeCustomizerProvider>
     );
@@ -96,7 +97,7 @@ function ThemedRoot({ children }) {
         : true;
     const pageheaderStyle = sectionColorStyle(customizer?.sectionColors?.['pageheader']);
 
-    return <div className={`theme-${template} ${customClass}`} style={{ ...customVars, fontFamily: "var(--font-body)", color: "var(--foreground)", background: "var(--background)" }}>
+    return <div data-landing-design="refined" data-design-family={customizer?.custom?.designFamily || undefined} className={`theme-${template} ${customClass}`} style={{ ...customVars, fontFamily: "var(--font-body)", color: "var(--foreground)", background: "var(--background)" }}>
         <Head>
             <title>{site?.title || siteName}</title>
             {seo?.description && <meta head-key="description" name="description" content={seo.description} />}
@@ -130,7 +131,7 @@ function ThemedRoot({ children }) {
                 : <FooterComponent site={site} footerMenus={footerMenus} />
         )}
         <FloatingWhatsApp />
-        <ThemeSettingsDrawer />
+        <ThemeEditor />
     </div>;
 }
 

@@ -5,7 +5,6 @@ import { Section, combinedText, TestimonialRating } from '../index';
 /** Testimoni Mode 4 — rotator: satu kutipan besar berganti otomatis dengan transisi halus + dots. Prop: { section, data } */
 export default function TestimonialMode4({ section, data }) {
     const list = data.testimonials || [];
-    if (!list.length) return null;
 
     const limit = section?.limit_data || 6;
     const items = list.slice(0, limit);
@@ -27,6 +26,8 @@ export default function TestimonialMode4({ section, data }) {
     };
 
     const item = items[index % items.length];
+
+    if (!list.length) return null;
 
     return (
         <Section

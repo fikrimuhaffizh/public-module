@@ -23,6 +23,7 @@ export default function StatisticMode6({ section, data }) {
                 >
                     {section.pre_title && <span className="eyebrow">{section.pre_title}</span>}
                     <h2 style={{ color: 'var(--sec-title, inherit)' }}>{section.title || 'Angka yang Berbicara'}</h2>
+                    {(section.subtitle || section.post_title) && <p className="section-mode-description" style={{ color: 'var(--sec-posttext, inherit)' }}>{section.subtitle || section.post_title}</p>}
                     {stats.slice(0, limit).map((stat, i) => (
                         <div key={stat.id || i} className="stats-split-item">
                             <strong style={{ color: 'var(--sec-title, inherit)' }}>{stat.value}</strong>

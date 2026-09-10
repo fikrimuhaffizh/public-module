@@ -15,7 +15,6 @@ import {
  */
 export default function FaqMode2({ section, data }) {
     const faqs = data.faqs || [];
-    if (!faqs.length) return null;
 
     const countBy = {};
     faqs.forEach((f) => {
@@ -25,6 +24,8 @@ export default function FaqMode2({ section, data }) {
     const cats = ['Semua', ...Object.keys(countBy)];
     const [cat, setCat] = useState('Semua');
     const filtered = cat === 'Semua' ? faqs : faqs.filter((f) => (f.category || 'FAQ') === cat);
+
+    if (!faqs.length) return null;
 
     return (
         <Section

@@ -13,6 +13,7 @@ use Inertia\Response;
 use Modules\Public\Models\Page;
 use Modules\Public\Models\Pengumuman;
 use Modules\Public\Services\LandingPageService;
+use Modules\Public\Http\Requests\SaveDesignRequest;
 
 class PublicController extends Controller
 {
@@ -99,28 +100,14 @@ class PublicController extends Controller
      * Menerima state customizer (palet, font, radius, dll.) + variant/warna
      * section, lalu menyimpan tema aktif + desain penuh per-tenant.
      */
-    public function saveDesign(Request $request): JsonResponse
+    public function saveDesign(SaveDesignRequest $request): JsonResponse
     {
-        $data = $request->validate([
-            'template' => ['required', 'string', Rule::in($this->landing->themeKeys())],
-            'paletteKey' => ['nullable', 'string', 'max:60'],
-            'font' => ['nullable', 'string', 'max:60'],
-            'card' => ['nullable', 'string', 'max:30'],
-            'nav' => ['nullable', 'string', 'max:30'],
-            'button' => ['nullable', 'string', 'max:30'],
-            'radius' => ['nullable', 'string', 'max:30'],
-            'density' => ['nullable', 'string', 'max:30'],
-            'elevation' => ['nullable', 'string', 'max:30'],
-            'dark' => ['nullable', 'boolean'],
-            'heroFill' => ['nullable', 'boolean'],
-            'customCss' => ['nullable', 'string', 'max:20000'],
-            'sectionVariants' => ['nullable', 'array'],
-            'sectionColors' => ['nullable', 'array'],
-            'sectionSettings' => ['nullable', 'array'],
-        ]);
+        $data = $request->validated();
 
         $design = [
             'paletteKey' => $data['paletteKey'] ?? null,
+            'customPalette' => $data['customPalette'] ?? null,
+            'designFamily' => $data['designFamily'] ?? null,
             'font' => $data['font'] ?? null,
             'card' => $data['card'] ?? null,
             'nav' => $data['nav'] ?? null,
@@ -135,12 +122,9 @@ class PublicController extends Controller
             'sectionColors' => $data['sectionColors'] ?? [],
         ];
 
-        $this->landing->saveDesign($data['template'], $design);
+        $this->landing->saveDesign($data['template'], $design, $data['sectionSettings'] ?? []);
 
         // Pengaturan per-section (mis. navbar → show_topbar) ditulis ke settings section DB.
-        if (!empty($data['sectionSettings']) && is_array($data['sectionSettings'])) {
-            $this->landing->saveSectionSettings($data['sectionSettings']);
-        }
 
         return response()->json(['ok' => true, 'template' => $data['template']]);
     }

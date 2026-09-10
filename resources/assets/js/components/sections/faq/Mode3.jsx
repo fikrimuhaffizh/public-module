@@ -12,7 +12,6 @@ import FaqReveal from './FaqReveal';
  */
 export default function FaqMode3({ section, data }) {
     const faqs = data.faqs || [];
-    if (!faqs.length) return null;
     const limit = section?.limit_data || 8;
     const [open, setOpen] = useState(() => new Set([0]));
 
@@ -24,6 +23,8 @@ export default function FaqMode3({ section, data }) {
             return next;
         });
     };
+
+    if (!faqs.length) return null;
 
     return (
         <Section

@@ -7,19 +7,21 @@ import { motion, AnimatePresence } from 'framer-motion';
  */
 export default function FeatureMode8({ section, data }) {
     const features = data.landing?.features || [];
-    if (!features.length) return null;
     const limit = section?.limit_data || 4;
     const items = features.slice(0, limit);
     const [active, setActive] = useState(0);
     const ease = [0.22, 1, 0.36, 1];
     const current = items[active] || items[0];
 
+    if (!features.length) return null;
+
     return (
         <section className="feature feature--tabs" id="keunggulan">
             <div className="shell">
-                <div className="feature-tabs-header" style={{ textAlign: 'center', marginBottom: 32 }}>
+                <div className="feature-tabs-header" style={{ textAlign: section.settings?.text_align || 'center', marginBottom: 32 }}>
                     {section.pre_title && <span className="eyebrow">{section.pre_title}</span>}
                     <h2 style={{ color: 'var(--sec-title, inherit)' }}>{section.title || 'Fitur Unggulan'}</h2>
+                    {(section.subtitle || section.post_title) && <p className="section-mode-description" style={{ color: 'var(--sec-posttext, inherit)' }}>{section.subtitle || section.post_title}</p>}
                 </div>
                 <div className="feature-tabs-nav">
                     {items.map((f, i) => (

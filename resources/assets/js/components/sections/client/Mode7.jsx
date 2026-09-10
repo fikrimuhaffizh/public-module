@@ -13,10 +13,11 @@ export default function ClientMode7({ section, data }) {
     return (
         <section className="client-logos client-logos--marquee" id="klien">
             <div className="shell" style={{ marginBottom: 24 }}>
-                {section.pre_title && <span className="eyebrow" style={{ display: 'block', textAlign: 'center' }}>{section.pre_title}</span>}
-                <h2 className="section-heading" style={{ textAlign: 'center', color: 'var(--sec-title, inherit)' }}>
+                {section.pre_title && <span className="eyebrow" style={{ display: 'block', textAlign: section.settings?.text_align || 'center' }}>{section.pre_title}</span>}
+                <h2 className="section-heading" style={{ textAlign: section.settings?.text_align || 'center', color: 'var(--sec-title, inherit)' }}>
                     {section.title || 'Mitra Kami'}
                 </h2>
+                    {(section.subtitle || section.post_title) && <p className="section-mode-description" style={{ color: 'var(--sec-posttext, inherit)' }}>{section.subtitle || section.post_title}</p>}
             </div>
             <div className="client-marquee">
                 <div className="client-marquee-track">

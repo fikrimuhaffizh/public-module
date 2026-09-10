@@ -13,9 +13,10 @@ export default function FaqMode6({ section, data }) {
     return (
         <section className="faq faq--center" id="faq">
             <div className="shell" style={{ maxWidth: 720 }}>
-                <div style={{ textAlign: 'center', marginBottom: 32 }}>
+                <div style={{ textAlign: section.settings?.text_align || 'center', marginBottom: 32 }}>
                     {section.pre_title && <span className="eyebrow">{section.pre_title}</span>}
                     <h2 style={{ color: 'var(--sec-title, inherit)' }}>{section.title || 'FAQ'}</h2>
+                    {(section.subtitle || section.post_title) && <p className="section-mode-description" style={{ color: 'var(--sec-posttext, inherit)' }}>{section.subtitle || section.post_title}</p>}
                 </div>
                 <div className="faq-center-list">
                     {faqs.slice(0, limit).map((faq, i) => (

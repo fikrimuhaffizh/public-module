@@ -1,7 +1,8 @@
 import React from 'react';
-import { useThemeCustomizer } from '@public/components/theme/ThemeCustomizer';
+import { useThemeCustomizer } from '@public/components/theme/ThemeCustomizerContext';
 import { sectionKey } from './index';
 import { resolveVariant } from './registry';
+import { readableText } from '../theme/design-system';
 
 /**
  * Section yang dirender layout-level (PublicLayout), bukan dari alur konten
@@ -38,40 +39,12 @@ function SectionRootGuard({ name, children }) {
 }
 
 /**
- * Konversi hex ke RGB. Mendukung #RGB, #RRGGBB.
- */
-function hexToRgb(hex) {
-    if (!hex) return null;
-    hex = hex.replace(/^#/, '');
-    if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
-    if (hex.length !== 6) return null;
-    const n = parseInt(hex, 16);
-    if (isNaN(n)) return null;
-    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
-}
-
-/**
- * Hitung luminance relative (WCAG 2.0).
- * Return 0 (gelap) — 1 (terang).
- */
-function relativeLuminance(r, g, b) {
-    const [rs, gs, bs] = [r, g, b].map(c => {
-        c = c / 255;
-        return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
-    });
-    return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
-}
-
-/**
  * Return warna kontras (#ffffff atau #1e293b) berdasarkan background.
  * WCAG contrast ratio ≥ 4.5:1.
  */
 export function contrastTextColor(bgHex) {
-    const rgb = hexToRgb(bgHex);
-    if (!rgb) return undefined;
-    const lum = relativeLuminance(...rgb);
-    // Luminance tinggi → background terang → teks gelap
-    return lum > 0.4 ? '#1e293b' : '#ffffff';
+    if (!/^#(?:[0-9a-f]{3}|[0-9a-f]{6})$/i.test(bgHex || '')) return undefined;
+    return readableText(bgHex);
 }
 
 /**
@@ -98,6 +71,7 @@ export function sectionColorStyle(colors) {
     if (colors.text) style['--sec-text'] = colors.text;
     if (colors.heading || colors.text) style['--sec-heading'] = colors.heading || colors.text;
     if (colors.accent) style['--sec-accent'] = colors.accent;
+    if (colors.accent) style['--sec-on-accent'] = contrastTextColor(colors.accent);
     if (colors.image) style['--sec-image'] = `url("${colors.image}")`;
     // Per-element color: pretext (eyebrow/badge), title (heading), posttext (subtitle/excerpt)
     if (colors.pretext_color) style['--sec-pretext'] = colors.pretext_color;
@@ -105,14 +79,14 @@ export function sectionColorStyle(colors) {
     if (colors.posttext_color) style['--sec-posttext'] = colors.posttext_color;
 
     // Dynamic contrast: auto hitam/putih jika bg ada tapi teks belum di-set
-    if (colors.bg && !colors.pretext_color && !colors.text_color && !colors.posttext_color && !colors.text) {
+    if (colors.bg) {
         const auto = contrastTextColor(colors.bg);
         if (auto) {
-            style['--sec-pretext'] = auto;
-            style['--sec-title'] = auto;
-            style['--sec-posttext'] = auto;
-            style['--sec-text'] = auto;
-            style['--sec-heading'] = auto;
+            style['--sec-pretext'] ??= colors.text || auto;
+            style['--sec-title'] ??= colors.heading || colors.text || auto;
+            style['--sec-posttext'] ??= colors.text || auto;
+            style['--sec-text'] ??= auto;
+            style['--sec-heading'] ??= auto;
         }
     }
 
@@ -158,9 +132,8 @@ export function SectionVariantRenderer({ section, data }) {
 
     const colors = customizer?.sectionColors?.[key];
     const hasBg = Boolean(colors?.bg || colors?.pattern || colors?.image);
-    if (!hasBg) return content;
-
     const style = sectionColorStyle(colors);
+    if (!hasBg && !style) return content;
     const patternClass = colors?.pattern ? ` sec-colored--p-${colors.pattern}` : '';
     const imgClass = colors?.image ? ' sec-colored--img' : '';
     return (

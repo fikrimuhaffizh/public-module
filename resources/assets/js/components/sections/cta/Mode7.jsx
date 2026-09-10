@@ -11,7 +11,7 @@ export default function CtaMode7({ section, data }) {
 
     return (
         <section className="cta cta--minimal">
-            <div className="shell" style={{ textAlign: 'center', maxWidth: 720 }}>
+            <div className="shell" style={{ textAlign: section.settings?.text_align || 'center', maxWidth: 720 }}>
                 <motion.div
                     initial={{ opacity: 0, y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}

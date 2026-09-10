@@ -11,9 +11,10 @@ import FaqReveal from './FaqReveal';
  */
 export default function FaqMode1({ section, data }) {
     const faqs = data.faqs || [];
-    if (!faqs.length) return null;
     const limit = section?.limit_data || 8;
     const [open, setOpen] = useState(0);
+
+    if (!faqs.length) return null;
 
     return (
         <Section

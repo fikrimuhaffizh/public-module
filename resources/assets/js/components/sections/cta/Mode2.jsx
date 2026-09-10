@@ -14,6 +14,7 @@ export default function CtaMode2({ section, data }) {
             <div className="shell cta-banner-inner">
                 {section?.pre_title && <span className="eyebrow eyebrow--light" style={{ color: 'var(--sec-pretext, inherit)' }}>{section.pre_title}</span>}
                 <h2 style={{ color: 'var(--sec-title, inherit)' }}>{title}</h2>
+                    {(section.subtitle || section.post_title) && <p className="section-mode-description" style={{ color: 'var(--sec-posttext, inherit)' }}>{section.subtitle || section.post_title}</p>}
                 <p style={{ color: 'var(--sec-posttext, inherit)' }}>{text}</p>
                 <Button asChild size="lg">
                     <a href={cta?.buttonLink || data.site.contactUrl}>

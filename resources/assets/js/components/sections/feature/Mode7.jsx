@@ -24,6 +24,7 @@ export default function FeatureMode7({ section, data }) {
                     >
                         {section.pre_title && <span className="eyebrow">{section.pre_title}</span>}
                         <h2 style={{ color: 'var(--sec-title, inherit)' }}>{section.title || 'Fitur Unggulan'}</h2>
+                    {(section.subtitle || section.post_title) && <p className="section-mode-description" style={{ color: 'var(--sec-posttext, inherit)' }}>{section.subtitle || section.post_title}</p>}
                     </motion.div>
                     <div className="feature-numbered-list">
                         {features.slice(0, limit).map((feature, i) => (

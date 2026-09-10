@@ -5,7 +5,6 @@ import { Section, combinedText } from '../index';
 /** Produk Mode 4 — carousel geser dengan scroll-snap + panah. Prop: { section, data } */
 export default function ProductMode4({ section, data }) {
     const products = data.landing?.products || [];
-    if (!products.length) return null;
 
     const limit = section?.limit_data || 5;
     const items = products.slice(0, limit);
@@ -27,6 +26,8 @@ export default function ProductMode4({ section, data }) {
         const step = card ? card.offsetWidth + 22 : 320;
         track.scrollBy({ left: dir * step, behavior: 'smooth' });
     };
+
+    if (!products.length) return null;
 
     return (
         <Section

@@ -1,5 +1,6 @@
 import React from 'react';
 import { usePage } from '@inertiajs/react';
+import { paletteForMode } from './design-system';
 import { collectFonts, collectPalettes, DARK_VARS, defaultsFor, FALLBACK_PALETTE, FONT_OPTIONS, paletteToVars, presetSections } from './presets';
 
 /**
@@ -33,9 +34,10 @@ export function useThemeCustomizer() {
 }
 
 /** Baca + parse localStorage dengan aman (korup/private mode → null). */
-export function loadStored() {
+export function loadStored(scope) {
     try {
-        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!scope) return null;
+        const raw = localStorage.getItem(`${STORAGE_KEY}:${scope}`);
         if (!raw) return null;
         const parsed = JSON.parse(raw);
         // Migrasi format lama (flat `{template, ...}`) → per-tema.
@@ -54,7 +56,7 @@ export function storedForTemplate(stored, template) {
 }
 
 export function ThemeCustomizerProvider({ children }) {
-    const { template, themeOptions = {}, preview, design = null } = usePage().props;
+    const { template, themeOptions = {}, preview, design = null, designScope } = usePage().props;
     const [isOpen, setOpen] = React.useState(false);
 
     const paletteOptions = React.useMemo(() => collectPalettes(themeOptions), [themeOptions]);
@@ -62,7 +64,7 @@ export function ThemeCustomizerProvider({ children }) {
 
     // Basis desain: preview → localStorage draft per-tema (atau design DB bila
     // belum ada draft); landing asli → design DB (fallback preset tema).
-    const [stored] = React.useState(() => loadStored());
+    const [stored] = React.useState(() => preview ? loadStored(designScope) : null);
     const dbDesign = design && design.template === template ? design : null;
     const basis = React.useMemo(
         () => (preview ? (storedForTemplate(stored, template) || dbDesign) : dbDesign),
@@ -91,7 +93,7 @@ export function ThemeCustomizerProvider({ children }) {
         if (prevKey.current === key) return;
         prevKey.current = key;
         const nextBasis = preview
-            ? (storedForTemplate(stored, template) || dbDesign)
+            ? (storedForTemplate(loadStored(designScope), template) || dbDesign)
             : dbDesign;
         setCustom(defaultsFor(nextBasis, paletteOptions, fontOptions, themeOptions[template]));
         setSectionVariants(nextBasis?.sectionVariants || presetSections(themeOptions[template]).sectionVariants);
@@ -122,16 +124,47 @@ export function ThemeCustomizerProvider({ children }) {
     React.useEffect(() => {
         // Draft localStorage hanya untuk halaman preview — landing asli tidak
         // pernah menulis agar design DB tidak tertimpa draft.
-        if (!preview) return;
+        if (!preview || !designScope) return;
         try {
-            const current = loadStored() || { byTemplate: {} };
+            const current = loadStored(designScope) || { byTemplate: {} };
             const draft = { ...custom, sectionVariants, sectionColors, sectionSettings };
             current.byTemplate = { ...(current.byTemplate || {}), [template]: draft };
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(current));
+            localStorage.setItem(`${STORAGE_KEY}:${designScope}`, JSON.stringify(current));
         } catch (e) { /* private mode */ }
     }, [preview, template, custom, sectionVariants, sectionColors, sectionSettings]);
 
-    const update = (patch) => setCustom(prev => ({ ...prev, ...patch }));
+    const update = (patch) => {
+        if (typeof patch.dark === 'boolean' && patch.dark !== custom.dark && custom.customPalette) {
+            const previous = custom.customPalette;
+            const next = paletteForMode(previous, patch.dark);
+            patch = { ...patch, customPalette: next };
+            setSectionColors(sections => Object.fromEntries(Object.entries(sections).map(([key, colors]) => {
+                // Only remap generated surfaces; explicit user colors and emphasized sections stay intact.
+                const role = ['background', 'tint', 'card'].find(name => previous[name] === colors.bg);
+                if (!role) return [key, colors];
+                const mapped = { ...colors, bg: next[role] };
+                for (const field of ['text', 'heading', 'text_color', 'posttext_color', 'pretext_color', 'accent']) {
+                    const oldAccent = custom.dark ? previous.accent : previous.primary;
+                    if (colors[field] === oldAccent) mapped[field] = patch.dark ? next.accent : next.primary;
+                    else if (colors[field] === previous.foreground) mapped[field] = next.foreground;
+                    else if (colors[field] === previous.muted) mapped[field] = next.muted;
+                }
+                return [key, mapped];
+            })));
+        }
+        setCustom(prev => ({ ...prev, ...patch }));
+    };
+    const applyGeneratedDesign = (design) => {
+        const { sectionVariants: variants, sectionColors: colors, ...appearance } = design;
+        setCustom(prev => ({ ...prev, ...appearance }));
+        setSectionVariants(variants);
+        // Preserve uploaded backgrounds and patterns; replace all old color values in one operation.
+        setSectionColors(prev => Object.fromEntries(Object.entries(colors).map(([key, value]) => [key, {
+            ...(prev[key]?.image ? { image: prev[key].image } : {}),
+            ...(prev[key]?.pattern ? { pattern: prev[key].pattern } : {}),
+            ...value,
+        }])));
+    };
     const reset = () => {
         const meta = themeOptions[template];
         setCustom(defaultsFor(null, paletteOptions, fontOptions, meta));
@@ -140,7 +173,7 @@ export function ThemeCustomizerProvider({ children }) {
         setSectionSettings({});
     };
 
-    const palette = paletteOptions.find(p => p.key === custom.paletteKey) || paletteOptions[0] || FALLBACK_PALETTE;
+    const palette = custom.customPalette || paletteOptions.find(p => p.key === custom.paletteKey) || paletteOptions[0] || FALLBACK_PALETTE;
     const font = fontOptions.find(f => f.key === custom.font) || fontOptions[0] || FONT_OPTIONS[0];
 
     const appliedVars = React.useMemo(() => ({
@@ -160,14 +193,14 @@ export function ThemeCustomizerProvider({ children }) {
     const value = {
         preview,
         isOpen, setOpen,
-        custom, update, reset,
+        custom, update, reset, applyGeneratedDesign,
         sectionVariants, setSectionVariant, resetSectionVariants,
         sectionColors, setSectionColor, resetSectionColor, resetSectionColors,
         sectionSettings, setSectionSetting,
         paletteOptions, fontOptions,
         palette, font,
         appliedVars, appliedClasses,
-        darkVars: custom.dark ? DARK_VARS : null,
+        darkVars: custom.dark && !custom.customPalette ? DARK_VARS : null,
     };
 
     return <ThemeCustomizerContext.Provider value={value}>{children}</ThemeCustomizerContext.Provider>;

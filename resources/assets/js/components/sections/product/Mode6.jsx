@@ -14,9 +14,10 @@ export default function ProductMode6({ section, data }) {
     return (
         <section className="product product--bento" id="informasi">
             <div className="shell">
-                <div style={{ textAlign: 'center', marginBottom: 36 }}>
+                <div style={{ textAlign: section.settings?.text_align || 'center', marginBottom: 36 }}>
                     {section.pre_title && <span className="eyebrow">{section.pre_title}</span>}
                     <h2 style={{ color: 'var(--sec-title, inherit)' }}>{section.title || 'Produk Kami'}</h2>
+                    {(section.subtitle || section.post_title) && <p className="section-mode-description" style={{ color: 'var(--sec-posttext, inherit)' }}>{section.subtitle || section.post_title}</p>}
                 </div>
                 <motion.div
                     className="product-bento-grid"

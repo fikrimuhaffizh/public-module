@@ -15,11 +15,7 @@ import { Button } from '@public/components/ui/button';
  * Dipakai oleh Hero Mode1/2/3 agar perilakunya konsisten.
  * Prop: { hero, site, align }
  */
-const DEFAULT_MICROCOPY = [
-    'Respon cepat via WhatsApp',
-    'Gratis konsultasi',
-    'Tanpa komitmen',
-];
+const DEFAULT_MICROCOPY = [];
 
 export default function HeroActions({ hero, site, align = 'left' }) {
     const wa = site?.whatsapp;
@@ -28,9 +24,9 @@ export default function HeroActions({ hero, site, align = 'left' }) {
         : DEFAULT_MICROCOPY;
 
     // CTA utama: WhatsApp kalau ada nomor, selain itu tombol primary CMS.
-    const primaryHref = wa ? `https://wa.me/${wa}` : (hero?.buttonPrimary?.link || '#informasi');
-    const primaryText = wa ? 'Chat WhatsApp' : (hero?.buttonPrimary?.text || 'Mulai menjelajah');
-    const primaryExternal = Boolean(wa);
+    const primaryHref = hero?.buttonPrimary?.link || (wa ? `https://wa.me/${wa}` : '#informasi');
+    const primaryText = hero?.buttonPrimary?.text || (wa ? 'Chat WhatsApp' : 'Mulai menjelajah');
+    const primaryExternal = /^https?:\/\//i.test(primaryHref);
 
     const secondaryHref = hero?.buttonSecondary?.link || '#berita';
     const secondaryText = hero?.buttonSecondary?.text || 'Kabar terbaru';

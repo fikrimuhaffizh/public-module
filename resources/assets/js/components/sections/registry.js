@@ -1,3 +1,5 @@
+import React from 'react';
+
 /**
  * Registri variant section — satu sumber kebenaran untuk daftar "Sections"
  * di Theme Settings (offcanvas /preview) DAN renderer section.
@@ -44,19 +46,22 @@ const SECTION_META = [
 
 // Import semua komponen section secara sinkron (eager) — setara dengan
 // daftar import manual lama, tapi otomatis mengikuti isi folder.
-const SECTION_MODULES = import.meta.glob('./**/*.jsx', { eager: true });
+const SECTION_MODULES = import.meta.glob('./*/Mode[0-9]*.jsx');
 
 /** Ambil daftar variant dari file `Mode{n}.jsx` dalam satu folder section. */
 function variantsFromFolder(dir, sectionKey) {
     return Object.entries(SECTION_MODULES)
-        .map(([path, mod]) => {
+        .map(([path, load]) => {
             const match = path.match(new RegExp(`^\\./${dir}/Mode(\\d+)\\.jsx$`));
             if (!match) return null;
             const num = Number(match[1]);
+            const Component = React.lazy(load);
             return {
                 key: `${sectionKey}_${num}`,
                 name: `Mode ${num}`,
-                component: mod.default,
+                component: props => React.createElement(React.Suspense, {
+                    fallback: React.createElement('section', { 'aria-busy': true, 'aria-label': 'Memuat bagian halaman', style: { minHeight: 80 } }),
+                }, React.createElement(Component, props)),
             };
         })
         .filter(Boolean)

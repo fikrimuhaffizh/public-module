@@ -14,7 +14,7 @@ export default function TestimonialMode8({ section, data }) {
 
     return (
         <section className="testimonial testimonial--minimal" id="testimoni">
-            <div className="shell" style={{ textAlign: 'center', maxWidth: 720 }}>
+            <div className="shell" style={{ textAlign: section.settings?.text_align || 'center', maxWidth: 720 }}>
                 <motion.div
                     initial={{ opacity: 0, y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}

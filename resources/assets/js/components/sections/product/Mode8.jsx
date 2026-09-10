@@ -18,6 +18,7 @@ export default function ProductMode8({ section, data }) {
                 <div style={{ marginBottom: 32 }}>
                     {section.pre_title && <span className="eyebrow">{section.pre_title}</span>}
                     <h2 style={{ color: 'var(--sec-title, inherit)' }}>{section.title || 'Produk Kami'}</h2>
+                    {(section.subtitle || section.post_title) && <p className="section-mode-description" style={{ color: 'var(--sec-posttext, inherit)' }}>{section.subtitle || section.post_title}</p>}
                 </div>
                 <motion.div
                     className="product-minimal-list"

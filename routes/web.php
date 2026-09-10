@@ -132,12 +132,11 @@ Route::middleware(['auth', 'check.expired', 'module:public'])->prefix('cms')->na
 Route::middleware(HandleInertiaRequests::class)->controller(PublicController::class)->name('public.')->group(function () {
     Route::get('/', 'home')->name('index');
     Route::get('/preview', 'preview')->name('preview');
-    Route::post('/preview/design', 'saveDesign')->middleware('auth')->name('design.save');
+    Route::post('/preview/design', 'saveDesign')->middleware(['auth', 'check.expired', 'module:public', 'permission:public.cms.settings.update'])->name('design.save');
     Route::get('/contact-us', 'contact')->name('contact');
     Route::post('/contact-us', 'sendContact')->middleware('throttle:5,1')->name('contact.send');
     Route::get('/page/{page:slug}', 'showPage')->name('page.show');
     Route::get('/announcements', 'showAllNews')->name('announcements.index');
     Route::get('/news/{pengumuman}', 'showNews')->name('news.show');
 });
-
 

@@ -17,7 +17,7 @@ export default function CtaMode6({ section, data }) {
 
     return (
         <section className="cta cta--cards">
-            <div className="shell" style={{ textAlign: 'center' }}>
+            <div className="shell" style={{ textAlign: section.settings?.text_align || 'center' }}>
                 {section.pre_title && <span className="eyebrow">{section.pre_title}</span>}
                 <h2 style={{ color: 'var(--sec-title, inherit)' }}>{section.title || 'Mengapa Memilih Kami?'}</h2>
                 <p style={{ color: 'var(--sec-posttext, inherit)', maxWidth: 520, margin: '0 auto 32px' }}>

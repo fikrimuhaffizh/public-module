@@ -14,9 +14,10 @@ export default function StatisticMode8({ section, data }) {
     return (
         <section className="stats stats--large" id="statistik">
             <div className="shell">
-                <div style={{ textAlign: 'center', marginBottom: 36 }}>
+                <div style={{ textAlign: section.settings?.text_align || 'center', marginBottom: 36 }}>
                     {section.pre_title && <span className="eyebrow">{section.pre_title}</span>}
                     <h2 style={{ color: 'var(--sec-title, inherit)' }}>{section.title || 'Angka yang Berbicara'}</h2>
+                    {(section.subtitle || section.post_title) && <p className="section-mode-description" style={{ color: 'var(--sec-posttext, inherit)' }}>{section.subtitle || section.post_title}</p>}
                 </div>
                 <motion.div
                     className="stats-large-grid"

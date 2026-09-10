@@ -8,7 +8,6 @@ import { Section, combinedText, TestimonialRating } from '../index';
  */
 export default function TestimonialMode5({ section, data }) {
     const list = data.testimonials || [];
-    if (!list.length) return null;
 
     const limit = section?.limit_data || 6;
     const items = list.slice(0, limit);
@@ -25,6 +24,8 @@ export default function TestimonialMode5({ section, data }) {
 
     const active = index % items.length;
     const ease = [0.22, 1, 0.36, 1];
+
+    if (!list.length) return null;
 
     return (
         <Section

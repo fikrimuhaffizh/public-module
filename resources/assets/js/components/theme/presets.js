@@ -1,3 +1,4 @@
+import { generateDesign, colorHsl, validatedPalette } from './design-system';
 /**
  * Presets & helper data Theme Customizer — konstanta murni tanpa React.
  * Dipakai oleh ThemeCustomizerContext (state) dan ThemeSettingsDrawer (UI).
@@ -87,7 +88,7 @@ export const FONT_OPTIONS = [
     { key: 'figtree', name: 'Figtree', heading: "'Figtree', ui-sans-serif, system-ui, sans-serif", body: "'Figtree', ui-sans-serif, system-ui, sans-serif" },
     { key: 'outfit', name: 'Outfit', heading: "'Outfit', ui-sans-serif, system-ui, sans-serif", body: "'DM Sans', ui-sans-serif, system-ui, sans-serif" },
     { key: 'poppins', name: 'Poppins', heading: "'Poppins', ui-sans-serif, system-ui, sans-serif", body: "'Inter', ui-sans-serif, system-ui, sans-serif" },
-    { key: 'serif', name: 'Serif', heading: "'Playfair Display', Georgia, serif", body: "'Source Serif 4', Georgia, serif" },
+    { key: 'serif', name: 'Serif', heading: "'Playfair Display', Georgia, serif", body: "'DM Sans', ui-sans-serif, system-ui, sans-serif" },
     { key: 'rounded', name: 'Rounded', heading: "'Baloo 2', ui-rounded, system-ui, sans-serif", body: "'DM Sans', ui-sans-serif, system-ui, sans-serif" },
     { key: 'condensed', name: 'Condensed', heading: "'Archivo', ui-sans-serif, system-ui, sans-serif", body: "'Manrope', ui-sans-serif, system-ui, sans-serif" },
 ];
@@ -103,7 +104,8 @@ export function paletteToVars(p) {
         '--foreground': c.foreground,
         '--muted': c.muted,
         '--border': c.border,
-        '--ui-primary': c.uiPrimary,
+        '--ui-primary': colorHsl(c.primary),
+        '--tint': c.tint || c.background,
     };
 }
 
@@ -125,6 +127,7 @@ export function collectPalettes(themeOptions) {
             foreground: p.foreground || FALLBACK_PALETTE.foreground,
             muted: p.muted || FALLBACK_PALETTE.muted,
             border: p.border || FALLBACK_PALETTE.border,
+            tint: p.tint || p.background || FALLBACK_PALETTE.background,
             uiPrimary: p['ui-primary'] || FALLBACK_PALETTE.uiPrimary,
         });
     });
@@ -159,76 +162,9 @@ export function presetSections(meta) {
     };
 }
 
-/** Pick random item from array. */
-function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
-
-/**
- * Random hex color within a hue range — ensures visually coherent palettes.
- * mode: 'vibrant' (high saturation), 'muted' (low sat), 'pastel' (light).
- */
-function randomColor(mode = 'vibrant') {
-    const h = Math.floor(Math.random() * 360);
-    if (mode === 'pastel') return `hsl(${h}, 60%, 88%)`;
-    if (mode === 'muted') return `hsl(${h}, 25%, 50%)`;
-    return `hsl(${h}, 70%, 50%)`;
-}
-
-/**
- * Random section bg — pick from curated list + random pastels.
- */
-const RANDOM_SECTION_BGS = [
-    '#ffffff', '#f8fafc', '#eef2f7', '#fbf3e4', '#eef7f1',
-    '#f0f9ff', '#fdf4ff', '#fef3c7', '#ecfdf5', '#f1f5f9',
-];
-
-/**
- * Generate fully random but coherent theme settings.
- * Accepts paletteOptions, fontOptions, and SECTION_VARIANTS for context.
- * Returns { paletteKey, font, radius, density, elevation, dark, heroFill,
- *             sectionVariants, sectionColors }.
- */
-export function randomizeTheme(paletteOptions = [], fontOptions = [], sectionMeta = []) {
-    const dark = Math.random() > 0.65;
-    const paletteKey = pick(paletteOptions)?.key || null;
-    const font = pick(fontOptions)?.key || 'modern';
-    const radius = pick(RADIUS_OPTIONS).key;
-    const density = pick(DENSITY_OPTIONS).key;
-    const elevation = pick(ELEVATION_OPTIONS).key;
-    const heroFill = Math.random() > 0.3;
-
-    // Random section variants — pick random mode for each section
-    const sectionVariants = {};
-    const sectionColors = {};
-    const sectionKyes = ['hero', 'product', 'statistic', 'feature', 'testimonial', 'client', 'faq', 'pengumuman', 'cta', 'price'];
-
-    sectionKyes.forEach((key) => {
-        const meta = sectionMeta.find(s => s.key === key);
-        if (!meta) return;
-        const numModes = meta.numModes || 3;
-        sectionVariants[key] = `${key}_${Math.floor(Math.random() * numModes) + 1}`;
-
-        // ~40% chance to randomize color per section
-        if (Math.random() > 0.6) {
-            const mode = pick(['vibrant', 'muted', 'pastel']);
-            const bg = pick(RANDOM_SECTION_BGS);
-            sectionColors[key] = {
-                bg,
-                accent: randomColor(mode),
-            };
-        }
-    });
-
-    return {
-        paletteKey,
-        font,
-        radius,
-        density,
-        elevation,
-        dark,
-        heroFill,
-        sectionVariants,
-        sectionColors,
-    };
+/** Generate a coordinated composition, including a new global color palette. */
+export function randomizeTheme(paletteOptions = [], fontOptions = [], sectionMeta = [], familyKey) {
+    return generateDesign({ fontOptions, sectionMeta, familyKey });
 }
 
 /**
@@ -249,6 +185,8 @@ export function defaultsFor(custom, paletteOptions, fontOptions, meta) {
         ?? 'modern';
     return {
         paletteKey,
+        customPalette: validatedPalette(custom?.customPalette),
+        designFamily: custom?.designFamily || preset.designFamily || null,
         font,
         radius: custom?.radius ?? preset.radius ?? 'default',
         density: custom?.density ?? preset.density ?? 'standard',

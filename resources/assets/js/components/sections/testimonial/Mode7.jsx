@@ -8,7 +8,6 @@ import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
  */
 export default function TestimonialMode7({ section, data }) {
     const testimonials = data.testimonials || [];
-    if (!testimonials.length) return null;
     const [idx, setIdx] = useState(0);
     const ease = [0.22, 1, 0.36, 1];
     const t = testimonials[idx] || testimonials[0];
@@ -16,12 +15,15 @@ export default function TestimonialMode7({ section, data }) {
     const prev = () => setIdx(i => (i - 1 + testimonials.length) % testimonials.length);
     const next = () => setIdx(i => (i + 1) % testimonials.length);
 
+    if (!testimonials.length) return null;
+
     return (
         <section className="testimonial testimonial--stack" id="testimoni">
             <div className="shell" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <div style={{ textAlign: 'center', marginBottom: 32 }}>
+                <div style={{ textAlign: section.settings?.text_align || 'center', marginBottom: 32 }}>
                     {section.pre_title && <span className="eyebrow">{section.pre_title}</span>}
                     <h2 style={{ color: 'var(--sec-title, inherit)' }}>{section.title || 'Apa Kata Mereka'}</h2>
+                    {(section.subtitle || section.post_title) && <p className="section-mode-description" style={{ color: 'var(--sec-posttext, inherit)' }}>{section.subtitle || section.post_title}</p>}
                 </div>
                 <div className="testimonial-stack-wrap">
                     <AnimatePresence mode="wait">

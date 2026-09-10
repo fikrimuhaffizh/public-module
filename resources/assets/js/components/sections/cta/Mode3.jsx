@@ -13,6 +13,7 @@ export default function CtaMode3({ section, data }) {
                 <div>
                     {section?.pre_title && <span className="eyebrow" style={{ color: 'var(--sec-pretext, inherit)' }}>{section.pre_title}</span>}
                     <h2 style={{ color: 'var(--sec-title, inherit)' }}>{title}</h2>
+                    {(section.subtitle || section.post_title) && <p className="section-mode-description" style={{ color: 'var(--sec-posttext, inherit)' }}>{section.subtitle || section.post_title}</p>}
                     <p style={{ color: 'var(--sec-posttext, inherit)' }}>{text}</p>
                 </div>
                 <Button asChild size="lg">

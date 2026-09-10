@@ -4,8 +4,10 @@ namespace Modules\Public\Services;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Modules\Public\Models\Cta;
+use Modules\Public\Models\LandingPageSetting;
 use Modules\Public\Models\LandingSection;
 use Modules\Public\Models\Menu;
 use Modules\Public\Models\Page;
@@ -21,12 +23,12 @@ use Modules\Public\Models\Slideshow;
  */
 class CmsService
 {
-    // ─── Generic CRUD ────────────────────────────────────────────
+    // Generic CRUD
 
     /**
      * Get all records ordered by a column.
      */
-    public function getOrdered(string $modelClass, string $orderBy = 'sort_order', string $direction = 'asc'): \Illuminate\Support\Collection
+    public function getOrdered(string $modelClass, string $orderBy = 'sort_order', string $direction = 'asc'): Collection
     {
         return $modelClass::orderBy($orderBy, $direction)->get();
     }
@@ -55,9 +57,9 @@ class CmsService
         $modelClass::whereKey($id)->update([$sortColumn => $sortOrder]);
     }
 
-    // ─── Menu ────────────────────────────────────────────────────
+    // Menu
 
-    public function getMenusByPosition(string $position): \Illuminate\Support\Collection
+    public function getMenusByPosition(string $position): Collection
     {
         return Menu::whereNull('parent_id')
             ->where('position', $position)
@@ -69,6 +71,7 @@ class CmsService
     {
         $pages = Page::where('is_published', true)->orderBy('title')->get();
         $parents = Menu::orderBy('title')->get();
+
         return compact('pages', 'parents');
     }
 
@@ -76,6 +79,7 @@ class CmsService
     {
         $pages = Page::where('is_published', true)->orderBy('title')->get();
         $parents = Menu::where('menu_id', '!=', $excludeMenuId)->orderBy('title')->get();
+
         return compact('pages', 'parents');
     }
 
@@ -84,16 +88,16 @@ class CmsService
         return Menu::where('page_id', $pageId)->first();
     }
 
-    // ─── Page ────────────────────────────────────────────────────
+    // Page
 
     public function queryPages(): Builder
     {
         return Page::query();
     }
 
-    // ─── Section ─────────────────────────────────────────────────
+    // Section
 
-    public function getSectionsByType(string $type): \Illuminate\Support\Collection
+    public function getSectionsByType(string $type): Collection
     {
         return Section::ofType($type)->ordered()->get();
     }
@@ -129,14 +133,15 @@ class CmsService
         $i = 2;
         while (Section::where('slug', $candidate)->where('type', $type)
             ->when($ignoreId, fn ($q) => $q->whereKeyNot($ignoreId))->exists()) {
-            $candidate = Str::slug($base) . '-' . $i++;
+            $candidate = Str::slug($base).'-'.$i++;
         }
+
         return $candidate;
     }
 
-    // ─── Landing Section ─────────────────────────────────────────
+    // Landing Section
 
-    public function getLandingSections(): \Illuminate\Support\Collection
+    public function getLandingSections(): Collection
     {
         return LandingSection::where('tenant_id', sys_tenant_id())
             ->orderBy('sort_order')
@@ -148,7 +153,7 @@ class CmsService
         return LandingSection::registry();
     }
 
-    // ─── Dashboard Stats ─────────────────────────────────────────
+    // Dashboard Stats
 
     public function getDashboardStats(): array
     {
@@ -167,7 +172,7 @@ class CmsService
         ];
     }
 
-    // ─── Pricing unique slug ─────────────────────────────────────
+    // Pricing unique slug
 
     public function uniquePricingSlug(string $base, ?int $ignoreId = null): string
     {
@@ -175,8 +180,9 @@ class CmsService
         $i = 2;
         while (Pricing::where('slug', $candidate)
             ->when($ignoreId, fn ($q) => $q->whereKeyNot($ignoreId))->exists()) {
-            $candidate = Str::slug($base) . '-' . $i++;
+            $candidate = Str::slug($base).'-'.$i++;
         }
+
         return $candidate;
     }
 
@@ -186,39 +192,40 @@ class CmsService
         $i = 2;
         while (Product::where('slug', $candidate)
             ->when($ignoreId, fn ($q) => $q->whereKeyNot($ignoreId))->exists()) {
-            $candidate = Str::slug($base) . '-' . $i++;
+            $candidate = Str::slug($base).'-'.$i++;
         }
+
         return $candidate;
     }
 
-    // ─── Cta activate ────────────────────────────────────────────
+    // Cta activate
 
     public function deactivateOtherCtas(int $activeId): void
     {
         Cta::whereKeyNot($activeId)->update(['is_active' => false]);
     }
-    // ─── CTA ─────────────────────────────────────────────────────
+    // CTA
 
-    public function getCtaOrdered(): \Illuminate\Support\Collection
+    public function getCtaOrdered(): Collection
     {
         return Cta::orderByDesc('is_active')->orderByDesc('updated_at')->get();
     }
 
-    // ─── Settings ────────────────────────────────────────────────
+    // Settings
 
-    public function getSettings(): \Modules\Public\Models\LandingPageSetting
+    public function getSettings(): LandingPageSetting
     {
-        return \Modules\Public\Models\LandingPageSetting::forCurrentTenant();
+        return LandingPageSetting::forCurrentTenant();
     }
 
     public function updateSettings(array $data): bool
     {
-        return \Modules\Public\Models\LandingPageSetting::forCurrentTenant()->update($data);
+        return LandingPageSetting::forCurrentTenant()->update($data);
     }
 
-    // ─── Menu Queries ────────────────────────────────────────────
+    // Menu Queries
 
-    public function getMenuHeaders(): \Illuminate\Support\Collection
+    public function getMenuHeaders(): Collection
     {
         return Menu::whereNull('parent_id')
             ->where('position', 'header')
@@ -227,7 +234,7 @@ class CmsService
             ->get();
     }
 
-    public function getMenuFooters(): \Illuminate\Support\Collection
+    public function getMenuFooters(): Collection
     {
         return Menu::whereNull('parent_id')
             ->where('position', 'like', 'footer%')
@@ -245,17 +252,16 @@ class CmsService
             ->orderBy('sequence');
     }
 
-    public function getMenusOrdered(): \Illuminate\Support\Collection
+    public function getMenusOrdered(): Collection
     {
         return Menu::orderBy('title')->get();
     }
 
-    public function getLandingSectionsByArea(): \Illuminate\Support\Collection
+    public function getLandingSectionsByArea(): Collection
     {
         return LandingSection::where('tenant_id', sys_tenant_id())
             ->ordered()
             ->get()
             ->groupBy('area');
     }
-
 }
