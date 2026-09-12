@@ -16,7 +16,7 @@ class SectionController extends Controller
     public function __construct(private LandingPageService $landing, private TenantService $tenantService)
     {
         $this->middleware('permission:public.cms.view')->only(['index', 'edit', 'sections']);
-        $this->middleware('permission:public.cms.update')->only(['update', 'updateSection', 'reorderSections', 'editSection', 'toggleSection', 'uploadBackground', 'uploadLogo', 'deleteLogo']);
+        $this->middleware('permission:public.cms.update')->only(['update', 'updateSection', 'reorderSections', 'reorderAllSections', 'editSection', 'toggleSection', 'uploadBackground', 'uploadLogo', 'deleteLogo']);
     }
 
     public function index()
@@ -193,6 +193,27 @@ class SectionController extends Controller
         }
 
         return back()->with('success', 'Section berhasil diurutkan.');
+    }
+
+    /**
+     * Simpan urutan GLOBAL semua section sekaligus (dipakai drag-reorder +
+     * tombol ↑/↓ di Theme Settings drawer /preview).
+     *
+     * Payload: { order: [{ id, area }] } — id boleh polos maupun
+     * terenkripsi, area wajib top|middle|bottom. Entri tak valid dilewati
+     * oleh service (tidak menggagalkan seluruh batch).
+     */
+    public function reorderAllSections(Request $request)
+    {
+        $data = $request->validate([
+            'order' => 'required|array|min:1',
+            'order.*.id' => 'required',
+            'order.*.area' => 'required|string|in:top,middle,bottom',
+        ]);
+
+        $this->landing->reorderSectionsGlobal($data['order']);
+
+        return response()->json(['message' => 'Urutan section berhasil disimpan.']);
     }
 
     public function uploadLogo(Request $request)

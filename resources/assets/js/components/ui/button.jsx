@@ -36,6 +36,12 @@ const buttonVariants = cva(
 
 const Button = React.forwardRef(({ className, variant, size, asChild = false, ...props }, ref) => {
   const Comp = asChild ? Slot : "button"
+  if (import.meta.env?.DEV && size === "icon" && !props["aria-label"] && !props["aria-labelledby"] && !props.title) {
+    console.warn(
+      "[ui/Button] tombol icon-only tanpa nama aksesibel — tambahkan aria-label. " +
+      "Lihat web-design-guidelines (aksesibilitas)."
+    );
+  }
   return (
     <Comp
       className={cn(buttonVariants({ variant, size, className }))}

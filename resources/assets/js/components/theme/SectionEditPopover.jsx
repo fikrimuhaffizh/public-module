@@ -14,6 +14,7 @@ import {
 import {
     SECTION_COLOR_PRESETS,
     SECTION_PATTERNS,
+    isPatternAllowed,
 } from './presets';
 
 
@@ -163,7 +164,7 @@ function LogoUploader({ collection, label }) {
  * SectionEditPopover — gabungan Teks + Warna + Latar dalam satu dropdown bertab.
  * Menggantikan TextEditPopover dan ColorPopover yang terpisah.
  */
-export default function SectionEditPopover({ item, sectionKey, currentText = {}, currentColors = {}, palette, active, onApplyText, onApplyTextLive, onToggleActive, onApplyColor, onClearColor, heroFill, onToggleHeroFill, dark, onToggleDark, showLogin, onToggleLogin }) {
+export default function SectionEditPopover({ item, sectionKey, variant = '', currentText = {}, currentColors = {}, palette, active, onApplyText, onApplyTextLive, onToggleActive, onApplyColor, onClearColor, heroFill, onToggleHeroFill, dark, onToggleDark, showLogin, onToggleLogin }) {
     const [tab, setTab] = useState('text');
     const [customColors, setCustomColors] = useState(Boolean(currentColors?.bg || currentColors?.pretext_color || currentColors?.text_color || currentColors?.posttext_color || currentColors?.accent));
     const [uploading, setUploading] = useState(false);
@@ -541,20 +542,30 @@ export default function SectionEditPopover({ item, sectionKey, currentText = {},
                         >
                             <span />Tanpa
                         </button>
-                        {SECTION_PATTERNS.map((x) => (
-                            <button
-                                key={x.key}
-                                type="button"
-                                className={`theme-sec-pattern-swatch${colorForm.pattern === x.key ? ' active' : ''}`}
-                                style={patternStyle(x.key)}
-                                onClick={() => setPattern(x.key)}
-                                title={x.name}
-                                aria-label={`Pola ${x.name}`}
-                            >
-                                {colorForm.pattern === x.key && <Check size={12} />}
-                            </button>
-                        ))}
+                        {SECTION_PATTERNS.map((x) => {
+                            // Pattern-mode gating: pola padat dilarang di mode
+                            // yang sudah padat visual (mis. galeri/bento).
+                            const allowed = isPatternAllowed(sectionKey, variant, x.key);
+                            return (
+                                <button
+                                    key={x.key}
+                                    type="button"
+                                    className={`theme-sec-pattern-swatch${colorForm.pattern === x.key ? ' active' : ''}${allowed ? '' : ' is-disabled'}`}
+                                    style={patternStyle(x.key)}
+                                    onClick={() => allowed && setPattern(x.key)}
+                                    disabled={!allowed}
+                                    title={allowed ? x.name : `Pola ${x.name} tidak disarankan untuk mode ini yang sudah padat visual`}
+                                    aria-label={`Pola ${x.name}`}
+                                    aria-disabled={!allowed}
+                                >
+                                    {colorForm.pattern === x.key && <Check size={12} />}
+                                </button>
+                            );
+                        })}
                     </div>
+                    {!isPatternAllowed(sectionKey, variant, colorForm.pattern) && colorForm.pattern && (
+                        <span className="theme-sec-url-hint">Pola {colorForm.pattern} kurang cocok untuk mode ini — pilih Tanpa pola atau pola yang lebih renggang.</span>
+                    )}
                 </div>
             )}
         </div>

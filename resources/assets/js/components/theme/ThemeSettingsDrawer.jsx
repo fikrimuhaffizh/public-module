@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { router, usePage } from '@inertiajs/react';
 import {
     Check,
+    ChevronDown,
+    ChevronUp,
     Dice5,
     Palette,
     Pencil,
@@ -136,6 +138,12 @@ export function ThemeSettingsDrawer() {
     const [savingReorder, setSavingReorder] = useState(false);
     const [saving, setSaving] = useState(false);
     const [saveMsg, setSaveMsg] = useState(null);
+    // Alternatif keyboard/tap untuk reorder (aksesibilitas — drag bukan
+    // satu-satunya cara). kbOrder = urutan lokal selama sesi pindah via
+    // keyboard; di-commit ke server saat Spasi/Enter kedua.
+    const [kbGrabIndex, setKbGrabIndex] = useState(null);
+    const [kbOrder, setKbOrder] = useState(null);
+    const [kbMsg, setKbMsg] = useState('');
 
     const saveReorder = async (order) => {
         setSavingReorder(true);
@@ -159,10 +167,22 @@ export function ThemeSettingsDrawer() {
             setDragIndex(null);
             setOverIndex(null);
             setOverAfter(false);
+            setKbGrabIndex(null);
+            setKbOrder(null);
         }
     };
 
+    // Petakan urutan visible (terfilter konteks halaman) kembali ke urutan
+    // global sectionsList agar section tersembunyi tidak ikut tergeser.
+    const mergeIntoFullOrder = (nextVisible, baseVisible) => {
+        const visibleIds = new Set(baseVisible.map((i) => i.id));
+        let vi = 0;
+        return sectionsList.map((item) =>
+            visibleIds.has(item.id) ? nextVisible[vi++] : item);
+    };
+
     const commitDrop = () => {
+        const list = kbOrder ?? visibleSections;
         if (dragIndex === null || overIndex === null) {
             setDragIndex(null);
             setOverIndex(null);
@@ -176,17 +196,66 @@ export function ThemeSettingsDrawer() {
             setOverAfter(false);
             return;
         }
-        const next = [...visibleSections];
+        const next = [...list];
         const [moved] = next.splice(dragIndex, 1);
         if (dragIndex < insertAt) insertAt -= 1;
         next.splice(insertAt, 0, moved);
         // Pertahankan posisi section yang tidak tampil (mis. Page Header saat
         // di landing) agar urutan global tidak rusak oleh reorder terfilter.
-        const visibleIds = new Set(visibleSections.map((i) => i.id));
-        let vi = 0;
-        const fullOrder = sectionsList.map((item) =>
-            visibleIds.has(item.id) ? next[vi++] : item);
-        saveReorder(fullOrder);
+        saveReorder(mergeIntoFullOrder(next, list));
+    };
+
+    // Pindah satu langkah via tombol ↑/↓ — langsung commit seperti drop.
+    const moveVisible = (from, to) => {
+        const list = kbOrder ?? visibleSections;
+        if (from < 0 || to < 0 || from >= list.length || to >= list.length) return;
+        const next = [...list];
+        const [moved] = next.splice(from, 1);
+        next.splice(to, 0, moved);
+        setKbMsg(`${moved.name} dipindah ke posisi ${to + 1} dari ${next.length}.`);
+        saveReorder(mergeIntoFullOrder(next, list));
+    };
+
+    // Sesi pindah via keyboard pada grip: Spasi/Enter = angkat–taruh,
+    // panah = geser (lokal, belum tersimpan), Escape = batal.
+    const kbGrab = (index) => {
+        const list = kbOrder ?? visibleSections;
+        setKbGrabIndex(index);
+        setKbOrder([...list]);
+        setKbMsg(`${list[index].name} diangkat. Panah atas atau bawah untuk memindah, Spasi untuk menaruh, Escape untuk batal.`);
+    };
+    const kbMove = (dir) => {
+        if (kbGrabIndex === null || !kbOrder) return;
+        const to = kbGrabIndex + dir;
+        if (to < 0 || to >= kbOrder.length) return;
+        const next = [...kbOrder];
+        const [moved] = next.splice(kbGrabIndex, 1);
+        next.splice(to, 0, moved);
+        setKbOrder(next);
+        setKbGrabIndex(to);
+        setKbMsg(`${moved.name} dipindah ke posisi ${to + 1} dari ${next.length}.`);
+    };
+    const kbDrop = (commit) => {
+        if (commit && kbOrder) {
+            saveReorder(mergeIntoFullOrder(kbOrder, visibleSections));
+        } else {
+            setKbMsg('Pemindahan dibatalkan.');
+            setKbGrabIndex(null);
+            setKbOrder(null);
+        }
+    };
+    const onGripKeyDown = (e, index) => {
+        if (e.key === ' ' || e.key === 'Enter') {
+            e.preventDefault();
+            if (kbGrabIndex === null) kbGrab(index);
+            else kbDrop(true);
+        } else if (e.key === 'Escape') {
+            if (kbGrabIndex !== null) { e.preventDefault(); kbDrop(false); }
+        } else if (e.key === 'ArrowUp') {
+            if (kbGrabIndex !== null) { e.preventDefault(); kbMove(-1); }
+        } else if (e.key === 'ArrowDown') {
+            if (kbGrabIndex !== null) { e.preventDefault(); kbMove(1); }
+        }
     };
 
     // Tutup popover saat klik di luar area popover.
@@ -244,6 +313,8 @@ export function ThemeSettingsDrawer() {
     const visibleSections = isDetail
         ? sectionsList.filter((i) => DETAIL_KEYS.includes(i.key))
         : sectionsList.filter((i) => i.key !== 'pageheader');
+    // Daftar yang dirender: urutan lokal sesi keyboard bila aktif.
+    const displaySections = kbOrder ?? visibleSections;
 
     const applyToLanding = async () => {
         setSaving(true);
@@ -360,8 +431,9 @@ export function ThemeSettingsDrawer() {
                             </div>
                             <div className="theme-opt">
                                 <h4><span className="theme-opt-icon">▤</span>Sections</h4>
+                                <div className="theme-sr-only" role="status" aria-live="polite">{kbMsg}</div>
                                 <div className="theme-sections-list">
-                                    {visibleSections.map((item, index) => {
+                                    {displaySections.map((item, index) => {
                                         const hasColor = !!(customizer.sectionColors?.[item.key] && Object.values(customizer.sectionColors[item.key]).some(Boolean));
                                         const isOver = overIndex === index && dragIndex !== null && dragIndex !== index;
                                         const active = customizer.sectionSettings?.[item.key]?.active ?? item.active;
@@ -386,17 +458,45 @@ export function ThemeSettingsDrawer() {
                                                     <span className="theme-section-name">
                                                         {!isDetail && (
                                                             <span
-                                                                className="theme-section-grip"
-                                                                aria-hidden="true"
-                                                                title="Seret untuk mengatur urutan"
+                                                                role="button"
+                                                                tabIndex={0}
+                                                                className={`theme-section-grip${kbGrabIndex === index ? ' kb-grabbed' : ''}`}
+                                                                title="Seret, atau fokus lalu tekan Spasi untuk mengatur urutan via keyboard"
+                                                                aria-label={`Urutkan ${item.name}. Tekan Spasi untuk mengangkat, panah atas bawah untuk memindah, Spasi lagi untuk menaruh, Escape untuk batal.`}
+                                                                aria-grabbed={kbGrabIndex === index}
                                                                 draggable
                                                                 onDragStart={(e) => { e.dataTransfer.effectAllowed = "move"; setDragIndex(index); setOverIndex(index); setOverAfter(false); }}
                                                                 onDragEnd={() => { setDragIndex(null); setOverIndex(null); setOverAfter(false); }}
+                                                                onKeyDown={(e) => onGripKeyDown(e, index)}
                                                             >⠿</span>
                                                         )}
                                                         {item.name}
                                                     </span>
                                                     <div className="theme-section-controls">
+                                                        {!isDetail && (
+                                                            <>
+                                                                <button
+                                                                    type="button"
+                                                                    className="theme-section-move-btn"
+                                                                    onClick={() => moveVisible(index, index - 1)}
+                                                                    disabled={index === 0 || savingReorder}
+                                                                    title={`Pindahkan ${item.name} ke atas`}
+                                                                    aria-label={`Pindahkan ${item.name} ke atas`}
+                                                                >
+                                                                    <ChevronUp size={13} />
+                                                                </button>
+                                                                <button
+                                                                    type="button"
+                                                                    className="theme-section-move-btn"
+                                                                    onClick={() => moveVisible(index, index + 1)}
+                                                                    disabled={index === displaySections.length - 1 || savingReorder}
+                                                                    title={`Pindahkan ${item.name} ke bawah`}
+                                                                    aria-label={`Pindahkan ${item.name} ke bawah`}
+                                                                >
+                                                                    <ChevronDown size={13} />
+                                                                </button>
+                                                            </>
+                                                        )}
                                                         <select
                                                             className="theme-section-select"
                                                             value={customizer.sectionVariants?.[item.key] || item.current}
@@ -429,6 +529,7 @@ export function ThemeSettingsDrawer() {
                                                     <SectionEditPopover
                                                         item={item}
                                                         sectionKey={item.key}
+                                                        variant={customizer.sectionVariants?.[item.key] || item.current}
                                                         currentText={customizer.sectionSettings?.[item.key]}
                                                         currentColors={customizer.sectionColors?.[item.key]}
                                                         palette={customizer.palette}

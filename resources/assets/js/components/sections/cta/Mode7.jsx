@@ -1,23 +1,17 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { Reveal } from '@public/components/motion/effects';
 
 /**
  * CTA Mode 7 — Minimal center: teks besar, clean, elegan.
- * Animasi: fade-up.
+ * Animasi: fade-up (budgeted).
  */
 export default function CtaMode7({ section, data }) {
     const cta = data.landing?.cta;
-    const ease = [0.22, 1, 0.36, 1];
 
     return (
         <section className="cta cta--minimal">
             <div className="shell" style={{ textAlign: section.settings?.text_align || 'center', maxWidth: 720 }}>
-                <motion.div
-                    initial={{ opacity: 0, y: 24 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-60px' }}
-                    transition={{ duration: 0.6, ease }}
-                >
+                <Reveal budgeted>
                     {section.pre_title && <span className="eyebrow">{section.pre_title}</span>}
                     <h2 style={{ color: 'var(--sec-title, inherit)', fontSize: 'clamp(28px, 4vw, 48px)' }}>
                         {section.title || 'Ada Pertanyaan?'}
@@ -28,7 +22,7 @@ export default function CtaMode7({ section, data }) {
                     {cta?.link && (
                         <a className="ui-btn ui-btn--outline ui-btn--lg" href={cta.link}>{cta.text || 'Hubungi Kami'}</a>
                     )}
-                </motion.div>
+                </Reveal>
             </div>
         </section>
     );

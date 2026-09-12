@@ -54,6 +54,26 @@ export const SECTION_PATTERNS = [
     { key: 'noise', name: 'Tekstur' },
 ];
 
+// Pattern-mode gating (PRD v2 §5): pola PADAT tidak boleh dipasang di mode
+// yang SUDAH padat visual (galeri foto, bento, barisan kartu) — hasilnya
+// berisik, bukan tekstur. Entri: variant key `${sectionKey}_${num}`.
+// Pola non-padat (diagonal/waves/beams/noise) tetap bebas di semua mode.
+export const PATTERN_DENSITY_RULES = {
+    densePatterns: ['dots', 'grid'],
+    denseVariants: {
+        hero: ['hero_3', 'hero_7'],
+        cta: ['cta_6'],
+        feature: ['feature_5'],
+    },
+};
+
+/** true bila pola boleh dipakai pada section+variant ini. */
+export function isPatternAllowed(sectionKey, variantKey, patternKey) {
+    if (!PATTERN_DENSITY_RULES.densePatterns.includes(patternKey)) return true;
+    const dense = PATTERN_DENSITY_RULES.denseVariants[sectionKey] || [];
+    return !dense.includes(variantKey);
+}
+
 // Preset latar per-section — field yang null berarti ikut tema (tidak di-override).
 // Preset 'accent' diisi runtime: bg = primary tema, aksen = accent tema.
 export const SECTION_COLOR_PRESETS = [

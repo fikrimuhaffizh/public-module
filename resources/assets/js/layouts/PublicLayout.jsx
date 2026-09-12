@@ -7,6 +7,7 @@ import {
 import ThemeEditor from '@public/components/theme/ThemeEditor';
 import { sectionColorStyle, useSectionVariant } from '@public/components/sections/renderer';
 import FloatingWhatsApp from '@public/components/FloatingWhatsApp';
+import { MotionBudgetProvider } from '@public/components/motion/effects';
 import { usePauseOffscreenAnimations } from '@public/lib/pauseOffscreen';
 import { resolveVariant } from '@public/components/sections/registry';
 
@@ -26,11 +27,13 @@ function sectionVariantOf(sections, key, fallback) {
  * Pages only need to attach: Page.layout = PublicPageLayout
  */
 export function PublicPageLayout({ children }) {
-    const { designScope, template, preview } = usePage().props;
+    const { props: { designScope, template, preview }, url } = usePage();
     usePauseOffscreenAnimations();
     return (
         <ThemeCustomizerProvider key={`${designScope}|${template}|${preview}`}>
-            <ThemedRoot>{children}</ThemedRoot>
+            <MotionBudgetProvider key={url || 'landing'}>
+                <ThemedRoot>{children}</ThemedRoot>
+            </MotionBudgetProvider>
         </ThemeCustomizerProvider>
     );
 }

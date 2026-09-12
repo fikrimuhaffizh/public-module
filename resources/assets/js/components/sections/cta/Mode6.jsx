@@ -1,14 +1,13 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
+import { Stagger } from '@public/components/motion/effects';
 
 /**
  * CTA Mode 6 — Floating cards: teks center + kartu fitur.
- * Animasi: stagger — kartu muncul satu per satu.
+ * Animasi: stagger — kartu muncul satu per satu (budgeted).
  */
 export default function CtaMode6({ section, data }) {
     const cta = data.landing?.cta;
-    const ease = [0.22, 1, 0.36, 1];
     const features = [
         section.settings?.cta_feature_1 || 'Setup 5 menit',
         section.settings?.cta_feature_2 || 'Tanpa kartu kredit',
@@ -23,24 +22,14 @@ export default function CtaMode6({ section, data }) {
                 <p style={{ color: 'var(--sec-posttext, inherit)', maxWidth: 520, margin: '0 auto 32px' }}>
                     {section.subtitle || section.post_title || ''}
                 </p>
-                <motion.div
-                    className="cta-cards-row"
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: '-60px' }}
-                    variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }}
-                >
+                <Stagger className="cta-cards-row" itemClassName="cta-card-item gen-card" budgeted>
                     {features.map((f, i) => (
-                        <motion.div
-                            key={i}
-                            className="cta-card-item gen-card"
-                            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease } } }}
-                        >
+                        <React.Fragment key={i}>
                             <Check size={20} style={{ color: 'var(--primary)' }} />
                             <span>{f}</span>
-                        </motion.div>
+                        </React.Fragment>
                     ))}
-                </motion.div>
+                </Stagger>
                 {cta?.link && (
                     <a className="ui-btn ui-btn--primary ui-btn--lg" href={cta.link} style={{ marginTop: 28 }}>
                         {cta.text || 'Mulai Sekarang'}

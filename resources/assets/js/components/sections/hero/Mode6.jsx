@@ -1,6 +1,14 @@
 import React from 'react';
-import HeroComposition from './HeroComposition';
+import { HeroCopy, useHeroData } from './HeroData';
 
-export default function HeroMode6(props) {
-    return <HeroComposition {...props} mode={6} />;
+/** Mode 6 — Minimal: tipografi raksasa tengah, tanpa visual sama sekali. */
+export default function HeroMode6({ section, data }) {
+    const { hero, copy, site } = useHeroData(section, data);
+    return (
+        <section className="landing-hero landing-hero--6 landing-hero--text">
+            <div className="shell landing-hero__grid">
+                <HeroCopy section={section} copy={copy} hero={hero} site={site} align="center" />
+            </div>
+        </section>
+    );
 }
