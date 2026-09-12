@@ -1,6 +1,6 @@
 import React from 'react';
 import { useThemeCustomizer } from '@public/components/theme/ThemeCustomizerContext';
-import { sectionKey } from './index';
+import { sectionKey } from './keys';
 import { resolveVariant } from './registry';
 import { readableText } from '../theme/design-system';
 
