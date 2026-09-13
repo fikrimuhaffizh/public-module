@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Support\Facades\Route;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Page extends Model implements HasMedia
@@ -52,7 +53,7 @@ class Page extends Model implements HasMedia
      */
     public function publicUrl(): string
     {
-        return \Illuminate\Support\Facades\Route::has('public.page.show')
+        return Route::has('public.page.show')
             ? route('public.page.show', ['page' => $this->slug])
             : url('/page/'.$this->slug);
     }

@@ -17,6 +17,8 @@ use Modules\Public\Http\Controllers\Cms\ProductController;
 use Modules\Public\Http\Controllers\Cms\StatisticController;
 use Modules\Public\Http\Controllers\Cms\TestimonialController;
 use Modules\Public\Http\Controllers\Web\PublicController;
+use Modules\Public\Http\Controllers\Cms\DashboardController;
+use Modules\Public\Http\Controllers\Cms\SectionControllerUnified;
 use App\Http\Middleware\HandleInertiaRequests;
 
 /*
@@ -27,7 +29,7 @@ use App\Http\Middleware\HandleInertiaRequests;
 
 // Admin Area (CMS)
 Route::middleware(['auth', 'check.expired', 'module:public'])->prefix('cms')->name('cms.')->group(function () {
-    Route::get('/dashboard', [Modules\Public\Http\Controllers\Cms\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Section Management (was landing)
     Route::get('section', [SectionController::class, 'index'])->name('landing.index');
@@ -68,14 +70,14 @@ Route::middleware(['auth', 'check.expired', 'module:public'])->prefix('cms')->na
     Route::resource('cta', CtaController::class)->except('show');
 
     // ── Unified Section routes ──────────────────────────────────────
-    Route::get("section/unified", [Modules\Public\Http\Controllers\Cms\SectionControllerUnified::class, "index"])->name("section.index");
-    Route::get("section/unified/create", [Modules\Public\Http\Controllers\Cms\SectionControllerUnified::class, "create"])->name("section.create");
-    Route::post("section/unified", [Modules\Public\Http\Controllers\Cms\SectionControllerUnified::class, "store"])->name("section.store");
-    Route::get("section/unified/{section}/edit", [Modules\Public\Http\Controllers\Cms\SectionControllerUnified::class, "edit"])->name("section.edit");
-    Route::put("section/unified/{section}", [Modules\Public\Http\Controllers\Cms\SectionControllerUnified::class, "update"])->name("section.update");
-    Route::delete("section/unified/{section}", [Modules\Public\Http\Controllers\Cms\SectionControllerUnified::class, "destroy"])->name("section.destroy");
-    Route::post("section/unified/{section}/toggle", [Modules\Public\Http\Controllers\Cms\SectionControllerUnified::class, "toggle"])->name("section.toggle");
-    Route::post("section/unified/reorder", [Modules\Public\Http\Controllers\Cms\SectionControllerUnified::class, "reorder"])->name("section.reorder");
+    Route::get("section/unified", [SectionControllerUnified::class, "index"])->name("section.index");
+    Route::get("section/unified/create", [SectionControllerUnified::class, "create"])->name("section.create");
+    Route::post("section/unified", [SectionControllerUnified::class, "store"])->name("section.store");
+    Route::get("section/unified/{section}/edit", [SectionControllerUnified::class, "edit"])->name("section.edit");
+    Route::put("section/unified/{section}", [SectionControllerUnified::class, "update"])->name("section.update");
+    Route::delete("section/unified/{section}", [SectionControllerUnified::class, "destroy"])->name("section.destroy");
+    Route::post("section/unified/{section}/toggle", [SectionControllerUnified::class, "toggle"])->name("section.toggle");
+    Route::post("section/unified/reorder", [SectionControllerUnified::class, "reorder"])->name("section.reorder");
 
     // Pricing
     Route::post('pricing/reorder', [PricingController::class, 'reorder'])->name('pricing.reorder');

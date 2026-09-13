@@ -3,6 +3,7 @@
 namespace Modules\Public\Http\Requests;
 
 use App\Http\Requests\BaseRequest;
+use Modules\Public\Models\Section;
 use Illuminate\Validation\Rule;
 
 class SectionRequest extends BaseRequest
@@ -13,7 +14,7 @@ class SectionRequest extends BaseRequest
         $sectionId = $section?->getKey();
         $type = $this->input('type', $section?->type ?? 'feature');
 
-        $allowedTypes = implode(',', array_keys(\Modules\Public\Models\Section::TYPES));
+        $allowedTypes = implode(',', array_keys(Section::TYPES));
         // CTA is also allowed as a type (for backward compatibility) but not shown in UI
         $allowedTypes .= ',cta';
 
@@ -73,7 +74,7 @@ class SectionRequest extends BaseRequest
         }
 
         // Image validation for all types that have media
-        $mediaField = \Modules\Public\Models\Section::MEDIA_COLLECTIONS[$type] ?? null;
+        $mediaField = Section::MEDIA_COLLECTIONS[$type] ?? null;
         if ($mediaField) {
             $rules[$mediaField] = ['nullable', 'image', 'mimes:jpeg,jpg,png,webp', 'max:4096'];
         }

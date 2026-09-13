@@ -1,5 +1,8 @@
+@php
+use Modules\Public\Models\Section;
+@endphp
 <x-ui.form-modal
-    :title="$section->exists ? 'Edit ' . \Modules\Public\Models\Section::typeLabel($type) : 'Tambah ' . \Modules\Public\Models\Section::typeLabel($type)"
+    :title="$section->exists ? 'Edit ' . Section::typeLabel($type) : 'Tambah ' . Section::typeLabel($type)"
     :route="$section->exists ? route('cms.section.update', $section) : route('cms.section.store')"
     :method="$section->exists ? 'PUT' : 'POST'"
     size="modal-xl"
@@ -121,7 +124,7 @@
 
             {{-- Media upload --}}
             @php
-                $mediaField = \Modules\Public\Models\Section::MEDIA_COLLECTIONS[$type] ?? null;
+                $mediaField = Section::MEDIA_COLLECTIONS[$type] ?? null;
                 $mediaLabel = match($type) {
                     'feature', 'product', 'pricing', 'faq', 'statistic' => 'Gambar/Cover',
                     'client', 'partner'  => 'Logo',
