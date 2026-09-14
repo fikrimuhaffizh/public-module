@@ -65,6 +65,6 @@ class FAQController extends Controller
             return jsonSuccess('Urutan FAQ berhasil diperbarui.');
         }
 
-        return jsonError('Data urutan tidak valid.');
+        return jsonError('Data urutan tidak valid.', 422);
     }
 }

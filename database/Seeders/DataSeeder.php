@@ -3,18 +3,27 @@
 namespace Modules\Public\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Modules\Public\Models\LandingPageSetting;
 use Modules\Public\Models\LandingSection;
 
-class RefSeeder extends Seeder
+/**
+ * DataSeeder — data default tenant baru untuk Public (landing page).
+ *
+ * Isi: 14 section landing page default (topbar, navbar, hero, produk, dst).
+ * PERHATIAN: forceDelete dulu lalu recreate — bukan idempotent murni,
+ * perubahan manual di DB akan tertimpa saat seeder dijalankan ulang.
+ */
+class DataSeeder extends Seeder
 {
     public function run(): void
     {
-        $tenantId = 1;
+        $tenantId = (int) getPermissionsTeamId() ?: 1;
         $this->seedLandingSections($tenantId);
-        $this->command->info('✅ RefSeeder (Public) completed.');
+        $this->command->info('✅ DataSeeder (Public) completed.');
     }
 
+    // ================= LANDING PAGE SECTIONS =================
+    // Struktur & konten awal landing page. area: top → middle → bottom,
+    // urut berdasarkan sort_order per area. Ubah teks default di sini.
     private function seedLandingSections(int $tenantId): void
     {
         LandingSection::withoutGlobalScopes()->where('tenant_id', $tenantId)->forceDelete();
@@ -39,7 +48,9 @@ class RefSeeder extends Seeder
         foreach ($sections as $section) {
             $data = ['tenant_id' => $tenantId, 'is_active' => true];
             foreach (['section_key', 'section_name', 'area', 'component_name', 'variant', 'pre_title', 'title', 'post_title', 'subtitle', 'description', 'sort_order', 'limit_data'] as $field) {
-                if (isset($section[$field])) $data[$field] = $section[$field];
+                if (isset($section[$field])) {
+                    $data[$field] = $section[$field];
+                }
             }
             LandingSection::create($data);
         }

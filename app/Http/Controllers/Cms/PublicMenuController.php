@@ -136,7 +136,7 @@ class PublicMenuController extends Controller
             return jsonSuccess('Struktur menu berhasil diperbarui.');
         }
 
-        return jsonError('Data struktur tidak valid.');
+        return jsonError('Data struktur tidak valid.', 422);
     }
 
     public function reorderPosition(Request $request)

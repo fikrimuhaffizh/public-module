@@ -6,6 +6,7 @@
         "Modules\\Public\\Providers\\PublicServiceProvider"
     ],
     "permission_seeder": "Modules\\\\Public\\\\Database\\\\Seeders\\\\RolePermissionSeeder",
+    "data_seeder": "Modules\\\\Public\\\\Database\\\\Seeders\\\\DataSeeder",
     "migration": {
         "seeds": [
             "Modules\\Public\\Database\\Seeders\\DatabaseSeeder",

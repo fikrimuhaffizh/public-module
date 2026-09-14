@@ -37,7 +37,7 @@ class SlideshowController extends Controller
             return jsonSuccess('Urutan slideshow berhasil diperbarui.');
         }
 
-        return jsonError('Data urutan tidak valid.');
+        return jsonError('Data urutan tidak valid.', 422);
     }
 
     public function data(Request $request)
