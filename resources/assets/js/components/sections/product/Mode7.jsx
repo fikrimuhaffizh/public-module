@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 
 /**
- * Product Mode 7 — Overlay: gambar + overlay teks.
+ * Product Mode 7 - Overlay: gambar + overlay teks.
  * Animasi: fade-up.
  */
 export default function ProductMode7({ section, data }) {

@@ -3,13 +3,13 @@
  *
  * Menambah tema baru:
  *   1. Buat file di folder ini (default export, terima prop `data`).
- *   2. Daftarkan di bawah — key HARUS sama dengan key di
+ *   2. Daftarkan di bawah - key HARUS sama dengan key di
  *      Modules/Public/config/themes.php (backend).
  *   3. Tambahkan file `resources/assets/css/themes/<key>.css` (blok `.theme-<key>`)
  *      lalu daftarkan @import-nya di resources/assets/css/landing.css.
  *
  * Metadata tema (nama, kategori, deskripsi, ikon) datang dari backend via
- * prop Inertia `themeOptions` — jangan duplikasi label di sini.
+ * prop Inertia `themeOptions` - jangan duplikasi label di sini.
  */
 import ModernTemplate from './ModernTemplate';
 import EditorialTemplate from './EditorialTemplate';
@@ -25,7 +25,7 @@ import TracerTemplate from './TracerTemplate';
 
 // ── UMKM ──────────────────────────────────────────────────────────────
 // Tema kurasi tangan (komponen khusus):
-// Tema hasil CLI public:generate-themes — SATU komponen generik (data-driven).
+// Tema hasil CLI public:generate-themes - SATU komponen generik (data-driven).
 // Layout & font dibaca dari metadata tema (prop Inertia themeOptions), jadi
 // menambah tema TIDAK perlu menulis komponen baru.
 import UmkmGenericTemplate from './UmkmGenericTemplate';

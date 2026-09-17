@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from '@inertiajs/react';
 
 /**
- * Announcement Mode 8 — Minimal list: list bersih.
+ * Announcement Mode 8 - Minimal list: list bersih.
  * Animasi: stagger.
  */
 export default function AnnouncementMode8({ section, data }) {

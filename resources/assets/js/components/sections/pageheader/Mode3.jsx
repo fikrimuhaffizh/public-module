@@ -3,8 +3,8 @@ import { Link } from '@inertiajs/react';
 import { BookOpen, ChevronRight } from 'lucide-react';
 
 /**
- * Page Header Mode 3 — dramatis: breadcrumb + badge kategori + judul di atas
- * latar gradien primary→gelap dengan aksen ornamen. Cocok untuk detail berita
+ * Page Header Mode 3 - dramatis: breadcrumb + badge kategori + judul di atas
+ * latar gradien primarykegelap dengan aksen ornamen. Cocok untuk detail berita
  * dan halaman statis utama. Prop: { context, site }
  */
 export default function PageHeaderMode3({ context, site }) {

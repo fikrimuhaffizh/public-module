@@ -1,7 +1,7 @@
 import React from 'react';
 import { Section, combinedText, TestimonialRating } from '../index';
 
-/** Testimoni Mode 3 — daftar kutipan satu kolom dengan pembatas tegas. Prop: { section, data } */
+/** Testimoni Mode 3 - daftar kutipan satu kolom dengan pembatas tegas. Prop: { section, data } */
 export default function TestimonialMode3({ section, data }) {
     const list = data.testimonials || [];
     if (!list.length) return null;

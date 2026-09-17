@@ -5,6 +5,7 @@ namespace Modules\Public\Http\Controllers\Cms;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Modules\Public\Http\Requests\PublicMenuRequest;
+use Modules\Public\Http\Requests\ReorderMenuPositionRequest;
 use Modules\Public\Http\Requests\ReorderRequest;
 use Modules\Public\Models\Menu;
 use Modules\Public\Services\PublicMenuService;
@@ -139,15 +140,11 @@ class PublicMenuController extends Controller
         return jsonError('Data struktur tidak valid.', 422);
     }
 
-    public function reorderPosition(Request $request)
+    public function reorderPosition(ReorderMenuPositionRequest $request)
     {
-        $request->validate([
-            'ids' => 'required|array',
-            'ids.*' => 'required|string',
-            'position' => 'required|string',
-        ]);
+        $validated = $request->validated();
 
-        $this->menuService->reorderForPosition($request->input('ids'), $request->input('position'));
+        $this->menuService->reorderForPosition($validated['ids'], $validated['position']);
 
         return jsonSuccess('Urutan berhasil diperbarui.');
     }

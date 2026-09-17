@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * Client Mode 7 — Marquee: logo berjalan otomatis.
+ * Client Mode 7 - Marquee: logo berjalan otomatis.
  * Animasi: CSS infinite scroll.
  */
 export default function ClientMode7({ section, data }) {

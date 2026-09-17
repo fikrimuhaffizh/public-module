@@ -1,17 +1,17 @@
-/* ============================================================
-   SECTIONS EXTENDED — CSS untuk Mode 4-8 yang baru ditambahkan
+/*
+   SECTIONS EXTENDED - CSS untuk Mode 4-8 yang baru ditambahkan
    
    Untuk junior programmer:
      - Cari section dengan komentar "=== SECTION NAME ==="
-     - Setiap mode ada komentar "MODE X — Nama"
+     - Setiap mode ada komentar "MODE X - Nama"
      - Copy pattern yang ada untuk buat mode baru
-   ============================================================ */
+   */
 
 /* ══════════════════════════════════════════════════════════════
-   CTA — Mode 4-8
+   CTA - Mode 4-8
    ══════════════════════════════════════════════════════════════ */
 
-/* MODE 4 — Split */
+/* MODE 4 - Split */
 .cta--split { padding: var(--section-py) 0 }
 .cta-split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center }
 .cta-split-copy h2 { font-size: clamp(28px, 4vw, 42px); margin: 12px 0 }
@@ -21,7 +21,7 @@
 .cta-split-placeholder { width: 100%; aspect-ratio: 4/3; background: var(--tint, #f1f5f9); border-radius: var(--radius) }
 @media (max-width: 800px) { .cta-split-grid { grid-template-columns: 1fr } }
 
-/* MODE 5 — Banner */
+/* MODE 5 - Banner */
 .cta--banner { padding: var(--section-py) 0 }
 .cta-banner-inner {
     background: linear-gradient(135deg, var(--primary, #155eef), var(--primary-dark, #0b3b91));
@@ -32,7 +32,7 @@
 .cta-banner-inner p { color: rgba(255,255,255,.85); font-size: 17px; max-width: 520px; margin: 0 auto 28px }
 .cta-banner-inner .eyebrow { color: rgba(255,255,255,.8) }
 
-/* MODE 6 — Cards */
+/* MODE 6 - Cards */
 .cta--cards { padding: var(--section-py) 0 }
 .cta-cards-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 600px; margin: 0 auto }
 .cta-card-item {
@@ -42,10 +42,10 @@
 }
 @media (max-width: 600px) { .cta-cards-row { grid-template-columns: 1fr } }
 
-/* MODE 7 — Minimal */
+/* MODE 7 - Minimal */
 .cta--minimal { padding: var(--section-py) 0 }
 
-/* MODE 8 — Glow */
+/* MODE 8 - Glow */
 .cta--glow { padding: var(--section-py) 0 }
 .cta-glow-card {
     text-align: center; padding: clamp(2rem, 5vw, 3.5rem); border-radius: var(--radius, 20px);
@@ -60,10 +60,10 @@
 
 
 /* ══════════════════════════════════════════════════════════════
-   FEATURE — Mode 6-8
+   FEATURE - Mode 6-8
    ══════════════════════════════════════════════════════════════ */
 
-/* MODE 6 — Zigzag */
+/* MODE 6 - Zigzag */
 .feature--zigzag { padding: var(--section-py) 0 }
 .feature-zigzag-list { display: flex; flex-direction: column; gap: 48px }
 .feature-zigzag-row { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center }
@@ -76,7 +76,7 @@
 .feature-zigzag-placeholder { width: 100%; aspect-ratio: 16/10; background: var(--tint, #f1f5f9); border-radius: var(--radius) }
 @media (max-width: 800px) { .feature-zigzag-row { grid-template-columns: 1fr } }
 
-/* MODE 7 — Numbered */
+/* MODE 7 - Numbered */
 .feature--numbered { padding: var(--section-py) 0 }
 .feature-numbered-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 48px; align-items: start }
 .feature-numbered-header h2 { font-size: clamp(28px, 4vw, 42px); margin: 12px 0 }
@@ -87,7 +87,7 @@
 .feature-numbered-item p { color: var(--muted); font-size: 14px; margin: 0 }
 @media (max-width: 800px) { .feature-numbered-grid { grid-template-columns: 1fr } }
 
-/* MODE 8 — Tabs */
+/* MODE 8 - Tabs */
 .feature--tabs { padding: var(--section-py) 0 }
 .feature-tabs-nav { display: flex; gap: 8px; margin-bottom: 28px; justify-content: center; flex-wrap: wrap }
 .feature-tabs-btn {
@@ -104,10 +104,10 @@
 
 
 /* ══════════════════════════════════════════════════════════════
-   TESTIMONIAL — Mode 6-8
+   TESTIMONIAL - Mode 6-8
    ══════════════════════════════════════════════════════════════ */
 
-/* MODE 6 — Masonry */
+/* MODE 6 - Masonry */
 .testimonial--masonry { padding: var(--section-py) 0 }
 .testimonial-masonry-grid { columns: 3; column-gap: 20px }
 .testimonial-masonry-card { break-inside: avoid; margin-bottom: 20px; padding: 24px; border-radius: var(--radius); background: var(--card); border: 1px solid var(--border) }
@@ -120,7 +120,7 @@
 @media (max-width: 900px) { .testimonial-masonry-grid { columns: 2 } }
 @media (max-width: 600px) { .testimonial-masonry-grid { columns: 1 } }
 
-/* MODE 7 — Stack */
+/* MODE 7 - Stack */
 .testimonial--stack { padding: var(--section-py) 0 }
 .testimonial-stack-wrap { max-width: 560px; width: 100%; text-align: center }
 .testimonial-stack-card { padding: 36px; border-radius: var(--radius, 20px) }
@@ -139,7 +139,7 @@
 .testimonial-stack-nav button:hover { border-color: var(--primary); color: var(--primary) }
 .testimonial-stack-nav span { font-size: 13px; color: var(--muted) }
 
-/* MODE 8 — Minimal */
+/* MODE 8 - Minimal */
 .testimonial--minimal { padding: var(--section-py) 0 }
 .testimonial-minimal-quote { font-size: clamp(20px, 3vw, 28px); line-height: 1.5; font-style: italic; color: var(--foreground); margin: 0 0 24px }
 .testimonial-minimal-author { display: flex; align-items: center; gap: 10px; justify-content: center }
@@ -149,10 +149,10 @@
 
 
 /* ══════════════════════════════════════════════════════════════
-   FAQ — Mode 5-8
+   FAQ - Mode 5-8
    ══════════════════════════════════════════════════════════════ */
 
-/* MODE 5 — Two column */
+/* MODE 5 - Two column */
 .faq--two-col { padding: var(--section-py) 0 }
 .faq-two-col-grid { display: grid; grid-template-columns: 1.3fr .7fr; gap: 48px; align-items: start }
 .faq-two-col-item {
@@ -170,7 +170,7 @@
 .faq-two-col-info p { color: var(--muted) }
 @media (max-width: 800px) { .faq-two-col-grid { grid-template-columns: 1fr } }
 
-/* MODE 6 — Center */
+/* MODE 6 - Center */
 .faq--center { padding: var(--section-py) 0 }
 .faq-center-list { display: flex; flex-direction: column; gap: 12px }
 .faq-center-item { border: 1px solid var(--border, #e2e8f0); border-radius: var(--radius); overflow: hidden }
@@ -182,7 +182,7 @@
 .faq-center-item[open] summary::before { content: '−' }
 .faq-center-answer { padding: 0 20px 16px; color: var(--muted); line-height: 1.65 }
 
-/* MODE 7 — Grid */
+/* MODE 7 - Grid */
 .faq--grid { padding: var(--section-py) 0 }
 .faq-grid-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px }
 .faq-grid-card { padding: 24px; border-radius: var(--radius); background: var(--card); border: 1px solid var(--border) }
@@ -190,7 +190,7 @@
 .faq-grid-a { color: var(--muted); font-size: 14px; margin: 0; line-height: 1.6 }
 @media (max-width: 700px) { .faq-grid-list { grid-template-columns: 1fr } }
 
-/* MODE 8 — Tabs */
+/* MODE 8 - Tabs */
 .faq--tabs { padding: var(--section-py) 0 }
 .faq-tabs-nav { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px }
 .faq-tabs-btn {
@@ -205,17 +205,17 @@
 
 
 /* ══════════════════════════════════════════════════════════════
-   STATISTIC — Mode 4-8
+   STATISTIC - Mode 4-8
    ══════════════════════════════════════════════════════════════ */
 
-/* MODE 4 — Cards */
+/* MODE 4 - Cards */
 .stats--cards { padding: var(--section-py) 0 }
 .stats-cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px }
 .stats-card { padding: 28px; text-align: center; border-radius: var(--radius); background: var(--card); border: 1px solid var(--border) }
 .stats-card-value { display: block; font-size: clamp(28px, 4vw, 40px); font-weight: 800; margin-bottom: 4px }
 .stats-card-label { font-size: 14px; color: var(--muted) }
 
-/* MODE 5 — Scroll */
+/* MODE 5 - Scroll */
 .stats--scroll { padding: var(--section-py) 0 }
 .stats-scroll-track { display: flex; gap: 32px; overflow-x: auto; padding: 8px 0; scrollbar-width: thin }
 .stats-scroll-item {
@@ -225,7 +225,7 @@
 .stats-scroll-item strong { font-size: 28px; font-weight: 800 }
 .stats-scroll-item span { font-size: 13px; color: var(--muted) }
 
-/* MODE 6 — Split */
+/* MODE 6 - Split */
 .stats--split { padding: var(--section-py) 0 }
 .stats-split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center }
 .stats-split-list h2 { font-size: clamp(28px, 4vw, 42px); margin: 12px 0 24px }
@@ -235,14 +235,14 @@
 .stats-split-placeholder { width: 100%; aspect-ratio: 1; background: var(--tint, #f1f5f9); border-radius: var(--radius, 20px) }
 @media (max-width: 800px) { .stats-split-grid { grid-template-columns: 1fr } }
 
-/* MODE 7 — Band */
+/* MODE 7 - Band */
 .stats--band { padding: var(--section-py) 0; background: var(--tint, #f1f5f9) }
 .stats-band-inner { display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 32px; padding: 32px 0 }
 .stats-band-item { display: flex; flex-direction: column; gap: 4px; text-align: center }
 .stats-band-item strong { font-size: clamp(24px, 3.5vw, 36px); font-weight: 800; color: var(--foreground) }
 .stats-band-item span { font-size: 14px; color: var(--muted) }
 
-/* MODE 8 — Large */
+/* MODE 8 - Large */
 .stats--large { padding: var(--section-py) 0 }
 .stats-large-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; text-align: center }
 .stats-large-item { display: flex; flex-direction: column; gap: 4px }
@@ -252,10 +252,10 @@
 
 
 /* ══════════════════════════════════════════════════════════════
-   PRODUCT — Mode 5-8
+   PRODUCT - Mode 5-8
    ══════════════════════════════════════════════════════════════ */
 
-/* MODE 5 — Featured */
+/* MODE 5 - Featured */
 .product--featured { padding: var(--section-py) 0 }
 .product-featured-grid { display: grid; grid-template-columns: 1.3fr .7fr; gap: 24px; align-items: start }
 .product-featured-main { padding: 0; overflow: hidden }
@@ -271,7 +271,7 @@
 .product-featured-item span { font-size: 13px; color: var(--muted) }
 @media (max-width: 800px) { .product-featured-grid { grid-template-columns: 1fr } }
 
-/* MODE 6 — Bento */
+/* MODE 6 - Bento */
 .product--bento { padding: var(--section-py) 0 }
 .product-bento-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px }
 .product-bento-card { padding: 0; overflow: hidden }
@@ -281,7 +281,7 @@
 .product-bento-card--large { grid-column: span 2 }
 .product-bento-card--large img { aspect-ratio: 21/9 }
 
-/* MODE 7 — Overlay */
+/* MODE 7 - Overlay */
 .product--overlay { padding: var(--section-py) 0 }
 .product-overlay-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px }
 .product-overlay-card { position: relative; border-radius: var(--radius); overflow: hidden; min-height: 280px }
@@ -296,7 +296,7 @@
 .product-overlay-content a { color: #fff; font-weight: 600; display: inline-flex; align-items: center; gap: 4px }
 @media (max-width: 700px) { .product-overlay-grid { grid-template-columns: 1fr } }
 
-/* MODE 8 — Minimal */
+/* MODE 8 - Minimal */
 .product--minimal { padding: var(--section-py) 0 }
 .product-minimal-list { display: flex; flex-direction: column; gap: 0 }
 .product-minimal-item {
@@ -311,10 +311,10 @@
 
 
 /* ══════════════════════════════════════════════════════════════
-   ANNOUNCEMENT — Mode 5-8
+   ANNOUNCEMENT - Mode 5-8
    ══════════════════════════════════════════════════════════════ */
 
-/* MODE 5 — Featured */
+/* MODE 5 - Featured */
 .news--featured { padding: var(--section-py) 0 }
 .news-featured-grid { display: grid; grid-template-columns: 1.3fr .7fr; gap: 40px; align-items: start }
 .news-featured-main h2 { font-size: clamp(28px, 4vw, 42px); margin: 12px 0 24px }
@@ -334,7 +334,7 @@
 .news-featured-list-item span { font-size: 12px; color: var(--muted) }
 @media (max-width: 800px) { .news-featured-grid { grid-template-columns: 1fr } }
 
-/* MODE 6 — Timeline */
+/* MODE 6 - Timeline */
 .news--timeline { padding: var(--section-py) 0 }
 .news-timeline { position: relative; padding-left: 28px }
 .news-timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: var(--border, #e2e8f0) }
@@ -348,7 +348,7 @@
 .news-timeline-content h4 { font-size: 17px; margin: 4px 0 6px }
 .news-timeline-content p { color: var(--muted); font-size: 14px; margin: 0; line-height: 1.5 }
 
-/* MODE 7 — Scroll */
+/* MODE 7 - Scroll */
 .news--scroll { padding: var(--section-py) 0 }
 .news-scroll-track { display: flex; gap: 20px; overflow-x: auto; padding: 8px 0; scrollbar-width: thin }
 .news-scroll-card { min-width: 280px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); flex: none; transition: box-shadow .2s }
@@ -358,7 +358,7 @@
 .news-scroll-date { font-size: 12px; color: var(--muted) }
 .news-scroll-body h4 { font-size: 16px; margin: 4px 0 8px }
 
-/* MODE 8 — Minimal */
+/* MODE 8 - Minimal */
 .news--minimal { padding: var(--section-py) 0 }
 .news-minimal-list { display: flex; flex-direction: column; gap: 0 }
 .news-minimal-item { padding: 16px 0; border-bottom: 1px solid var(--border) }
@@ -368,10 +368,10 @@
 
 
 /* ══════════════════════════════════════════════════════════════
-   CLIENT — Mode 6-8
+   CLIENT - Mode 6-8
    ══════════════════════════════════════════════════════════════ */
 
-/* MODE 6 — Bento */
+/* MODE 6 - Bento */
 .client-logos--bento { padding: var(--section-py) 0 }
 .client-bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px }
 .client-bento-cell {
@@ -386,7 +386,7 @@
 .client-bento-name { font-size: 13px; color: var(--muted) }
 @media (max-width: 700px) { .client-bento-grid { grid-template-columns: repeat(2, 1fr) } .client-bento-cell--large { grid-column: span 1 } }
 
-/* MODE 7 — Marquee */
+/* MODE 7 - Marquee */
 .client-logos--marquee { padding: var(--section-py) 0; overflow: hidden }
 .client-marquee { overflow: hidden; mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent) }
 .client-marquee-track { display: flex; gap: 40px; animation: marquee-scroll 30s linear infinite; width: max-content }
@@ -396,7 +396,7 @@
 .client-marquee-initial { font-size: 18px; font-weight: 700; color: var(--muted) }
 @keyframes marquee-scroll { from { transform: translateX(0) } to { transform: translateX(-50%) } }
 
-/* MODE 8 — Minimal */
+/* MODE 8 - Minimal */
 .client-logos--minimal { padding: var(--section-py) 0 }
 .client-minimal-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 32px 48px }
 .client-minimal-item { opacity: .45; transition: opacity .3s; display: flex; align-items: center; justify-content: center }
@@ -406,14 +406,14 @@
 
 
 /* ══════════════════════════════════════════════════════════════
-   PAGEHEADER — Mode 4-8
+   PAGEHEADER - Mode 4-8
    ══════════════════════════════════════════════════════════════ */
 
-/* MODE 4 — Minimal Center */
+/* MODE 4 - Minimal Center */
 .pageheader--minimal-center { padding: clamp(2rem, 5vw, 4rem) 0; text-align: center }
 .pageheader--minimal-center h1 { font-size: clamp(28px, 4vw, 44px); margin: 12px 0 8px }
 
-/* MODE 5 — Image */
+/* MODE 5 - Image */
 .pageheader--image {
     position: relative; padding: clamp(3rem, 6vw, 5rem) 0; color: #fff;
     background-size: cover; background-position: center
@@ -421,28 +421,28 @@
 .pageheader-image-scrim { position: absolute; inset: 0; background: rgba(8,15,30,.65); z-index: 1 }
 .pageheader--image h1 { font-size: clamp(28px, 4vw, 44px); margin: 12px 0 8px; color: #fff }
 
-/* MODE 6 — Gradient */
+/* MODE 6 - Gradient */
 .pageheader--gradient {
     padding: clamp(3rem, 6vw, 5rem) 0; text-align: center;
     background: linear-gradient(135deg, var(--primary, #155eef), var(--primary-dark, #0b3b91))
 }
 .pageheader--gradient h1 { font-size: clamp(28px, 4vw, 44px); margin: 12px 0 8px; color: #fff }
 
-/* MODE 7 — Split */
+/* MODE 7 - Split */
 .pageheader--split { padding: clamp(2rem, 4vw, 3rem) 0 }
 .pageheader-split-grid { display: grid; grid-template-columns: auto 1fr; gap: 32px; align-items: end }
 .pageheader-split-title h1 { font-size: clamp(28px, 4vw, 44px); margin: 0 }
 
-/* MODE 8 — Large */
+/* MODE 8 - Large */
 .pageheader--large { padding: clamp(2rem, 4vw, 3.5rem) 0 }
 .pageheader-large-title { font-size: clamp(36px, 6vw, 64px); font-weight: 800; line-height: 1.05; letter-spacing: -.03em; margin: 12px 0 8px }
 
 
 /* ══════════════════════════════════════════════════════════════
-   PRICE — Mode 3-8
+   PRICE - Mode 3-8
    ══════════════════════════════════════════════════════════════ */
 
-/* MODE 3 — Horizontal */
+/* MODE 3 - Horizontal */
 .price-horizontal-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px }
 .price-horizontal-item { padding: 24px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--card); transition: border-color .2s }
 .price-horizontal-item:hover { border-color: var(--primary) }
@@ -452,7 +452,7 @@
 .price-horizontal-desc { color: var(--muted); font-size: 14px; margin: 0 0 16px }
 @media (max-width: 800px) { .price-horizontal-list { grid-template-columns: 1fr } }
 
-/* MODE 4 — Table */
+/* MODE 4 - Table */
 .price-table-wrap { overflow-x: auto }
 .price-table { width: 100%; border-collapse: collapse; text-align: center }
 .price-table th, .price-table td { padding: 12px 16px; border-bottom: 1px solid var(--border) }
@@ -461,12 +461,12 @@
 .price-table--featured { background: color-mix(in srgb, var(--primary, #155eef) 5%, transparent) }
 .price-table-price { font-size: 14px; color: var(--primary); font-weight: 700; margin-top: 4px }
 
-/* MODE 5 — Toggle */
+/* MODE 5 - Toggle */
 .price-toggle-wrap { display: flex; gap: 4px; justify-content: center; margin-bottom: 28px; background: var(--tint, #f1f5f9); padding: 4px; border-radius: var(--radius); width: fit-content }
 .price-toggle-btn { padding: 8px 24px; border: none; border-radius: calc(var(--radius) - 4px); background: transparent; font-weight: 600; font-size: 14px; cursor: pointer; transition: all .2s }
 .price-toggle-btn.active { background: var(--card, #fff); color: var(--foreground); box-shadow: var(--shadow-sm) }
 
-/* MODE 6 — Minimal Center */
+/* MODE 6 - Minimal Center */
 .price-minimal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; text-align: center }
 .price-minimal-card { padding: 32px 24px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--card) }
 .price-minimal-card--featured { border-color: var(--primary); position: relative }
@@ -480,7 +480,7 @@
 .price-minimal-card .ui-btn { width: 100% }
 @media (max-width: 800px) { .price-minimal-grid { grid-template-columns: 1fr } }
 
-/* MODE 7 — Split */
+/* MODE 7 - Split */
 .price-split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start }
 .price-split-list { display: flex; flex-direction: column; gap: 12px }
 .price-split-item { padding: 16px 20px; border: 1px solid var(--border); border-radius: var(--radius); transition: border-color .2s }
@@ -496,7 +496,7 @@
 .price-split-detail .ui-btn { width: 100%; margin-top: 16px }
 @media (max-width: 800px) { .price-split-grid { grid-template-columns: 1fr } }
 
-/* MODE 8 — Glow */
+/* MODE 8 - Glow */
 .price-glow-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px }
 .price-glow-card {
     text-align: center; padding: 32px 24px; border-radius: var(--radius, 20px);
@@ -527,10 +527,10 @@
 
 
 /* ══════════════════════════════════════════════════════════════
-   NAVBAR — Mode 5-8
+   NAVBAR - Mode 5-8
    ══════════════════════════════════════════════════════════════ */
 
-/* MODE 5 — Centered */
+/* MODE 5 - Centered */
 .site-header--centered {
     background: var(--background, #fff);
     border-bottom: 1px solid var(--border);
@@ -589,7 +589,7 @@
     top: 12px
 }
 
-/* MODE 6 — Premium Glass (Stripe/Linear inspired) */
+/* MODE 6 - Premium Glass (Stripe/Linear inspired) */
 .site-header--glass {
     background: rgba(255, 255, 255, 0.72);
     backdrop-filter: blur(20px) saturate(180%);
@@ -648,7 +648,7 @@
     border-color: var(--foreground)
 }
 
-/* MODE 7 — Minimal Clean (Vercel/Notion inspired) */
+/* MODE 7 - Minimal Clean (Vercel/Notion inspired) */
 .site-header--bordered {
     background: var(--background, #fff);
     border-bottom: 1px solid var(--border, rgba(0,0,0,.06));
@@ -698,7 +698,7 @@
     border-color: var(--foreground)
 }
 
-/* MODE 8 — Premium Dark (Linear/Arc inspired) */
+/* MODE 8 - Premium Dark (Linear/Arc inspired) */
 .site-header--dark {
     background: linear-gradient(180deg, #0f172a 0%, #1a2332 100%);
     position: sticky;
@@ -765,17 +765,17 @@
 
 
 /* ══════════════════════════════════════════════════════════════
-   FOOTER — Mode 5-8
+   FOOTER - Mode 5-8
    ══════════════════════════════════════════════════════════════ */
 
-/* MODE 5 — Minimal Center */
+/* MODE 5 - Minimal Center */
 .site-footer--minimal-center { padding: 48px 0 24px; border-top: 1px solid var(--border); text-align: center }
 .footer-logo { height: 28px; margin-bottom: 16px; object-fit: contain }
 .footer-nav-center { display: flex; gap: 24px; justify-content: center; margin-bottom: 16px; flex-wrap: wrap }
 .footer-nav-center a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500 }
 .footer-copy { font-size: 13px; color: var(--muted) }
 
-/* MODE 6 — Bordered */
+/* MODE 6 - Bordered */
 .site-footer--bordered { padding: 48px 0 24px; border-top: 1px solid var(--border) }
 .footer-bordered-grid { display: grid; grid-template-columns: 1.5fr repeat(2, 1fr); gap: 40px; margin-bottom: 32px }
 .footer-bordered-brand .brand { font-size: 18px; font-weight: 800; display: block; margin: 8px 0 }
@@ -785,7 +785,7 @@
 .footer-bordered-copy { border-top: 1px solid var(--border); padding-top: 16px; font-size: 13px; color: var(--muted); text-align: center }
 @media (max-width: 700px) { .footer-bordered-grid { grid-template-columns: 1fr } }
 
-/* MODE 7 — Newsletter */
+/* MODE 7 - Newsletter */
 .site-footer--newsletter { padding: 48px 0 24px; border-top: 1px solid var(--border) }
 .footer-newsletter-row { display: flex; justify-content: space-between; align-items: center; gap: 32px; margin-bottom: 24px }
 .footer-newsletter-copy h4 { font-size: 18px; margin: 0 0 4px }
@@ -796,7 +796,7 @@
 .footer-newsletter-links a { color: var(--muted); text-decoration: none; font-size: 14px }
 @media (max-width: 700px) { .footer-newsletter-row { flex-direction: column; text-align: center } .footer-newsletter-form { flex-direction: column; width: 100% } .footer-newsletter-input { min-width: 0; width: 100% } }
 
-/* MODE 8 — Gradient */
+/* MODE 8 - Gradient */
 .site-footer--gradient {
     padding: 48px 0 24px;
     background: linear-gradient(135deg, #0f172a, #1e293b); color: #fff
@@ -812,10 +812,10 @@
 
 
 /* ══════════════════════════════════════════════════════════════
-   TOPBAR — Mode 4-8
+   TOPBAR - Mode 4-8
    ══════════════════════════════════════════════════════════════ */
 
-/* MODE 4 — Minimal Center */
+/* MODE 4 - Minimal Center */
 .topbar--minimal-center {
     background: var(--background, #fff);
     border-bottom: 1px solid var(--border, rgba(0,0,0,.06))
@@ -827,7 +827,7 @@
     color: var(--primary)
 }
 
-/* MODE 5 — Gradient */
+/* MODE 5 - Gradient */
 .topbar--gradient {
     background: linear-gradient(135deg, var(--primary, #155eef) 0%, var(--primary-dark, #0b3b91) 100%);
     color: #fff
@@ -845,7 +845,7 @@
     color: #fff
 }
 
-/* MODE 6 — Icons */
+/* MODE 6 - Icons */
 .topbar--icons {
     background: var(--background, #fff);
     border-bottom: 1px solid var(--border, rgba(0,0,0,.06))
@@ -866,7 +866,7 @@
     color: var(--primary)
 }
 
-/* MODE 7 — Social */
+/* MODE 7 - Social */
 .topbar--social {
     background: var(--background, #fff);
     border-bottom: 1px solid var(--border, rgba(0,0,0,.06))
@@ -888,7 +888,7 @@
     color: var(--primary)
 }
 
-/* MODE 8 — Dark Premium */
+/* MODE 8 - Dark Premium */
 .topbar--dark {
     background: linear-gradient(180deg, #0f172a 0%, #1a2332 100%);
     color: rgba(255,255,255,.85);

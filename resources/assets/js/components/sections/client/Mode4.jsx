@@ -2,7 +2,7 @@ import React from 'react';
 import { Reveal } from '@public/components/motion/effects';
 import { sectionHeading } from '../index';
 
-/** Klien/Logo Mode 4 — awan logo: logo melayang naik-turun lembut dengan jeda acak, pause saat hover. Prop: { section, data } */
+/** Klien/Logo Mode 4 - awan logo: logo melayang naik-turun lembut dengan jeda acak, pause saat hover. Prop: { section, data } */
 export default function ClientMode4({ section, data }) {
     const clients = data.landing?.clients || [];
     if (!clients.length) return null;

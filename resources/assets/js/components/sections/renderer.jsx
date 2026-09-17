@@ -6,18 +6,18 @@ import { readableText } from '../theme/design-system';
 
 /**
  * Section yang dirender layout-level (PublicLayout), bukan dari alur konten
- * template — variant-nya dipakai di navbar/footer, jadi dilewati di sini.
+ * template - variant-nya dipakai di navbar/footer, jadi dilewati di sini.
  */
 const LAYOUT_SECTIONS = ['navbar', 'footer', 'topbar', 'pageheader'];
 
-/** Elemen root yang sah untuk komponen variant — lihat kontrak di registry.js. */
+/** Elemen root yang sah untuk komponen variant - lihat kontrak di registry.js. */
 const ROOT_TAGS = ['SECTION', 'HEADER', 'FOOTER'];
 
 /**
  * Guard dev-mode: peringatkan saat komponen variant memakai elemen root
  * selain <section>/<header>/<footer> (mis. <div>), karena override warna
  * (.sec-colored) dan styling template tidak akan bekerja. Tanpa efek di
- * produksi — wrapper memakai display:contents (tidak membentuk kotak).
+ * produksi - wrapper memakai display:contents (tidak membentuk kotak).
  */
 function SectionRootGuard({ name, children }) {
     const ref = React.useRef(null);
@@ -49,17 +49,17 @@ export function contrastTextColor(bgHex) {
 
 /**
  * Style object (CSS vars) untuk override warna per-section dari Theme
- * Settings. Return null bila tidak ada override — dipakai di SectionVariantRenderer
+ * Settings. Return null bila tidak ada override - dipakai di SectionVariantRenderer
  * dan di layout (navbar/footer) supaya konsisten.
  *
  * Per-element color vars:
- *   --sec-pretext   → pretitle / eyebrow / badge
- *   --sec-title     → heading (h1/h2/h3)
- *   --sec-posttext  → subtitle / excerpt / description
- *   --sec-bg        → background section
- *   --sec-text      → general text (fallback)
- *   --sec-heading   → heading (fallback ke --sec-text)
- *   --sec-accent    → accent / CTA color
+ *   --sec-pretext   ke pretitle / eyebrow / badge
+ *   --sec-title     ke heading (h1/h2/h3)
+ *   --sec-posttext  ke subtitle / excerpt / description
+ *   --sec-bg        ke background section
+ *   --sec-text      ke general text (fallback)
+ *   --sec-heading   ke heading (fallback ke --sec-text)
+ *   --sec-accent    ke accent / CTA color
  *
  * Dynamic contrast: jika bg di-set tapi text/pretext/title/posttext TIDAK di-set,
  * otomatis hitung warna kontras (putih atau gelap) berdasarkan luminance bg.
@@ -97,7 +97,7 @@ export function sectionColorStyle(colors) {
  * Render satu section memakai komponen variant-nya.
  *
  * Urutan variant: override dari Theme Settings (offcanvas /preview, live)
- * → variant tersimpan di DB (section.variant) → variant pertama registry.
+ * ke variant tersimpan di DB (section.variant) ke variant pertama registry.
  * Override warna per-section diterapkan lewat wrapper .sec-colored (CSS vars).
  *
  * Komponen variant menerima { section, data } dan bertanggung jawab penuh

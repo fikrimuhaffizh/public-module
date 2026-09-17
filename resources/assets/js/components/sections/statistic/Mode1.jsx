@@ -2,7 +2,7 @@ import React from 'react';
 import { SectionHeader } from '../index';
 import CountUp from './CountUp';
 
-/** Statistik Mode 1 — grid counter sederhana (angka + label). Prop: { section, data } */
+/** Statistik Mode 1 - grid counter sederhana (angka + label). Prop: { section, data } */
 export default function StatsMode1({ section, data }) {
     const stats = data.landing?.statistics || [];
     if (!stats.length) return null;

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 /**
- * Feature Mode 8 — Tabs: fitur ditampilkan dalam tab switching.
+ * Feature Mode 8 - Tabs: fitur ditampilkan dalam tab switching.
  * Animasi: fade content saat ganti tab.
  */
 export default function FeatureMode8({ section, data }) {

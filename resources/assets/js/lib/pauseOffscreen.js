@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 /**
- * usePauseOffscreenAnimations — hentikan animasi CSS tak-terbatas pada elemen
+ * usePauseOffscreenAnimations - hentikan animasi CSS tak-terbatas pada elemen
  * yang tidak terlihat (di luar viewport) untuk menghemat kompositing/paint.
  *
  * Elemen ditandai dengan atribut `data-pause-offscreen`; saat keluar viewport

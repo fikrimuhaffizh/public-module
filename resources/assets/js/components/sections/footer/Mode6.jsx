@@ -4,7 +4,7 @@ import { GraduationCap } from 'lucide-react';
 import { FooterSocials } from './Mode1';
 
 /**
- * Footer Mode 6 — Bordered.
+ * Footer Mode 6 - Bordered.
  * 4 kolom: Brand + deskripsi, Navigasi, Kontak, Jam Layanan.
  * Border antar kolom, clean corporate look.
  * Prop: { site, footerMenus }

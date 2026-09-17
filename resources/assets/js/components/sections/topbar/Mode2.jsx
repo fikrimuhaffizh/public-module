@@ -3,7 +3,7 @@ import { Clock, MapPin, MessageCircle, Phone } from 'lucide-react';
 import { openStatusNow, useNow } from './hours';
 
 /**
- * Top Bar Mode 2 — banner terpusat: status buka/tutup besar + alamat + jam,
+ * Top Bar Mode 2 - banner terpusat: status buka/tutup besar + alamat + jam,
  * kontak di kanan. Cocok untuk UMKM yang ingin info kontak menonjol.
  * Prop: { site, settings }
  */

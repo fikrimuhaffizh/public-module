@@ -1,7 +1,7 @@
 import React from 'react';
 import { Section, combinedText } from '../index';
 
-/** Fitur Mode 1 — PlatformOverview: teks + visual split. Prop: { section, data } */
+/** Fitur Mode 1 - PlatformOverview: teks + visual split. Prop: { section, data } */
 export default function FeatureMode1({ section, data }) {
     const items = (data.landing?.features || []).slice(0, section.limit_data || 4);
     if (!items.length) return null;

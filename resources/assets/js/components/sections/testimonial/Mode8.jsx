@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Quote } from 'lucide-react';
 
 /**
- * Testimonial Mode 8 — Minimal quote: quote besar center + foto.
+ * Testimonial Mode 8 - Minimal quote: quote besar center + foto.
  * Animasi: fade-up.
  */
 export default function TestimonialMode8({ section, data }) {

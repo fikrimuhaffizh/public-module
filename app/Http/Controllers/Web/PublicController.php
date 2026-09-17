@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Modules\Public\Http\Requests\SaveDesignRequest;
+use Modules\Public\Http\Requests\SendContactRequest;
 use Modules\Public\Models\Page;
 use Modules\Public\Models\Pengumuman;
 use Modules\Public\Services\LandingPageService;
@@ -19,7 +20,7 @@ class PublicController extends Controller
     public function __construct(private LandingPageService $landing)
     {
         // Dipakai juga sebagai root controller (LANDING_CONTROLLER) yang tidak
-        // membawa middleware Inertia di route-nya — lihat routes/web.php.
+        // membawa middleware Inertia di route-nya - lihat routes/web.php.
         $this->middleware(HandleInertiaRequests::class);
     }
 
@@ -57,14 +58,9 @@ class PublicController extends Controller
         ]);
     }
 
-    public function sendContact(Request $request): RedirectResponse
+    public function sendContact(SendContactRequest $request): RedirectResponse
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:100'],
-            'email' => ['required', 'email', 'max:150'],
-            'subject' => ['required', 'string', 'max:150'],
-            'message' => ['required', 'string', 'max:3000'],
-        ]);
+        $request->validated();
 
         logActivity('public_contact', 'Pesan kontak diterima dari '.$request->string('email'));
 
@@ -123,7 +119,7 @@ class PublicController extends Controller
 
         $this->landing->saveDesign($data['template'], $design, $data['sectionSettings'] ?? []);
 
-        // Pengaturan per-section (mis. navbar → show_topbar) ditulis ke settings section DB.
+        // Pengaturan per-section (mis. navbar => show_topbar) ditulis ke settings section DB.
 
         return response()->json(['ok' => true, 'template' => $data['template']]);
     }

@@ -2,8 +2,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 /**
- * Feature Mode 7 — Numbered list: fitur bernomor besar.
- * Animasi: stagger — nomor muncul lalu teks slide-in.
+ * Feature Mode 7 - Numbered list: fitur bernomor besar.
+ * Animasi: stagger - nomor muncul lalu teks slide-in.
  */
 export default function FeatureMode7({ section, data }) {
     const features = data.landing?.features || [];

@@ -6,7 +6,7 @@ import { useScrollShadow } from './useNavbarEffects';
 import NavbarMenuItem from './NavbarMenuItem';
 
 /**
- * Navbar Mode 1 — logo di kiri, menu navigasi di kanan (klasik).
+ * Navbar Mode 1 - logo di kiri, menu navigasi di kanan (klasik).
  * Fitur: scroll shadow, active page indicator, dropdown submenus.
  * Prop: { site, menus, open, onToggle, settings }
  */

@@ -1,6 +1,6 @@
-/* ============================================================
-   base.css — bagian dari landing (dipecah dari landing.css)
-   ============================================================ */
+/*
+   base.css - bagian dari landing (dipecah dari landing.css)
+   */
 
 /* Generated themes */
 @tailwind base;
@@ -487,7 +487,7 @@ img {
 }
 
 /* ════════════════════════════════════════════════════════════════════
-   NAVBAR DROPDOWN — Nested menu support
+   NAVBAR DROPDOWN - Nested menu support
    ════════════════════════════════════════════════════════════════════ */
 
 .nav-dropdown {
@@ -590,7 +590,7 @@ img {
 }
 
 /* ════════════════════════════════════════════════════════════════════
-   RESPONSIVE — Mobile breakpoints untuk section navbar & footer
+   RESPONSIVE - Mobile breakpoints untuk section navbar & footer
    ════════════════════════════════════════════════════════════════════ */
 
 /* ── Navbar: tablet ≤860px ──────────────────────────────────────── */
@@ -611,7 +611,7 @@ img {
     .brand-mark { width: 36px; height: 36px }
     .brand { gap: 8px }
 
-    /* Center mode: grid collapse → stack */
+    /* Center mode: grid collapse => stack */
     .nav-wrap--center { display: flex; justify-content: space-between }
     .nav-wrap--center .desktop-nav,
     .nav-wrap--center .brand,

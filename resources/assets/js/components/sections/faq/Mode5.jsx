@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 
 /**
- * FAQ Mode 5 — Two column: FAQ kiri, info kanan.
+ * FAQ Mode 5 - Two column: FAQ kiri, info kanan.
  */
 export default function FaqMode5({ section, data }) {
     const faqs = data.faqs || [];

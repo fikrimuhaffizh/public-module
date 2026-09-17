@@ -1,11 +1,11 @@
 /**
- * Barrel Theme Customizer — semua export lama tetap tersedia lewat satu
+ * Barrel Theme Customizer - semua export lama tetap tersedia lewat satu
  * import `@public/components/theme/ThemeCustomizer` agar consumer
  * (PublicLayout, renderer, template) tidak berubah.
  *
- *   ThemeCustomizerContext.jsx → context + provider + state (loadStored)
- *   ThemeSettingsDrawer.jsx    → UI tombol + offcanvas
- *   presets.js                 → konstanta & helper data murni
+ *   ThemeCustomizerContext.jsx ke context + provider + state (loadStored)
+ *   ThemeSettingsDrawer.jsx    ke UI tombol + offcanvas
+ *   presets.js                 ke konstanta & helper data murni
  */
 export { ThemeCustomizerProvider, useThemeCustomizer, loadStored, storedForTemplate } from './ThemeCustomizerContext';
 export { ThemeSettingsDrawer } from './ThemeSettingsDrawer';

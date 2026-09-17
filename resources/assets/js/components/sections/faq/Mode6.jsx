@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 /**
- * FAQ Mode 6 — Accordion center: FAQ center, lebar penuh.
+ * FAQ Mode 6 - Accordion center: FAQ center, lebar penuh.
  */
 export default function FaqMode6({ section, data }) {
     const faqs = data.faqs || [];

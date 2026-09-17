@@ -42,7 +42,7 @@ export function sectionText(section, field, fallback = '') {
     return section?.[field] || fallback;
 }
 
-/** Demo paket harga — dipakai bila section price belum punya data di settings. */
+/** Demo paket harga - dipakai bila section price belum punya data di settings. */
 const DEFAULT_PRICE_PACKAGES = [
     {
         name: 'Starter',
@@ -79,7 +79,7 @@ const DEFAULT_PRICE_PACKAGES = [
 
 /**
  * Baca daftar paket harga dari section.settings.packages (array JSON yang
- * dikelola lewat CMS Section → Harga), fallback ke demo bila kosong.
+ * dikelola lewat CMS Section ke Harga), fallback ke demo bila kosong.
  * Normalisasi: harga bisa string ("99.000") atau angka (99000).
  */
 export function pricePackages(section, pricingData) {

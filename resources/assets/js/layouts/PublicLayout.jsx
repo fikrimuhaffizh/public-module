@@ -23,7 +23,7 @@ function sectionVariantOf(sections, key, fallback) {
 }
 
 /**
- * Persistent layout — reads all shared props from usePage().
+ * Persistent layout - reads all shared props from usePage().
  * Pages only need to attach: Page.layout = PublicPageLayout
  */
 export function PublicPageLayout({ children }) {
@@ -39,9 +39,9 @@ export function PublicPageLayout({ children }) {
 }
 
 /**
- * Root bertema — konsumsi state customizer (CSS vars warna/font + kelas
+ * Root bertema - konsumsi state customizer (CSS vars warna/font + kelas
  * struktur navbar/kartu/tombol) lalu render header, konten, dan footer.
- * Navbar & footer dirender dari komponen variant section (registry.js) —
+ * Navbar & footer dirender dari komponen variant section (registry.js) -
  * ganti variant-nya live dari Theme Settings di /preview.
  */
 function ThemedRoot({ children }) {
@@ -72,7 +72,7 @@ function ThemedRoot({ children }) {
     const FooterComponent = resolveVariant('footer', footerKey)?.component;
     const footerStyle = sectionColorStyle(customizer?.sectionColors?.['footer']);
 
-    // Top Bar — section layout-level (variant + warna dari offcanvas).
+    // Top Bar - section layout-level (variant + warna dari offcanvas).
     const topbarKey = useSectionVariant('topbar', sectionVariantOf(sections, 'topbar', 'topbar_1'));
     const TopBarComponent = resolveVariant('topbar', topbarKey)?.component;
     const topbarSection = sections?.find(s => s.section_key === 'topbar');
@@ -82,9 +82,9 @@ function ThemedRoot({ children }) {
     const topbarStyle = sectionColorStyle(customizer?.sectionColors?.['topbar']);
     const topbarSettings = { ...(topbarSection?.settings || {}), ...(customizer?.sectionSettings?.topbar || {}) };
 
-    // Page Header — section layout-level untuk halaman dalam (berita detail,
+    // Page Header - section layout-level untuk halaman dalam (berita detail,
     // halaman statis, berita, kontak). Konten diturunkan dari props halaman;
-    // home tidak punya konteks → tidak dirender. Mode/warna/toggle dari
+    // home tidak punya konteks ke tidak dirender. Mode/warna/toggle dari
     // Theme Settings (offcanvas), sama seperti navbar/topbar/footer.
     // Color props: pretitleColor, titleColor, subtitleColor bisa diatur per-halaman.
     const pageHeaderContext = page

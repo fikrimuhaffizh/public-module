@@ -1,10 +1,10 @@
-/* ============================================================
-   themes/enterprise.css — bagian dari themes (dipecah dari landing.css)
-   ============================================================ */
+/*
+   themes/enterprise.css - bagian dari themes (dipecah dari landing.css)
+   */
 
-/* =============================================
-   Theme 6 — Enterprise (clean SaaS, monochrome + blue)
-   ============================================= */
+/*
+   Theme 6 - Enterprise (clean SaaS, monochrome + blue)
+   */
 .theme-enterprise {
     --primary: #2563eb;
     --section-alt: #eef2f8;

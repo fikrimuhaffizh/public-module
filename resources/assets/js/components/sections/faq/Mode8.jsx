@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 /**
- * FAQ Mode 8 — Tabs: FAQ dalam tab switching.
+ * FAQ Mode 8 - Tabs: FAQ dalam tab switching.
  * Animasi: fade content saat ganti tab.
  */
 export default function FaqMode8({ section, data }) {

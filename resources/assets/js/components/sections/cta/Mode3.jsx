@@ -2,7 +2,7 @@ import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@public/components/ui/button';
 
-/** CTA Mode 3 — band split: teks di kiri, tombol di kanan. Prop: { section, data } */
+/** CTA Mode 3 - band split: teks di kiri, tombol di kanan. Prop: { section, data } */
 export default function CtaMode3({ section, data }) {
     const cta = data.landing?.cta;
     const title = section?.title || cta?.title || 'Siap modernisasi kampus Anda?';

@@ -4,7 +4,7 @@ import { ChevronDown } from 'lucide-react';
 import { isMenuActive } from './useNavbarEffects';
 
 /**
- * NavbarMenuItem — reusable menu item with dropdown submenu support.
+ * NavbarMenuItem - reusable menu item with dropdown submenu support.
  * 
  * Props:
  * - item: { id, title, url, target, children? }
@@ -54,14 +54,14 @@ export default function NavbarMenuItem({ item, onToggle, isMobile = false }) {
         );
     }
 
-    // Desktop: no children → simple link
+    // Desktop: no children ke simple link
     if (!hasChildren) {
         return item.target === '_blank'
             ? <a href={item.url} target="_blank" rel="noreferrer" className={active ? 'nav-active' : ''}>{item.title}</a>
             : <Link href={item.url} className={active ? 'nav-active' : ''}>{item.title}</Link>;
     }
 
-    // Desktop: has children → dropdown
+    // Desktop: has children ke dropdown
     return (
         <div className="nav-dropdown" ref={dropdownRef} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
             <button className={`nav-dropdown-trigger ${active ? 'nav-active' : ''}`} onClick={() => setOpen(!open)}>

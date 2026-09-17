@@ -3,12 +3,12 @@ import { Link } from '@inertiajs/react';
 import { ChevronRight } from 'lucide-react';
 
 /**
- * Page Header Mode 1 — klasik: breadcrumb + judul rata kiri di latar tint.
+ * Page Header Mode 1 - klasik: breadcrumb + judul rata kiri di latar tint.
  * Dipakai layout-level (PublicLayout) di semua halaman dalam; konten
  * (judul/ekserp) berasal dari halaman yang sedang dibuka, bukan dari CMS.
  * 
  * Color props: context.pretitleColor, context.titleColor, context.subtitleColor
- * → applied sebagai inline style, bisa diatur per-halaman dari CMS.
+ * ke applied sebagai inline style, bisa diatur per-halaman dari CMS.
  * 
  * Prop: { context, site }
  */

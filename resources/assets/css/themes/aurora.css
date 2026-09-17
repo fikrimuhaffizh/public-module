@@ -1,6 +1,6 @@
-/* ============================================================
-   themes/aurora.css — bagian dari themes (dipecah dari landing.css)
-   ============================================================ */
+/*
+   themes/aurora.css - bagian dari themes (dipecah dari landing.css)
+   */
 
 /* ─── Aurora Theme ─────────────────────────────────────────────────────── */
 .theme-aurora {
@@ -161,17 +161,17 @@
 .theme-aurora[data-theme="light"] .accordion-trigger { color: var(--foreground) }
 .theme-aurora[data-theme="light"] .accordion-content { color: var(--muted) }
 
-/* Aurora light mode — gradient text */
+/* Aurora light mode - gradient text */
 .theme-aurora[data-theme="light"] .aurora-gradient-text {
     background: linear-gradient(135deg, #1a1b2e 20%, #0ea5e9 60%, #0090b3 100%);
     -webkit-background-clip: text;
     background-clip: text
 }
 
-/* Aurora light mode — blobs (softer) */
+/* Aurora light mode - blobs (softer) */
 .theme-aurora[data-theme="light"] .aurora-blob { opacity: .2 }
 
-/* Aurora light mode — outline button */
+/* Aurora light mode - outline button */
 .aurora-btn-outline {
     border-color: rgba(14, 165, 233, .35) !important;
     color: #0ea5e9 !important
@@ -181,7 +181,7 @@
     color: #0ea5e9 !important
 }
 
-/* Aurora light mode — mockup */
+/* Aurora light mode - mockup */
 .theme-aurora[data-theme="light"] .aurora-mockup {
     border-color: rgba(0, 0, 0, .08);
     background: #fff
@@ -204,7 +204,7 @@
     background: rgba(0, 0, 0, .06)
 }
 
-/* Aurora light mode — trust strip & sections */
+/* Aurora light mode - trust strip & sections */
 .theme-aurora[data-theme="light"] .aurora-trust-strip {
     background: rgba(0, 0, 0, .02)
 }
@@ -213,19 +213,19 @@
     background: rgba(0, 0, 0, .02)
 }
 
-/* Aurora light mode — stat gradient */
+/* Aurora light mode - stat gradient */
 .theme-aurora[data-theme="light"] .aurora-stat-card strong {
     background: linear-gradient(135deg, #1a1b2e, #0ea5e9);
     -webkit-background-clip: text;
     background-clip: text
 }
 
-/* Aurora light mode — marquee (remove invert filter) */
+/* Aurora light mode - marquee (remove invert filter) */
 .theme-aurora[data-theme="light"] .aurora-marquee-item img {
     filter: none
 }
 
-/* Aurora light mode — toggle button */
+/* Aurora light mode - toggle button */
 .aurora-theme-toggle {
     display: inline-flex;
     align-items: center;
@@ -249,7 +249,7 @@
     color: #0ea5e9
 }
 
-/* Aurora light mode — CTA blobs */
+/* Aurora light mode - CTA blobs */
 .theme-aurora[data-theme="light"] .aurora-cta-blob { opacity: .15 }
 
 /* Aurora shared utilities */

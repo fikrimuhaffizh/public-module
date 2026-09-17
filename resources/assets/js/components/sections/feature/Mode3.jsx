@@ -2,7 +2,7 @@ import React from 'react';
 import { Check } from 'lucide-react';
 import { Section, combinedText } from '../index';
 
-/** Fitur Mode 3 — daftar dua kolom dengan ikon centang. Prop: { section, data } */
+/** Fitur Mode 3 - daftar dua kolom dengan ikon centang. Prop: { section, data } */
 export default function FeatureMode3({ section, data }) {
     const features = data.landing?.features || [];
     if (!features.length) return null;

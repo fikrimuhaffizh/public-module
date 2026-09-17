@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 /**
- * Product Mode 6 — Bento: grid asimetris.
+ * Product Mode 6 - Bento: grid asimetris.
  * Animasi: stagger.
  */
 export default function ProductMode6({ section, data }) {

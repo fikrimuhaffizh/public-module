@@ -3,7 +3,7 @@ import { MapPin, Phone, MessageCircle, Clock } from 'lucide-react';
 import { openStatusNow, useNow } from './hours';
 
 /**
- * Topbar Mode 5 — Gradient.
+ * Topbar Mode 5 - Gradient.
  * Background gradient, info di kiri, kontak di kanan.
  * Prop: { site, settings }
  */

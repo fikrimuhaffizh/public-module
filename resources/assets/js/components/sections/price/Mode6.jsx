@@ -4,7 +4,7 @@ import { Check } from 'lucide-react';
 import { Section, pricePackages, combinedText } from '../index';
 
 /**
- * Price Mode 6 — Minimal center: paket center.
+ * Price Mode 6 - Minimal center: paket center.
  * Animasi: fade-up.
  */
 export default function PriceMode6({ section, data }) {

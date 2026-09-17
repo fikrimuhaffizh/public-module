@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 /**
- * Client Mode 8 — Minimal: logo kecil center.
+ * Client Mode 8 - Minimal: logo kecil center.
  * Animasi: fade.
  */
 export default function ClientMode8({ section, data }) {

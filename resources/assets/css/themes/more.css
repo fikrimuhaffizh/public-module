@@ -1,10 +1,10 @@
-/* ============================================================
-   themes/more.css — bagian dari themes (dipecah dari landing.css)
-   ============================================================ */
+/*
+   themes/more.css - bagian dari themes (dipecah dari landing.css)
+   */
 
-/* =============================================
-   Theme 9 — Campus (University / Academic)
-   ============================================= */
+/*
+   Theme 9 - Campus (University / Academic)
+   */
 .theme-campus {
     --primary: #0d766e;
     --section-alt: #edf5f3;
@@ -85,9 +85,9 @@
     .campus-cta-card { padding: 40px 24px }
 }
 
-/* =============================================
-   Theme 10 — Admissions (Enrollment / Pendaftaran)
-   ============================================= */
+/*
+   Theme 10 - Admissions (Enrollment / Pendaftaran)
+   */
 .theme-admissions {
     --primary: #9f1239;
     --section-alt: #fbf1f4;
@@ -174,9 +174,9 @@
     .admissions-cta-card { padding: 40px 24px }
 }
 
-/* =============================================
-   Theme 11 — Tracer (Alumni & Tracer Study)
-   ============================================= */
+/*
+   Theme 11 - Tracer (Alumni & Tracer Study)
+   */
 .theme-tracer {
     --primary: #1e3a8a;
     --section-alt: #eef4fb;

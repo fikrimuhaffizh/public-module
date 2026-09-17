@@ -3,7 +3,7 @@ import { Reveal } from '@public/components/motion/effects';
 import { Section } from '../index';
 
 /**
- * CTA Mode 4 — Split: teks kiri, visual kanan.
+ * CTA Mode 4 - Split: teks kiri, visual kanan.
  * Animasi: slide-in from sides (Reveal x, budgeted).
  */
 export default function CtaMode4({ section, data }) {

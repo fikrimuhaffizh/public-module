@@ -1,8 +1,8 @@
-/* ============================================================
-   sections/client.css — bagian dari landing (dipecah dari landing.css)
-   ============================================================ */
+/*
+   sections/client.css - bagian dari landing (dipecah dari landing.css)
+   */
 
-/* ===== Section: Klien/Logo (client) ===== */
+/* Section: Klien/Logo (client) */
 .client-logos {
     padding: 90px 0;
 }
@@ -71,7 +71,7 @@
     font-size: 17px;
 }
 
-/* Marquee — strip logo berjalan */
+/* Marquee - strip logo berjalan */
 .client-logos--marquee {
     overflow: hidden;
     -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
@@ -130,7 +130,7 @@
 }
 
 
-/* Showcase — panggung logo interaktif (Klien/Logo V2) */
+/* Showcase - panggung logo interaktif (Klien/Logo V2) */
 .client-logos--showcase {
     touch-action: pan-y;
     display: grid;
@@ -254,7 +254,7 @@
     opacity: 1;
     transform: translateY(-2px)
 }
-/* ===== Klien/Logo Mode 5 — Orbiting circles (Velora-inspired) ===== */
+/* Klien/Logo Mode 5 - Orbiting circles (Velora-inspired) */
 .orbit-stage {
     position: relative;
     width: 460px;

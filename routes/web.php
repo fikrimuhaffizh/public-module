@@ -130,7 +130,7 @@ Route::middleware(['auth', 'check.expired', 'module:public'])->prefix('cms')->na
 
 });
 
-// Web Area (Landing Page) — no prefix, routes register at / level (e.g. /, /contact-us, /page/{slug})
+// Web Area (Landing Page) - no prefix, routes register at / level (e.g. /, /contact-us, /page/{slug})
 Route::middleware(HandleInertiaRequests::class)->controller(PublicController::class)->name('public.')->group(function () {
     Route::get('/', 'home')->name('index');
     Route::get('/preview', 'preview')->name('preview');

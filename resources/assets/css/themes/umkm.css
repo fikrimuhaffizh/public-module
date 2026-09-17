@@ -1,6 +1,6 @@
-/* ============================================================
-   themes/umkm.css — bagian dari themes (dipecah dari landing.css)
-   ============================================================ */
+/*
+   themes/umkm.css - bagian dari themes (dipecah dari landing.css)
+   */
 
 /* ════════════════════════════════════════════════════════════════════
    TEMA UMKM (prototipe pipeline 100 tema)
@@ -94,6 +94,6 @@
 
 /* ── umkm_fashion : Fashion & Boutique ──────────────────────────── */
 /* ════════════════════════════════════════════════════════════════════
-   SECTION VARIANTS — class struktur untuk tiap variant section
+   SECTION VARIANTS - class struktur untuk tiap variant section
    (dipakai komponen di components/sections/<section>/Vx.jsx)
    ════════════════════════════════════════════════════════════════════ */

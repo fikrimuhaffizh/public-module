@@ -25,7 +25,7 @@ return new class extends Migration
             return;
         }
 
-        // 1) section_key alias → canonical.
+        // 1) section_key alias => canonical.
         DB::table('cms_landing_sections')
             ->whereIn('section_key', ['products', 'stats', 'features', 'testimonials', 'clients', 'announcement'])
             ->update([
@@ -39,7 +39,7 @@ return new class extends Migration
                 END"),
             ]);
 
-        // 2) variant prefix legacy → canonical.
+        // 2) variant prefix legacy => canonical.
         DB::table('cms_landing_sections')
             ->where('variant', 'like', 'stats\_%')
             ->update(['variant' => DB::raw("REPLACE(variant, 'stats_', 'statistic_')")]);
@@ -56,7 +56,7 @@ return new class extends Migration
     public function down(): void
     {
         // Migrasi data tidak bisa dibalik dengan aman (nilai lama sudah
-        // digabung). Biarkan — alias di frontend/backend tetap menerima
+        // digabung). Biarkan - alias di frontend/backend tetap menerima
         // kedua bentuk, jadi tidak ada yang rusak bila dibiarkan.
     }
 };

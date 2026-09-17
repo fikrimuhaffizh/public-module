@@ -6,7 +6,7 @@ import { useScrollShadow } from './useNavbarEffects';
 import NavbarMenuItem from './NavbarMenuItem';
 
 /**
- * Navbar Mode 6 — Premium Glassmorphism.
+ * Navbar Mode 6 - Premium Glassmorphism.
  * Backdrop-blur transparan dengan efek frosted glass.
  * Logo di kiri, menu center, CTA di kanan.
  * Inspirasi: Stripe, Linear, Vercel.
@@ -27,7 +27,7 @@ export default function NavbarMode6({ site, menus, open, onToggle, settings = {}
                         : <span className="brand-mark"><GraduationCap size={20} /></span>}
                 </Link>
 
-                {/* Menu — center */}
+                {/* Menu - center */}
                 <nav className="desktop-nav">
                     {(menus || []).map(menu => (
                         <NavbarMenuItem key={menu.id} item={menu} />

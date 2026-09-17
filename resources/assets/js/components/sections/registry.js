@@ -1,13 +1,13 @@
 import React from 'react';
 
 /**
- * Registri variant section — satu sumber kebenaran untuk daftar "Sections"
+ * Registri variant section - satu sumber kebenaran untuk daftar "Sections"
  * di Theme Settings (offcanvas /preview) DAN renderer section.
  *
  * AUTO-DISCOVERY: daftar mode dibaca langsung dari file komponen di folder
  * section-nya. Developer cukup menambah file dengan pola `Mode{n}.jsx`:
  *
- *     components/sections/faq/Mode5.jsx  →  otomatis menjadi "Mode 5"
+ *     components/sections/faq/Mode5.jsx  =>  otomatis menjadi "Mode 5"
  *
  * File yang bukan variant (helper: FaqReveal, HeroActions, CountUp, hours.js)
  * otomatis diabaikan karena namanya tidak memuat `Mode{digit}`.
@@ -19,9 +19,9 @@ import React from 'react';
  * ─── KONTRAK ELEMEN ROOT (penting!) ─────────────────────────────────
  *   Elemen root komponen variant HARUS berupa <section> (konten), <header>
  *   (navbar), atau <footer> (footer). Alasan:
- *   • override warna per-section (.sec-colored) memakai CSS vars pada
+ * Override warna per section (.sec-colored) memakai CSS vars pada
  *     wrapper, dan CSS menembus lewat selektor `section/header/footer`;
- *   • root <div> membuat override warna dan styling template TIDAK bekerja
+ * Root <div> membuat override warna dan styling template tidak bekerja
  *     (guard dev-mode di renderer akan memperingatkan, lihat konsol).
  *   Jangan bungkus root dengan <div> lain. ───────────────────────────
  */
@@ -44,7 +44,7 @@ const SECTION_META = [
     { key: 'footer', dir: 'footer', name: 'Footer' },
 ];
 
-// Import semua komponen section secara sinkron (eager) — setara dengan
+// Import semua komponen section secara sinkron (eager) - setara dengan
 // daftar import manual lama, tapi otomatis mengikuti isi folder.
 const SECTION_MODULES = import.meta.glob('./*/Mode[0-9]*.jsx');
 
@@ -69,8 +69,8 @@ function variantsFromFolder(dir, sectionKey) {
 }
 
 /**
- * Key section mengikuti `sectionKey()` (alias dibukukan): clients → client,
- * products → product, stats → statistic, dsb.
+ * Key section mengikuti `sectionKey()` (alias dibukukan): clients => client,
+ * products => product, stats => statistic, dsb.
  */
 export const SECTION_VARIANTS = Object.fromEntries(
     SECTION_META.map(({ key, dir, ...meta }) => [

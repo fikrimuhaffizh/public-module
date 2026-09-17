@@ -6,7 +6,7 @@ import HeroActions from './HeroActions';
  * Kontrak konten + blok penyusun bersama semua mode Hero.
  *
  * Tiap ModeN.jsx memakai hook & blok ini, tapi MENYUSUN strukturnya
- * sendiri-sendiri (split, centered, gallery, cinematic, dst.) — tidak ada
+ * sendiri-sendiri (split, centered, gallery, cinematic, dst.) - tidak ada
  * lagi `mode === n` conditional tersebar. Class CSS dipertahankan identik
  * (`landing-hero--n`, `landing-hero__*`) supaya visual tidak berubah.
  */

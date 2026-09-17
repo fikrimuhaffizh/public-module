@@ -1,6 +1,6 @@
-/* ============================================================
-   sections/feature.css — bagian dari landing (dipecah dari landing.css)
-   ============================================================ */
+/*
+   sections/feature.css - bagian dari landing (dipecah dari landing.css)
+   */
 
 /* ── FITUR V2 / V3 ──────────────────────────────────────────────── */
 .feature-icon-card {
@@ -127,8 +127,7 @@
     object-fit: cover;
 }
 
-/* ===== Fitur Mode 5 — Bento grid (Velora-inspired) =====
-   Specificity 2 kelas supaya menang atas .gen-card (diimpor belakangan). */
+/* Dua kelas menjaga prioritas Bento grid di atas .gen-card. */
 .bento-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);

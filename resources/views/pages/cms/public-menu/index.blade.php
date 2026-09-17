@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function () {
             onEnd: onSortEnd
         });
 
-        // Nested child sortables — each also triggers hierarchy save
+        // Nested child sortables - each also triggers hierarchy save
         el.querySelectorAll('.sortable-list').forEach(function (childUl) {
             new Sortable(childUl, {
                 group: 'nested',

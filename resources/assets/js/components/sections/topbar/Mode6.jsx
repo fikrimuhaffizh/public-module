@@ -2,7 +2,7 @@ import React from 'react';
 import { Phone, Mail, MessageCircle, MapPin } from 'lucide-react';
 
 /**
- * Topbar Mode 6 — Icons.
+ * Topbar Mode 6 - Icons.
  * Ikon + teks clickable, info di kiri, kontak di kanan.
  * Prop: { site, settings }
  */

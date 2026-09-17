@@ -1,7 +1,7 @@
 import React from 'react';
 import { Section, combinedText } from '../index';
 
-/** Fitur Mode 2 — grid kartu ikon (dari landing.features). Prop: { section, data } */
+/** Fitur Mode 2 - grid kartu ikon (dari landing.features). Prop: { section, data } */
 export default function FeatureMode2({ section, data }) {
     const features = data.landing?.features || [];
     if (!features.length) return null;

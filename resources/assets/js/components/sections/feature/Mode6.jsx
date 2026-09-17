@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 /**
- * Feature Mode 6 — Side-by-side zigzag: teks + gambar bergantian.
+ * Feature Mode 6 - Side-by-side zigzag: teks + gambar bergantian.
  * Animasi: fade-in dari kiri/kanan bergantian.
  */
 export default function FeatureMode6({ section, data }) {

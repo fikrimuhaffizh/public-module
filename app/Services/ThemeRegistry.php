@@ -6,7 +6,7 @@ namespace Modules\Public\Services;
  * Registri tema landing page.
  *
  * Sumber data tunggal: config('public_themes') (dari Modules/Public/config/themes.php).
- * Semua tempat yang butuh daftar/validasi tema harus lewat service ini —
+ * Semua tempat yang butuh daftar/validasi tema harus lewat service ini -
  * jangan hardcode daftar tema di controller/view/komponen lain.
  */
 class ThemeRegistry

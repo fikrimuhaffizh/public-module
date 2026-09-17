@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 /**
- * Statistik Mode 6 — Split: stats kiri, gambar kanan.
+ * Statistik Mode 6 - Split: stats kiri, gambar kanan.
  * Animasi: fade alternatif kiri/kanan.
  */
 export default function StatisticMode6({ section, data }) {

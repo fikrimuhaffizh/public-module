@@ -2,7 +2,7 @@ import React from 'react';
 import { Home } from 'lucide-react';
 
 /**
- * Pageheader Mode 5 — Image bg: gambar background + overlay.
+ * Pageheader Mode 5 - Image bg: gambar background + overlay.
  */
 export default function PageheaderMode5({ context, site }) {
     const { breadcrumb = [], title = '', subtitle = '', image = '' } = context || {};

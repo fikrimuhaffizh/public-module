@@ -130,7 +130,7 @@ class PublicMenuService
 
     /**
      * Reorder menus within a specific position (header or footer).
-     * Simple flat reorder — updates sequence only.
+     * Simple flat reorder - updates sequence only.
      */
     public function reorderForPosition(array $ids, string $position): bool
     {

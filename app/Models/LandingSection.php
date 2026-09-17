@@ -113,7 +113,7 @@ class LandingSection extends Model implements HasMedia
     }
 
     /**
-     * Scope: order sections by area (top → middle → bottom), then by sort_order.
+     * Scope: order sections by area (top => middle => bottom), then by sort_order.
      */
     public function scopeOrdered(Builder $query): Builder
     {

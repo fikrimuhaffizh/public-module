@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 
 /**
- * Product Mode 8 — Minimal list: list bersih.
+ * Product Mode 8 - Minimal list: list bersih.
  * Animasi: stagger.
  */
 export default function ProductMode8({ section, data }) {

@@ -3,8 +3,8 @@ import { Check } from 'lucide-react';
 import { Stagger } from '@public/components/motion/effects';
 
 /**
- * CTA Mode 6 — Floating cards: teks center + kartu fitur.
- * Animasi: stagger — kartu muncul satu per satu (budgeted).
+ * CTA Mode 6 - Floating cards: teks center + kartu fitur.
+ * Animasi: stagger - kartu muncul satu per satu (budgeted).
  */
 export default function CtaMode6({ section, data }) {
     const cta = data.landing?.cta;

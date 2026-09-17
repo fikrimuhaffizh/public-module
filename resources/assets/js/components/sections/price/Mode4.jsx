@@ -3,7 +3,7 @@ import { Check, X } from 'lucide-react';
 import { Section, pricePackages, combinedText } from '../index';
 
 /**
- * Price Mode 4 — Comparison table: tabel perbandingan.
+ * Price Mode 4 - Comparison table: tabel perbandingan.
  */
 export default function PriceMode4({ section, data }) {
     const packages = pricePackages(section, data?.landing?.pricing);

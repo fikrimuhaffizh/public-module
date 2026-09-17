@@ -4,9 +4,9 @@ import { GraduationCap, Send } from 'lucide-react';
 import { FooterSocials } from './Mode1';
 
 /**
- * Footer Mode 7 — Newsletter.
+ * Footer Mode 7 - Newsletter.
  * Newsletter form + nav links + social + contact + copyright.
- * Modern SaaS style — cocok untuk startup/tech.
+ * Modern SaaS style - cocok untuk startup/tech.
  * Prop: { site, footerMenus }
  */
 export default function FooterMode7({ site, footerMenus }) {

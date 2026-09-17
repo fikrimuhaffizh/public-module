@@ -3,7 +3,7 @@ import { Mail, MapPin, Phone, Clock } from 'lucide-react';
 import { openStatusNow, useNow } from './hours';
 
 /**
- * Topbar Mode 4 — Minimal Center.
+ * Topbar Mode 4 - Minimal Center.
  * Semua info di tengah, rapi dan bersih.
  * Prop: { site, settings }
  */

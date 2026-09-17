@@ -4,7 +4,7 @@ import { Megaphone } from 'lucide-react';
 import { Badge } from '@public/components/ui/badge';
 import { Section, combinedText } from '../index';
 
-/** Pengumuman Mode 4 — ticker berjalan: judul berita melintas terus-menerus. Prop: { section, data } */
+/** Pengumuman Mode 4 - ticker berjalan: judul berita melintas terus-menerus. Prop: { section, data } */
 export default function AnnouncementMode4({ section, data }) {
     const list = data.announcements || [];
     if (!list.length) return null;

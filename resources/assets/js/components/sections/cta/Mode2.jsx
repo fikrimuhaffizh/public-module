@@ -2,7 +2,7 @@ import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@public/components/ui/button';
 
-/** CTA Mode 2 — banner penuh dengan latar gambar + overlay. Prop: { section, data } */
+/** CTA Mode 2 - banner penuh dengan latar gambar + overlay. Prop: { section, data } */
 export default function CtaMode2({ section, data }) {
     const cta = data.landing?.cta;
     const title = section?.title || cta?.title || 'Siap modernisasi kampus Anda?';

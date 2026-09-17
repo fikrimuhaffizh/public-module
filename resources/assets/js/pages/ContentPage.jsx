@@ -27,7 +27,7 @@ import { Reveal } from '@public/components/motion/effects';
 import { PublicPageLayout } from '@public/layouts/PublicLayout';
 
 /**
- * ContentPage — detail page untuk halaman statis (/page/{slug}).
+ * ContentPage - detail page untuk halaman statis (/page/{slug}).
  * 
  * Layout options:
  * - default: contained width (max-width 780px)

@@ -5,7 +5,7 @@ import { Button } from '@public/components/ui/button';
 import { FooterSocials } from './Mode1';
 
 /**
- * Footer Mode 4 — big type: nama brand raksasa sebagai watermark, strip CTA
+ * Footer Mode 4 - big type: nama brand raksasa sebagai watermark, strip CTA
  * WhatsApp di atas, lalu grid brand + navigasi + kontak.
  * Prop: { site, footerMenus }
  */

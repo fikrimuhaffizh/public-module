@@ -4,7 +4,7 @@ import { Section, combinedText } from '../index';
 import FaqReveal from './FaqReveal';
 
 /**
- * FAQ Mode 1 — tanya-jawab editorial: daftar bersih dengan garis pembatas,
+ * FAQ Mode 1 - tanya-jawab editorial: daftar bersih dengan garis pembatas,
  * ikon + berputar jadi ×. Ringan, fokus teks, tanpa kartu.
  * Jawaban muncul dengan animasi height + opacity (FaqReveal).
  * Prop: { section, data }

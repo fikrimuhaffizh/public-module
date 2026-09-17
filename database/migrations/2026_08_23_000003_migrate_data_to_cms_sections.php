@@ -7,7 +7,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        // 1. Features → cms_sections (type=feature)
+        // 1. Features => cms_sections (type=feature)
         $features = DB::table('cms_features')->whereNull('deleted_at')->get();
         foreach ($features as $f) {
             DB::table('cms_sections')->insert([
@@ -23,7 +23,7 @@ return new class extends Migration
             ]);
         }
 
-        // 2. Products → cms_sections (type=product)
+        // 2. Products => cms_sections (type=product)
         $products = DB::table('cms_products')->whereNull('deleted_at')->get();
         foreach ($products as $p) {
             $settings = array_filter([
@@ -46,7 +46,7 @@ return new class extends Migration
             ]);
         }
 
-        // 3. Clients → cms_sections (type=client)
+        // 3. Clients => cms_sections (type=client)
         $clients = DB::table('cms_clients')->whereNull('deleted_at')->get();
         foreach ($clients as $c) {
             $settings = array_filter([
@@ -65,7 +65,7 @@ return new class extends Migration
             ]);
         }
 
-        // 4. Partners → cms_sections (type=partner)
+        // 4. Partners => cms_sections (type=partner)
         $partners = DB::table('cms_partner')->whereNull('deleted_at')->get();
         foreach ($partners as $p) {
             $settings = array_filter([
@@ -85,7 +85,7 @@ return new class extends Migration
             ]);
         }
 
-        // 5. Testimonials → cms_sections (type=testimonial)
+        // 5. Testimonials => cms_sections (type=testimonial)
         $testimonials = DB::table('cms_testimonial')->whereNull('deleted_at')->get();
         foreach ($testimonials as $t) {
             $settings = array_filter([
@@ -107,7 +107,7 @@ return new class extends Migration
             ]);
         }
 
-        // 6. CTAs → cms_sections (type=cta)
+        // 6. CTAs => cms_sections (type=cta)
         $ctas = DB::table('cms_ctas')->whereNull('deleted_at')->get();
         foreach ($ctas as $c) {
             $settings = array_filter([
@@ -128,7 +128,7 @@ return new class extends Migration
             ]);
         }
 
-        // 7. Statistics → cms_sections (type=statistic)
+        // 7. Statistics => cms_sections (type=statistic)
         $stats = DB::table('cms_statistics')->whereNull('deleted_at')->get();
         foreach ($stats as $s) {
             $settings = array_filter([

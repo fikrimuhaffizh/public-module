@@ -1,7 +1,7 @@
 import React from 'react';
 import { usePage } from '@inertiajs/react';
 
-/** Ikon WhatsApp resmi (path SVG) — lebih dikenali daripada ikon generik. */
+/** Ikon WhatsApp resmi (path SVG) - lebih dikenali daripada ikon generik. */
 function WhatsAppIcon({ size = 24 }) {
     return (
         <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -11,7 +11,7 @@ function WhatsAppIcon({ size = 24 }) {
 }
 
 /**
- * Floating WhatsApp button — muncul di SEMUA halaman landing (dipakai di
+ * Floating WhatsApp button - muncul di SEMUA halaman landing (dipakai di
  * PublicLayout). Nomor dikonfigurasi dari CMS: LandingPageSetting.whatsapp
  * (Cth: 6281234567890). Tidak dirender bila nomor kosong. Pesan default bisa
  * disesuaikan lewat prop `message` (opsional).

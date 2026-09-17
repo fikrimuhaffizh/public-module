@@ -2,8 +2,8 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { animate, useInView } from 'framer-motion';
 
 /**
- * Parsing nilai statistik — dukung format Indonesia: "15.000+" → 15000,
- * "98,5%" → 98.5. Titik = pemisah ribuan, koma = desimal.
+ * Parsing nilai statistik - dukung format Indonesia: "15.000+" ke 15000,
+ * "98,5%" ke 98.5. Titik = pemisah ribuan, koma = desimal.
  */
 function parseStatValue(raw) {
     const str = String(raw ?? '').trim();
@@ -24,7 +24,7 @@ function formatCount(value, decimals) {
 
 /**
  * Angka berjalan naik (count-up) saat masuk viewport.
- * Perilaku DEFAULT semua mode Statistik — bukan variant tersendiri.
+ * Perilaku DEFAULT semua mode Statistik - bukan variant tersendiri.
  */
 export default function CountUp({ value, duration = 1.6 }) {
     const ref = useRef(null);

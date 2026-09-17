@@ -28,7 +28,7 @@ import { PublicPageLayout } from '@public/layouts/PublicLayout';
 import { NewsGrid } from '@public/components/sections/LandingSections';
 
 /**
- * NewsDetail — detail page untuk berita/pengumuman (/news/{pengumuman}).
+ * NewsDetail - detail page untuk berita/pengumuman (/news/{pengumuman}).
  * 
  * Layout options:
  * - default: contained width (max-width 780px)

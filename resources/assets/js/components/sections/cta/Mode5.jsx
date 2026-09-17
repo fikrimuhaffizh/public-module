@@ -2,7 +2,7 @@ import React from 'react';
 import { Reveal } from '@public/components/motion/effects';
 
 /**
- * CTA Mode 5 — Banner gradient: background gradient + teks besar center.
+ * CTA Mode 5 - Banner gradient: background gradient + teks besar center.
  * Animasi: zoom-in dari kecil (Reveal scale, budgeted).
  */
 export default function CtaMode5({ section, data }) {

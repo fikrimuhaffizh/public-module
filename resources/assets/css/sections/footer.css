@@ -1,6 +1,6 @@
-/* ============================================================
-   sections/footer.css — bagian dari landing (dipecah dari landing.css)
-   ============================================================ */
+/*
+   sections/footer.css - bagian dari landing (dipecah dari landing.css)
+   */
 
 /* ── FOOTER V2 / V3 ─────────────────────────────────────────────── */
 .site-footer--center { text-align: center }
@@ -18,7 +18,7 @@
     color: var(--muted); font-size: 13px;
 }
 .footer-corp-hours span { display: block; color: var(--muted); font-size: 13.5px }
-/* ===== Footer Mode 4 — Big type + CTA strip (Velora-inspired) ===== */
+/* Footer Mode 4 - Big type + CTA strip (Velora-inspired) */
 .site-footer--bigtype { position: relative; overflow: hidden; padding: 0 0 26px }
 .footer-bigtype-name {
     position: absolute;

@@ -3,7 +3,7 @@ import { Check } from 'lucide-react';
 import { Section, pricePackages, combinedText } from '../index';
 
 /**
- * Harga Mode 2 — daftar baris horizontal: tiap paket satu baris penuh (nama,
+ * Harga Mode 2 - daftar baris horizontal: tiap paket satu baris penuh (nama,
  * fitur ringkas, harga di kanan). Cocok untuk layanan/jasa. Prop: { section, data }
  */
 export default function PriceMode2({ section, data }) {

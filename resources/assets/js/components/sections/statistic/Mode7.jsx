@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 /**
- * Statistik Mode 7 — Band: stat dalam bar horizontal.
+ * Statistik Mode 7 - Band: stat dalam bar horizontal.
  * Animasi: slide-in dari kiri.
  */
 export default function StatisticMode7({ section, data }) {

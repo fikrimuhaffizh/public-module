@@ -3,7 +3,7 @@ import { ArrowRight } from 'lucide-react';
 import { Reveal } from '@public/components/motion/effects';
 
 /**
- * CTA Mode 8 — Glow card: card center dengan border glow.
+ * CTA Mode 8 - Glow card: card center dengan border glow.
  * Animasi: scale-in dari kecil (budgeted).
  */
 export default function CtaMode8({ section, data }) {

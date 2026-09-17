@@ -1,8 +1,8 @@
-/* ============================================================
-   sections/product.css — bagian dari landing (dipecah dari landing.css)
-   ============================================================ */
+/*
+   sections/product.css - bagian dari landing (dipecah dari landing.css)
+   */
 
-/* ── PRODUK V2 — baris kartu (thumbnail + teks + panah) ─────────── */
+/* ── PRODUK V2 - baris kartu (thumbnail + teks + panah) ─────────── */
 .product-rows { display: flex; flex-direction: column; gap: 14px }
 .product-row {
     display: flex;
@@ -63,7 +63,7 @@
     transform: translateX(3px);
 }
 
-/* ── PRODUK V3 — kartu bernomor (grid dua kolom) ────────────────── */
+/* ── PRODUK V3 - kartu bernomor (grid dua kolom) ────────────────── */
 .product-num-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px }
 .product-num-card {
     position: relative;
@@ -199,7 +199,7 @@
     .client-logos-stage__inner { min-width: 0; width: 100%; padding: 26px 18px }
 }
 
-/* ── Produk Mode 1 — card dengan gambar cover ────────────────── */
+/* ── Produk Mode 1 - card dengan gambar cover ────────────────── */
 .product-card-cover { overflow: hidden }
 .product-card-cover-img {
     width: 100%;

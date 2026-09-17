@@ -13,9 +13,7 @@ return new class extends BaseMigration
      */
     public function up(): void
     {
-        // =====================================================================
         // 1. Pages
-        // =====================================================================
         if (!Schema::hasTable('cms_page')) {
             Schema::create('cms_page', function (Blueprint $table) {
                 $table->id('page_id');
@@ -37,9 +35,7 @@ return new class extends BaseMigration
             });
         }
 
-        // =====================================================================
         // 2. Menus
-        // =====================================================================
         if (!Schema::hasTable('cms_menu')) {
             Schema::create('cms_menu', function (Blueprint $table) {
                 $table->id('menu_id');
@@ -69,9 +65,7 @@ return new class extends BaseMigration
             });
         }
 
-        // =====================================================================
         // 3. Pengumuman
-        // =====================================================================
         if (!Schema::hasTable('cms_pengumuman')) {
             Schema::create('cms_pengumuman', function (Blueprint $table) {
                 $table->id('pengumuman_id');
@@ -99,9 +93,7 @@ return new class extends BaseMigration
             });
         }
 
-        // =====================================================================
         // 4. Slideshows
-        // =====================================================================
         if (!Schema::hasTable('cms_slideshow')) {
             Schema::create('cms_slideshow', function (Blueprint $table) {
                 $table->id('slideshow_id');
@@ -126,9 +118,7 @@ return new class extends BaseMigration
             });
         }
 
-        // =====================================================================
         // 5. FAQ
-        // =====================================================================
         if (!Schema::hasTable('cms_faq')) {
             Schema::create('cms_faq', function (Blueprint $table) {
                 $table->id('faq_id');
@@ -150,9 +140,7 @@ return new class extends BaseMigration
             });
         }
 
-        // =====================================================================
         // 6. Testimonials
-        // =====================================================================
         if (! Schema::hasTable('cms_testimonial')) {
             Schema::create('cms_testimonial', function (Blueprint $table) {
                 $table->id('testimonial_id');
@@ -175,9 +163,7 @@ return new class extends BaseMigration
             });
         }
 
-        // =====================================================================
         // 7. Partners
-        // =====================================================================
         if (! Schema::hasTable('cms_partner')) {
             Schema::create('cms_partner', function (Blueprint $table) {
                 $table->id('partner_id');
@@ -198,9 +184,7 @@ return new class extends BaseMigration
             });
         }
 
-        // =====================================================================
         // 8. Landing CMS Tables (with blameable_id columns)
-        // =====================================================================
         if (! Schema::hasTable('cms_hero_sections')) {
             Schema::create('cms_hero_sections', function (Blueprint $table) {
                 $table->id('hero_id');
@@ -309,9 +293,7 @@ return new class extends BaseMigration
             });
         }
 
-        // =====================================================================
         // 9. Landing Sections (with pre_title/post_title)
-        // =====================================================================
         if (! Schema::hasTable('cms_landing_sections')) {
             Schema::create('cms_landing_sections', function (Blueprint $table) {
                 $table->id('landing_section_id');

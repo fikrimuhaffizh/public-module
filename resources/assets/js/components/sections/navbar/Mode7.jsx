@@ -6,7 +6,7 @@ import { useScrollShadow } from './useNavbarEffects';
 import NavbarMenuItem from './NavbarMenuItem';
 
 /**
- * Navbar Mode 7 — Minimal Clean.
+ * Navbar Mode 7 - Minimal Clean.
  * Border bottom tipis, spacing luas, typografi bersih.
  * Logo di kiri, menu center, CTA di kanan.
  * Inspirasi: Vercel, Notion, Linear.
@@ -27,7 +27,7 @@ export default function NavbarMode7({ site, menus, open, onToggle, settings = {}
                         : <span className="brand-mark"><GraduationCap size={20} /></span>}
                 </Link>
 
-                {/* Menu — center */}
+                {/* Menu - center */}
                 <nav className="desktop-nav">
                     {(menus || []).map(menu => (
                         <NavbarMenuItem key={menu.id} item={menu} />

@@ -1,13 +1,13 @@
 import { generateDesign, colorHsl, validatedPalette } from './design-system';
 /**
- * Presets & helper data Theme Customizer — konstanta murni tanpa React.
+ * Presets & helper data Theme Customizer - konstanta murni tanpa React.
  * Dipakai oleh ThemeCustomizerContext (state) dan ThemeSettingsDrawer (UI).
  */
 
-// Struktur navbar & tombol tidak lagi di sini — navbar diatur per-section
+// Struktur navbar & tombol tidak lagi di sini - navbar diatur per-section
 // (variant Mode 1/2/3), tombol ikut knob Sudut (Radius).
 
-// Radius global — diterapkan lewat class theme-custom-radius--<key> di root
+// Radius global - diterapkan lewat class theme-custom-radius--<key> di root
 // (blok CSS di css/themes/*.css memetakan tiap key ke nilai sudut).
 export const RADIUS_OPTIONS = [
     { key: 'square', label: 'Kotak' },
@@ -16,7 +16,7 @@ export const RADIUS_OPTIONS = [
     { key: 'pill', label: 'Pill' },
 ];
 
-// Kepadatan halaman — mengatur jarak vertikal antar section (padding
+// Kepadatan halaman - mengatur jarak vertikal antar section (padding
 // section + heading). Diterapkan lewat class theme-custom-density--<key>.
 export const DENSITY_OPTIONS = [
     { key: 'compact', label: 'Padat' },
@@ -24,7 +24,7 @@ export const DENSITY_OPTIONS = [
     { key: 'spacious', label: 'Lega' },
 ];
 
-// Elevasi kartu (shadow) — seberapa "terangkat" kartu dari permukaan.
+// Elevasi kartu (shadow) - seberapa "terangkat" kartu dari permukaan.
 // Diterapkan lewat class theme-custom-elevation--<key> di root.
 export const ELEVATION_OPTIONS = [
     { key: 'flat', label: 'Flat' },
@@ -33,7 +33,7 @@ export const ELEVATION_OPTIONS = [
     { key: 'strong', label: 'Tajam' },
 ];
 
-// Mode gelap — class theme-custom-dark di root mengganti CSS vars permukaan.
+// Mode gelap - class theme-custom-dark di root mengganti CSS vars permukaan.
 export const DARK_VARS = {
     '--background': '#0b1220',
     '--card': '#131c2e',
@@ -43,7 +43,7 @@ export const DARK_VARS = {
     '--tint': '#101a2c',
 };
 
-// Pola latar abstrak per-section — kunci memetakan ke class .sec-colored--p-<key>
+// Pola latar abstrak per-section - kunci memetakan ke class .sec-colored--p-<key>
 // di css/sections/*.css; dipakai popover warna (tab Pola) + renderer.
 export const SECTION_PATTERNS = [
     { key: 'dots', name: 'Titik' },
@@ -55,7 +55,7 @@ export const SECTION_PATTERNS = [
 ];
 
 // Pattern-mode gating (PRD v2 §5): pola PADAT tidak boleh dipasang di mode
-// yang SUDAH padat visual (galeri foto, bento, barisan kartu) — hasilnya
+// yang SUDAH padat visual (galeri foto, bento, barisan kartu) - hasilnya
 // berisik, bukan tekstur. Entri: variant key `${sectionKey}_${num}`.
 // Pola non-padat (diagonal/waves/beams/noise) tetap bebas di semua mode.
 export const PATTERN_DENSITY_RULES = {
@@ -74,7 +74,7 @@ export function isPatternAllowed(sectionKey, variantKey, patternKey) {
     return !dense.includes(variantKey);
 }
 
-// Preset latar per-section — field yang null berarti ikut tema (tidak di-override).
+// Preset latar per-section - field yang null berarti ikut tema (tidak di-override).
 // Preset 'accent' diisi runtime: bg = primary tema, aksen = accent tema.
 export const SECTION_COLOR_PRESETS = [
     { key: 'light', name: 'Terang', bg: '#f8fafc', text: '#102033' },
@@ -95,7 +95,7 @@ export const FALLBACK_PALETTE = {
 
 /**
  * Kurasi pasangan font (heading/body) yang cocok untuk front-end.
- * SEMUA keluarga font di daftar ini harus termuat — lihat @import
+ * SEMUA keluarga font di daftar ini harus termuat - lihat @import
  * Google Fonts di landing.css. Pasangan font dari metadata tema backend
  * (themeOptions[].font) ditambahkan di atas daftar ini oleh collectFonts().
  */
@@ -156,7 +156,7 @@ export function collectPalettes(themeOptions) {
 
 /**
  * Kumpulkan pasangan font: kurasi FONT_OPTIONS + font dari metadata tema
- * (themeOptions[].font) — font tema menimpa yang sekunci, sisanya bertahan.
+ * (themeOptions[].font) - font tema menimpa yang sekunci, sisanya bertahan.
  */
 export function collectFonts(themeOptions) {
     const fonts = new Map(FONT_OPTIONS.map(f => [f.key, f]));
@@ -170,7 +170,7 @@ export function collectFonts(themeOptions) {
 }
 
 /**
- * Preset desain tema (config/themes.php) — variant section + warna section.
+ * Preset desain tema (config/themes.php) - variant section + warna section.
  * Key section memakai canonical (sectionKey): hero, product, statistic, dst.
  * Dipakai ThemeCustomizerContext saat tema berganti agar ganti tema benar-benar
  * mengubah tampilan (bukan hanya palet).
@@ -190,7 +190,7 @@ export function randomizeTheme(paletteOptions = [], fontOptions = [], sectionMet
 /**
  * Default state custom untuk tema tertentu (atau null bila tidak ada).
  * Nilai dari preset tema (config/themes.php) dipakai bila tidak ada override
- * user — jadi ganti tema otomatis menerapkan font/radius/nav/card/dark-nya.
+ * user - jadi ganti tema otomatis menerapkan font/radius/nav/card/dark-nya.
  */
 export function defaultsFor(custom, paletteOptions, fontOptions, meta) {
     const preset = meta?.preset || {};

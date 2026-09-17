@@ -2,7 +2,7 @@ import React from 'react';
 import { Globe, MapPin } from 'lucide-react';
 
 /**
- * Topbar Mode 7 — Social.
+ * Topbar Mode 7 - Social.
  * Alamat di kiri, social media links di kanan (text-based, no brand icons in lucide).
  * Prop: { site, settings }
  */

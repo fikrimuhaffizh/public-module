@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 /**
- * Scroll Shadow — returns true when the page has been scrolled past 10px.
+ * Scroll Shadow - returns true when the page has been scrolled past 10px.
  * Used by all navbar modes to add a subtle shadow on scroll.
  */
 export function useScrollShadow(threshold = 10) {
@@ -18,7 +18,7 @@ export function useScrollShadow(threshold = 10) {
 }
 
 /**
- * Active Page Detection — compares a menu URL against the current Inertia URL.
+ * Active Page Detection - compares a menu URL against the current Inertia URL.
  * Handles: exact match, startsWith (for sub-pages), trailing slash normalization.
  */
 export function isMenuActive(menuUrl, currentUrl) {

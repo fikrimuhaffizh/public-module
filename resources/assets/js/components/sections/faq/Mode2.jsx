@@ -8,9 +8,9 @@ import {
 } from '@public/components/ui/accordion';
 
 /**
- * FAQ Mode 2 — filter kategori: pill di atas, daftar accordion di bawah.
+ * FAQ Mode 2 - filter kategori: pill di atas, daftar accordion di bawah.
  * Tiap pill menampilkan jumlah pertanyaan kategori-nya.
- * Klik kategori → hanya pertanyaan kategori itu yang tampil.
+ * Klik kategori ke hanya pertanyaan kategori itu yang tampil.
  * Prop: { section, data }
  */
 export default function FaqMode2({ section, data }) {

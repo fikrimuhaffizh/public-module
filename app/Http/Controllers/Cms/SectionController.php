@@ -8,7 +8,12 @@ use Illuminate\Validation\Rule;
 use Modules\Public\Models\LandingSection;
 use Modules\Public\Services\LandingPageService;
 use Modules\Tenant\Services\TenantService;
+use Modules\Public\Http\Requests\ReorderAllSectionsRequest;
+use Modules\Public\Http\Requests\ReorderSectionsRequest;
 use Modules\Public\Http\Requests\SectionBackgroundRequest;
+use Modules\Public\Http\Requests\UpdateLandingTemplateRequest;
+use Modules\Public\Http\Requests\UpdateSectionRequest;
+use Modules\Public\Http\Requests\UploadLogoRequest;
 use Modules\Public\Services\CmsService;
 
 class SectionController extends Controller
@@ -60,11 +65,9 @@ class SectionController extends Controller
         ]);
     }
 
-    public function update(Request $request)
+    public function update(UpdateLandingTemplateRequest $request)
     {
-        $data = $request->validate([
-            'landing_template' => ['required', Rule::in($this->landing->themeKeys())],
-        ]);
+        $data = $request->validated();
 
         $this->landing->saveTemplate($data['landing_template']);
 
@@ -79,33 +82,11 @@ class SectionController extends Controller
             ->with('success', 'Template landing page berhasil diperbarui.');
     }
 
-    public function updateSection(Request $request, LandingSection $section)
+    public function updateSection(UpdateSectionRequest $request, LandingSection $section)
     {
-        $registry = $this->cmsService->getLandingSectionRegistry();
-        $sectionMeta = $registry[$section->section_key] ?? [];
-        $allowedVariants = array_keys($sectionMeta['variants'] ?? []);
+        $data = $request->validated();
 
-        $rules = [
-            'pre_title'     => 'nullable|string|max:100',
-            'title'         => 'nullable|string|max:191',
-            'post_title'    => 'nullable|string|max:100',
-            'subtitle'      => 'nullable|string|max:500',
-            'limit_data'    => 'nullable|integer|min:1|max:50',
-            'settings'      => 'nullable|array',
-            'settings.text_align' => ['nullable', Rule::in(['left', 'center', 'right'])],
-        ];
-
-        // Allow variant changes for all templates
-        if (!empty($allowedVariants)) {
-            $rules['variant'] = ['required', Rule::in($allowedVariants)];
-        } elseif (!empty($sectionMeta['variants'])) {
-            $rules['variant'] = 'nullable|string|max:50';
-        }
-
-        $data = $request->validate($rules);
-        // Variant is now saved for all templates (not just custom)
-
-        // Sanitize text fields — strip any HTML tags
+        // Sanitize text fields - strip any HTML tags
         foreach (['pre_title', 'title', 'post_title', 'subtitle'] as $field) {
             if (isset($data[$field])) {
                 $data[$field] = strip_tags($data[$field]);
@@ -121,18 +102,11 @@ class SectionController extends Controller
 
         // Handle Section Image Upload (for hero, etc.)
         if ($request->hasFile('section_image')) {
-            $request->validate([
-                'section_image' => 'file|mimes:png,jpg,jpeg,webp|max:4096'
-            ]);
             $section->clearMediaCollection('section_image');
             $section->addMedia($request->file('section_image'))
                 ->toMediaCollection('section_image');
         } elseif ($request->filled('section_image_url')) {
-            // Handle URL input — download image from URL
             $url = $request->input('section_image_url');
-            $request->validate([
-                'section_image_url' => 'url|max:2048'
-            ]);
             try {
                 $section->clearMediaCollection('section_image');
                 $section->addMediaFromUrl($url)
@@ -150,9 +124,6 @@ class SectionController extends Controller
         if ($tenant) {
             foreach (['logo_navbar', 'logo_footer'] as $logoCollection) {
                 if ($request->hasFile($logoCollection)) {
-                    $request->validate([
-                        $logoCollection => 'file|mimes:png,webp,jpg,jpeg|max:2048'
-                    ]);
                     $file = $request->file($logoCollection);
                     $tenant->clearMediaCollection($logoCollection);
                     $tenant->addMedia($file)
@@ -179,12 +150,9 @@ class SectionController extends Controller
         return back()->with('success', 'Status section berhasil diperbarui.');
     }
 
-    public function reorderSections(Request $request)
+    public function reorderSections(ReorderSectionsRequest $request)
     {
-        $data = $request->validate([
-            'area' => 'required|string',
-            'ids' => 'required|array',
-        ]);
+        $data = $request->validated();
 
         $this->landing->reorderSections($data['area'], $data['ids']);
 
@@ -199,29 +167,22 @@ class SectionController extends Controller
      * Simpan urutan GLOBAL semua section sekaligus (dipakai drag-reorder +
      * tombol ↑/↓ di Theme Settings drawer /preview).
      *
-     * Payload: { order: [{ id, area }] } — id boleh polos maupun
+     * Payload: { order: [{ id, area }] } - id boleh polos maupun
      * terenkripsi, area wajib top|middle|bottom. Entri tak valid dilewati
      * oleh service (tidak menggagalkan seluruh batch).
      */
-    public function reorderAllSections(Request $request)
+    public function reorderAllSections(ReorderAllSectionsRequest $request)
     {
-        $data = $request->validate([
-            'order' => 'required|array|min:1',
-            'order.*.id' => 'required',
-            'order.*.area' => 'required|string|in:top,middle,bottom',
-        ]);
+        $data = $request->validated();
 
         $this->landing->reorderSectionsGlobal($data['order']);
 
         return response()->json(['message' => 'Urutan section berhasil disimpan.']);
     }
 
-    public function uploadLogo(Request $request)
+    public function uploadLogo(UploadLogoRequest $request)
     {
-        $request->validate([
-            'logo' => 'required|file|mimes:png,webp,jpg,jpeg|max:2048',
-            'collection' => 'required|in:logo_navbar,logo_footer',
-        ]);
+        $request->validated();
 
         $tenant = $this->tenantService->findById(sys_tenant_id());
         if (! $tenant) {

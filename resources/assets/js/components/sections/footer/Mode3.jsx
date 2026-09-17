@@ -4,7 +4,7 @@ import { GraduationCap } from 'lucide-react';
 import { FooterSocials } from './Mode1';
 
 /**
- * Footer Mode 3 — brand + sosmed di baris atas, kolom navigasi/kontak di tengah,
+ * Footer Mode 3 - brand + sosmed di baris atas, kolom navigasi/kontak di tengah,
  * bar copyright di bawah (struktur korporat).
  * Prop: { site, footerMenus }
  */

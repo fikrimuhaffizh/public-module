@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/react';
 import { GraduationCap } from 'lucide-react';
 
 /**
- * Footer Mode 1 — grid 3 kolom klasik: brand+sosmed, navigasi, kontak.
+ * Footer Mode 1 - grid 3 kolom klasik: brand+sosmed, navigasi, kontak.
  * Prop: { site, footerMenus }
  */
 export function FooterSocials({ social }) {

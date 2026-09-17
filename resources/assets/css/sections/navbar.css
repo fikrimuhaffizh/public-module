@@ -1,8 +1,8 @@
-/* ============================================================
-   sections/navbar.css — bagian dari landing (dipecah dari landing.css)
-   ============================================================ */
+/*
+   sections/navbar.css - bagian dari landing (dipecah dari landing.css)
+   */
 
-/* ── Scroll Shadow — navbar mendapat shadow saat user scroll ── */
+/* ── Scroll Shadow - navbar mendapat shadow saat user scroll ── */
 .site-header--scrolled {
     box-shadow: 0 4px 24px rgba(15, 23, 42, .08)
 }
@@ -10,7 +10,7 @@
     box-shadow: 0 8px 32px rgba(15, 23, 42, .14)
 }
 
-/* ── Active Page Indicator — highlight menu item halaman aktif ── */
+/* ── Active Page Indicator - highlight menu item halaman aktif ── */
 .desktop-nav a.nav-active,
 .nav-dock-menu a.nav-active {
     color: var(--primary)
@@ -40,7 +40,7 @@
 
 /* ── NAVBAR: logo kiri / tengah / kanan ─────────────────────────── */
 /* Grid 3 kolom membuat logo TERSENTRAL sungguhan & tinggi header tetap
-   76px (sama dgn V1) → tidak bentrok dengan hero di bawahnya.
+   76px (sama dgn V1) => tidak bentrok dengan hero di bawahnya.
    grid-column DIPIN eksplisit agar saat .desktop-nav display:none (mobile)
    auto-placement tidak menggeser brand ke kiri. */
 .nav-wrap--center { display: grid; grid-template-columns: 1fr auto 1fr; gap: 18px }
@@ -51,7 +51,7 @@
 .nav-right-group { display: flex; align-items: center; gap: 18px; margin-left: auto }
 
 
-/* ===== Navbar Mode 2 — dua baris ===== */
+/* Navbar Mode 2 - dua baris */
 .site-header--rows .nav-rows-menu {
     border-top: 1px solid var(--border);
     padding: 0;
@@ -80,7 +80,7 @@
     }
 }
 
-/* ===== Navbar Mode 3 — tanpa tombol login ===== */
+/* Navbar Mode 3 - tanpa tombol login */
 .site-header--nologin .nav-right-group {
     display: flex;
     align-items: center;
@@ -91,11 +91,11 @@
 .site-header--nologin .desktop-nav {
     margin-right: 0;
 }
-/* ===== Navbar Mode 4 — Dock mengambang (Velora-inspired) ===== */
+/* Navbar Mode 4 - Dock mengambang (Velora-inspired) */
 /* Dock = pill mengambang tanpa chrome header. !important diperlukan karena
    rule tema (mis. .theme-enterprise .site-header) menimpa border/background
    .site-header--dock (specificity lebih tinggi). Override warna section
-   (.sec-colored--bg header) tetap menang — specificity lebih tinggi. */
+   (.sec-colored--bg header) tetap menang - specificity lebih tinggi. */
 .site-header--dock { background: transparent !important; border-bottom: none !important; padding: 20px 0 18px }
 .nav-dock-wrap { display: flex; justify-content: center }
 .nav-dock {

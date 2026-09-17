@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 /**
- * Statistik Mode 4 — Counter cards: kartu counter.
+ * Statistik Mode 4 - Counter cards: kartu counter.
  * Animasi: stagger + count-up.
  */
 export default function StatisticMode4({ section, data }) {

@@ -2,7 +2,7 @@ import React from 'react';
 import { Reveal } from '@public/components/motion/effects';
 import { sectionHeading } from '../index';
 
-/** Klien/Logo Mode 1 — grid kartu teratur (logo + nama). Prop: { section, data } */
+/** Klien/Logo Mode 1 - grid kartu teratur (logo + nama). Prop: { section, data } */
 export default function ClientMode1({ section, data }) {
     const clients = data.landing?.clients || [];
     if (!clients.length) return null;

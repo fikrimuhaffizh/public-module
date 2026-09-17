@@ -4,7 +4,7 @@ import { ArrowRight } from 'lucide-react';
 import { Badge } from '@public/components/ui/badge';
 import { Section, combinedText } from '../index';
 
-/** Pengumuman Mode 2 — baris daftar: gambar di kiri, info di kanan. Prop: { section, data } */
+/** Pengumuman Mode 2 - baris daftar: gambar di kiri, info di kanan. Prop: { section, data } */
 export default function AnnouncementMode2({ section, data }) {
     const list = data.announcements || [];
     if (!list.length) return null;

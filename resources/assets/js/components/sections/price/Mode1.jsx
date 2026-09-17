@@ -3,7 +3,7 @@ import { Check, Star } from 'lucide-react';
 import { Section, pricePackages, combinedText } from '../index';
 
 /**
- * Harga Mode 1 — kartu 3 kolom klasik: tiap paket satu kartu, paket unggulan
+ * Harga Mode 1 - kartu 3 kolom klasik: tiap paket satu kartu, paket unggulan
  * ditandai dan lebih menonjol. Prop: { section, data }
  * Data dari section.settings.packages (array JSON), fallback demo.
  */

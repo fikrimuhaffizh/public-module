@@ -3,8 +3,8 @@ import { Clock, MessageCircle, Phone } from 'lucide-react';
 import { openStatusNow, useNow } from './hours';
 
 /**
- * Top Bar Mode 3 — compact satu baris: status singkat + jam + kontak penting.
- * Hemat ruang — pas untuk halaman yang ingin tetap bersih.
+ * Top Bar Mode 3 - compact satu baris: status singkat + jam + kontak penting.
+ * Hemat ruang - pas untuk halaman yang ingin tetap bersih.
  * Prop: { site, settings }
  */
 export default function TopBarMode3({ site = {}, settings = {} }) {

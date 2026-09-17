@@ -4,7 +4,7 @@ import { Plus } from 'lucide-react';
 import { Stagger } from '@public/components/motion/effects';
 import { Section, combinedText } from '../index';
 
-/** FAQ Mode 4 — accordion animasi: kartu melebar halus, satu terbuka. Prop: { section, data } */
+/** FAQ Mode 4 - accordion animasi: kartu melebar halus, satu terbuka. Prop: { section, data } */
 export default function FaqMode4({ section, data }) {
     const faqs = data.faqs || [];
     const [open, setOpen] = useState(() => (faqs.length ? `faq-${faqs[0].id}` : null));

@@ -4,7 +4,7 @@ import { Check, Star } from 'lucide-react';
 import { Section, pricePackages, combinedText } from '../index';
 
 /**
- * Price Mode 5 — Toggle monthly/yearly.
+ * Price Mode 5 - Toggle monthly/yearly.
  * Animasi: fade saat ganti period.
  */
 export default function PriceMode5({ section, data }) {

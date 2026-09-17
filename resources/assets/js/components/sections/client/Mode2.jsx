@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Reveal } from '@public/components/motion/effects';
 import { sectionHeading } from '../index';
 
-/** Klien/Logo Mode 2 — showcase: panggung logo aktif (besar) + panah + strip thumbnail, auto-putar, swipe untuk mobile. Prop: { section, data } */
+/** Klien/Logo Mode 2 - showcase: panggung logo aktif (besar) + panah + strip thumbnail, auto-putar, swipe untuk mobile. Prop: { section, data } */
 export default function ClientMode2({ section, data }) {
     const clients = data.landing?.clients || [];
 
@@ -45,7 +45,7 @@ export default function ClientMode2({ section, data }) {
         const t = e.touches[0];
         const dx = t.clientX - touchStart.current.x;
         const dy = t.clientY - touchStart.current.y;
-        // Geser dominan horizontal — ikuti jari (dibatasi ±120px), biarkan scroll vertikal jalan.
+        // Geser dominan horizontal - ikuti jari (dibatasi ±120px), biarkan scroll vertikal jalan.
         if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 8) {
             dragXRef.current = Math.max(-120, Math.min(120, dx));
             setDragX(dragXRef.current);

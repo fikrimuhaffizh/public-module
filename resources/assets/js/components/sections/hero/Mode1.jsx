@@ -1,7 +1,7 @@
 import React from 'react';
 import { HeroCopy, HeroMedia, useHeroData } from './HeroData';
 
-/** Mode 1 — Split klasik: copy kiri, visual kanan. */
+/** Mode 1 - Split klasik: copy kiri, visual kanan. */
 export default function HeroMode1({ section, data }) {
     const { hero, copy, image, imageAlt, site } = useHeroData(section, data);
     return (

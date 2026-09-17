@@ -1,8 +1,8 @@
-/* ============================================================
-   sections/spacing.css — bagian dari landing (dipecah dari landing.css)
-   ============================================================ */
+/*
+   sections/spacing.css - bagian dari landing (dipecah dari landing.css)
+   */
 
-/* Normalisasi jarak heading — pretitle tidak mepet dengan section di atas */
+/* Normalisasi jarak heading - pretitle tidak mepet dengan section di atas */
 .section-heading {
     margin-top: 2px;
     padding-top: 6px;

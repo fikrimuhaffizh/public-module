@@ -3,9 +3,9 @@ import { Clock, MapPin, MessageCircle, Phone } from 'lucide-react';
 import { openStatusNow, useNow } from './hours';
 
 /**
- * Top Bar Mode 1 — strip klasik: kiri alamat + jam, kanan telepon + WhatsApp,
+ * Top Bar Mode 1 - strip klasik: kiri alamat + jam, kanan telepon + WhatsApp,
  * plus status "Buka/Tutup" real-time di depan.
- * Prop: { site, settings } — layout-level, seperti navbar/footer.
+ * Prop: { site, settings } - layout-level, seperti navbar/footer.
  */
 export default function TopBarMode1({ site = {}, settings = {} }) {
     const hours = settings.topbar_hours || '';

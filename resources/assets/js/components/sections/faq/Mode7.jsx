@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 /**
- * FAQ Mode 7 — Grid cards: FAQ dalam card grid.
+ * FAQ Mode 7 - Grid cards: FAQ dalam card grid.
  * Animasi: stagger.
  */
 export default function FaqMode7({ section, data }) {

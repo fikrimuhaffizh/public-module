@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 /**
- * Statistik Mode 8 — Large center: angka besar center.
+ * Statistik Mode 8 - Large center: angka besar center.
  * Animasi: zoom-in.
  */
 export default function StatisticMode8({ section, data }) {

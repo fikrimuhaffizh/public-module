@@ -3,7 +3,7 @@ import { ArrowUpRight } from 'lucide-react';
 import { Section, combinedText } from '../index';
 
 /**
- * Produk Mode 3 — kartu bernomor: media (foto/inisial) + angka watermark besar
+ * Produk Mode 3 - kartu bernomor: media (foto/inisial) + angka watermark besar
  * + nama + deskripsi, grid dua kolom di desktop. Prop: { section, data }
  */
 export default function ProductMode3({ section, data }) {

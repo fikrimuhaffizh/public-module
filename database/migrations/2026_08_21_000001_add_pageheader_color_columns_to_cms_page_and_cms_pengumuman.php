@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Schema;
  *   - subtitle_color: warna excerpt / deskripsi
  *
  * Berlaku untuk dua tabel:
- *   1. cms_page — halaman statis (mode template)
- *   2. cms_pengumuman — berita / pengumuman
+ *   1. cms_page - halaman statis (mode template)
+ *   2. cms_pengumuman - berita / pengumuman
  */
 return new class extends Migration
 {

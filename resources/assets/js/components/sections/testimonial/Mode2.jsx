@@ -1,7 +1,7 @@
 import React from 'react';
 import { Section, combinedText, TestimonialRating } from '../index';
 
-/** Testimoni Mode 2 — spotlight: satu kutipan besar di tengah, avatar di bawah. Prop: { section, data } */
+/** Testimoni Mode 2 - spotlight: satu kutipan besar di tengah, avatar di bawah. Prop: { section, data } */
 export default function TestimonialMode2({ section, data }) {
     const list = data.testimonials || [];
     if (!list.length) return null;

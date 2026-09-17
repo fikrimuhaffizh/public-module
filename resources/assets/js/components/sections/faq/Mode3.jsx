@@ -4,8 +4,8 @@ import { Section, combinedText } from '../index';
 import FaqReveal from './FaqReveal';
 
 /**
- * FAQ Mode 3 — kartu Q&A: grid dua kolom kartu, tiap kartu bisa dibuka
- * independen (multi-open). Kartu memakai .gen-card — bahasa visual
+ * FAQ Mode 3 - kartu Q&A: grid dua kolom kartu, tiap kartu bisa dibuka
+ * independen (multi-open). Kartu memakai .gen-card - bahasa visual
  * sama dengan kartu Produk/Harga/Fitur.
  * Jawaban muncul dengan animasi height + opacity (FaqReveal).
  * Prop: { section, data }

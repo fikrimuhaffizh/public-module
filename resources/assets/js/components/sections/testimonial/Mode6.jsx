@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Quote } from 'lucide-react';
 
 /**
- * Testimonial Mode 6 — Masonry grid: card berbagai ukuran.
+ * Testimonial Mode 6 - Masonry grid: card berbagai ukuran.
  * Animasi: stagger.
  */
 export default function TestimonialMode6({ section, data }) {

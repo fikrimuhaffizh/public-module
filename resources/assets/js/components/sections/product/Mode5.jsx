@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 
 /**
- * Product Mode 5 — Featured: 1 produk besar + grid kecil.
+ * Product Mode 5 - Featured: 1 produk besar + grid kecil.
  * Animasi: stagger.
  */
 export default function ProductMode5({ section, data }) {

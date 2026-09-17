@@ -4,9 +4,9 @@ import { GraduationCap } from 'lucide-react';
 import { FooterSocials } from './Mode1';
 
 /**
- * Footer Mode 8 — Dark Gradient.
+ * Footer Mode 8 - Dark Gradient.
  * Background gelap gradient, 3 kolom: Brand, Navigasi, Kontak.
- * Premium look — cocok untuk corporate/enterprise.
+ * Premium look - cocok untuk corporate/enterprise.
  * Prop: { site, footerMenus }
  */
 export default function FooterMode8({ site, footerMenus }) {

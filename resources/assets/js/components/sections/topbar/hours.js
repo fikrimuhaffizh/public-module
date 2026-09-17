@@ -1,10 +1,10 @@
 import React from 'react';
 
 /**
- * Helper jam operasional — murni, bisa dipakai topbar & section lain.
+ * Helper jam operasional - murni, bisa dipakai topbar & section lain.
  * Format yang didukung, contoh:
- *   "Senin–Jumat 08.00–17.00, Sabtu 09.00–14.00"
- *   "Setiap hari 08.00–22.00"
+ *   "Senin-Jumat 08.00-17.00, Sabtu 09.00-14.00"
+ *   "Setiap hari 08.00-22.00"
  *   "Senin-Jumat 08:00-17:00, Sabtu Tutup, Minggu Tutup"
  */
 
@@ -38,7 +38,7 @@ export function parseHoursText(text) {
     return rules;
 }
 
-/** Hari-hari yang disebut dalam teks (mendukung rentang "Senin–Jumat", "Setiap hari"). */
+/** Hari-hari yang disebut dalam teks (mendukung rentang "Senin-Jumat", "Setiap hari"). */
 function extractDays(text) {
     const lower = text.toLowerCase();
     const found = [];

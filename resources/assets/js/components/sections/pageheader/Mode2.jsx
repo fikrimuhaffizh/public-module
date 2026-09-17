@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/react';
 import { ChevronRight, Home } from 'lucide-react';
 
 /**
- * Page Header Mode 2 — terpusat: breadcrumb + eyebrow + judul di tengah,
+ * Page Header Mode 2 - terpusat: breadcrumb + eyebrow + judul di tengah,
  * latar bersih dengan garis bawah halus. Cocok untuk halaman berita & kontak.
  * Fitur: home icon di breadcrumb, eyebrow default jika tidak ada.
  * Prop: { context, site }

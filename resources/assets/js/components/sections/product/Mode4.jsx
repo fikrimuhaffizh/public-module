@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Section, combinedText } from '../index';
 
-/** Produk Mode 4 — carousel geser dengan scroll-snap + panah. Prop: { section, data } */
+/** Produk Mode 4 - carousel geser dengan scroll-snap + panah. Prop: { section, data } */
 export default function ProductMode4({ section, data }) {
     const products = data.landing?.products || [];
 

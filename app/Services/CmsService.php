@@ -18,7 +18,7 @@ use Modules\Public\Models\Section;
 use Modules\Public\Models\Slideshow;
 
 /**
- * Generic CMS Service — handles CRUD for all CMS entities.
+ * Generic CMS Service - handles CRUD for all CMS entities.
  * Replaces direct Model calls in CMS Controllers (Slim Controller pattern).
  */
 class CmsService

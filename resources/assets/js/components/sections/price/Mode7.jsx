@@ -4,7 +4,7 @@ import { Check } from 'lucide-react';
 import { Section, pricePackages, combinedText } from '../index';
 
 /**
- * Price Mode 7 — Split: paket kiri, info kanan.
+ * Price Mode 7 - Split: paket kiri, info kanan.
  * Animasi: slide-in.
  */
 export default function PriceMode7({ section, data }) {

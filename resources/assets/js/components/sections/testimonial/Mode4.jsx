@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Section, combinedText, TestimonialRating } from '../index';
 
-/** Testimoni Mode 4 — rotator: satu kutipan besar berganti otomatis dengan transisi halus + dots. Prop: { section, data } */
+/** Testimoni Mode 4 - rotator: satu kutipan besar berganti otomatis dengan transisi halus + dots. Prop: { section, data } */
 export default function TestimonialMode4({ section, data }) {
     const list = data.testimonials || [];
 

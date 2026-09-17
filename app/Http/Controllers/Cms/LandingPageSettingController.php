@@ -17,7 +17,7 @@ class LandingPageSettingController extends Controller
     }
 
     /**
-     * Combined Settings — Kontak, Media Sosial, dan SEO dalam satu halaman.
+     * Combined Settings - Kontak, Media Sosial, dan SEO dalam satu halaman.
      */
     public function editSettings()
     {

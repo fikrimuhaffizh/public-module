@@ -1,10 +1,10 @@
-/* ============================================================
-   themes/registration.css — bagian dari themes (dipecah dari landing.css)
-   ============================================================ */
+/*
+   themes/registration.css - bagian dari themes (dipecah dari landing.css)
+   */
 
-/* =============================================
-   Theme 7 — Registration (warm emerald, form-centric)
-   ============================================= */
+/*
+   Theme 7 - Registration (warm emerald, form-centric)
+   */
 .theme-registration {
     --primary: #059669;
     --section-alt: #f0f7f4;

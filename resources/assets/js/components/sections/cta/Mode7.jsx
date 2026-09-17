@@ -2,7 +2,7 @@ import React from 'react';
 import { Reveal } from '@public/components/motion/effects';
 
 /**
- * CTA Mode 7 — Minimal center: teks besar, clean, elegan.
+ * CTA Mode 7 - Minimal center: teks besar, clean, elegan.
  * Animasi: fade-up (budgeted).
  */
 export default function CtaMode7({ section, data }) {

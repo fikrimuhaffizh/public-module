@@ -1,7 +1,7 @@
 import React from 'react';
 import { Section, NewsGrid, combinedText } from '../index';
 
-/** Pengumuman Mode 1 — grid kartu berita. Prop: { section, data } */
+/** Pengumuman Mode 1 - grid kartu berita. Prop: { section, data } */
 export default function AnnouncementMode1({ section, data }) {
     return (
         <Section

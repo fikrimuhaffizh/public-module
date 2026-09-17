@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 /**
- * Statistik Mode 5 — Horizontal scroll: stat dalam scroll.
+ * Statistik Mode 5 - Horizontal scroll: stat dalam scroll.
  * Animasi: slide-in dari bawah.
  */
 export default function StatisticMode5({ section, data }) {

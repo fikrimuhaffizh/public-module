@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from '@inertiajs/react';
 
 /**
- * Announcement Mode 7 — Horizontal scroll: berita scroll horizontal.
+ * Announcement Mode 7 - Horizontal scroll: berita scroll horizontal.
  * Animasi: slide-in.
  */
 export default function AnnouncementMode7({ section, data }) {

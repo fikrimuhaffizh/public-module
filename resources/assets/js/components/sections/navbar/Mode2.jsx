@@ -6,7 +6,7 @@ import { useScrollShadow } from './useNavbarEffects';
 import NavbarMenuItem from './NavbarMenuItem';
 
 /**
- * Navbar Mode 2 — dua baris:
+ * Navbar Mode 2 - dua baris:
  *   Baris 1: logo di kiri + tombol masuk di kanan.
  *   Baris 2: menu navigasi penuh (border-top tipis).
  * Fitur: scroll shadow, active page indicator, dropdown submenus.

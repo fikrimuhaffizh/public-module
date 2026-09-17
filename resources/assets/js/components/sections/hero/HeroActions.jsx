@@ -3,12 +3,12 @@ import { ArrowRight, CheckCircle2, MessageCircle } from 'lucide-react';
 import { Button } from '@public/components/ui/button';
 
 /**
- * HeroActions — aksi hero yang FOKUS KONVERSI.
+ * HeroActions - aksi hero yang FOKUS KONVERSI.
  *
- *  • Satu CTA utama: chat WhatsApp bila nomor tersedia (site.whatsapp),
+ * Satu CTA utama membuka WhatsApp bila nomor tersedia (site.whatsapp),
  *    fallback ke buttonPrimary dari CMS. CTA sekunder (outline) tetap ada
  *    sebagai pintu alternatif, bukan penyaing utama.
- *  • Microcopy anti-keberatan di bawah tombol — menjawab keraguan sebelum
+ * Microcopy di bawah tombol menjawab keraguan sebelum
  *    muncul: kecepatan respon, gratis, tanpa komitmen. Daftar bisa
  *    di-override per-hero via `hero.microcopy` (array of strings).
  *

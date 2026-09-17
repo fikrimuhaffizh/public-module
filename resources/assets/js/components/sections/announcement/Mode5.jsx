@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from '@inertiajs/react';
 
 /**
- * Announcement Mode 5 — Featured: 1 berita besar + sidebar.
+ * Announcement Mode 5 - Featured: 1 berita besar + sidebar.
  * Animasi: fade.
  */
 export default function AnnouncementMode5({ section, data }) {

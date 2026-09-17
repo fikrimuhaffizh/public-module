@@ -2,7 +2,7 @@ import React from 'react';
 import { SectionHeader } from '../index';
 import CountUp from './CountUp';
 
-/** Statistik Mode 3 — band angka lebar dengan pembatas vertikal. Prop: { section, data } */
+/** Statistik Mode 3 - band angka lebar dengan pembatas vertikal. Prop: { section, data } */
 export default function StatsMode3({ section, data }) {
     const stats = data.landing?.statistics || [];
     if (!stats.length) return null;

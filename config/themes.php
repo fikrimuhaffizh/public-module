@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Theme registry — SATU sumber kebenaran untuk semua tema landing page.
+ * Theme registry - SATU sumber kebenaran untuk semua tema landing page.
  *
  * Menambah tema baru cukup satu entri di sini + komponen React di
  * resources/assets/js/templates/ + blok CSS `.theme-<key>` di landing.css.
@@ -15,7 +15,7 @@
  *     'icon'        => string,  // ikon Tabler (tanpa prefix "ti ti-")
  *     'palette'     => ['primary' => ..., 'primary-dark' => ...],
  *
- *     // Preset desain — diterapkan OTOMATIS saat tema dipilih (lihat
+ *     // Preset desain - diterapkan OTOMATIS saat tema dipilih (lihat
  *     // ThemeCustomizerContext). Key sama dengan knob Theme Settings:
  *     //   font/radius/nav/card/button  => key di presets.js (FONT_OPTIONS dll.)
  *     //   dark                         => bool

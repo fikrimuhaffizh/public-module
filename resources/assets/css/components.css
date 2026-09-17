@@ -1,8 +1,8 @@
-/* ============================================================
-   COMPONENT VARIANTS — Reusable UI Components
+/*
+   COMPONENT VARIANTS - Reusable UI Components
    
    Semua section MENGGUNAKAN komponen ini.
-   Ubah di sini → semua section ikut berubah.
+   Ubah di sini => semua section ikut berubah.
    
    Cara pakai:
      <button class="ui-btn ui-btn--primary">Solid</button>
@@ -12,7 +12,7 @@
      
      <div class="ui-card ui-card--bordered">Card</div>
      <div class="ui-card ui-card--glass">Glass Card</div>
-   ============================================================ */
+   */
 
 /* ── BUTTON VARIANTS ───────────────────────────────────── */
 .ui-btn {
@@ -109,7 +109,7 @@
                 box-shadow var(--duration-normal) var(--ease-default);
 }
 
-/* Flat (default — no shadow) */
+/* Flat (default - no shadow) */
 .ui-card--flat {
     border: none;
     box-shadow: none;
@@ -143,7 +143,7 @@
     border: 1px solid color-mix(in srgb, var(--color-primary, #155eef) 12%, var(--color-border, #e2e8f0));
 }
 
-/* Image Card — gambar di atas */
+/* Image Card - gambar di atas */
 .ui-card--image { position: relative }
 .ui-card--image .ui-card-img {
     width: calc(100% + 2 * var(--card-pad, 0px));

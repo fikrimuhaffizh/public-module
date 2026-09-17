@@ -1,6 +1,6 @@
-/* ============================================================
-   sections/hero.css — bagian dari landing (dipecah dari landing.css)
-   ============================================================ */
+/*
+   sections/hero.css - bagian dari landing (dipecah dari landing.css)
+   */
 
 /* ── HERO V2: terpusat ──────────────────────────────────────────── */
 .hero--centered { display: flex; align-items: center; text-align: center; padding: 96px 0 72px; position: relative }
@@ -45,7 +45,7 @@
 .hero--overlay .hero-microcopy svg { color: #4ade80 }
 
 
-/* ===== Hero Mode 3 — dua kolom galeri UMKM (kompak, muat 1 layar) ===== */
+/* Hero Mode 3 - dua kolom galeri UMKM (kompak, muat 1 layar) */
 .hero--gallery {
     position: relative;
     overflow: hidden;
@@ -148,7 +148,7 @@
 }
 /* Density overrides for all hero modes moved to customizer.css */
 
-/* Hero "Isi satu layar" — toggle di Theme Settings.
+/* Hero "Isi satu layar" - toggle di Theme Settings.
    Hero mengisi 100svh (viewport penuh), ditarik ke atas menutupi navbar
    agar background-nya full dari atas ke bawah. Content di-push ke bawah
    dengan padding-top = tinggi navbar supaya tidak tertutup. */
@@ -185,7 +185,7 @@
         padding-top: 60px;
     }
 }
-/* ===== Hero Mode 4 — Aurora animasi (Velora-inspired) ===== */
+/* Hero Mode 4 - Aurora animasi (Velora-inspired) */
 .hero--aurora {
     position: relative;
     display: flex;
@@ -217,7 +217,7 @@
     .hero-aurora-chip--2 { right: 4px }
 }
 
-/* ===== HERO MODE 4 — Cinematic ===== */
+/* HERO MODE 4 - Cinematic */
 .hero--cinematic {
     position: relative;
     display: flex;
@@ -247,7 +247,7 @@
     color: rgba(255,255,255,.82); font-size: 17px; max-width: 540px
 }
 
-/* ===== HERO MODE 5 — Split Reversed ===== */
+/* HERO MODE 5 - Split Reversed */
 .hero--split-reverse {
     display: flex; align-items: center; padding: 100px 0 88px
 }
@@ -271,7 +271,7 @@
     .hero-split-visual { max-width: 480px }
 }
 
-/* ===== HERO MODE 6 — Minimal Large Typography ===== */
+/* HERO MODE 6 - Minimal Large Typography */
 .hero--minimal {
     position: relative; display: flex; align-items: center;
     text-align: center; padding: 110px 0 88px; overflow: hidden
@@ -288,7 +288,7 @@
 .hero-minimal-word { display: inline-block; white-space: pre }
 .hero-minimal-subtitle { font-size: 18px; color: var(--muted); max-width: 560px; margin: 0 auto 30px }
 
-/* ===== HERO MODE 7 — Bento Grid ===== */
+/* HERO MODE 7 - Bento Grid */
 .hero--bento { padding: 100px 0 88px }
 .hero-bento-grid {
     display: grid;
@@ -321,7 +321,7 @@
     .hero-bento-stat { grid-column: 1; grid-row: 3 }
 }
 
-/* ===== HERO MODE 8 — Immersive Gradient ===== */
+/* HERO MODE 8 - Immersive Gradient */
 .hero--gradient {
     position: relative; display: flex; align-items: center;
     padding: 100px 0 88px; overflow: hidden; isolation: isolate

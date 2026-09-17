@@ -6,10 +6,10 @@
 * License: https://bootstrapmade.com/license/
 */
 
-/*--------------------------------------------------------------
+/*
 # Font & Color Variables
 # Help: https://bootstrapmade.com/color-system/
---------------------------------------------------------------*/
+*/
 /* Fonts */
 :root {
   --default-font: "Roboto",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -66,9 +66,9 @@
   scroll-behavior: smooth;
 }
 
-/*--------------------------------------------------------------
+/*
 # General Styling & Shared Classes
---------------------------------------------------------------*/
+*/
 body {
   color: var(--default-color);
   background-color: var(--background-color);
@@ -97,7 +97,7 @@ h6 {
 }
 
 /* PHP Email Form Messages
-------------------------------*/
+*/
 .php-email-form .error-message {
   display: none;
   background: #df1529;
@@ -148,9 +148,9 @@ h6 {
   }
 }
 
-/*--------------------------------------------------------------
+/*
 # Global Header
---------------------------------------------------------------*/
+*/
 .header {
   --background-color: rgba(255, 255, 255, 0);
   color: var(--default-color);
@@ -226,9 +226,9 @@ h6 {
   }
 }
 
-/*--------------------------------------------------------------
+/*
 # Navigation Menu
---------------------------------------------------------------*/
+*/
 /* Navmenu - Desktop */
 @media (min-width: 1200px) {
   .navmenu {
@@ -463,9 +463,9 @@ h6 {
   }
 }
 
-/*--------------------------------------------------------------
+/*
 # Global Footer
---------------------------------------------------------------*/
+*/
 .footer {
   color: var(--default-color);
   background: var(--background-color);
@@ -780,9 +780,9 @@ textarea::placeholder {
   color: color-mix(in srgb, var(--default-color), transparent 70%);
 }
 
-/*--------------------------------------------------------------
+/*
 # Preloader
---------------------------------------------------------------*/
+*/
 #preloader {
   position: fixed;
   inset: 0;
@@ -825,9 +825,9 @@ textarea::placeholder {
   }
 }
 
-/*--------------------------------------------------------------
+/*
 # Scroll Top Button
---------------------------------------------------------------*/
+*/
 .scroll-top {
   position: fixed;
   visibility: hidden;
@@ -859,18 +859,18 @@ textarea::placeholder {
   bottom: 15px;
 }
 
-/*--------------------------------------------------------------
+/*
 # Disable aos animation delay on mobile devices
---------------------------------------------------------------*/
+*/
 @media screen and (max-width: 768px) {
   [data-aos-delay] {
     transition-delay: 0 !important;
   }
 }
 
-/*--------------------------------------------------------------
+/*
 # Global Page Titles & Breadcrumbs
---------------------------------------------------------------*/
+*/
 .page-title {
   color: var(--default-color);
   background-color: var(--background-color);
@@ -913,9 +913,9 @@ textarea::placeholder {
   color: color-mix(in srgb, var(--default-color), transparent 70%);
 }
 
-/*--------------------------------------------------------------
+/*
 # Global Sections
---------------------------------------------------------------*/
+*/
 section,
 .section {
   color: var(--default-color);
@@ -933,9 +933,9 @@ section,
   }
 }
 
-/*--------------------------------------------------------------
+/*
 # Global Section Titles
---------------------------------------------------------------*/
+*/
 .section-title {
   text-align: center;
   padding-bottom: 60px;
@@ -980,9 +980,9 @@ section,
   margin-bottom: 0;
 }
 
-/*--------------------------------------------------------------
+/*
 # Hero Section
---------------------------------------------------------------*/
+*/
 .hero {
   position: relative;
   background: linear-gradient(135deg, color-mix(in srgb, var(--accent-color), transparent 95%) 0%, color-mix(in srgb, var(--background-color), transparent 5%) 100%);
@@ -1334,9 +1334,9 @@ section,
   }
 }
 
-/*--------------------------------------------------------------
+/*
 # Home About Section
---------------------------------------------------------------*/
+*/
 .home-about .image-section {
   position: relative;
 }
@@ -1654,9 +1654,9 @@ section,
   color: var(--accent-color);
 }
 
-/*--------------------------------------------------------------
+/*
 # Featured Properties Section
---------------------------------------------------------------*/
+*/
 .featured-properties .grid-featured {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -2197,9 +2197,9 @@ section,
   background: color-mix(in srgb, var(--accent-color), transparent 92%);
 }
 
-/*--------------------------------------------------------------
+/*
 # Featured Services Section
---------------------------------------------------------------*/
+*/
 .featured-services .service-card {
   background: var(--surface-color);
   border-radius: 20px;
@@ -2537,9 +2537,9 @@ section,
   }
 }
 
-/*--------------------------------------------------------------
+/*
 # Featured Agents Section
---------------------------------------------------------------*/
+*/
 .featured-agents .agent-card {
   background: var(--surface-color);
   border-radius: 16px;
@@ -2874,9 +2874,9 @@ section,
   }
 }
 
-/*--------------------------------------------------------------
+/*
 # Testimonials Section
---------------------------------------------------------------*/
+*/
 .testimonials .testimonials-slider {
   width: 100%;
   position: relative;
@@ -2988,9 +2988,9 @@ section,
   color: var(--contrast-color);
 }
 
-/*--------------------------------------------------------------
+/*
 # Why Us Section
---------------------------------------------------------------*/
+*/
 .why-us {
   padding: 100px 0;
   background: linear-gradient(135deg, var(--background-color) 0%, var(--surface-color) 100%);
@@ -3389,9 +3389,9 @@ section,
   }
 }
 
-/*--------------------------------------------------------------
+/*
 # Recent Blog Posts Section
---------------------------------------------------------------*/
+*/
 .recent-blog-posts .post-item {
   background: var(--surface-color);
   box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.1);
@@ -3455,9 +3455,9 @@ section,
   transform: scale(1.1);
 }
 
-/*--------------------------------------------------------------
+/*
 # Call To Action Section
---------------------------------------------------------------*/
+*/
 .call-to-action {
   padding: 100px 0;
   background: linear-gradient(135deg, var(--background-color) 0%, color-mix(in srgb, var(--accent-color), transparent 95%) 100%);
@@ -3763,9 +3763,9 @@ section,
   }
 }
 
-/*--------------------------------------------------------------
+/*
 # About Section
---------------------------------------------------------------*/
+*/
 .about .intro-content .section-badge {
   display: inline-flex;
   align-items: center;
@@ -4191,9 +4191,9 @@ section,
   color: var(--contrast-color);
 }
 
-/*--------------------------------------------------------------
+/*
 # Properties Section
---------------------------------------------------------------*/
+*/
 .properties .properties-header .view-toggle .view-btn {
   border-color: color-mix(in srgb, var(--default-color), transparent 70%);
   color: var(--default-color);
@@ -4818,9 +4818,9 @@ section,
   }
 }
 
-/*--------------------------------------------------------------
+/*
 # Property Details Section
---------------------------------------------------------------*/
+*/
 .property-details .property-gallery .main-image-container {
   position: relative;
   margin-bottom: 20px;
@@ -5239,9 +5239,9 @@ section,
   }
 }
 
-/*--------------------------------------------------------------
+/*
 # Agents Section
---------------------------------------------------------------*/
+*/
 .agents .featured-agent .agent-image {
   position: relative;
   border-radius: 15px;
@@ -5635,9 +5635,9 @@ section,
   }
 }
 
-/*--------------------------------------------------------------
+/*
 # Agent Profile Section
---------------------------------------------------------------*/
+*/
 .agent-profile .agent-profile-card {
   position: relative;
   background: var(--surface-color);
@@ -6249,9 +6249,9 @@ section,
   font-weight: 500;
 }
 
-/*--------------------------------------------------------------
+/*
 # Services Section
---------------------------------------------------------------*/
+*/
 .services .service-block {
   background: var(--surface-color);
   border-radius: 15px;
@@ -6518,9 +6518,9 @@ section,
   }
 }
 
-/*--------------------------------------------------------------
+/*
 # Service Details Section
---------------------------------------------------------------*/
+*/
 .service-details .service-sidebar .service-hero {
   position: relative;
   margin-bottom: 2.5rem;
@@ -7074,9 +7074,9 @@ section,
   }
 }
 
-/*--------------------------------------------------------------
+/*
 # Blog Hero Section
---------------------------------------------------------------*/
+*/
 .blog-hero .post-item {
   margin-bottom: 30px;
   transition: all 0.3s ease;
@@ -7191,9 +7191,9 @@ section,
   }
 }
 
-/*--------------------------------------------------------------
+/*
 # Blog Posts Section
---------------------------------------------------------------*/
+*/
 .blog-posts article {
   background-color: var(--surface-color);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
@@ -7248,9 +7248,9 @@ section,
   margin-bottom: 0;
 }
 
-/*--------------------------------------------------------------
+/*
 # Pagination 2 Section
---------------------------------------------------------------*/
+*/
 .pagination-2 {
   padding-top: 0;
 }
@@ -7330,9 +7330,9 @@ section,
   }
 }
 
-/*--------------------------------------------------------------
+/*
 # Blog Details Section
---------------------------------------------------------------*/
+*/
 .blog-details {
   max-width: 1000px;
   margin: 0 auto;
@@ -7704,9 +7704,9 @@ section,
   font-size: 1.2rem;
 }
 
-/*--------------------------------------------------------------
+/*
 # Blog Comments Section
---------------------------------------------------------------*/
+*/
 .blog-comments .comments-header {
   display: flex;
   align-items: center;
@@ -7991,9 +7991,9 @@ section,
   }
 }
 
-/*--------------------------------------------------------------
+/*
 # Blog Comment Form Section
---------------------------------------------------------------*/
+*/
 .blog-comment-form {
   max-width: 900px;
   margin: 30px auto 0 auto;
@@ -8127,9 +8127,9 @@ section,
   }
 }
 
-/*--------------------------------------------------------------
+/*
 # Contact 2 Section
---------------------------------------------------------------*/
+*/
 .contact-2 .contact-info-box {
   background-color: var(--surface-color);
   border-radius: 10px;
@@ -8359,9 +8359,9 @@ section,
   }
 }
 
-/*--------------------------------------------------------------
+/*
 # Terms Of Service Section
---------------------------------------------------------------*/
+*/
 .terms-of-service .tos-header {
   margin-bottom: 60px;
 }
@@ -8656,9 +8656,9 @@ section,
   }
 }
 
-/*--------------------------------------------------------------
+/*
 # Privacy Section
---------------------------------------------------------------*/
+*/
 .privacy .privacy-content {
   font-size: 16px;
   line-height: 1.7;
@@ -8947,9 +8947,9 @@ section,
   }
 }
 
-/*--------------------------------------------------------------
+/*
 # Error 404 Section
---------------------------------------------------------------*/
+*/
 .error-404 {
   padding: 100px 0;
   background: linear-gradient(135deg, color-mix(in srgb, var(--background-color), transparent 0%), color-mix(in srgb, var(--background-color), var(--accent-color) 4%));
@@ -9201,9 +9201,9 @@ section,
   }
 }
 
-/*--------------------------------------------------------------
+/*
 # Starter Section Section
---------------------------------------------------------------*/
+*/
 .starter-section {
   /* Add your styles here */
 }

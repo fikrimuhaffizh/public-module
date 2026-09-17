@@ -2,7 +2,7 @@ import React from 'react';
 import { SectionHeader } from '../index';
 import CountUp from './CountUp';
 
-/** Statistik Mode 2 — kartu dengan ikon, angka, dan label. Prop: { section, data } */
+/** Statistik Mode 2 - kartu dengan ikon, angka, dan label. Prop: { section, data } */
 export default function StatsMode2({ section, data }) {
     const stats = data.landing?.statistics || [];
     if (!stats.length) return null;

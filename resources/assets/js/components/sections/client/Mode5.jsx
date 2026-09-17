@@ -10,7 +10,7 @@ const pos = (r, i, n) => {
 };
 
 /**
- * Klien/Logo Mode 5 — orbiting circles: logo partner mengorbit pelan mengelilingi
+ * Klien/Logo Mode 5 - orbiting circles: logo partner mengorbit pelan mengelilingi
  * logo utama tenant (2 ring, arah berlawanan). Prop: { section, data }
  */
 export default function ClientMode5({ section, data }) {
@@ -23,7 +23,7 @@ export default function ClientMode5({ section, data }) {
         text: 'Ribuan institusi telah mempercayakan manajemennya kepada kami.',
     });
 
-    // ≤4 item → satu ring besar; lebih → ring dalam 3 + ring luar sampai 6.
+    // ≤4 item ke satu ring besar; lebih ke ring dalam 3 + ring luar sampai 6.
     const rings = useMemo(() => {
         const ringItems = (arr, r) =>
             arr.map((c, i) => ({ ...c, ...pos(r, i, arr.length) }));

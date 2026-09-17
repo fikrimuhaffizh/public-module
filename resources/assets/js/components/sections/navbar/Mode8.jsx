@@ -6,7 +6,7 @@ import { useScrollShadow } from './useNavbarEffects';
 import NavbarMenuItem from './NavbarMenuItem';
 
 /**
- * Navbar Mode 8 — Premium Dark.
+ * Navbar Mode 8 - Premium Dark.
  * Background gelap solid dengan accent glow.
  * Logo di kiri, menu center, CTA di kanan.
  * Inspirasi: Linear, Arc browser, Raycast.
@@ -27,7 +27,7 @@ export default function NavbarMode8({ site, menus, open, onToggle, settings = {}
                         : <span className="brand-mark"><GraduationCap size={20} /></span>}
                 </Link>
 
-                {/* Menu — center */}
+                {/* Menu - center */}
                 <nav className="desktop-nav">
                     {(menus || []).map(menu => (
                         <NavbarMenuItem key={menu.id} item={menu} />

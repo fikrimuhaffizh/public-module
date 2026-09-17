@@ -6,7 +6,7 @@ import { useScrollShadow } from './useNavbarEffects';
 import NavbarMenuItem from './NavbarMenuItem';
 
 /**
- * Navbar Mode 4 — dock mengambang: logo + menu + CTA dalam satu pill terpusat,
+ * Navbar Mode 4 - dock mengambang: logo + menu + CTA dalam satu pill terpusat,
  * item membesar saat hover (efek magnification ala macOS dock).
  * Fitur: scroll shadow, active page indicator, dropdown submenus.
  * Prop: { site, menus, open, onToggle, settings }

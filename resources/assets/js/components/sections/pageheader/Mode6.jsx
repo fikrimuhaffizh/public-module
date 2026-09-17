@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Home } from 'lucide-react';
 
 /**
- * Pageheader Mode 6 — Gradient bg: gradient animasi + title center.
+ * Pageheader Mode 6 - Gradient bg: gradient animasi + title center.
  */
 export default function PageheaderMode6({ context, site }) {
     const { breadcrumb = [], title = '', subtitle = '' } = context || {};

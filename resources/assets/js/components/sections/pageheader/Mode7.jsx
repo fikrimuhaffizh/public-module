@@ -2,7 +2,7 @@ import React from 'react';
 import { Home } from 'lucide-react';
 
 /**
- * Pageheader Mode 7 — Split: breadcrumb kiri, title kanan.
+ * Pageheader Mode 7 - Split: breadcrumb kiri, title kanan.
  */
 export default function PageheaderMode7({ context, site }) {
     const { breadcrumb = [], title = '', subtitle = '' } = context || {};

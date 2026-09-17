@@ -3,7 +3,7 @@ import { Phone, Mail, MessageCircle, MapPin, Clock } from 'lucide-react';
 import { openStatusNow, useNow } from './hours';
 
 /**
- * Topbar Mode 8 — Dark Premium.
+ * Topbar Mode 8 - Dark Premium.
  * Background gelap, info di kiri, kontak di kanan.
  * Prop: { site, settings }
  */

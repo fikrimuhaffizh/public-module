@@ -4,7 +4,7 @@ import { GraduationCap } from 'lucide-react';
 import { FooterSocials } from './Mode1';
 
 /**
- * Footer Mode 2 — terpusat: brand + deskripsi di tengah, menu sebaris, sosmed, copyright.
+ * Footer Mode 2 - terpusat: brand + deskripsi di tengah, menu sebaris, sosmed, copyright.
  * Prop: { site, footerMenus }
  */
 export default function FooterMode2({ site, footerMenus }) {

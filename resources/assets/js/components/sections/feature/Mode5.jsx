@@ -2,7 +2,7 @@ import React from 'react';
 import { Section, combinedText } from '../index';
 
 /**
- * Fitur Mode 5 — bento grid: kartu unggulan besar (2×2, opsional gambar latar)
+ * Fitur Mode 5 - bento grid: kartu unggulan besar (2×2, opsional gambar latar)
  * + kartu kecil asimetris, gaya Velora UI. Prop: { section, data }
  */
 export default function FeatureMode5({ section, data }) {

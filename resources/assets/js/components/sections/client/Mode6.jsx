@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 /**
- * Client Mode 6 — Bento grid: logo asimetris.
+ * Client Mode 6 - Bento grid: logo asimetris.
  * Animasi: stagger.
  */
 export default function ClientMode6({ section, data }) {

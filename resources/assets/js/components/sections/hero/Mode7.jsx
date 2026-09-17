@@ -1,7 +1,7 @@
 import React from 'react';
 import { HeroCopy, HeroMedia, HeroStats, useHeroData } from './HeroData';
 
-/** Mode 7 — Bento: copy dalam kartu + visual + statistik berbentuk kartu. */
+/** Mode 7 - Bento: copy dalam kartu + visual + statistik berbentuk kartu. */
 export default function HeroMode7({ section, data }) {
     const { hero, copy, image, imageAlt, stats, site } = useHeroData(section, data);
     return (

@@ -5,7 +5,7 @@ import { useScrollShadow } from './useNavbarEffects';
 import NavbarMenuItem from './NavbarMenuItem';
 
 /**
- * Navbar Mode 3 — tanpa tombol login: logo di kiri, menu navigasi di kanan.
+ * Navbar Mode 3 - tanpa tombol login: logo di kiri, menu navigasi di kanan.
  * Hanya tombol hamburger di mobile.
  * Fitur: scroll shadow, active page indicator, dropdown submenus.
  * Prop: { site, menus, open, onToggle }

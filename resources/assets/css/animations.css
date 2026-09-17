@@ -1,5 +1,5 @@
-/* ============================================================
-   ANIMATION PRESETS — Reusable Animations
+/*
+   ANIMATION PRESETS - Reusable Animations
    
    Cara pakai (junior programmer):
      <div class="anim-fade-up">Konten muncul dari bawah</div>
@@ -12,7 +12,7 @@
      anim-delay-3 = 300ms
      anim-delay-4 = 400ms
      anim-delay-5 = 500ms
-   ============================================================ */
+   */
 
 /* ── BASE: trigger on viewport entry ───────────────────── */
 .anim-fade,
@@ -74,7 +74,7 @@
 .anim-delay-5 { transition-delay: 500ms }
 
 /* ── HOVER EFFECTS ─────────────────────────────────────── */
-/* Lift — card terangkat saat hover */
+/* Lift - card terangkat saat hover */
 .hover-lift {
     transition: transform var(--duration-normal) var(--ease-default),
                 box-shadow var(--duration-normal) var(--ease-default);
@@ -84,7 +84,7 @@
     box-shadow: var(--shadow-lg);
 }
 
-/* Glow — border glow warna primary */
+/* Glow - border glow warna primary */
 .hover-glow {
     transition: box-shadow var(--duration-normal) var(--ease-default),
                 border-color var(--duration-normal) var(--ease-default);
@@ -94,7 +94,7 @@
     border-color: var(--color-primary, #155eef);
 }
 
-/* Scale — sedikit membesar */
+/* Scale - sedikit membesar */
 .hover-scale {
     transition: transform var(--duration-normal) var(--ease-bounce);
 }
@@ -102,7 +102,7 @@
     transform: scale(1.03);
 }
 
-/* Image Zoom — gambar zoom saat card hover */
+/* Image Zoom - gambar zoom saat card hover */
 .hover-img-zoom {
     overflow: hidden;
 }
@@ -113,7 +113,7 @@
     transform: scale(1.06);
 }
 
-/* Underline — garis bawah muncul dari kiri */
+/* Underline - garis bawah muncul dari kiri */
 .hover-underline {
     position: relative;
 }

@@ -23,8 +23,8 @@ import {
 import { SECTION_VARIANTS, sectionVariants } from '../sections/registry';
 
 /**
- * Canonical section key — server memakai alias/plural (products, stats,
- * testimonials, announcement, …), registry memakai key tunggal.
+ * Canonical section key - server memakai alias/plural (products, stats,
+ * testimonials, announcement, ...), registry memakai key tunggal.
  */
 function canonicalOf(section) {
     const key = section?.section_key || section?.key || '';
@@ -61,7 +61,7 @@ function ChipGroup({ title, options, value, onSelect, icon, hint }) {
     );
 }
 
-/** LabelSelect — dropdown dengan judul + hint (mis. Tipografi). */
+/** LabelSelect - dropdown dengan judul + hint (mis. Tipografi). */
 function LabelSelect({ title, icon, options, value, onSelect, hint }) {
     return (
         <div className="theme-opt">
@@ -81,7 +81,7 @@ function LabelSelect({ title, icon, options, value, onSelect, hint }) {
     );
 }
 
-/** ThemeSelect — dropdown tema (daftar flat, tanpa grouping). */
+/** ThemeSelect - dropdown tema (daftar flat, tanpa grouping). */
 function ThemeSelect() {
     const { template, themeOptions = {} } = usePage().props;
     const changeTheme = (e) => {
@@ -109,17 +109,17 @@ function ThemeSelect() {
 
 
 /**
- * LogoUploader — upload logo Navbar/Footer langsung dari Theme Settings.
+ * LogoUploader - upload logo Navbar/Footer langsung dari Theme Settings.
  * Endpoint: POST /cms/section/upload-logo + DELETE /cms/section/delete-logo/{collection}
- * (perlu permission public.cms.update — hanya tampil untuk user login CMS).
+ * (perlu permission public.cms.update - hanya tampil untuk user login CMS).
  * Setelah sukses, partial reload prop `site` agar navbar/footer ter-render
  * dengan logo baru tanpa me-refresh seluruh halaman.
  */
 /**
- * ThemeSettingsDrawer — offcanvas Theme Settings dua mode:
+ * ThemeSettingsDrawer - offcanvas Theme Settings dua mode:
  * Landing Page (halaman depan) & Detail Page (halaman dalam).
  * Di /preview selalu tampil; di halaman asli hanya untuk user login CMS.
- * Daftar section difilter sesuai konteks halaman — hanya yang relevan.
+ * Daftar section difilter sesuai konteks halaman - hanya yang relevan.
  */
 export function ThemeSettingsDrawer() {
     const customizer = useThemeCustomizer();
@@ -138,7 +138,7 @@ export function ThemeSettingsDrawer() {
     const [savingReorder, setSavingReorder] = useState(false);
     const [saving, setSaving] = useState(false);
     const [saveMsg, setSaveMsg] = useState(null);
-    // Alternatif keyboard/tap untuk reorder (aksesibilitas — drag bukan
+    // Alternatif keyboard/tap untuk reorder (aksesibilitas - drag bukan
     // satu-satunya cara). kbOrder = urutan lokal selama sesi pindah via
     // keyboard; di-commit ke server saat Spasi/Enter kedua.
     const [kbGrabIndex, setKbGrabIndex] = useState(null);
@@ -205,7 +205,7 @@ export function ThemeSettingsDrawer() {
         saveReorder(mergeIntoFullOrder(next, list));
     };
 
-    // Pindah satu langkah via tombol ↑/↓ — langsung commit seperti drop.
+    // Pindah satu langkah via tombol ↑/↓ - langsung commit seperti drop.
     const moveVisible = (from, to) => {
         const list = kbOrder ?? visibleSections;
         if (from < 0 || to < 0 || from >= list.length || to >= list.length) return;
@@ -216,7 +216,7 @@ export function ThemeSettingsDrawer() {
         saveReorder(mergeIntoFullOrder(next, list));
     };
 
-    // Sesi pindah via keyboard pada grip: Spasi/Enter = angkat–taruh,
+    // Sesi pindah via keyboard pada grip: Spasi/Enter = angkat-taruh,
     // panah = geser (lokal, belum tersimpan), Escape = batal.
     const kbGrab = (index) => {
         const list = kbOrder ?? visibleSections;

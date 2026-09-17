@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 
 /**
- * Testimonial Mode 7 — Card stack: tumpukan card dengan navigasi.
+ * Testimonial Mode 7 - Card stack: tumpukan card dengan navigasi.
  * Animasi: slide left/right.
  */
 export default function TestimonialMode7({ section, data }) {

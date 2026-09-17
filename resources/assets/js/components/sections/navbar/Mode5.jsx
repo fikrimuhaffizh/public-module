@@ -4,7 +4,7 @@ import { useScrollShadow } from './useNavbarEffects';
 import NavbarMenuItem from './NavbarMenuItem';
 
 /**
- * Navbar Mode 5 — Centered: logo center, menu di bawah.
+ * Navbar Mode 5 - Centered: logo center, menu di bawah.
  * Fitur: scroll shadow, active page indicator, dropdown submenus.
  */
 export default function NavbarMode5({ site, menus, open, onToggle, settings }) {

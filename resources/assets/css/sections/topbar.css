@@ -1,8 +1,8 @@
-/* ============================================================
-   sections/topbar.css — bagian dari landing (dipecah dari landing.css)
-   ============================================================ */
+/*
+   sections/topbar.css - bagian dari landing (dipecah dari landing.css)
+   */
 
-/* ===== Info bar atas (TopInfoBar) ===== */
+/* Info bar atas (TopInfoBar) */
 .topbar {
     background: var(--foreground);
     color: var(--background);
@@ -57,7 +57,7 @@
 }
 
 
-/* ===== Theme drawer: toggle info bar atas ===== */
+/* Theme drawer: toggle info bar atas */
 .theme-section-item {
     position: relative;
 }
@@ -116,7 +116,7 @@
 }
 
 
-/* ===== Topbar: status buka/tutup real-time ===== */
+/* Topbar: status buka/tutup real-time */
 .topbar-status {
     display: inline-flex;
     align-items: center;
@@ -159,7 +159,7 @@
 
 
 
-/* ===== Top Bar section — variant V2 banner & V3 compact ===== */
+/* Top Bar section - variant V2 banner & V3 compact */
 .topbar--banner {
     border-bottom: 0;
 }

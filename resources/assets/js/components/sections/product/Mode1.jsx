@@ -5,7 +5,7 @@ import { Section, combinedText } from '../index';
 import { Stagger, SpotlightCard } from '@public/components/motion/effects';
 
 /**
- * Produk Mode 1 — card grid dengan gambar cover.
+ * Produk Mode 1 - card grid dengan gambar cover.
  * Setiap card menampilkan gambar, nama, deskripsi singkat, dan link demo.
  * Prop: { section, data }
  */

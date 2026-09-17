@@ -3,12 +3,12 @@ import { motion, useMotionTemplate, useMotionValue, useReducedMotion } from 'fra
 import { cn } from '@public/lib/utils';
 
 /**
- * Motion budget — maksimal animasi "ekstra" (di luar heading section)
+ * Motion budget - maksimal animasi "ekstra" (di luar heading section)
  * yang boleh hidup per halaman. Satu momen terorkestrasi, bukan belasan
  * reveal yang saling berebut perhatian.
  *
  * Mekanisme: komponen yang memakai `budgeted` mengklaim satu slot saat
- * mount (urutan DOM = urutan klaim). Slot habis → render statis, tanpa
+ * mount (urutan DOM = urutan klaim). Slot habis ke render statis, tanpa
  * error. Provider di-remount per navigasi (key = URL) sehingga budget
  * segar di tiap halaman. Aman StrictMode: klaim dilepas saat unmount.
  */

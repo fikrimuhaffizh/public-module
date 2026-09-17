@@ -1,6 +1,6 @@
-/* ============================================================
-   sections/stats.css — bagian dari landing (dipecah dari landing.css)
-   ============================================================ */
+/*
+   sections/stats.css - bagian dari landing (dipecah dari landing.css)
+   */
 
 /* ── STATISTIK V1 / V2 / V3 ─────────────────────────────────────── */
 .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 26px; text-align: center }

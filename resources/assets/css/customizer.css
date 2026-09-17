@@ -1,6 +1,6 @@
-/* ============================================================
-   customizer.css — bagian dari landing (dipecah dari landing.css)
-   ============================================================ */
+/*
+   customizer.css - bagian dari landing (dipecah dari landing.css)
+   */
 
 /* ── OFFCAVAS: daftar Sections ──────────────────────────────────── */
 .theme-sections-list { display: flex; flex-direction: column; gap: 10px }
@@ -13,7 +13,7 @@
 }
 
 /* ════════════════════════════════════════════════════════════════════
-   THEME CUSTOMIZER (/preview) — tombol + offcanvas + variasi struktur.
+   THEME CUSTOMIZER (/preview) - tombol + offcanvas + variasi struktur.
    Variasi ini beda antar-template SUNGGAH (struktur elemen), bukan warna saja:
    navbar (glass/solid/gelap/primary), kartu (standar/elevated/gradient/
    outline), tombol (standar/pill/sharp), hero (split/centered/overlay).
@@ -193,7 +193,7 @@
 .theme-reset-btn:hover { color: var(--primary); border-color: var(--primary) }
 
 /* ── Variasi NAVBAR (struktur nyata, bukan warna saja) ──────────── */
-/* Knob Navbar & Tombol lama dihapus — struktur navbar diatur per-section
+/* Knob Navbar & Tombol lama dihapus - struktur navbar diatur per-section
    (variant Mode 1/2/3), bentuk tombol mengikuti knob Sudut (Radius). */
 
 /* Posisi tombol mengambang di layar kecil */
@@ -210,7 +210,7 @@
    ════════════════════════════════════════════════════════════════════ */
 .sec-colored { background: var(--sec-bg, transparent) }
 .sec-colored { color: var(--sec-text, inherit) }
-/* Transparansi root hanya saat override LATAR aktif (sec-colored--bg) —
+/* Transparansi root hanya saat override LATAR aktif (sec-colored--bg) -
    root section/footer/header dibuka agar --sec-bg tampil. */
 .sec-colored--bg section,
 .sec-colored--bg footer,
@@ -238,7 +238,7 @@
 .sec-colored .stats-cell strong,
 .sec-colored .feature-num,
 .sec-colored .cta-number { color: var(--sec-accent, var(--primary)) }
-/* Navbar (header) — teks link/brand/toggle ikut override warna section */
+/* Navbar (header) - teks link/brand/toggle ikut override warna section */
 .sec-colored .desktop-nav a,
 .sec-colored .brand,
 .sec-colored .mobile-toggle { color: var(--sec-text, inherit) }
@@ -608,7 +608,7 @@
 .theme-custom-elevation--strong .umkm-feature-card { box-shadow: 0 18px 44px rgba(15, 23, 42, .16); transform: translateY(-3px) }
 
 
-/* ===== Theme drawer: drag & drop urutan section ===== */
+/* Theme drawer: drag & drop urutan section */
 .theme-sr-only {
     position: absolute; width: 1px; height: 1px;
     margin: -1px; padding: 0; overflow: hidden;
@@ -667,7 +667,7 @@
 
 
 
-/* ===== Theme drawer: combined edit popover (Teks | Warna | Latar) ===== */
+/* Theme drawer: combined edit popover (Teks | Warna | Latar) */
 .theme-sec-edit-pop {
     position: absolute;
     top: calc(100% + 6px);
@@ -763,7 +763,7 @@
     cursor: not-allowed;
 }
 
-/* ===== Theme drawer: efek drag & drop yang jelas ===== */
+/* Theme drawer: efek drag & drop yang jelas */
 .theme-section-item.dragging {
     opacity: .55;
     outline: 2px dashed color-mix(in srgb, var(--primary, #155eef) 60%, transparent);
@@ -780,7 +780,7 @@
 }
 
 
-/* ===== Theme drawer: tombol perataan teks ===== */
+/* Theme drawer: tombol perataan teks */
 .theme-sec-align-row {
     display: flex;
     gap: 6px;

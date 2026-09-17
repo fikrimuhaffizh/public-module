@@ -4,9 +4,9 @@ import { GraduationCap } from 'lucide-react';
 import { FooterSocials } from './Mode1';
 
 /**
- * Footer Mode 5 — Minimal Center.
+ * Footer Mode 5 - Minimal Center.
  * Brand center, nav center, social, contact, copyright.
- * Bersih dan elegan — cocok untuk SaaS/Startup.
+ * Bersih dan elegan - cocok untuk SaaS/Startup.
  * Prop: { site, footerMenus }
  */
 export default function FooterMode5({ site, footerMenus }) {

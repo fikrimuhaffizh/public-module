@@ -1,8 +1,8 @@
-/* ── Page Header — section layout-level (breadcrumb + judul halaman dalam) ──
+/* ── Page Header - section layout-level (breadcrumb + judul halaman dalam) ──
    Dirender PublicLayout di semua halaman dalam; konten dari halaman yang
    dibuka. Tiga mode: classic (kiri, tint) / center (tengah, bersih) / bold
    (gelap gradien + ornamen). Root .pageheader di-exclude dari selang-seling
-   --section-alt (lihat base.css) — tiap mode mengontrol latarnya sendiri. */
+   --section-alt (lihat base.css) - tiap mode mengontrol latarnya sendiri. */
 
 .pageheader {
     position: relative;
@@ -49,12 +49,12 @@
     opacity: 0.55;
 }
 
-/* ── Mode 1: classic — tint, rata kiri ── */
+/* ── Mode 1: classic - tint, rata kiri ── */
 .pageheader--classic {
     border-bottom: 1px solid var(--border);
 }
 
-/* ── Mode 2: center — bersih, tengah ── */
+/* ── Mode 2: center - bersih, tengah ── */
 .pageheader--center {
     background: var(--background);
     border-bottom: 1px solid var(--border);
@@ -82,7 +82,7 @@
     margin-top: 8px;
 }
 
-/* ── Mode 3: bold — gradien primary→gelap, ornamen ── */
+/* ── Mode 3: bold - gradien primary=>gelap, ornamen ── */
 .pageheader--bold {
     background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 55%, #0b1120 130%);
     color: #fff;

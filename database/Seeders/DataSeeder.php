@@ -6,10 +6,10 @@ use Illuminate\Database\Seeder;
 use Modules\Public\Models\LandingSection;
 
 /**
- * DataSeeder — data default tenant baru untuk Public (landing page).
+ * DataSeeder - data default tenant baru untuk Public (landing page).
  *
  * Isi: 14 section landing page default (topbar, navbar, hero, produk, dst).
- * PERHATIAN: forceDelete dulu lalu recreate — bukan idempotent murni,
+ * PERHATIAN: forceDelete dulu lalu recreate - bukan idempotent murni,
  * perubahan manual di DB akan tertimpa saat seeder dijalankan ulang.
  */
 class DataSeeder extends Seeder
@@ -21,8 +21,8 @@ class DataSeeder extends Seeder
         $this->command->info('✅ DataSeeder (Public) completed.');
     }
 
-    // ================= LANDING PAGE SECTIONS =================
-    // Struktur & konten awal landing page. area: top → middle → bottom,
+    // LANDING PAGE SECTIONS
+    // Struktur & konten awal landing page. area: top => middle => bottom,
     // urut berdasarkan sort_order per area. Ubah teks default di sini.
     private function seedLandingSections(int $tenantId): void
     {

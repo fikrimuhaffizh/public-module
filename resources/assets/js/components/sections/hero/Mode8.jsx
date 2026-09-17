@@ -2,7 +2,7 @@ import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { HeroCopy, HeroMedia, useHeroData } from './HeroData';
 
-/** Mode 8 — Lebar: copy atas, visual panorama bawah dengan caption institusi. */
+/** Mode 8 - Lebar: copy atas, visual panorama bawah dengan caption institusi. */
 export default function HeroMode8({ section, data }) {
     const { hero, copy, image, imageAlt, siteName, site } = useHeroData(section, data);
     return (

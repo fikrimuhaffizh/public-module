@@ -1,8 +1,8 @@
-/* ============================================================
-   sections/faq.css — bagian dari landing (dipecah dari landing.css)
-   ============================================================ */
+/*
+   sections/faq.css - bagian dari landing (dipecah dari landing.css)
+   */
 
-/* ── FAQ V1 — tanya-jawab editorial (garis bersih) ──────────────── */
+/* ── FAQ V1 - tanya-jawab editorial (garis bersih) ──────────────── */
 .faq-lines { display: flex; flex-direction: column }
 .faq-line { border-bottom: 1px solid var(--border) }
 .faq-line:first-child { border-top: 1px solid var(--border) }
@@ -41,7 +41,7 @@
 }
 .faq-line-a { margin: 0; padding: 0 2px 22px; color: var(--muted); line-height: 1.7; max-width: 720px }
 
-/* ── FAQ V2 — filter kategori + accordion ───────────────────────── */
+/* ── FAQ V2 - filter kategori + accordion ───────────────────────── */
 .faq-cats { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 34px }
 .faq-cat {
     display: inline-flex;
@@ -69,7 +69,7 @@
 .faq-cat.is-active { background: var(--primary); border-color: var(--primary); color: #fff }
 .faq-cats + .faq-list { max-width: 780px; margin: 0 auto }
 
-/* ── FAQ V3 — kartu Q&A (grid dua kolom, multi-buka) ────────────── */
+/* ── FAQ V3 - kartu Q&A (grid dua kolom, multi-buka) ────────────── */
 .faq-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px }
 .faq-card { padding: 22px 24px; display: flex; flex-direction: column }
 .faq-card-q {
@@ -127,7 +127,7 @@
 }
 
 
-/* ── FAQ V4 — accordion animasi ─────────────────────────────── */
+/* ── FAQ V4 - accordion animasi ─────────────────────────────── */
 .faq-anim-list {
     display: flex;
     flex-direction: column;

@@ -1,8 +1,8 @@
-/* ============================================================
-   DESIGN TOKENS — Single Source of Truth
+/*
+   DESIGN TOKENS - Single Source of Truth
    
    Semua styling landing page MERUJUK token ini.
-   Theme berubah → ubah token → seluruh halaman ikut berubah.
+   Theme berubah => ubah token => seluruh halaman ikut berubah.
    
    Cara pakai:
      background: var(--color-primary);
@@ -15,11 +15,11 @@
      - JANGAN hardcode angka di component
      - SELALU pakai var(--token-name)
      - Kalau token belum ada, tambah di sini dulu
-   ============================================================ */
+   */
 
 :root {
     /* ── COLOR TOKENS ─────────────────────────────────────── */
-    /* Warna utama — di-override oleh palette tema */
+    /* Warna utama - di-override oleh palette tema */
     --color-primary: #155eef;
     --color-primary-dark: #0b3b91;
     --color-primary-light: #3b82f6;
@@ -52,7 +52,7 @@
     --color-info: #2563eb;
 
     /* ── TYPOGRAPHY TOKENS ────────────────────────────────── */
-    /* Font families — di-override oleh theme font */
+    /* Font families - di-override oleh theme font */
     --font-heading: 'Manrope', ui-sans-serif, system-ui, sans-serif;
     --font-body: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
     --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
@@ -64,7 +64,7 @@
     --font-bold: 700;
     --font-extrabold: 800;
     
-    /* Font size scale — responsive, proporsional */
+    /* Font size scale - responsive, proporsional */
     --text-xs: 0.75rem;      /* 12px */
     --text-sm: 0.8125rem;    /* 13px */
     --text-base: 0.9375rem;  /* 15px */
@@ -89,7 +89,7 @@
     --tracking-wide: 0.06em;
 
     /* ── SPACING TOKENS ───────────────────────────────────── */
-    /* Consistent spacing scale — 4px base */
+    /* Consistent spacing scale - 4px base */
     --space-0: 0;
     --space-1: 0.25rem;   /* 4px */
     --space-2: 0.5rem;    /* 8px */
@@ -104,7 +104,7 @@
     --space-20: 5rem;     /* 80px */
     --space-24: 6rem;     /* 96px */
     
-    /* Section spacing — responsive */
+    /* Section spacing - responsive */
     --section-py: clamp(3.5rem, 8vw, 7rem);
     --section-py-compact: clamp(2rem, 5vw, 3.5rem);
     --section-py-spacious: clamp(5rem, 12vw, 9rem);
@@ -118,7 +118,7 @@
     --radius-xl: 24px;
     --radius-2xl: 32px;
     --radius-full: 9999px;
-    /* Default — di-override oleh theme radius */
+    /* Default - di-override oleh theme radius */
     --radius: var(--radius-lg);
 
     /* ── SHADOW TOKENS ────────────────────────────────────── */
@@ -129,7 +129,7 @@
     --shadow-lg: 0 8px 24px rgba(15, 23, 42, .10);
     --shadow-xl: 0 16px 48px rgba(15, 23, 42, .14);
     --shadow-2xl: 0 24px 64px rgba(15, 23, 42, .18);
-    /* Default — di-override oleh theme elevation */
+    /* Default - di-override oleh theme elevation */
     --shadow: var(--shadow-sm);
 
     /* ── CONTAINER TOKENS ─────────────────────────────────── */
@@ -219,6 +219,6 @@
 }
 
 /* ── CONTAINER WIDTH TOKENS ────────────────────────────── */
-/* Default: 1180px — handled by .shell class */
+/* Default: 1180px - handled by .shell class */
 /* Full width: shell berubah */
 .theme-custom-container--full .shell { max-width: 100%; padding-left: var(--container-px); padding-right: var(--container-px); }

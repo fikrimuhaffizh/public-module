@@ -4,7 +4,7 @@ import { Check } from 'lucide-react';
 import { Section, pricePackages, combinedText } from '../index';
 
 /**
- * Price Mode 3 — Horizontal: paket dalam baris.
+ * Price Mode 3 - Horizontal: paket dalam baris.
  * Animasi: stagger.
  */
 export default function PriceMode3({ section, data }) {

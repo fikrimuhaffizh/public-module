@@ -2,7 +2,7 @@ import React from 'react';
 import { motion, useMotionTemplate, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Section, combinedText } from '../index';
 
-/** Kartu tilt 3D — miring mengikuti kursor + kilau halus (framer-motion). */
+/** Kartu tilt 3D - miring mengikuti kursor + kilau halus (framer-motion). */
 function TiltCard({ children }) {
     const x = useMotionValue(0);
     const y = useMotionValue(0);
@@ -35,7 +35,7 @@ function TiltCard({ children }) {
     );
 }
 
-/** Fitur Mode 4 — grid kartu ikon dengan efek tilt 3D mengikuti kursor. Prop: { section, data } */
+/** Fitur Mode 4 - grid kartu ikon dengan efek tilt 3D mengikuti kursor. Prop: { section, data } */
 export default function FeatureMode4({ section, data }) {
     const features = data.landing?.features || [];
     if (!features.length) return null;

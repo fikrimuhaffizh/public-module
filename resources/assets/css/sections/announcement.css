@@ -1,6 +1,6 @@
-/* ============================================================
-   sections/announcement.css — bagian dari landing (dipecah dari landing.css)
-   ============================================================ */
+/*
+   sections/announcement.css - bagian dari landing (dipecah dari landing.css)
+   */
 
 /* ── PENGUMUMAN V2 / V3 ─────────────────────────────────────────── */
 .announcement-list {
@@ -25,7 +25,7 @@
     transform: translateY(-2px)
 }
 
-/* Mode 2 — baris dengan gambar kiri + info kanan */
+/* Mode 2 - baris dengan gambar kiri + info kanan */
 .announcement-row--media {
     display: flex;
     align-items: center;
@@ -163,7 +163,7 @@
 }
 
 
-/* ── Pengumuman V4 — ticker berjalan ────────────────────────── */
+/* ── Pengumuman V4 - ticker berjalan ────────────────────────── */
 .announcement-ticker {
     display: flex;
     align-items: stretch;

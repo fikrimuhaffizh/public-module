@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from '@inertiajs/react';
 
 /**
- * Announcement Mode 6 — Timeline: berita dalam timeline.
+ * Announcement Mode 6 - Timeline: berita dalam timeline.
  * Animasi: stagger.
  */
 export default function AnnouncementMode6({ section, data }) {

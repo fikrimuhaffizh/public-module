@@ -4,7 +4,7 @@ import { Check, Star } from 'lucide-react';
 import { Section, pricePackages, combinedText } from '../index';
 
 /**
- * Price Mode 8 — Glow card: paket center dengan glow.
+ * Price Mode 8 - Glow card: paket center dengan glow.
  * Animasi: scale-in.
  */
 export default function PriceMode8({ section, data }) {

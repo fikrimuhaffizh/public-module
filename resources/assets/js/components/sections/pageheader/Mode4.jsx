@@ -2,7 +2,7 @@ import React from 'react';
 import { Home } from 'lucide-react';
 
 /**
- * Pageheader Mode 4 — Minimal center: title center, clean.
+ * Pageheader Mode 4 - Minimal center: title center, clean.
  */
 export default function PageheaderMode4({ context, site }) {
     const { breadcrumb = [], title = '', subtitle = '', pretitle = '' } = context || {};

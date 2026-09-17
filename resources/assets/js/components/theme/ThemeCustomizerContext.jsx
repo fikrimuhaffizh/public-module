@@ -4,24 +4,24 @@ import { paletteForMode } from './design-system';
 import { collectFonts, collectPalettes, DARK_VARS, defaultsFor, FALLBACK_PALETTE, FONT_OPTIONS, paletteToVars, presetSections } from './presets';
 
 /**
- * Context Theme Customizer — state desain yang dibagikan ke PublicLayout
+ * Context Theme Customizer - state desain yang dibagikan ke PublicLayout
  * (CSS vars warna/font, kelas struktur) dan renderer section (variant +
  * warna per-section). UI drawer ada di ThemeSettingsDrawer.jsx; konstanta &
  * helper data murni ada di presets.js.
  *
- * TEMA = PRESET: setiap tema (config/themes.php) membawa preset desain —
+ * TEMA = PRESET: setiap tema (config/themes.php) membawa preset desain -
  * variant section, palet, font, radius, nav, dark. Saat tema berganti,
  * seluruh state di-reset ke preset tema baru (kecuali ada simpanan untuk
  * tema itu), jadi ganti tema benar-benar mengubah tampilan.
  *
  * SUMBER BASIS desain:
- *   • Preview (/preview)  → localStorage PER-TEMA (draft). Tombol
+ * Preview (/preview) memakai localStorage per tema sebagai draft. Tombol
  *     "Terapkan ke landing" mengirim state ini ke backend (PublicController
- *     saveDesign) — disimpan ke DB, landing asli ikut berubah.
- *   • Landing asli (/)    → design tersimpan di DB (props `design`, dari
+ *     saveDesign) - disimpan ke DB, landing asli ikut berubah.
+ * Landing asli (/) memakai desain dari DB (props `design`, dari
  *     kolom JSON cms_landing_page_settings.design). Fallback ke preset tema.
  *
- * Persistensi localStorage hanya ditulis saat preview — landing asli tidak
+ * Persistensi localStorage hanya ditulis saat preview - landing asli tidak
  * pernah menimpa draft.
  */
 
@@ -33,14 +33,14 @@ export function useThemeCustomizer() {
     return React.useContext(ThemeCustomizerContext);
 }
 
-/** Baca + parse localStorage dengan aman (korup/private mode → null). */
+/** Baca + parse localStorage dengan aman (korup/private mode ke null). */
 export function loadStored(scope) {
     try {
         if (!scope) return null;
         const raw = localStorage.getItem(`${STORAGE_KEY}:${scope}`);
         if (!raw) return null;
         const parsed = JSON.parse(raw);
-        // Migrasi format lama (flat `{template, ...}`) → per-tema.
+        // Migrasi format lama (flat `{template, ...}`) ke per-tema.
         if (parsed.template && !parsed.byTemplate) {
             return { byTemplate: { [parsed.template]: parsed } };
         }
@@ -62,8 +62,8 @@ export function ThemeCustomizerProvider({ children }) {
     const paletteOptions = React.useMemo(() => collectPalettes(themeOptions), [themeOptions]);
     const fontOptions = React.useMemo(() => collectFonts(themeOptions), [themeOptions]);
 
-    // Basis desain: preview → localStorage draft per-tema (atau design DB bila
-    // belum ada draft); landing asli → design DB (fallback preset tema).
+    // Basis desain: preview ke localStorage draft per-tema (atau design DB bila
+    // belum ada draft); landing asli ke design DB (fallback preset tema).
     const [stored] = React.useState(() => preview ? loadStored(designScope) : null);
     const dbDesign = design && design.template === template ? design : null;
     const basis = React.useMemo(
@@ -80,12 +80,12 @@ export function ThemeCustomizerProvider({ children }) {
     const [sectionColors, setSectionColors] = React.useState(() =>
         basis?.sectionColors || presetSections(themeOptions[template]).sectionColors);
 
-    // Pengaturan per-section (mis. navbar → showTopbar) — draft preview,
+    // Pengaturan per-section (mis. navbar ke showTopbar) - draft preview,
     // dikirim saat "Terapkan ke landing" lalu disimpan ke settings section DB.
     const [sectionSettings, setSectionSettings] = React.useState(() =>
         basis?.sectionSettings || {});
 
-    // Template berganti (dropdown tema / URL ?template=) → muat basis untuk
+    // Template berganti (dropdown tema / URL ?template=) ke muat basis untuk
     // tema itu (draft localStorage di preview, design DB di landing).
     const prevKey = React.useRef(`${preview}|${template}`);
     React.useEffect(() => {
@@ -122,7 +122,7 @@ export function ThemeCustomizerProvider({ children }) {
         setSectionSettings(prev => ({ ...prev, [sectionKeyName]: { ...(prev[sectionKeyName] || {}), ...patch } }));
 
     React.useEffect(() => {
-        // Draft localStorage hanya untuk halaman preview — landing asli tidak
+        // Draft localStorage hanya untuk halaman preview - landing asli tidak
         // pernah menulis agar design DB tidak tertimpa draft.
         if (!preview || !designScope) return;
         try {

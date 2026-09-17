@@ -4,7 +4,7 @@ import { ArrowRight } from 'lucide-react';
 import { Badge } from '@public/components/ui/badge';
 import { Section, combinedText } from '../index';
 
-/** Pengumuman Mode 3 — satu berita unggulan besar + sisa daftar kecil. Prop: { section, data } */
+/** Pengumuman Mode 3 - satu berita unggulan besar + sisa daftar kecil. Prop: { section, data } */
 export default function AnnouncementMode3({ section, data }) {
     const list = data.announcements || [];
     if (!list.length) return null;

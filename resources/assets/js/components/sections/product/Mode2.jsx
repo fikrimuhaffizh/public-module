@@ -3,7 +3,7 @@ import { ArrowRight } from 'lucide-react';
 import { Section, combinedText } from '../index';
 
 /**
- * Produk Mode 2 — baris kartu: thumbnail media (foto/inisial) + nama + deskripsi,
+ * Produk Mode 2 - baris kartu: thumbnail media (foto/inisial) + nama + deskripsi,
  * panah di kanan, seluruh baris bisa diklik bila ada demo URL.
  * Prop: { section, data }
  */

@@ -1,7 +1,7 @@
 import React from 'react';
 import { HeroCopy, useHeroData } from './HeroData';
 
-/** Mode 4 — Cinematic: backdrop foto full-bleed + scrim, copy menempel bawah. Tanpa kolom media. */
+/** Mode 4 - Cinematic: backdrop foto full-bleed + scrim, copy menempel bawah. Tanpa kolom media. */
 export default function HeroMode4({ section, data }) {
     const { hero, copy, image, site } = useHeroData(section, data);
     return (

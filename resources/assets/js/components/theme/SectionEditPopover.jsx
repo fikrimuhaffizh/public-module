@@ -80,7 +80,7 @@ function patternStyle(key) {
     }
 }
 
-/** ChipGroup — deretan tombol pilihan (Radius / Kepadatan / Elevasi). */
+/** ChipGroup - deretan tombol pilihan (Radius / Kepadatan / Elevasi). */
 function LogoUploader({ collection, label }) {
     const [busy, setBusy] = useState(false);
     const [msg, setMsg] = useState(null);
@@ -161,7 +161,7 @@ function LogoUploader({ collection, label }) {
     );
 }
 /**
- * SectionEditPopover — gabungan Teks + Warna + Latar dalam satu dropdown bertab.
+ * SectionEditPopover - gabungan Teks + Warna + Latar dalam satu dropdown bertab.
  * Menggantikan TextEditPopover dan ColorPopover yang terpisah.
  */
 export default function SectionEditPopover({ item, sectionKey, variant = '', currentText = {}, currentColors = {}, palette, active, onApplyText, onApplyTextLive, onToggleActive, onApplyColor, onClearColor, heroFill, onToggleHeroFill, dark, onToggleDark, showLogin, onToggleLogin }) {

@@ -2,7 +2,7 @@ import React from 'react';
 import { Reveal } from '@public/components/motion/effects';
 import { sectionHeading } from '../index';
 
-/** Klien/Logo Mode 3 — marquee: strip logo berjalan tak terbatas. Prop: { section, data } */
+/** Klien/Logo Mode 3 - marquee: strip logo berjalan tak terbatas. Prop: { section, data } */
 export default function ClientMode3({ section, data }) {
     const clients = data.landing?.clients || [];
     if (!clients.length) return null;

@@ -2,7 +2,7 @@ import React from 'react';
 import { Home } from 'lucide-react';
 
 /**
- * Pageheader Mode 8 — Large: title sangat besar, minimal.
+ * Pageheader Mode 8 - Large: title sangat besar, minimal.
  */
 export default function PageheaderMode8({ context, site }) {
     const { breadcrumb = [], title = '', subtitle = '' } = context || {};

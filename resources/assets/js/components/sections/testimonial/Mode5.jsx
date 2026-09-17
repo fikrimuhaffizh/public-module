@@ -3,7 +3,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { Section, combinedText, TestimonialRating } from '../index';
 
 /**
- * Testimoni Mode 5 — animated list: daftar testimoni masuk berurutan, item aktif
+ * Testimoni Mode 5 - animated list: daftar testimoni masuk berurutan, item aktif
  * berganti otomatis dengan progress bar + highlight halus. Prop: { section, data }
  */
 export default function TestimonialMode5({ section, data }) {
@@ -15,7 +15,7 @@ export default function TestimonialMode5({ section, data }) {
     const [paused, setPaused] = useState(false);
     const reduceMotion = useReducedMotion();
 
-    // Auto-advance — mati saat hover, kurang dari 2 item, atau reduced motion.
+    // Auto-advance - mati saat hover, kurang dari 2 item, atau reduced motion.
     useEffect(() => {
         if (items.length < 2 || reduceMotion || paused) return undefined;
         const timer = window.setInterval(() => setIndex(i => (i + 1) % items.length), 5000);
